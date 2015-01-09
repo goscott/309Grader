@@ -12,6 +12,14 @@ public class Student implements Comparable<Student> {
 		this.id = id;
 		scores = new HashMap<String, GradedItem>();
 	}
+	
+	public String name() {
+		return name;
+	}
+	
+	public String id() {
+		return id;
+	}
 
 	public double getTotalScore() {
 		return 0;
@@ -21,8 +29,12 @@ public class Student implements Comparable<Student> {
 		return scores.get(asgn);
 	}
 	
-	public void addScore(String asgn, GradedItem item) {
+	public void addAssignment(String asgn, GradedItem item) {
 		scores.put(asgn, item);
+	}
+	
+	public void changeScore(String asgn, ScoreNode sc) {
+		scores.get(asgn).changeScore(sc);
 	}
 	
 	public void removeScore(String asgn) {
@@ -31,5 +43,14 @@ public class Student implements Comparable<Student> {
 	
 	public int compareTo(Student other) {
 		return name.compareTo(other.name);
+	}
+	
+	public boolean equals(Object other) {
+		boolean ret = false;
+		if((other != null) && (other instanceof Student)) {
+			Student oth = (Student)other;
+			return oth.name().equals(name) && oth.id().equals(id);
+		}
+		return ret;
 	}
 }

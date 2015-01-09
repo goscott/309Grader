@@ -26,4 +26,20 @@ public class GradedItem {
 	public ScoreNode score() {
 		return score;
 	}
+	
+	public void changeScore(ScoreNode sc) {
+		score = sc;
+	}
+	
+	public boolean equals(Object other) {
+		if((other != null) && (other instanceof GradedItem)) {
+			GradedItem oth = (GradedItem)other;
+			return oth.name().equals(name);
+		}
+		return false;
+	}
+	
+	public GradedItem copy() {
+		return new GradedItem(name, descr);
+	}
 }
