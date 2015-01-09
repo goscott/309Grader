@@ -23,9 +23,29 @@ public class Roster {
 		return students;
 	}
 	
+	private ArrayList<Student> getStudentsByAssignmentScore(String asgn) {
+		Collections.sort(students, new AssignmentComparator(asgn));
+		return students;
+	}
+	
 	private class ScoreComparator implements Comparator<Student> {
 		public int compare(Student s1, Student s2) {
 			return (int) (s1.getTotalScore() - s2.getTotalScore());
+		}
+		
+	}
+	
+	private class AssignmentComparator implements Comparator<Student> {
+		private String asgn;
+		
+		public AssignmentComparator(String asgn)
+		{
+			this.asgn = asgn;
+		}
+		
+		public int compare(Student s1, Student s2) {
+			return (int) (s1.getAssignmentScore(asgn).score().value()
+					- s2.getAssignmentScore(asgn).score().value());
 		}
 		
 	}

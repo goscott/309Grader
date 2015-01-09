@@ -15,15 +15,15 @@ public class GradedItem {
 		this.score = score;
 	}
 	
-	public String getName() {
+	public String name() {
 		return name;
 	}
 	
-	public String getDescr() {
+	public String descr() {
 		return descr;
 	}
 	
-	public ScoreNode getScore() {
+	public ScoreNode score() {
 		return score;
 	}
 }

@@ -17,11 +17,11 @@ public class ScoreNode {
 		subnodes.add(new ScoreNode(name, val));
 	}
 	
-	public String getName() {
+	public String name() {
 		return name;
 	}
 	
-	public double getValue() {
+	public double value() {
 		return value;
 	}
 	
