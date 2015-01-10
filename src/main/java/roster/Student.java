@@ -5,12 +5,12 @@ import java.util.HashMap;
 public class Student implements Comparable<Student> {
 	private final String name;
 	private final String id;
-	private HashMap<String, GradedItem> scores;
+	private HashMap<String, ScoreNode> scores;
 
 	public Student(String name, String id) {
 		this.name = name;
 		this.id = id;
-		scores = new HashMap<String, GradedItem>();
+		scores = new HashMap<String, ScoreNode>();
 	}
 	
 	public String name() {
@@ -25,16 +25,16 @@ public class Student implements Comparable<Student> {
 		return 0;
 	}
 	
-	public GradedItem getAssignmentScore(String asgn) {
+	public ScoreNode getAssignmentScore(String asgn) {
 		return scores.get(asgn);
 	}
 	
-	public void addAssignment(String asgn, GradedItem item) {
-		scores.put(asgn, item);
+	public void addAssignment(String asgn) {
+		scores.put(asgn, null);
 	}
 	
 	public void changeScore(String asgn, ScoreNode sc) {
-		scores.get(asgn).changeScore(sc);
+		scores.put(asgn, sc);
 	}
 	
 	public void removeScore(String asgn) {
