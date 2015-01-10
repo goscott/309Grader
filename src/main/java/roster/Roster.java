@@ -115,15 +115,15 @@ public class Roster {
 	// TODO Delete (only for debugging)
 	public void print() {
 		getStudentsByName();
-		System.out.println("============================================");
+		spacer();
 		System.out.println(courseName + " " + time);
-		System.out.println("============================================");
+		spacer();
 		System.out.print("\t\t\t\t\t\t\t");
 		for(GradedItem a : assignments) {
 			System.out.print(a.name() + '\t');
 		}
 		System.out.println();
-		System.out.println("============================================");
+		spacer();
 		for(Student s : students) {
 			System.out.print(s.name() + "\t\t" + s.id() + "\t\t");
 			System.out.print("Total Score: " + s.getTotalScore() + "\t");
@@ -138,6 +138,13 @@ public class Roster {
 			}
 			System.out.println();
 		}
-		System.out.println("============================================");
+		spacer();
+	}
+	
+	//TODO DELETE
+	private void spacer() {
+		for(int i = 0; i < 2000; i++)
+			System.out.print("=");
+		System.out.println();
 	}
 }
