@@ -6,11 +6,16 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class Roster {
+	private String courseName;
+	private String instructor;
+	private String time;
 	private ArrayList<Student> students;
 	private ArrayList<GradedItem> assignments;
 	private HashMap<String, Student> ids;
 	
-	public Roster() {
+	public Roster(String name, String time) {
+		courseName = name;
+		this.time = time;
 		students = new ArrayList<Student>();
 		assignments = new ArrayList<GradedItem>();
 		ids = new HashMap<String, Student>();
@@ -21,11 +26,30 @@ public class Roster {
 		ids.put(s.id(), s);
 	}
 	
+	public String getInstructor() {
+		return instructor;
+	}
+	
+	public String getTime() {
+		return time;
+	}
+	
+	public String courseName() {
+		return courseName;
+	}
+	
 	public void addAssignment(GradedItem asgn) {
 		assignments.add(asgn);
 		for(Student stud : students) {
 			stud.addAssignment(asgn.name());
 		}
+	}
+	
+	public GradedItem getAssignment(String name) {
+		for(GradedItem item : assignments)
+			if(item.name().equals(name))
+				return item;
+		return null;
 	}
 	
 	public void addScore(Student student, GradedItem asgn, ScoreNode score) {
@@ -92,7 +116,7 @@ public class Roster {
 	public void print() {
 		getStudentsByName();
 		System.out.println("============================================");
-		System.out.println("ROSTER");
+		System.out.println(courseName + " " + time);
 		System.out.println("============================================");
 		System.out.print("\t\t\t\t\t\t\t");
 		for(GradedItem a : assignments) {
@@ -105,9 +129,12 @@ public class Roster {
 			System.out.print("Total Score: " + s.getTotalScore() + "\t");
 			for(GradedItem a : assignments) {
 				if(s.getAssignmentScore(a.name()) != null) {
-					System.out.print(s.getAssignmentScore(a.name()).value());
+					System.out.print("|" + s.getAssignmentScore(a.name()).value());
 				}
-				System.out.print('\t');
+				else {
+					System.out.print("|    ");
+				}
+				System.out.print("|\t");
 			}
 			System.out.println();
 		}

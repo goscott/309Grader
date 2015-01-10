@@ -10,7 +10,7 @@ public class Driver {
 	
 	public void startup() {
 		System.out.println("Starting Calendar Tool...");
-		roster = new Roster();
+		roster = new Roster("CPE 309", "Winter 2015");
 		test();
 	}
 	
@@ -25,7 +25,7 @@ public class Driver {
 		roster.addAssignment(new GradedItem("Asgn1", "Blah blah blah"));
 		roster.addAssignment(new GradedItem("Asgn2", "Blah blah blah"));
 		roster.addAssignment(new GradedItem("Asgn3", "Blah blah blah"));
-		roster.addScore(new Student("Mason", "2222222"), new GradedItem("Asgn2", "Blah blah blah"), new ScoreNode("total", 98.5));
+		roster.addScore(roster.getStudentByID("2222222"), new GradedItem("Asgn2", "Blah blah blah"), new ScoreNode("total", 98.5));
 		roster.print();
 	}
 }
