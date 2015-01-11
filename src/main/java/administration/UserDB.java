@@ -6,14 +6,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class UserDB {
 	private Collection<User> users;
-	private static final String DATABASE = "users.udb";
+	private static final String DATABASE = "src/main/java/administration/users.udb";
 	
 	public UserDB() {
 		loadUserDB();
+		print();
 	}
 	
 	/**
@@ -25,6 +27,8 @@ public class UserDB {
 		String line = "";
 		String[] tokens;
 		int index;
+		
+		users = new ArrayList<User>();
 		
 		targetFile = new File(DATABASE);
 		
@@ -47,7 +51,7 @@ public class UserDB {
 		}
 		
 		catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 	}
@@ -60,7 +64,7 @@ public class UserDB {
 		if (!users.contains(newUser))
 		{
 			try {
-				writer = new BufferedWriter(new FileWriter(DATABASE));
+				writer = new BufferedWriter(new FileWriter(DATABASE, true));
 				
 				//add the user to the db file
 				writer.append(newUser.getfName() + "," + newUser.getlName() + "," + newUser.getId() 
@@ -86,13 +90,15 @@ public class UserDB {
 		return false;
 	}
 	
-	private void print() {
+	public void print() {
 		
 		System.out.println("USER DB:");
-		System.out.printf("%-10s%-10s%-10s%-10s%-10s\n\n", "First", "Last", "ID", "Password", "Type");
+		System.out.println("----------------------------------------------------------------------------------------");
+		System.out.printf("%-20s%-20s%-20s%-20s%-20s\n\n", "First", "Last", "ID", "Password", "Type");
 		
 		for (User u : users) {
-			System.out.printf("%-10s%-10s%-10s%-10s%-10c\n", u.getfName(), u.getlName(), u.getId(), u.getPassword(), u.getType());
+			System.out.printf("%-20s%-20s%-20s%-20s%-20c\n", u.getfName(), u.getlName(), u.getId(), u.getPassword(), u.getType());
 		}
+		System.out.println("----------------------------------------------------------------------------------------\n\n");
 	}
 }
