@@ -1,5 +1,6 @@
 package roster;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Student implements Comparable<Student> {
@@ -53,4 +54,18 @@ public class Student implements Comparable<Student> {
 		}
 		return ret;
 	}
+
+    public static String Save(ArrayList<Student> students)
+    {
+        String toReturn = "";
+        char secret = 1;
+        for(Student stu: students) {
+            toReturn += "S" + secret;
+            toReturn += stu.name + secret + stu.id + secret;
+            toReturn += ScoreNode.Save(stu.scores);
+            toReturn += "\n";
+        }
+        
+        return toReturn;
+    }
 }

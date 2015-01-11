@@ -1,6 +1,7 @@
 package roster;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ScoreNode {
 	private ArrayList<ScoreNode> subnodes;
@@ -28,4 +29,16 @@ public class ScoreNode {
 	public ArrayList<ScoreNode> getChildren() {
 		return subnodes;
 	}
+
+    public static String Save(HashMap<String, ScoreNode> scores)
+    {
+        //TODO save the nodes
+        return "";
+    }
+
+    public static String Save(ScoreNode score)
+    {
+        // TODO Auto-generated method stub
+        return "";
+    }
 }

@@ -147,4 +147,17 @@ public class Roster {
 			System.out.print("=");
 		System.out.println();
 	}
+	
+	
+	public void Save() {
+	    Save(this);
+	}
+	public static void Save(Roster rost) {
+	    char secret = 1;
+	    String save = rost.courseName + secret + rost.instructor + secret + rost.time + "\n";
+	    save += GradedItem.Save(rost.assignments);
+	    save += Student.Save(rost.students);
+	    
+	}
+	
 }
