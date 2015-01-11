@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class UserDB {
-	private Collection<User> users;
+	private ArrayList<User> users;
 	private static final String DATABASE = "src/main/java/administration/users.udb";
 	
 	public UserDB() {
@@ -87,7 +87,32 @@ public class UserDB {
 	}
 	
 	public boolean removeUser(User target) {
+		
+		//check to see if user exists
+		if (users.contains(target)) {
+			//remove from users
+			
+			//remove from database
+			
+			return true;
+		}
+		
 		return false;
+	}
+	
+	public boolean editUserType(User target, char newType) {
+		//check if target exists
+		if (users.contains(target)) {
+			//edit User object type
+			((User) users.get(users.indexOf(target))).setType(newType);
+			//edit User in udb
+			return true;
+		}
+		return false;
+	}
+	
+	public Collection<User> getUsers() {
+		return users;
 	}
 	
 	public void print() {

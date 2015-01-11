@@ -13,6 +13,14 @@ public class User
 		type = newType;
 	}
 	
+	public boolean editType(char newType) {
+		if (UserTypes.isValidType(newType)) {
+			type = newType;
+			return true;
+		}
+		return false;
+	}
+	
 	public String getfName() {
 		return fName;
 	}
