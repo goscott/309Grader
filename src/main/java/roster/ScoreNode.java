@@ -2,6 +2,10 @@ package roster;
 
 import java.util.ArrayList;
 
+/**
+ * A score for an assignment, with sub-assignments
+ * @author Gavin Scott
+ */
 public class ScoreNode {
 	private ArrayList<ScoreNode> subnodes;
 	private String name;

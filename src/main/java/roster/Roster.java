@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+/**
+ * The class Roster that stores students and assignments
+ * @author Gavin Scott
+ */
 public class Roster {
 	private String courseName;
 	private String instructor;

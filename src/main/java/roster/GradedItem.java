@@ -1,5 +1,9 @@
 package roster;
 
+/**
+ * A grade-able assignment
+ * @author Gavin Scott
+ */
 public class GradedItem {
 	private String name;
 	private String descr;
