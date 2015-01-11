@@ -1,8 +1,10 @@
 package roster;
 
-import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * A grade-able assignment
+ * @author Gavin Scott
+ */
 public class GradedItem {
 	private String name;
 	private String descr;
