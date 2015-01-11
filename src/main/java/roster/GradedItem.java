@@ -48,16 +48,15 @@ public class GradedItem {
 	public GradedItem copy() {
 		return new GradedItem(name, descr);
 	}
-
-    public static String Save(List<GradedItem> assignments)
-    {
-        String toReturn = "";
-        char secret = 1;
-        for(GradedItem item : assignments) {
-            toReturn += "A" +secret;
-            toReturn += item.name + secret + item.descr + secret + ScoreNode.Save(item.score);
-            toReturn +="\n";
-        }
-        return toReturn;
-    }
+	 public static String Save(List<GradedItem> assignments)
+	    {
+	        String toReturn = "";
+	        char secret = 1;
+	        for(GradedItem item : assignments) {
+	            toReturn += "A" +secret;
+	            toReturn += item.name + secret + item.descr + secret + ScoreNode.Save(item.score);
+	            toReturn +="\n";
+	        }
+	        return toReturn;
+	    }
 }
