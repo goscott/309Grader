@@ -1,5 +1,6 @@
 package roster;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,16 +11,25 @@ import java.util.List;
 public class GradedItem {
 	private String name;
 	private String descr;
-	private ScoreNode score;
+	private double score;
+	private ArrayList<GradedItem> children;
+	private GradedItem parent;
 
 	public GradedItem(String name, String descr) {
-		this(name, descr, null);
+		this(name, descr, 0);
 	}
 
-	public GradedItem(String name, String descr, ScoreNode score) {
+	public GradedItem(String name, String descr, GradedItem parent) {
+		this(name, descr, 0);
+		this.parent = parent;
+	}
+
+	public GradedItem(String name, String descr, double score) {
 		this.name = name;
 		this.descr = descr;
 		this.score = score;
+		parent = null;
+		children = new ArrayList<GradedItem>();
 	}
 
 	public String name() {
@@ -30,24 +40,59 @@ public class GradedItem {
 		return descr;
 	}
 
-	public ScoreNode score() {
+	public double score() {
 		return score;
 	}
 
-	public void changeScore(ScoreNode sc) {
+	public void changeScore(double sc) {
 		score = sc;
+	}
+
+	public void addChild(GradedItem item) {
+		children.add(item);
+		item.setParent(this);
+	}
+
+	public void removeChild(GradedItem item) {
+		if (children.contains(item)) {
+			item.parent = null;
+			children.remove(item);
+		}
+	}
+
+	public boolean leaf() {
+		return children.isEmpty();
+	}
+
+	public boolean hasParent() {
+		return parent != null;
+	}
+
+	public void setParent(GradedItem newParent) {
+		parent.removeChild(this);
+		parent = newParent;
+		newParent.addChild(this);
+	}
+
+	public double calcScore() {
+		double sc = 0;
+		for (GradedItem item : children) {
+			sc += item.score();
+		}
+		return sc;
 	}
 
 	public boolean equals(Object other) {
 		if ((other != null) && (other instanceof GradedItem)) {
 			GradedItem oth = (GradedItem) other;
-			return oth.name().equals(name);
+			return oth.name().equals(name) && oth.descr().equals(descr)
+					&& (oth.score() == score);
 		}
 		return false;
 	}
 
 	public GradedItem copy() {
-		return new GradedItem(name, descr);
+		return new GradedItem(name, descr, score);
 	}
 
 	public static String Save(List<GradedItem> assignments) {
@@ -55,8 +100,9 @@ public class GradedItem {
 		char secret = 1;
 		for (GradedItem item : assignments) {
 			toReturn += "A" + secret;
-			toReturn += item.name + secret + item.descr + secret
-					+ ScoreNode.Save(item.score);
+			toReturn += item.name + secret + item.descr + secret + item.score()
+					+ secret;
+			// + ScoreNode.Save(item.score);
 			toReturn += "\n";
 		}
 		return toReturn;

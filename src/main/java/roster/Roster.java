@@ -198,7 +198,6 @@ public class Roster {
 				+ rost.time + "\n";
 		save += GradedItem.Save(rost.assignments);
 		save += Student.Save(rost.students);
-
 	}
 
 }
