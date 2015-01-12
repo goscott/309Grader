@@ -9,13 +9,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 
 public class GradebookTable {
-    @FXML
-    private TableView<?> mainTable;
-    @FXML
-    private TableColumn<?, ?> idCol;
-    @FXML
-    private TableColumn<?, ?> totalGradeCol;
-    @FXML
-    private TableColumn<?, ?> nameCol;
-}
+	@FXML
+	private TableView<?> mainTable;
+	@FXML
+	private TableColumn<?, ?> idCol;
+	@FXML
+	private TableColumn<?, ?> totalGradeCol;
+	@FXML
+	private TableColumn<?, ?> nameCol;
 
+	@FXML
+	protected void initialize() {
+		//mainTable.
+	}
+}
