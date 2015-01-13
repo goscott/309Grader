@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ *
+ * @author Mason Stevenson
+ *
+ */
 public class UserDB {
     private ArrayList<User> users;
     private static final String DATABASE = "src/main/java/administration/users.udb";
@@ -161,6 +166,23 @@ public class UserDB {
             }
         }
 
+        return null;
+    }
+    
+    /**
+     * Fetches a matching User object if supplied with a valid user id and password.
+     * @param id A user id.
+     * @param password A user password.
+     * @return Returns a User object, or null.
+     */
+    public User login(String id, String password) {
+        User temp = get(id);
+        
+        //if id exists and password matches, return true        
+        if (temp != null && temp.getPassword().equals(password)) {
+            return temp;
+        }
+        
         return null;
     }
 
