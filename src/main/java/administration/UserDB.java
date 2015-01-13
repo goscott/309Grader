@@ -15,7 +15,7 @@ public class UserDB {
 
     public UserDB() {
         loadUserDB();
-        print();
+        //print();
     }
 
     /**
@@ -62,12 +62,26 @@ public class UserDB {
      * Overwrites the db file with the current list of users
      */
     private void updateDB() {
+        BufferedWriter writer = null;
         File userData = new File(DATABASE);
 
         userData.delete();
 
-        for (User target : users) {
-            addUser(target);
+        try {
+            writer = new BufferedWriter(new FileWriter(DATABASE, true));
+            
+            for (User newUser : users) {
+                // add the user to the db file
+                writer.append(newUser.getfName() + "," + newUser.getlName()
+                        + "," + newUser.getId() + "," + newUser.getPassword()
+                        + "," + newUser.getType() + "\n");
+            }
+            
+            writer.close();
+        }
+        
+        catch (IOException e) {
+            
         }
     }
 
@@ -122,6 +136,7 @@ public class UserDB {
             // edit User object type
             ((User) users.get(users.indexOf(target))).setType(newType);
             // edit User in udb
+            updateDB();
             return true;
         }
         return false;

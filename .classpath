@@ -22,7 +22,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Gavin/Documents/Libraries/fxsampler-1.0.8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Gavin/Documents/Libraries/openjfx-dialogs-1.0.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
