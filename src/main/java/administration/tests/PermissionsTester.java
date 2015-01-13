@@ -1,8 +1,10 @@
-package administration;
+package administration.tests;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import administration.User;
+import administration.UserDB;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +16,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author Mason Stevenson
+ *
+ */
 public class PermissionsTester extends Application {
 
     /**
@@ -29,7 +36,7 @@ public class PermissionsTester extends Application {
         
         try {
             //BorderPane page = (BorderPane) FXMLLoader.load(getClass().getResource("PermissionsEditor.fxml"));
-            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getResource("PermissionsEditor.fxml")));
+            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getResource("../resources/permissions_editor.fxml")));
             
             ListView<String> view = (ListView<String>) scene.lookup("#user_list");
             ObservableList<String> list = FXCollections.observableArrayList();
@@ -47,6 +54,7 @@ public class PermissionsTester extends Application {
             
         } catch (Exception ex) {
             Logger.getLogger(PermissionsTester.class.getName()).log(Level.SEVERE, null, ex);
+            //System.out.println("ERR");
         }
     }
 }

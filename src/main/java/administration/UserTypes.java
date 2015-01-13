@@ -1,5 +1,10 @@
 package administration;
 
+/**
+ * 
+ * @author Mason Stevenson
+ *
+ */
 public class UserTypes {
 
     public static final char USER_STUDENT = 's';

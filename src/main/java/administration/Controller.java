@@ -3,6 +3,11 @@ package administration;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+/**
+ * 
+ * @author Mason Stevenson
+ *
+ */
 public class Controller {
     
     @FXML

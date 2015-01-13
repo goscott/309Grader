@@ -1,5 +1,10 @@
 package administration;
 
+/**
+ * 
+ * @author Mason Stevenson
+ *
+ */
 public class User {
     private String fName, lName, id, password;
     private char type;

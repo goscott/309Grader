@@ -1,5 +1,12 @@
-package administration;
+package administration.tests;
 
+import administration.*;
+
+/**
+ * 
+ * @author Mason Stevenson
+ *
+ */
 public class dbtest {
 
     public static void main(String[] args) {
@@ -9,6 +16,6 @@ public class dbtest {
                 //"f0rk$@ndKNIVES33", 't'));
         //db.removeUser(db.get("msteve07"));
         //db.editUserType(db.get("msteve07"), UserTypes.USER_TA);
-        db.print();
+        //db.print();
     }
 }
