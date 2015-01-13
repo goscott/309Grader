@@ -8,12 +8,18 @@ package roster;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import javafx.event.ActionEvent;
 
 public class GradeBookTester extends Application {
 
@@ -31,8 +37,17 @@ public class GradeBookTester extends Application {
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.show();
+            
+            /*scene.widthProperty().addListener(new ChangeListener<Number>() {
+				public void stateChanged(ChangeEvent arg0) {
+					// TODO Auto-generated method stub
+					System.out.println("changed width");
+				}
+            });*/
+            
         } catch (Exception ex) {
             Logger.getLogger(GradeBookTester.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 }

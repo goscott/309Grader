@@ -3,27 +3,32 @@ package roster;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Student implements Comparable<Student> {
-	private final String name;
-	private final String id;
+	private final SimpleStringProperty name;
+	private final SimpleStringProperty id;
 	private HashMap<String, ScoreNode> scores;
+	private double totalScore;
 
 	public Student(String name, String id) {
-		this.name = name;
-		this.id = id;
+		this.name = new SimpleStringProperty(name);
+		this.id = new SimpleStringProperty(id);
 		scores = new HashMap<String, ScoreNode>();
+		totalScore = 0;
 	}
 
-	public String name() {
-		return name;
+	public String getName() {
+		return name.get();
 	}
 
-	public String id() {
-		return id;
+	public String getId() {
+		return id.get();
 	}
 
 	public double getTotalScore() {
-		return 0;
+		return totalScore;
 	}
 
 	public ScoreNode getAssignmentScore(String asgn) {
@@ -43,13 +48,13 @@ public class Student implements Comparable<Student> {
 	}
 
 	public int compareTo(Student other) {
-		return name.compareTo(other.name);
+		return name.toString().compareTo(other.name.toString());
 	}
 
 	public boolean equals(Object other) {
 		if ((other != null) && (other instanceof Student)) {
 			Student oth = (Student) other;
-			return oth.name().equals(name) && oth.id().equals(id);
+			return oth.getName().equals(name) && oth.getId().equals(id);
 		}
 		return false;
 	}
@@ -59,7 +64,7 @@ public class Student implements Comparable<Student> {
 		char secret = 1;
 		for (Student stu : students) {
 			toReturn += "S" + secret;
-			toReturn += stu.name + secret + stu.id + secret;
+			toReturn += stu.name.toString() + secret + stu.id + secret;
 			toReturn += ScoreNode.Save(stu.scores);
 			toReturn += "\n";
 		}

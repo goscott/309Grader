@@ -28,7 +28,7 @@ public class Roster {
 
 	public void addStudent(Student s) {
 		students.add(s);
-		ids.put(s.id(), s);
+		ids.put(s.getId(), s);
 	}
 
 	public String getInstructor() {
@@ -105,7 +105,7 @@ public class Roster {
 
 	private class IDComparator implements Comparator<Student> {
 		public int compare(Student s1, Student s2) {
-			return s1.id().compareTo(s2.id());
+			return s1.getId().compareTo(s2.getId());
 		}
 
 	}
@@ -165,7 +165,7 @@ public class Roster {
 		System.out.println();
 		spacer();
 		for (Student s : students) {
-			System.out.print(s.name() + "\t\t" + s.id() + "\t\t");
+			System.out.print(s.getName() + "\t\t" + s.getId() + "\t\t");
 			System.out.print("Total Score: " + s.getTotalScore() + "\t");
 			for (GradedItem a : assignments) {
 				if (s.getAssignmentScore(a.name()) != null) {
