@@ -1,7 +1,7 @@
 package model.curve;
 
 /**
- * A representation f a percentage based grade.
+ * A representation of a percentage based grade.
  * @author Frank Poole
  */
 public class Grade implements Comparable<Grade> {
@@ -17,15 +17,27 @@ public class Grade implements Comparable<Grade> {
      */
     public Grade(String name, int max, int min) {
         this.name = name;
-        this.setRange(max, min);
+        this.set(max, min);
     }
 
     /**
+     * Returns a negative integer, zero, or a positive integer as this grade is
+     * less than, equal to, or greater than the specified grade. Overlapping
+     * grades are considered duplicates and therefore equivalent.
      * @return a negative integer, zero, or a positive integer as this grade is
      * less than, equal to, or greater than the specified grade.
      */
     public int compareTo(Grade other) {
-        return Float.compare(this.max, other.max);
+        if (this.overlap(other)) {
+            return 0;
+        }
+        else {
+            return Float.compare(this.max, other.max);
+        }
+    }
+    
+    public boolean overlap(Grade other) {
+        return this.min <= other.max && other.min <= this.max;
     }
     
     /**
@@ -65,7 +77,7 @@ public class Grade implements Comparable<Grade> {
      * @param max the new maximum percentage required
      * @param min the new minimum percentage required
      */
-    public void setRange(float max, float min) {
+    public void set(float max, float min) {
         if (max <= 100 && min >= 0 && max >= min) {
             this.max = max;
             this.min = min;
