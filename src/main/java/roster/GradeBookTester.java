@@ -23,7 +23,7 @@ import javafx.event.ActionEvent;
 
 
 /**
- * Tests the gradebook GUI
+ * Tests the Gradebook GUI
  * @author Gavin Scott
  *
  */
@@ -43,13 +43,6 @@ public class GradeBookTester extends Application {
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.show();
-            
-            /*scene.widthProperty().addListener(new ChangeListener<Number>() {
-				public void stateChanged(ChangeEvent arg0) {
-					// TODO Auto-generated method stub
-					System.out.println("changed width");
-				}
-            });*/
             
         } catch (Exception ex) {
             Logger.getLogger(GradeBookTester.class.getName()).log(Level.SEVERE, null, ex);

@@ -11,8 +11,8 @@
    
    <top>
    	   <FlowPane >
-   	   		<Button text="Add Assignment" onAction="#asgnButton"></Button>
-	   		<Button text="Add Student" onAction="#studentButton"></Button>
+   	   		<Button text="Add Assignment" onAction="#asgnButton" fx:id="asgnButton"></Button>
+	   		<Button text="Add Student" onAction="#studentButton" fx:id="studButton"></Button>
    	   </FlowPane> 
    </top>
    

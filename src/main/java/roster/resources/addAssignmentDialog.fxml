@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="roster.AddAssignmentDialog">
+   <top>
+      <Pane prefHeight="54.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="14.0" layoutY="26.0" text="Name" />
+            <TextField fx:id="nameField" layoutX="58.0" layoutY="22.0" prefHeight="25.0" prefWidth="221.0" />
+         </children>
+      </Pane>
+   </top>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="14.0" layoutY="11.0" text="Description" />
+            <TextArea fx:id="descrField" layoutX="14.0" layoutY="31.0" prefHeight="266.0" prefWidth="572.0" />
+            <Button fx:id="addButton" onAction="#handleAddButton" layoutX="501.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Add" />
+            <Button fx:id="cancelButton" onAction="#handleCancelButton" layoutX="14.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

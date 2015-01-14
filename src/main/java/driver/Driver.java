@@ -1,5 +1,6 @@
 package driver;
 
+import roster.AddAssignmentDialog;
 import roster.GradeBookTester;
 import roster.GradedItem;
 import roster.Roster;
@@ -17,8 +18,10 @@ public class Driver {
 		Roster roster = new Roster("CPE 309", "Winter 2015");
 		Grader.addRoster(roster);
 		Grader.setCurrentRoster(roster);
-		Grader.addAssignment(new GradedItem("Test", "sfds"));
+		Grader.addAssignment(new GradedItem("Test 2", "sfds"));
+		Grader.addStudent(new Student("Bob", "123"));
 		grader.printClassList();
 		GradeBookTester.main(null);
+		//AddAssignmentDialog.main(null);
 	}
 }
