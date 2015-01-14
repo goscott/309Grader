@@ -1,4 +1,4 @@
-package roster;
+package model.roster;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -41,7 +41,7 @@ public class AddAssignmentDialog {
 	public void start(Stage stage) {
 		try {
 			BorderPane page = (BorderPane) FXMLLoader.load(getClass()
-					.getResource("resources/addAssignmentDialog.fxml"));
+					.getResource("../../view/roster/addAssignmentDialog.fxml"));
 			Scene popup = new Scene(page);
 			stage.setScene(popup);
 			stage.show();

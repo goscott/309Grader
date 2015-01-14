@@ -1,4 +1,4 @@
-package curve;
+package model.curve;
 
 import java.util.ArrayList;
 

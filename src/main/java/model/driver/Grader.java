@@ -1,13 +1,13 @@
-package driver;
+package model.driver;
 
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import administration.UserDB;
-import roster.GradedItem;
-import roster.Roster;
-import roster.Student;
+import model.administration.UserDB;
+import model.roster.GradedItem;
+import model.roster.Roster;
+import model.roster.Student;
 
 
 /**

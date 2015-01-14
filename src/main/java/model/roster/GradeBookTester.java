@@ -1,4 +1,4 @@
-package roster;
+package model.roster;
 
 /*
  * Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
@@ -39,7 +39,7 @@ public class GradeBookTester extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-        	BorderPane page = (BorderPane) FXMLLoader.load(getClass().getResource("resources/gradebook_screen.fxml"));
+        	BorderPane page = (BorderPane) FXMLLoader.load(getClass().getResource("../../view/roster/gradebook_screen.fxml"));
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.show();

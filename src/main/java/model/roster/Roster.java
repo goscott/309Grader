@@ -1,4 +1,4 @@
-package roster;
+package model.roster;
 
 import java.util.ArrayList;
 import java.util.Collections;

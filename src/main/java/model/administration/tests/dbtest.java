@@ -1,6 +1,6 @@
-package administration.tests;
+package model.administration.tests;
 
-import administration.*;
+import model.administration.*;
 
 /**
  * 

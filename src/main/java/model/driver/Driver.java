@@ -1,10 +1,10 @@
-package driver;
+package model.driver;
 
-import roster.AddAssignmentDialog;
-import roster.GradeBookTester;
-import roster.GradedItem;
-import roster.Roster;
-import roster.Student;
+import model.roster.AddAssignmentDialog;
+import model.roster.GradeBookTester;
+import model.roster.GradedItem;
+import model.roster.Roster;
+import model.roster.Student;
 
 public class Driver {
 	private static Grader grader;

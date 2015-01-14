@@ -1,4 +1,4 @@
-package administration.tests;
+package model.administration.tests;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +26,7 @@ public class LoginTest extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getResource("../resources/user_login.fxml")));
+            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getResource("../../../view/administration/user_login.fxml")));
             
             primaryStage.setScene(scene);
             primaryStage.setTitle("GraderTool: Login");

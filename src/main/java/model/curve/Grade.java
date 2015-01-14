@@ -1,4 +1,4 @@
-package curve;
+package model.curve;
 
 /**
  * A representation f a percentage based grade.

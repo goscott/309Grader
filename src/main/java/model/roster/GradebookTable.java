@@ -1,31 +1,17 @@
-package roster;
-
-import java.awt.Label;
-import java.io.IOException;
+package model.roster;
 
 import javax.swing.JOptionPane;
 
-import driver.Grader;
+import model.driver.Grader;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -49,9 +35,8 @@ public class GradebookTable {
 	Button asgnButton;
 	@FXML
 	Button studentButton;
-
-	private ObservableList<Student> data = FXCollections.observableArrayList();
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@FXML
 	protected void initialize() {
 		mainTable.setEditable(false);

@@ -1,10 +1,10 @@
-package administration.tests;
+package model.administration.tests;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import administration.User;
-import administration.UserDB;
+import model.administration.User;
+import model.administration.UserDB;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,7 +36,7 @@ public class PermissionsTester extends Application {
         
         try {
             //BorderPane page = (BorderPane) FXMLLoader.load(getClass().getResource("PermissionsEditor.fxml"));
-            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getResource("../resources/permissions_editor.fxml")));
+            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getResource("../../../view/administration/permissions_editor.fxml")));
             
             ListView<String> view = (ListView<String>) scene.lookup("#user_list");
             ObservableList<String> list = FXCollections.observableArrayList();

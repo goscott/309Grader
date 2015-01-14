@@ -1,4 +1,4 @@
-package administration;
+package model.administration;
 
 /**
  * 

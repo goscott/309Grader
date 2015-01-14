@@ -1,4 +1,4 @@
-package roster;
+package model.roster;
 
 public class TestDriver {
 	private Roster roster;

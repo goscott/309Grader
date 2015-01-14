@@ -1,4 +1,4 @@
-package administration;
+package model.administration;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,7 +16,7 @@ import java.util.Collection;
  */
 public class UserDB {
     private ArrayList<User> users;
-    private static final String DATABASE = "src/main/java/administration/users.udb";
+    private static final String DATABASE = "src/main/java/model/administration/users.udb";
 
     public UserDB() {
         loadUserDB();
