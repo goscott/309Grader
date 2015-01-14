@@ -33,6 +33,9 @@ public class Roster {
 		System.out.println("adding student");
 		students.add(s);
 		ids.put(s.getId(), s);
+		for(GradedItem item : assignments) {
+			s.addAssignment(item.name());
+		}
 	}
 
 	public String getInstructor() {
@@ -95,10 +98,10 @@ public class Roster {
 		return students;
 	}
 
-	public ArrayList<Student> getStudentsByAssignmentScore(String asgn) {
+	/*public ArrayList<Student> getStudentsByAssignmentScore(String asgn) {
 		Collections.sort(students, new AssignmentComparator(asgn));
 		return students;
-	}
+	}*/
 	
 	private class ScoreComparator implements Comparator<Student> {
 		public int compare(Student s1, Student s2) {
@@ -113,7 +116,7 @@ public class Roster {
 		}
 
 	}
-
+/*
 	private class AssignmentComparator implements Comparator<Student> {
 		private String asgn;
 
@@ -126,7 +129,7 @@ public class Roster {
 					.getAssignmentScore(asgn).value());
 		}
 
-	}
+	}*/
 
 	/*public boolean equals(Object other) {
 		return true;
@@ -187,7 +190,7 @@ public class Roster {
 			for (GradedItem a : assignments) {
 				if (s.getAssignmentScore(a.name()) != null) {
 					System.out.print("|"
-							+ s.getAssignmentScore(a.name()).value());
+							+ s.getAssignmentScore(a.name()));
 				} else {
 					System.out.print("|    ");
 				}

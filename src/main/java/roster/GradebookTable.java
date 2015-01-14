@@ -3,7 +3,11 @@ package roster;
 import java.awt.Label;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import driver.Grader;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,8 +19,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
 
 /**
  * Controls the visual gradebook
@@ -65,12 +71,28 @@ public class GradebookTable {
 		mainTable.setItems(Grader.getStudentList());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@FXML
 	void asgnButton(ActionEvent e) {
-		TableColumn<Student, String> temp = new TableColumn<Student, String>("Test");
-		temp.setMinWidth(100);
-		temp.setEditable(true);
-		mainTable.getColumns().addAll(temp);
+		String asgn = JOptionPane.showInputDialog("Please input a name");
+		
+		final TableColumn<Student, Double> newColumn = new TableColumn<Student, Double>(asgn);		
+		newColumn.setMinWidth(100);
+		newColumn.setEditable(true);
+		
+		Grader.addAssignment(new GradedItem(newColumn.getText(), "empty"));
+		
+		 newColumn.setCellValueFactory(new Callback() {
+			public SimpleDoubleProperty call(CellDataFeatures<Student, Double> param) {
+				return param.getValue().getAssignmentScoreAsProperty(newColumn.getText());
+			}
+			public Object call(Object param) {
+				System.out.println("hit other one");
+				return call((CellDataFeatures<Student, Double>)(param));
+			}
+		});
+		
+		mainTable.getColumns().add(newColumn);
 	}
 	
 	@FXML

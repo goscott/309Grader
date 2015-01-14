@@ -3,8 +3,12 @@ package roster;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableNumberValue;
+import javafx.beans.value.ObservableValue;
 
 /**
  * A student in a class
@@ -15,12 +19,14 @@ public class Student implements Comparable<Student> {
 	private final SimpleStringProperty name;
 	private final SimpleStringProperty id;
 	private HashMap<String, ScoreNode> scores;
+	private HashMap<String, Double> scoreValues;
 	private double totalScore;
 
 	public Student(String name, String id) {
 		this.name = new SimpleStringProperty(name);
 		this.id = new SimpleStringProperty(id);
 		scores = new HashMap<String, ScoreNode>();
+		scoreValues = new HashMap<String, Double>();
 		totalScore = 0;
 	}
 
@@ -36,12 +42,22 @@ public class Student implements Comparable<Student> {
 		return totalScore;
 	}
 
-	public ScoreNode getAssignmentScore(String asgn) {
-		return scores.get(asgn);
+	public Double getAssignmentScore(String asgn) {
+		return scoreValues.get(asgn);
+	}
+	
+	public SimpleDoubleProperty getAssignmentScoreAsProperty(String asgn) {
+		System.out.println("checking score for " + asgn);
+		if(getAssignmentScore(asgn) != null)
+			return new SimpleDoubleProperty(getAssignmentScore(asgn));
+		else
+			return new SimpleDoubleProperty(-1);
 	}
 
 	public void addAssignment(String asgn) {
-		scores.put(asgn, null);
+		scores.put(asgn, new ScoreNode("temp", 0));
+		System.out.println("adding assignment: " + asgn);
+		scoreValues.put(asgn, 0.0);
 	}
 
 	public void changeScore(String asgn, ScoreNode sc) {
