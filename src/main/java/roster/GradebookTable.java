@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,6 +19,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -74,7 +76,7 @@ public class GradebookTable {
 	@SuppressWarnings("unchecked")
 	@FXML
 	void asgnButton(ActionEvent e) {
-		String asgn = JOptionPane.showInputDialog("Please input a name");
+		String asgn = JOptionPane.showInputDialog("Please input an assignment name");
 		
 		final TableColumn<Student, Double> newColumn = new TableColumn<Student, Double>(asgn);		
 		newColumn.setMinWidth(100);
@@ -97,7 +99,8 @@ public class GradebookTable {
 	
 	@FXML
 	void studentButton(ActionEvent e) {
-		Grader.addStudent(new Student("New Guy", "12345"));
+		String name = JOptionPane.showInputDialog("Please input a name");
+		Grader.addStudent(new Student(name, ""+(name.length()*236 - name.charAt(0))));
 		mainTable.setItems(Grader.getStudentList());
 	}
 }
