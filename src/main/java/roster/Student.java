@@ -6,6 +6,11 @@ import java.util.HashMap;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * A student in a class
+ * @author Gavin Scott
+ *
+ */
 public class Student implements Comparable<Student> {
 	private final SimpleStringProperty name;
 	private final SimpleStringProperty id;

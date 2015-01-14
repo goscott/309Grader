@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A grade-able assignment
- * 
+ * A grade-able assignment, and a category in the gradebook
  * @author Gavin Scott
  */
 public class GradedItem {

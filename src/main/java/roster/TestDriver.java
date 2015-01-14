@@ -1,10 +1,10 @@
 package roster;
 
-public class Driver {
+public class TestDriver {
 	private Roster roster;
 
 	public static void main(String[] args) {
-		Driver driver = new Driver();
+		TestDriver driver = new TestDriver();
 		driver.startup();
 	}
 

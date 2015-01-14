@@ -3,6 +3,7 @@ package roster;
 import java.awt.Label;
 import java.io.IOException;
 
+import driver.Grader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +18,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
+/**
+ * Controls the visual gradebook
+ * @author Gavin Scott
+ */
 public class GradebookTable {
 	@FXML
 	private TableView<Student> mainTable;
@@ -57,18 +62,7 @@ public class GradebookTable {
 		totalGradeCol.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 				"totalScore"));
 		
-		for(int i = 1; i < 10; i++)
-		{
-			data.add(new Student("" + i, "000"));
-		}
-		
-		for(int i = 1; i < 3; i++) {
-			TableColumn<Student, String> temp = new TableColumn<Student, String>("Asgn " + i);
-			temp.setMinWidth(100);
-			temp.setEditable(true);
-			mainTable.getColumns().addAll(temp);
-		}
-		mainTable.setItems(data);
+		mainTable.setItems(Grader.getStudentList());
 	}
 	
 	@FXML
@@ -81,6 +75,7 @@ public class GradebookTable {
 	
 	@FXML
 	void studentButton(ActionEvent e) {
-		data.add(new Student("New Guy", "12345"));
+		Grader.addStudent(new Student("New Guy", "12345"));
+		mainTable.setItems(Grader.getStudentList());
 	}
 }

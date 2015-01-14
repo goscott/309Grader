@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /**
  * The class Roster that stores students and assignments
  * 
@@ -27,6 +30,7 @@ public class Roster {
 	}
 
 	public void addStudent(Student s) {
+		System.out.println("adding student");
 		students.add(s);
 		ids.put(s.getId(), s);
 	}
@@ -95,7 +99,7 @@ public class Roster {
 		Collections.sort(students, new AssignmentComparator(asgn));
 		return students;
 	}
-
+	
 	private class ScoreComparator implements Comparator<Student> {
 		public int compare(Student s1, Student s2) {
 			return (int) (s1.getTotalScore() - s2.getTotalScore());
@@ -124,6 +128,15 @@ public class Roster {
 
 	}
 
+	/*public boolean equals(Object other) {
+		return true;
+		/*if ((other == null) || !(other instanceof GradedItem)) {
+			return false;
+		}
+		Roster rost = (Roster) other;
+		return rost.courseName().equals(courseName);
+	}*/
+	
 	public boolean equals(Object other) {
 		if ((other == null) || !(other instanceof GradedItem)) {
 			return false;
@@ -152,6 +165,10 @@ public class Roster {
 		return assignments;
 	}
 
+	public String toString() {
+		return courseName + " " + time;
+	}
+	
 	// TODO Delete (only for debugging)
 	public void print() {
 		getStudentsByName();

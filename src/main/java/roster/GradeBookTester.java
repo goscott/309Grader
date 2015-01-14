@@ -21,6 +21,12 @@ import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
 
+
+/**
+ * Tests the gradebook GUI
+ * @author Gavin Scott
+ *
+ */
 public class GradeBookTester extends Application {
 
     /**
