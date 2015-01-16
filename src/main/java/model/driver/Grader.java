@@ -62,6 +62,32 @@ public class Grader {
 		return data;
 	}
 	
+	/**
+	 * Gets an observable list of the assignment names for 
+	 * the current roster, useful for fxml.
+	 */
+	public static ObservableList<String> getAssignmentNameList() {
+		ObservableList<String> data = FXCollections
+				.observableArrayList();
+		for(GradedItem item : currentRoster.getAssignments()) {
+			data.add(item.name());
+		}
+		return data;
+	}
+	
+	/**
+	 * Gets an observable list of the assignments for 
+	 * the current roster, useful for fxml.
+	 */
+	public static ObservableList<GradedItem> getAssignmentList() {
+		ObservableList<GradedItem> data = FXCollections
+				.observableArrayList();
+		for(GradedItem item : currentRoster.getAssignments()) {
+			data.add(item);
+		}
+		return data;
+	}
+	
 	public void printClassList() {
 		System.out.println("CLASS LIST");
 		for(Roster r : classList) {

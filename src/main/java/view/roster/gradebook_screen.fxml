@@ -11,8 +11,26 @@
    
    <top>
    	   <FlowPane >
-   	   		<Button text="Add Assignment" onAction="#asgnButton" fx:id="asgnButton"></Button>
-	   		<Button text="Add Student" onAction="#studentButton" fx:id="studButton"></Button>
+   	   		<Button text="Add Assignment" onAction="#asgnButton" fx:id="asgnButton">
+            	<tooltip>
+					<Tooltip text='Brings up the "Add Assignment" dialog' />
+			    </tooltip>
+   	   		</Button>
+	   		<Button text="Add Student" onAction="#studentButton" fx:id="studentButton">
+	   		    <tooltip>
+					<Tooltip text='Brings up the "Add Student" dialog' />
+			    </tooltip>
+	   		</Button>
+	   		<Button text="Remove Student" onAction="#studentButton" fx:id="removeStudentButton">
+	   		    <tooltip>
+					<Tooltip text='Brings up the "Remove Student" dialog' />
+			    </tooltip>
+	   		</Button>
+	   		<Button text="Remove Assignment" onAction="#studentButton" fx:id="removeAsgnButton">
+	   		    <tooltip>
+					<Tooltip text='Brings up the "Remove Assignment" dialog' />
+			    </tooltip>
+	   		</Button>
    	   </FlowPane> 
    </top>
    

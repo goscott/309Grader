@@ -5,13 +5,16 @@ import javax.swing.JOptionPane;
 import model.driver.Grader;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -35,16 +38,32 @@ public class GradebookTable {
 	Button asgnButton;
 	@FXML
 	Button studentButton;
-	
+	@FXML
+	Button removeStudentButton;
+	@FXML
+	Button removeAsgnButton;
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@FXML
 	protected void initialize() {
-		mainTable.setEditable(false);
+		mainTable.setEditable(true);
 
 		nameCol.setMinWidth(100);
-		nameCol.setEditable(false);
+		nameCol.setEditable(true);
 		nameCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
 				"name"));
+		nameCol.setCellFactory(TextFieldTableCell.<Student> forTableColumn());
+		
+		nameCol.setOnEditCommit(new EventHandler<CellEditEvent<Student, String>>() {
+			public void handle(CellEditEvent<Student, String> t) {
+				System.out.println("typing...");
+				/*
+				 * ((Student) t.getTableView().getItems().get(
+				 * t.getTablePosition().getRow())
+				 * ).setFirstName(t.getNewValue());
+				 */
+			}
+		});
 
 		idCol.setMinWidth(100);
 		idCol.setEditable(false);
@@ -98,6 +117,7 @@ public class GradebookTable {
 		newColumn.setMinWidth(100);
 		newColumn.setEditable(true);
 
+		// newColumn.setCellFactory(TextFieldTableCell.<StateData>forTableColumn());
 		Grader.addAssignment(new GradedItem(asgn, descr));
 
 		newColumn.setCellValueFactory(new Callback() {
