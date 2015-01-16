@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 import model.driver.Grader;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -49,21 +50,9 @@ public class GradebookTable {
 		mainTable.setEditable(true);
 
 		nameCol.setMinWidth(100);
-		nameCol.setEditable(true);
+		nameCol.setEditable(false);
 		nameCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
 				"name"));
-		nameCol.setCellFactory(TextFieldTableCell.<Student> forTableColumn());
-		
-		nameCol.setOnEditCommit(new EventHandler<CellEditEvent<Student, String>>() {
-			public void handle(CellEditEvent<Student, String> t) {
-				System.out.println("typing...");
-				/*
-				 * ((Student) t.getTableView().getItems().get(
-				 * t.getTablePosition().getRow())
-				 * ).setFirstName(t.getNewValue());
-				 */
-			}
-		});
 
 		idCol.setMinWidth(100);
 		idCol.setEditable(false);
@@ -77,20 +66,26 @@ public class GradebookTable {
 						"totalScore"));
 
 		for (GradedItem item : Grader.getRoster().getAssignments()) {
-			final TableColumn<Student, Double> newColumn = new TableColumn<Student, Double>(
+			final TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
 					item.name());
 			newColumn.setMinWidth(100);
 			newColumn.setEditable(true);
 
 			newColumn.setCellValueFactory(new Callback() {
-				public SimpleDoubleProperty call(
+				public SimpleStringProperty call(
 						CellDataFeatures<Student, Double> param) {
-					return param.getValue().getAssignmentScoreAsProperty(
-							newColumn.getText());
+					return new SimpleStringProperty(param.getValue().getAssignmentScore(newColumn.getText()).toString());
 				}
 
 				public Object call(Object param) {
 					return call((CellDataFeatures<Student, Double>) (param));
+				}
+			});
+			newColumn.setCellFactory(TextFieldTableCell.<Student> forTableColumn());
+			/* When a user types a change */
+			newColumn.setOnEditCommit(new EventHandler<CellEditEvent<Student, String>>() {
+				public void handle(CellEditEvent<Student, String> t) {
+					System.out.println("typing...");
 				}
 			});
 
@@ -110,15 +105,14 @@ public class GradebookTable {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	void addAssignmentColumn(String asgn, String descr) {
+	void addAssignmentColumn(String asgn, String descr, GradedItem asgnParent) {
 
 		final TableColumn<Student, Double> newColumn = new TableColumn<Student, Double>(
 				asgn);
 		newColumn.setMinWidth(100);
 		newColumn.setEditable(true);
 
-		// newColumn.setCellFactory(TextFieldTableCell.<StateData>forTableColumn());
-		Grader.addAssignment(new GradedItem(asgn, descr));
+		Grader.addAssignment(new GradedItem(asgn, descr, asgnParent));
 
 		newColumn.setCellValueFactory(new Callback() {
 			public SimpleDoubleProperty call(

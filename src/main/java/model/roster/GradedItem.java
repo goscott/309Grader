@@ -15,19 +15,25 @@ public class GradedItem {
 	private GradedItem parent;
 
 	public GradedItem(String name, String descr) {
-		this(name, descr, 0);
+		this(name, descr, null, 0);
+	}
+	
+	public GradedItem(String name, String descr, double score) {
+		this(name, descr, null, score);
 	}
 
 	public GradedItem(String name, String descr, GradedItem parent) {
-		this(name, descr, 0);
-		this.parent = parent;
+		this(name, descr, parent, 0);
 	}
 
-	public GradedItem(String name, String descr, double score) {
+	public GradedItem(String name, String descr, GradedItem parent, double score) {
 		this.name = name;
 		this.descr = descr;
 		this.score = score;
-		parent = null;
+		this.parent = parent;
+		if(parent != null) {
+			parent.addChild(this);
+		}
 		children = new ArrayList<GradedItem>();
 	}
 
@@ -49,7 +55,6 @@ public class GradedItem {
 
 	public void addChild(GradedItem item) {
 		children.add(item);
-		item.setParent(this);
 	}
 
 	public void removeChild(GradedItem item) {

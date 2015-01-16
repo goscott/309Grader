@@ -49,6 +49,8 @@ public class AddAssignmentDialog {
 
 	private static GradebookTable parent;
 	private final int maxChars = 25;
+	private final int numParentsShown = 10;
+	private final String noParent = "<None>";
 
 	/**
 	 * Sets the parent of the window, so it can grab information from the
@@ -69,9 +71,7 @@ public class AddAssignmentDialog {
 		// disables the add button
 		addButton.setDisable(true);
 		// populates parent list
-		parentDropdown.setItems(Grader.getAssignmentNameList());
-		
-		//refreshButton.setGraphic(new ImageView(new Image("../../view/roster/refresh_img.png")));
+		resetDropdown();
 	}
 
 	/**
@@ -103,9 +103,15 @@ public class AddAssignmentDialog {
 	@FXML
 	// adds a new assignment
 	private void handleAddButton(ActionEvent event) {
-		parent.addAssignmentColumn(nameField.getText(), descrField.getText());
+		GradedItem asgnParent = null;
+		System.out.println("SELECTED PARENT: " + parentDropdown.getValue());
+		if(parentDropdown.getValue() != null && !parentDropdown.getValue().equals(noParent)) {
+			asgnParent = Grader.getRoster().getAssignment(parentDropdown.getValue());
+		}
+		parent.addAssignmentColumn(nameField.getText(), descrField.getText(), asgnParent);
 		nameField.setText("");
 		descrField.setText("");
+		resetDropdown();
 	}
 
 	@FXML
@@ -174,8 +180,14 @@ public class AddAssignmentDialog {
 		return false;
 	}
 
+	private void resetDropdown() {
+		parentDropdown.setItems(Grader.getAssignmentNameList());
+		parentDropdown.getItems().add(0, noParent);
+		parentDropdown.setVisibleRowCount(numParentsShown);
+	}
+	
 	@FXML
 	private void handleRefreshButton(ActionEvent event) {
-		parentDropdown.setItems(Grader.getAssignmentNameList());
+		resetDropdown();
 	}
 }
