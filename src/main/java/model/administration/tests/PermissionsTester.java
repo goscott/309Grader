@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import model.administration.User;
 import model.administration.UserDB;
+import model.administration.UserTypes;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,7 +43,7 @@ public class PermissionsTester extends Application {
             ObservableList<String> list = FXCollections.observableArrayList();
             
             for (User target : users.getUsers()) {
-                list.add(target.getId());
+                list.add(String.format("%-40s%51s", target.getId(), UserTypes.fullName(target.getType())));
             }
             
             view.setItems(list);
