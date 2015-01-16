@@ -49,21 +49,11 @@ public class GradebookTable {
 		mainTable.setEditable(true);
 
 		nameCol.setMinWidth(100);
-		nameCol.setEditable(false);
-		/*
-		 * nameCol.setCellValueFactory(new PropertyValueFactory<Student,
-		 * String>( "name"));
-		 * 
-		 * nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		 * nameCol.setOnEditCommit( new EventHandler<CellEditEvent<Student,
-		 * String>>() { public void handle(CellEditEvent<Student, String> t) {
-		 * /*((Person) t.getTableView().getItems().get(
-		 * t.getTablePosition().getRow()) ).setFirstName(t.getNewValue()); } }
-		 * );
-		 */
+		nameCol.setEditable(true);
 		nameCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
 				"name"));
 		nameCol.setCellFactory(TextFieldTableCell.<Student> forTableColumn());
+		
 		nameCol.setOnEditCommit(new EventHandler<CellEditEvent<Student, String>>() {
 			public void handle(CellEditEvent<Student, String> t) {
 				System.out.println("typing...");

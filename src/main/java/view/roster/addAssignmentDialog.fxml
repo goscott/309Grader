@@ -3,7 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.collections.FXCollections ?>
+<?import javafx.scene.image.ImageView ?>
+<?import javafx.scene.image.Image ?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.roster.AddAssignmentDialog">
    <top>
@@ -15,11 +17,19 @@
 					<Tooltip text="Enter the name of the assignment (Note: Assignment names must be unique)" />
 			    </tooltip>
             </TextField>
-            <MenuButton fx:id="parentDropdown" layoutX="304.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="281.0" text="Choose Parent">
-              <items>
-                <MenuItem mnemonicParsing="false" text="None"/>
-              </items>
-            </MenuButton>
+            <ComboBox fx:id="parentDropdown" layoutX="304.0" layoutY="22.0" prefHeight="25.0" prefWidth="245.0" promptText="Select Parent" />
+		 	<Button fx:id="refreshButton" onAction="#handleRefreshButton" layoutX="556.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
+		 		<tooltip>
+					<Tooltip text="Refreshes the list of possible parents" />
+			    </tooltip>
+			    <graphic>
+			    	<ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../view/roster/refresh_img.png"/>
+                        </image>                            
+                    </ImageView>
+                </graphic>
+		 	</Button>
          </children>
       </Pane>
    </top>
@@ -32,15 +42,15 @@
 					<Tooltip text="Enter a description for the assignment" />
 			    </tooltip>
             </TextArea>
-            <Button fx:id="addButton" onAction="#handleAddButton" layoutX="501.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Add">
+            <Button fx:id="addButton" defaultButton="true" onAction="#handleAddButton" layoutX="501.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Add">
             	<tooltip>
 					<Tooltip text="Adds an assignment with the given information to the gradebook" />
 			    </tooltip>
             </Button>
-            <Button fx:id="cancelButton" onAction="#handleCancelButton" layoutX="14.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel">
+            <Button onAction="#handleCancelButton" layoutX="14.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel">
             	<tooltip>
 					<Tooltip text="Closes the window. Infomation that has not been added will not be saved." />
-			    </tooltip>            
+			    </tooltip>
             </Button>
          </children>
       </Pane>
