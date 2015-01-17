@@ -72,7 +72,8 @@ public class UserLoginController {
 	}
 
 	public void newUser() {
-		System.out.println("new user");
+		launchNewUser();
+		((Stage) new_user.getScene().getWindow()).close();
 	}
 
 	private void launchMainPage() {
@@ -91,6 +92,23 @@ public class UserLoginController {
 		catch (Exception e) {
 
 		}
+	}
+	
+	private void launchNewUser() {
+	    try {
+            Stage stage = new Stage();
+            Scene scene = new Scene((Parent) FXMLLoader.load(getClass()
+                    .getResource("new_user.fxml")));
+
+            stage.setScene(scene);
+            stage.setTitle("Create New User");
+
+            stage.show();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 
 }
