@@ -1,5 +1,3 @@
-package model.administration.tests;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,18 +6,14 @@ import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.administration.tests.LoginTest;
 
-/**
- * 
- * @author Mason Stevenson
- *
- */
-public class LoginTest extends Application {
+
+public class Launcher extends Application {
 
     /**
      * @param args the command line arguments
@@ -31,7 +25,7 @@ public class LoginTest extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getResource("../../../view/administration/user_login.fxml")));
+            Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getResource("view/administration/user_login.fxml")));
             
             primaryStage.setScene(scene);
             primaryStage.setTitle("GraderTool: Login");

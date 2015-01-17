@@ -1,55 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.administration.UserLoginController">
    <children>
       <HBox alignment="CENTER">
          <children>
-            <HBox>
-               <children>
-                  <Label text="Username: ">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </Label>
-                  <TextField>
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox alignment="TOP_RIGHT">
-               <children>
-                  <Label text="Password:">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </Label>
-                  <PasswordField>
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </PasswordField>
-               </children>
-            </HBox>
+            <Label text="Username: ">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="user_name">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </TextField>
+            <Label text="Password:">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <PasswordField fx:id="password">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </PasswordField>
+            <Hyperlink fx:id="new_user" onAction="#newUser" text="New User?" visited="true">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Hyperlink>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT">
+         <children>
+            <Label fx:id="login_invalid" alignment="CENTER" text="**Your ID and/or password are invalid**" textFill="RED" visible="false">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="30.0" />
+               </HBox.margin>
+            </Label>
          </children>
       </HBox>
       <HBox alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Ok">
+            <Button fx:id="button_login" mnemonicParsing="false" onAction="#login" text="Login">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Cancel">
+            <Button fx:id="button_cancel" mnemonicParsing="false" onAction="#cancel" text="Cancel">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
                </HBox.margin>
             </Button>
          </children>

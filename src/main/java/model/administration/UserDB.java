@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -177,9 +178,23 @@ public class UserDB {
      */
     public User login(String id, String password) {
         User temp = get(id);
+        String filename = "src/main/java/model/administration/login.txt";
+        File file;
+        PrintWriter writer;
         
         //if id exists and password matches, return true        
         if (temp != null && temp.getPassword().equals(password)) {
+            try {
+                file = new File(filename);
+                writer = new PrintWriter(file);
+                writer.println(id);
+                writer.close();
+            }
+            
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            
             return temp;
         }
         
