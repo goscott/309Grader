@@ -1,7 +1,6 @@
 package model.driver;
 
-import model.roster.AddAssignmentDialog;
-import model.roster.GradeBookTester;
+import model.roster.AddAssignmentDialogController;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.ScoreNode;
@@ -15,7 +14,7 @@ public class Driver {
 		test();
 	}
 	
-	private static void test() {
+	public static void test() {
 		Roster roster = new Roster("CPE 309", "Winter 2015");
 		Grader.addRoster(roster);
 		Grader.setCurrentRoster(roster);
@@ -35,7 +34,5 @@ public class Driver {
 		Grader.addScore(bob, "Midterm 1", 90);
 		Grader.addScore(bob, "Midterm 2", 86);
 		Grader.addScore(bob, "Midterm 3", 95);
-		grader.printClassList();
-		GradeBookTester.main(null);
 	}
 }

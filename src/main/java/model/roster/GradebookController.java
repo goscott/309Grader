@@ -24,7 +24,7 @@ import javafx.util.Callback;
  * 
  * @author Gavin Scott
  */
-public class GradebookTable {
+public class GradebookController {
 	@FXML
 	private TableView<Student> mainTable;
 	@FXML
@@ -48,7 +48,7 @@ public class GradebookTable {
 	@FXML
 	protected void initialize() {
 		mainTable.setEditable(true);
-
+		
 		nameCol.setMinWidth(100);
 		nameCol.setEditable(false);
 		nameCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
@@ -64,57 +64,49 @@ public class GradebookTable {
 		totalGradeCol
 				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 						"totalScore"));
+		if (Grader.getRoster() != null) {
+			for (GradedItem item : Grader.getRoster().getAssignments()) {
+				final TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
+						item.name());
+				newColumn.setMinWidth(100);
+				newColumn.setEditable(true);
 
-		for (GradedItem item : Grader.getRoster().getAssignments()) {
-			final TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
-					item.name());
-			newColumn.setMinWidth(100);
-			newColumn.setEditable(true);
+				newColumn.setCellValueFactory(new Callback() {
+					public SimpleStringProperty call(
+							CellDataFeatures<Student, Double> param) {
+						return new SimpleStringProperty(param.getValue()
+								.getAssignmentScore(newColumn.getText())
+								.toString());
+					}
 
-			newColumn.setCellValueFactory(new Callback() {
-				public SimpleStringProperty call(
-						CellDataFeatures<Student, Double> param) {
-					return new SimpleStringProperty(param.getValue().getAssignmentScore(newColumn.getText()).toString());
+					public Object call(Object param) {
+						return call((CellDataFeatures<Student, Double>) (param));
+					}
+				});
+				newColumn.setCellFactory(TextFieldTableCell
+						.<Student> forTableColumn());
+				/* When a user types a change */
+				newColumn
+						.setOnEditCommit(new EventHandler<CellEditEvent<Student, String>>() {
+							public void handle(CellEditEvent<Student, String> t) {
+								System.out.println("typing...");
+							}
+						});
+				if (!item.hasParent()) {
+					mainTable.getColumns().add(newColumn);
+				} else {
+					addSubColumn(item, newColumn);
 				}
 
-				public Object call(Object param) {
-					return call((CellDataFeatures<Student, Double>) (param));
-				}
-			});
-			newColumn.setCellFactory(TextFieldTableCell.<Student> forTableColumn());
-			/* When a user types a change */
-			newColumn.setOnEditCommit(new EventHandler<CellEditEvent<Student, String>>() {
-				public void handle(CellEditEvent<Student, String> t) {
-					System.out.println("typing...");
-				}
-			});
-			if(!item.hasParent()) {
-				mainTable.getColumns().add(newColumn);
 			}
-			else {
-				addSubColumn(item, newColumn);
-			}
-			
+			mainTable.setItems(Grader.getStudentList());
 		}
-		mainTable.setItems(Grader.getStudentList());
 	}
 
 	@FXML
 	void asgnButton(ActionEvent e) {
-		// TODO delete
-		System.out.println("*****************");
-		for(Student s : Grader.getStudentList()) {
-			System.out.print("STUDENT NAME: " + s.getName() + " ");
-			for(GradedItem item : Grader.getAssignmentList()) {
-				System.out.print(item.name() + ": " + s.getAssignmentScore(item.name()));
-			}
-			System.out.println();
-		}
-
-		System.out.println("*****************");
-		
 		Stage newStage = new Stage();
-		AddAssignmentDialog popup = new AddAssignmentDialog();
+		AddAssignmentDialogController popup = new AddAssignmentDialogController();
 		popup.start(newStage);
 		popup.setParent(this);
 		asgnButton.setDisable(true);
@@ -141,13 +133,13 @@ public class GradebookTable {
 				return call((CellDataFeatures<Student, Double>) (param));
 			}
 		});
-		
-		if(asgnParent == null) {
+
+		if (asgnParent == null) {
 			mainTable.getColumns().add(newColumn);
 		} else {
 			addSubColumn(item, newColumn);
 		}
-		
+
 	}
 
 	@FXML
@@ -157,10 +149,11 @@ public class GradebookTable {
 				+ (name.length() * 236 - name.charAt(0))));
 		mainTable.setItems(Grader.getStudentList());
 	}
-	
+
 	private void addSubColumn(GradedItem item, TableColumn newColumn) {
-		for(int ndx = 0; ndx < mainTable.getColumns().size(); ndx++) {
-			if(mainTable.getColumns().get(ndx).getText().equals(item.getParent().name())) {
+		for (int ndx = 0; ndx < mainTable.getColumns().size(); ndx++) {
+			if (mainTable.getColumns().get(ndx).getText()
+					.equals(item.getParent().name())) {
 				mainTable.getColumns().get(ndx).getColumns().add(newColumn);
 			}
 		}

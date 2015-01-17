@@ -35,7 +35,7 @@ import javafx.util.Callback;
  * @author Gavin Scott
  *
  */
-public class AddAssignmentDialog {
+public class AddAssignmentDialogController {
 	@FXML
 	private TextField nameField;
 	@FXML
@@ -47,7 +47,7 @@ public class AddAssignmentDialog {
 	@FXML
 	private Button refreshButton;
 
-	private static GradebookTable parent;
+	private static GradebookController parent;
 	private final int maxChars = 25;
 	private final int numParentsShown = 10;
 	private final String noParent = "<None>";
@@ -59,7 +59,7 @@ public class AddAssignmentDialog {
 	 * @param newParent
 	 *            the parent
 	 */
-	public void setParent(GradebookTable newParent) {
+	public void setParent(GradebookController newParent) {
 		parent = newParent;
 	}
 

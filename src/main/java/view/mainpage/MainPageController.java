@@ -1,22 +1,56 @@
 package view.mainpage;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.administration.User;
 import model.administration.UserDB;
 import model.administration.UserTypes;
 import model.administration.tests.PermissionsTester;
+import model.driver.Driver;
+import model.driver.Grader;
 
 public class MainPageController {
-    
+	@FXML
+    private AnchorPane classTab;
+	@FXML
+    private AnchorPane gradebookTab;
+	@FXML
+    private AnchorPane graphsTab;
+	@FXML
+    private AnchorPane historyTab;
+	@FXML
+    private AnchorPane predictionsTab;
+	@FXML
+    private AnchorPane announcmentsTab;
+	
+	public void initialize() {
+		// gives it some initial data
+		Grader.get();
+		//Driver.test();
+		
+		// loads tab contents
+		try {
+			BorderPane gradebookPage = (BorderPane) FXMLLoader.load(getClass().getResource("../roster/gradebook_screen.fxml"));
+			gradebookTab.getChildren().add(gradebookPage);
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
     //launches the permissions editor
     public void permissions() {
         System.out.println("Launching permissions editor");
@@ -48,4 +82,5 @@ public class MainPageController {
             //System.out.println("ERR");
         }
     }
+
 }

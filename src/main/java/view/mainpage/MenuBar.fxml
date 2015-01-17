@@ -5,36 +5,36 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.driver.MenubarController">
    <children>
       <MenuBar id="MenuBar">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem id="Save" mnemonicParsing="false" text="Save" />
-                  <MenuItem id="Export" mnemonicParsing="false" text="Export" />
-                  <MenuItem id="Load" mnemonicParsing="false" text="Load" />
+              <MenuItem fx:id="Save" mnemonicParsing="false" text="Save" />
+                  <MenuItem fx:id="Export" mnemonicParsing="false" text="Export" />
+                  <MenuItem fx:id="Load" mnemonicParsing="false" text="Load" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Class">
             <items>
-              <MenuItem id="AddAssignment" mnemonicParsing="false" text="Add Assignment" />
-                  <MenuItem id="DropAssignment" mnemonicParsing="false" text="Drop Assignment" />
-                  <MenuItem id="ImportAssignment" mnemonicParsing="false" text="Import Assignment" />
-                  <MenuItem id="AddStudent" mnemonicParsing="false" text="Add Student" />
-                  <MenuItem id="DropStudent" mnemonicParsing="false" text="Drop Student" />
-                  <MenuItem id="RosterSync" mnemonicParsing="false" text="Roster Sync" />
+              <MenuItem fx:id="AddAssignment" mnemonicParsing="false" text="Add Assignment" />
+                  <MenuItem fx:id="DropAssignment" mnemonicParsing="false" text="Drop Assignment" />
+                  <MenuItem fx:id="ImportAssignment" mnemonicParsing="false" text="Import Assignment" />
+                  <MenuItem fx:id="AddStudent" mnemonicParsing="false" text="Add Student" />
+                  <MenuItem fx:id="DropStudent" mnemonicParsing="false" text="Drop Student" />
+                  <MenuItem fx:id="RosterSync" mnemonicParsing="false" text="Roster Sync" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Settings">
             <items>
-              <MenuItem id="Permissions" mnemonicParsing="false" text="Permissions " />
+              <MenuItem fx:id="Permissions" mnemonicParsing="false" text="Permissions " />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Help">
               <items>
-                  <MenuItem id="ViewHelp" mnemonicParsing="false" text="View Help" />
-                <MenuItem id="RequestHelp" mnemonicParsing="false" text="Request Help" />
+                  <MenuItem fx:id="ViewHelp" mnemonicParsing="false" text="View Help" />
+                <MenuItem fx:id="RequestHelp" mnemonicParsing="false" text="Request Help" />
               </items>
             </Menu>
         </menus>
