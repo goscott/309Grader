@@ -49,7 +49,7 @@
       </HBox>
       <HBox alignment="CENTER">
          <children>
-            <Button fx:id="button_login" mnemonicParsing="false" onAction="#login" text="Login">
+            <Button fx:id="button_login" defaultButton="true" mnemonicParsing="false" onAction="#login" text="Login">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" />
                </HBox.margin>
