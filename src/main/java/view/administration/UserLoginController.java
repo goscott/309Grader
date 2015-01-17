@@ -1,8 +1,9 @@
 package view.administration;
 
+import run.Launcher;
 import model.administration.User;
 import model.administration.UserDB;
-import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,9 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class UserLoginController {
 
@@ -72,8 +72,8 @@ public class UserLoginController {
 	}
 
 	public void newUser() {
-		launchNewUser();
-		((Stage) new_user.getScene().getWindow()).close();
+	    launchNewUser();
+        ((Stage) new_user.getScene().getWindow()).close();
 	}
 
 	private void launchMainPage() {
@@ -104,6 +104,16 @@ public class UserLoginController {
             stage.setTitle("Create New User");
 
             stage.show();
+            
+            stage.setResizable(false);
+            
+            stage.setOnHiding(new EventHandler<WindowEvent>() {
+
+                public void handle(WindowEvent event) {
+                    Launcher launch = new Launcher();
+                    launch.start(new Stage());
+                }
+            });
         }
 
         catch (Exception e) {

@@ -20,7 +20,7 @@ public class Launcher extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Application.launch(LoginTest.class, (java.lang.String[])null);
+        Application.launch(Launcher.class, (java.lang.String[])null);
     }
 
     @Override
@@ -28,12 +28,15 @@ public class Launcher extends Application {
         try {
             Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getResource("../view/administration/user_login.fxml")));
             
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("GraderTool: Login");
             
+            primaryStage.setTitle("GraderTool: Login");
+            primaryStage.setScene(scene);
             setUser(scene);
             
             primaryStage.show();
+            primaryStage.setResizable(false);
+            
+            System.out.println("Init");
             
             
         } catch (Exception ex) {

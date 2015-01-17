@@ -18,6 +18,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="First Name:">
@@ -70,11 +71,24 @@
                   </CheckBox>
                </children>
             </HBox>
+            <Label text="User Permission Type:" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <MenuButton fx:id="button_select_permissions" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Select Permission Type" GridPane.columnIndex="1" GridPane.rowIndex="4">
+              <items>
+                <MenuItem fx:id="item_student" mnemonicParsing="false" onAction="#studentSelected" text="Student" />
+                <MenuItem fx:id="item_ta" mnemonicParsing="false" onAction="#taSelected" text="Teacher's Aid" />
+                  <MenuItem fx:id="item_instructor" mnemonicParsing="false" onAction="#instructorSelected" text="Instructor" />
+                  <MenuItem fx:id="item_admin" mnemonicParsing="false" onAction="#adminSelected" text="Admin" />
+              </items>
+            </MenuButton>
          </children>
       </GridPane>
       <HBox>
          <children>
-            <Label text="ERRORMESSAGE" textFill="RED" visible="false">
+            <Label fx:id="error_message" text="ERRORMESSAGE" textFill="RED" visible="false">
                <HBox.margin>
                   <Insets left="40.0" />
                </HBox.margin>
