@@ -4,6 +4,7 @@ import model.roster.AddAssignmentDialog;
 import model.roster.GradeBookTester;
 import model.roster.GradedItem;
 import model.roster.Roster;
+import model.roster.ScoreNode;
 import model.roster.Student;
 
 public class Driver {
@@ -19,7 +20,21 @@ public class Driver {
 		Grader.addRoster(roster);
 		Grader.setCurrentRoster(roster);
 		Grader.addAssignment(new GradedItem("Test", "sfds"));
+		GradedItem test2 = new GradedItem("Midterms", "sfds");
+		GradedItem test3 = new GradedItem("Midterm 1", "sfds", test2);
+		GradedItem test4 = new GradedItem("Midterm 2", "sfds", test2);
+		GradedItem test5 = new GradedItem("Midterm 3", "sfds", test2);
+		Grader.addAssignment(test2);
+		Grader.addAssignment(test3);
+		Grader.addAssignment(test4);
+		Grader.addAssignment(test5);
+		
+		Student bob = new Student("Bob", "123");
+		
 		Grader.addStudent(new Student("Bob", "123"));
+		Grader.addScore(bob, "Midterm 1", 90);
+		Grader.addScore(bob, "Midterm 2", 86);
+		Grader.addScore(bob, "Midterm 3", 95);
 		grader.printClassList();
 		GradeBookTester.main(null);
 	}

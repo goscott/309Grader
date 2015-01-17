@@ -18,8 +18,8 @@ public class ScoreNode {
 		subnodes = new ArrayList<ScoreNode>();
 	}
 	
-	public void addSub(String name, double val) {
-		subnodes.add(new ScoreNode(name, val));
+	public void addSub(String name, double value) {
+		subnodes.add(new ScoreNode(name, value));
 	}
 	
 	public String name() {

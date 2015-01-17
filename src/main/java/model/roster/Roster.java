@@ -67,7 +67,7 @@ public class Roster {
 	public void addScore(Student student, GradedItem asgn, ScoreNode score) {
 		if (students.contains(student) && assignments.contains(asgn)) {
 			Student stud = students.get(students.indexOf(student));
-			stud.changeScore(asgn.name(), score);
+			stud.setScore(asgn.name(), score.value());
 		}
 	}
 

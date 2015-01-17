@@ -43,6 +43,7 @@ public class Student implements Comparable<Student> {
 	}
 
 	public Double getAssignmentScore(String asgn) {
+		System.out.println("!!! getting score for " + asgn + ": " + scoreValues.get(asgn));
 		return scoreValues.get(asgn);
 	}
 	
@@ -60,8 +61,9 @@ public class Student implements Comparable<Student> {
 		scoreValues.put(asgn, 0.0);
 	}
 
-	public void changeScore(String asgn, ScoreNode sc) {
-		scores.put(asgn, sc);
+	public void setScore(String asgn, double sc) {
+		//scores.put(asgn, sc);
+		scoreValues.put(asgn, sc);
 	}
 
 	public void removeScore(String asgn) {

@@ -88,15 +88,31 @@ public class GradebookTable {
 					System.out.println("typing...");
 				}
 			});
-
-			mainTable.getColumns().add(newColumn);
+			if(!item.hasParent()) {
+				mainTable.getColumns().add(newColumn);
+			}
+			else {
+				addSubColumn(item, newColumn);
+			}
+			
 		}
-
 		mainTable.setItems(Grader.getStudentList());
 	}
 
 	@FXML
 	void asgnButton(ActionEvent e) {
+		// TODO delete
+		System.out.println("*****************");
+		for(Student s : Grader.getStudentList()) {
+			System.out.print("STUDENT NAME: " + s.getName() + " ");
+			for(GradedItem item : Grader.getAssignmentList()) {
+				System.out.print(item.name() + ": " + s.getAssignmentScore(item.name()));
+			}
+			System.out.println();
+		}
+
+		System.out.println("*****************");
+		
 		Stage newStage = new Stage();
 		AddAssignmentDialog popup = new AddAssignmentDialog();
 		popup.start(newStage);
@@ -106,13 +122,13 @@ public class GradebookTable {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	void addAssignmentColumn(String asgn, String descr, GradedItem asgnParent) {
-
 		final TableColumn<Student, Double> newColumn = new TableColumn<Student, Double>(
 				asgn);
 		newColumn.setMinWidth(100);
 		newColumn.setEditable(true);
 
-		Grader.addAssignment(new GradedItem(asgn, descr, asgnParent));
+		GradedItem item = new GradedItem(asgn, descr, asgnParent);
+		Grader.addAssignment(item);
 
 		newColumn.setCellValueFactory(new Callback() {
 			public SimpleDoubleProperty call(
@@ -125,7 +141,13 @@ public class GradebookTable {
 				return call((CellDataFeatures<Student, Double>) (param));
 			}
 		});
-		mainTable.getColumns().add(newColumn);
+		
+		if(asgnParent == null) {
+			mainTable.getColumns().add(newColumn);
+		} else {
+			addSubColumn(item, newColumn);
+		}
+		
 	}
 
 	@FXML
@@ -134,5 +156,13 @@ public class GradebookTable {
 		Grader.addStudent(new Student(name, ""
 				+ (name.length() * 236 - name.charAt(0))));
 		mainTable.setItems(Grader.getStudentList());
+	}
+	
+	private void addSubColumn(GradedItem item, TableColumn newColumn) {
+		for(int ndx = 0; ndx < mainTable.getColumns().size(); ndx++) {
+			if(mainTable.getColumns().get(ndx).getText().equals(item.getParent().name())) {
+				mainTable.getColumns().get(ndx).getColumns().add(newColumn);
+			}
+		}
 	}
 }

@@ -49,7 +49,7 @@ public class GradedItem {
 		return score;
 	}
 
-	public void changeScore(double sc) {
+	public void setScore(double sc) {
 		score = sc;
 	}
 
@@ -64,12 +64,12 @@ public class GradedItem {
 		}
 	}
 
-	public boolean leaf() {
-		return children.isEmpty();
-	}
-
 	public boolean hasParent() {
 		return parent != null;
+	}
+	
+	public GradedItem getParent() {
+		return parent;
 	}
 
 	public void setParent(GradedItem newParent) {

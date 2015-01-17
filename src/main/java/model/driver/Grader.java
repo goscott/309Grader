@@ -52,12 +52,21 @@ public class Grader {
 		currentRoster.print();
 	}
 	
+	public static void addScore(Student student, String asgn, double score) {
+		currentRoster.getStudentByID(student.getId()).setScore(asgn, score);
+	}
+	
 	/* For FXML stuff */
 	public static ObservableList<Student> getStudentList() {
 		ObservableList<Student> data = FXCollections
 				.observableArrayList();
 		for(Student s : currentRoster.getStudentsByName()) {
 			data.add(s);
+			System.out.print("CHECKING IF SCORES ARE BEING SAVED: " + s.getName() + " ");
+			for(GradedItem item : currentRoster.getAssignments()) {
+				System.out.print(s.getAssignmentScore(item.name()) + " ");
+			}
+			System.out.println();
 		}
 		return data;
 	}
