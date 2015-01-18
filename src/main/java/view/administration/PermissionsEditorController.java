@@ -6,6 +6,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import model.administration.UserDB;
 
+/**
+ * Controls the permissions_editor view.
+ * @author Mason Stevenson
+ *
+ */
 public class PermissionsEditorController {
     
     @FXML
@@ -22,7 +27,9 @@ public class PermissionsEditorController {
     
     UserDB users = new UserDB();
     
-    @FXML
+    /**
+     * Switches the view to edit-user mode.
+     */
     public void editPermissions() {
         
         user_select.setVisible(false);
@@ -31,6 +38,9 @@ public class PermissionsEditorController {
         user_id.setText(((String)user_list.getSelectionModel().getSelectedItem()).split(" ")[0]);
     }
     
+    /**
+     * Commits the changes.
+     */
     public void permissionsChanged() {
         //get currently selected userID from gui
         //obtain User objet from UserDB based on userID
@@ -39,6 +49,9 @@ public class PermissionsEditorController {
         user_edit.setVisible(false);
     }
     
+    /**
+     * Switches the view back to user-list mode.
+     */
     public void cancel() {
         user_select.setVisible(true);
         user_edit.setVisible(false);

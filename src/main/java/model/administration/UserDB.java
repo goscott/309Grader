@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- *
+ * Holds login info for multiple users.
  * @author Mason Stevenson
  *
  */
@@ -91,6 +91,11 @@ public class UserDB {
         }
     }
 
+    /**
+     * Adds a user to the db.
+     * @param newUser A user to add.
+     * @return Returns true if the add was successful.
+     */
     public boolean addUser(User newUser) {
 
         BufferedWriter writer = null;
@@ -121,6 +126,11 @@ public class UserDB {
         return false;
     }
 
+    /**
+     * Removes a user from the db.
+     * @param target A user to remove.
+     * @return Returns true if the remove was successful. 
+     */
     public boolean removeUser(User target) {
 
         // check to see if user exists
@@ -136,6 +146,12 @@ public class UserDB {
         return false;
     }
 
+    /**
+     * Changes a user's permission type.
+     * @param target A user to change.
+     * @param newType A permission type. (See UserTypes.java)
+     * @return Returns true if the change was successful.
+     */
     public boolean editUserType(User target, char newType) {
         // check if target exists
         if (users.contains(target)) {
@@ -148,12 +164,15 @@ public class UserDB {
         return false;
     }
 
+    /** 
+     * @return Returns the db.
+     */
     public Collection<User> getUsers() {
         return users;
     }
 
     /**
-     * Returns a user with the corresponding user id.
+     * Returns a user with the corresponding user id. 
      * 
      * @param id
      *            The target id.

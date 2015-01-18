@@ -13,6 +13,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Controls the new_user view.
+ * @author Mason Stevenson
+ *
+ */
 public class NewUserController {
     @FXML
     private TextField first_name;
@@ -58,28 +63,26 @@ public class NewUserController {
     
     private char userType = UserTypes.USER_STUDENT;
     
+    /**
+     * Switches between masked and plaintext views of the password.
+     */
     public void togglePassword() {
         if (checkbox_show.isSelected()) {
-            showPassword();
+            password_masked.setVisible(false);
+            password_plain_text.setText(password_masked.getText());
+            password_plain_text.setVisible(true);
         }
         
         else {
-            hidePassword();
+            password_plain_text.setVisible(false);
+            password_masked.setText(password_masked.getText());
+            password_masked.setVisible(true);
         }
     }
     
-    private void showPassword() {
-        password_masked.setVisible(false);
-        password_plain_text.setText(password_masked.getText());
-        password_plain_text.setVisible(true);
-    }
-    
-    private void hidePassword() {
-        password_plain_text.setVisible(false);
-        password_masked.setText(password_masked.getText());
-        password_masked.setVisible(true);
-    }
-    
+    /**
+     * Attempts to add a user to the user database based on the info entered by the user.
+     */
     public void createUser() {
         
         UserDB users = new UserDB();
@@ -116,25 +119,40 @@ public class NewUserController {
         }
     }
     
+    /**
+     * Closes the window.
+     */
     public void cancel() {
         ((Stage) button_cancel.getScene().getWindow()).close();
     }
     
+    /**
+     * Handles a selected element in the permissions chooser.
+     */
     public void studentSelected() {
         button_select_permissions.setText("Student");
         userType = UserTypes.USER_STUDENT;
     }
     
+    /**
+     * Handles a selected element in the permissions chooser.
+     */
     public void taSelected() {
         button_select_permissions.setText("Teacher's Aid");
         userType = UserTypes.USER_TA;
     }
     
+    /**
+     * Handles a selected element in the permissions chooser.
+     */
     public void instructorSelected() {
         button_select_permissions.setText("Instructor");
         userType = UserTypes.USER_INSTRUCTOR;
     }
     
+    /**
+     * Handles a selected element in the permissions chooser.
+     */
     public void adminSelected() {
         button_select_permissions.setText("Admin");
     }

@@ -17,6 +17,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Controller for the user_login view.
+ * @author Mason Stevenson
+ *
+ */
 public class UserLoginController {
 
 	@FXML
@@ -37,6 +42,9 @@ public class UserLoginController {
 	@FXML
 	private Label login_invalid;
 
+	/**
+	 * Handles the login button click. If login is successful, launches the MainPage view.
+	 */
 	public void login() {
 		System.out.println("logging in");
 
@@ -71,6 +79,9 @@ public class UserLoginController {
 		((Stage) button_cancel.getScene().getWindow()).close();
 	}
 
+	/**
+	 * Launches the new_user view.
+	 */
 	public void newUser() {
 	    launchNewUser();
         ((Stage) new_user.getScene().getWindow()).close();
