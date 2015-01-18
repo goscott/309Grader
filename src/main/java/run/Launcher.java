@@ -28,7 +28,6 @@ public class Launcher extends Application {
         try {
             Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getResource("../view/administration/user_login.fxml")));
             
-            
             primaryStage.setTitle("GraderTool: Login");
             primaryStage.setScene(scene);
             setUser(scene);
@@ -37,7 +36,6 @@ public class Launcher extends Application {
             primaryStage.setResizable(false);
             
             System.out.println("Init");
-            
             
         } catch (Exception ex) {
             Logger.getLogger(LoginTest.class.getName()).log(Level.SEVERE, null, ex);

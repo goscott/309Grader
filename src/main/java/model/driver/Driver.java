@@ -1,6 +1,6 @@
 package model.driver;
 
-import model.roster.AddAssignmentDialogController;
+import view.roster.AddAssignmentDialogController;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.ScoreNode;

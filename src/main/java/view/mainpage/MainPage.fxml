@@ -6,36 +6,36 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mainpage.MainPageController">
    <center>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Classes">
+          <Tab text="Classes" fx:id="classTab">
             <content>
-              <AnchorPane fx:id="classTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
-          <Tab text="GradeBook">
+          <Tab text="GradeBook" fx:id="gradebookTab">
             <content>
-              <AnchorPane fx:id="gradebookTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
-            <Tab text="Graphs">
+            <Tab text="Graphs" fx:id="graphTab">
               <content>
-                <AnchorPane fx:id="graphTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="History">
+            <Tab text="History" fx:id="historyTab" >
               <content>
-                <AnchorPane fx:id="historyTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="Predictions">
+            <Tab text="Predictions" fx:id="predictionsTab" >
               <content>
-                <AnchorPane fx:id="predictionsTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="Announcements">
+            <Tab text="Announcements" fx:id="announcementsTab" >
               <content>
-                <AnchorPane fx:id="announcementsTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
         </tabs>
@@ -51,14 +51,16 @@
                   <MenuItem id="Load" mnemonicParsing="false" text="Load" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Class">
+            <Menu fx:id="classMenu" mnemonicParsing="false" text="Class">
                <items>
-                  <MenuItem id="AddAssignment" mnemonicParsing="false" text="Add Assignment" />
-                  <MenuItem id="DropAssignment" mnemonicParsing="false" text="Drop Assignment" />
-                  <MenuItem id="ImportAssignment" mnemonicParsing="false" text="Import Assignment" />
-                  <MenuItem id="AddStudent" mnemonicParsing="false" text="Add Student" />
-                  <MenuItem id="DropStudent" mnemonicParsing="false" text="Drop Student" />
-                  <MenuItem id="RosterSync" mnemonicParsing="false" text="Roster Sync" />
+                  <MenuItem fx:id="addAssignment" mnemonicParsing="false" text="Add Assignment"/>
+                  <MenuItem fx:id="dropAssignment" mnemonicParsing="false" text="Drop Assignment" />
+                  <MenuItem fx:id="importAssignment" mnemonicParsing="false" text="Import Assignment" />
+				  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="addStudent" mnemonicParsing="false" text="Add Student" />
+                  <MenuItem fx:id="dropStudent" mnemonicParsing="false" text="Drop Student" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="rosterSync" mnemonicParsing="false" text="Roster Sync" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Settings">

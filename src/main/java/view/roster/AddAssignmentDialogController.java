@@ -1,8 +1,9 @@
-package model.roster;
+package view.roster;
 
 import java.io.IOException;
 
 import model.driver.Grader;
+import model.roster.GradedItem;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,13 +13,10 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -27,7 +25,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 
 /**
  * The dialog that allows the user to add assignments to the gradebook
@@ -47,7 +44,7 @@ public class AddAssignmentDialogController {
 	@FXML
 	private Button refreshButton;
 
-	private static GradebookController parent;
+	private static MenuItem parent;
 	private final int maxChars = 25;
 	private final int numParentsShown = 10;
 	private final String noParent = "<None>";
@@ -59,8 +56,9 @@ public class AddAssignmentDialogController {
 	 * @param newParent
 	 *            the parent
 	 */
-	public void setParent(GradebookController newParent) {
+	public void setParent(MenuItem newParent) {
 		parent = newParent;
+		parent.setDisable(true);
 	}
 
 	/**
@@ -95,7 +93,7 @@ public class AddAssignmentDialogController {
 
 		stage.setOnHiding(new EventHandler<WindowEvent>() {
 			public void handle(WindowEvent event) {
-				parent.asgnButton.setDisable(false);
+				parent.setDisable(false);
 			}
 		});
 	}
@@ -104,11 +102,11 @@ public class AddAssignmentDialogController {
 	// adds a new assignment
 	private void handleAddButton(ActionEvent event) {
 		GradedItem asgnParent = null;
-		System.out.println("SELECTED PARENT: " + parentDropdown.getValue());
 		if(parentDropdown.getValue() != null && !parentDropdown.getValue().equals(noParent)) {
 			asgnParent = Grader.getRoster().getAssignment(parentDropdown.getValue());
 		}
-		parent.addAssignmentColumn(nameField.getText(), descrField.getText(), asgnParent);
+		GradedItem item = new GradedItem(nameField.getText(),  descrField.getText(), asgnParent);
+		Grader.addAssignment(item);
 		nameField.setText("");
 		descrField.setText("");
 		resetDropdown();
