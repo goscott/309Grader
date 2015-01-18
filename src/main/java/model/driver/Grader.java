@@ -44,12 +44,10 @@ public class Grader {
 	
 	public static void addStudent(Student s) {
 		currentRoster.addStudent(s);
-		currentRoster.print();
 	}
 	
 	public static void addAssignment(GradedItem item) {
 		currentRoster.addAssignment(item);
-		currentRoster.print();
 	}
 	
 	public static void addScore(Student student, String asgn, double score) {
@@ -61,12 +59,8 @@ public class Grader {
 		ObservableList<Student> data = FXCollections
 				.observableArrayList();
 		for(Student s : currentRoster.getStudentsByName()) {
+			Debug.log("Grader Test", "checking student: " + s.getName());
 			data.add(s);
-			System.out.print("CHECKING IF SCORES ARE BEING SAVED: " + s.getName() + " ");
-			for(GradedItem item : currentRoster.getAssignments()) {
-				System.out.print(s.getAssignmentScore(item.name()) + " ");
-			}
-			System.out.println();
 		}
 		return data;
 	}
@@ -96,12 +90,4 @@ public class Grader {
 		}
 		return data;
 	}
-	
-	public void printClassList() {
-		System.out.println("CLASS LIST");
-		for(Roster r : classList) {
-			System.out.println(r.toString());
-		}
-	}
-
 }

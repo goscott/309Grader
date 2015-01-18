@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+
 import view.roster.AddAssignmentDialogController;
 import view.roster.GradebookController;
 import javafx.beans.binding.BooleanBinding;
@@ -31,24 +33,25 @@ import model.administration.User;
 import model.administration.UserDB;
 import model.administration.UserTypes;
 import model.administration.tests.PermissionsTester;
-import model.driver.Driver;
+import model.driver.Debug;
 import model.driver.Grader;
+import model.roster.Student;
 
 public class MainPageController {
 	@FXML
 	private TabPane tabPane;
 	@FXML
-    private Tab classTab;
+	private Tab classTab;
 	@FXML
-    private Tab gradebookTab;
+	private Tab gradebookTab;
 	@FXML
-    private Tab graphsTab;
+	private Tab graphsTab;
 	@FXML
-    private Tab historyTab;
+	private Tab historyTab;
 	@FXML
-    private Tab predictionsTab;
+	private Tab predictionsTab;
 	@FXML
-    private Tab announcmentsTab;
+	private Tab announcmentsTab;
 	@FXML
 	private Menu classMenu;
 	@FXML
@@ -63,82 +66,97 @@ public class MainPageController {
 	private MenuItem dropStudent;
 	@FXML
 	private MenuItem rosterSync;
-	
+
 	public void initialize() {
 		// gives it some initial data
-		Driver.test();
-		
+		Debug.autoPopulate();
+
 		// loads tab contents
 		try {
 			// add gradebook
-			TableView<?> gradebookPage = (TableView<?>) FXMLLoader.load(getClass().getResource("../roster/gradebook_screen.fxml"));
+			TableView<?> gradebookPage = (TableView<?>) FXMLLoader
+					.load(getClass().getResource(
+							"../roster/gradebook_screen.fxml"));
 			gradebookTab.setContent(gradebookPage);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		// FILE MENU
-		
+
 		// disable class menu if no current roster
 		classMenu.disableProperty().bind(new BooleanBinding() {
-		    @Override
-		    protected boolean computeValue() {
-		        return Grader.getRoster() == null;
-		    }
+			@Override
+			protected boolean computeValue() {
+				return Grader.getRoster() == null;
+			}
 		});
 		EventHandler<ActionEvent> action = handleMenuItems();
 		addAssignment.setOnAction(action);
-		
-	}
-	
-	@FXML
-    //launches the permissions editor
-    public void permissions() {
-        System.out.println("Launching permissions editor");
-        UserDB users = new UserDB();
-        
-        try {
-            Stage stage = new Stage();
-            
-            //BorderPane page = (BorderPane) FXMLLoader.load(getClass().getResource("PermissionsEditor.fxml"));
-            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getResource("../administration/permissions_editor.fxml")));
-            
-            ListView<String> view = (ListView<String>) scene.lookup("#user_list");
-            ObservableList<String> list = FXCollections.observableArrayList();
-            
-            for (User target : users.getUsers()) {
-                list.add(String.format("%-40s%51s", target.getId(), UserTypes.fullName(target.getType())));
-            }
-            
-            view.setItems(list);
-            
-            stage.setScene(scene);
-            stage.setTitle("Edit User Permissions");
-            stage.setResizable(false);
-            
-            stage.show();
-            
-        } catch (Exception ex) {
-            Logger.getLogger(PermissionsTester.class.getName()).log(Level.SEVERE, null, ex);
-            //System.out.println("ERR");
-        }
-    }
-	
-	private EventHandler<ActionEvent> handleMenuItems() {
-        return new EventHandler<ActionEvent>() {
+		addStudent.setOnAction(action);
 
-            public void handle(ActionEvent event) {
-                MenuItem mItem = (MenuItem) event.getSource();
-                switch(mItem.getText()) {
-                case "Add Assignment":
-                	Stage newStage = new Stage();
-            		AddAssignmentDialogController popup = new AddAssignmentDialogController();
-            		popup.setParent(mItem);
-            		popup.start(newStage);
-                	break;
-                }
-            }
-        };
-    }
+	}
+
+	@FXML
+	// launches the permissions editor
+	public void permissions() {
+		System.out.println("Launching permissions editor");
+		UserDB users = new UserDB();
+
+		try {
+			Stage stage = new Stage();
+
+			// BorderPane page = (BorderPane)
+			// FXMLLoader.load(getClass().getResource("PermissionsEditor.fxml"));
+			Scene scene = new Scene((Parent) FXMLLoader.load(getClass()
+					.getResource("../administration/permissions_editor.fxml")));
+
+			@SuppressWarnings("unchecked")
+			ListView<String> view = (ListView<String>) scene
+					.lookup("#user_list");
+			ObservableList<String> list = FXCollections.observableArrayList();
+
+			for (User target : users.getUsers()) {
+				list.add(String.format("%-40s%51s", target.getId(),
+						UserTypes.fullName(target.getType())));
+			}
+
+			view.setItems(list);
+
+			stage.setScene(scene);
+			stage.setTitle("Edit User Permissions");
+			stage.setResizable(false);
+
+			stage.show();
+
+		} catch (Exception ex) {
+			Logger.getLogger(PermissionsTester.class.getName()).log(
+					Level.SEVERE, null, ex);
+		}
+	}
+
+	private EventHandler<ActionEvent> handleMenuItems() {
+		return new EventHandler<ActionEvent>() {
+
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				switch (mItem.getText()) {
+				case "Add Assignment":
+					Stage newStage = new Stage();
+					AddAssignmentDialogController popup = new AddAssignmentDialogController();
+					popup.setParent(mItem);
+					popup.start(newStage);
+					break;
+
+				case "Add Student":
+					String name = JOptionPane
+							.showInputDialog("Please input a name");
+					Grader.addStudent(new Student(name, ""
+							+ (name.length() * 236 - name.charAt(0))));
+					break;
+				}
+			}
+		};
+	}
 }

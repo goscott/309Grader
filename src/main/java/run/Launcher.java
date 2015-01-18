@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.administration.tests.LoginTest;
+import model.driver.Debug;
 
 
 public class Launcher extends Application {
@@ -35,7 +36,8 @@ public class Launcher extends Application {
             primaryStage.show();
             primaryStage.setResizable(false);
             
-            System.out.println("Init");
+            Debug.newFile();
+            Debug.log("Grader Tool", "Initializing...\n");
             
         } catch (Exception ex) {
             Logger.getLogger(LoginTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,8 +59,8 @@ public class Launcher extends Application {
                 field.setText(reader.readLine());
                 reader.close();
             }
-            
             catch (Exception e) {
+            	Debug.log("ERROR", "Could not read login file");
                 e.printStackTrace();
             }
         }

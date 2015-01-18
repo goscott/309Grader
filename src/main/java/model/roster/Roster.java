@@ -30,7 +30,6 @@ public class Roster {
 	}
 
 	public void addStudent(Student s) {
-		System.out.println("adding student");
 		students.add(s);
 		ids.put(s.getId(), s);
 		for(GradedItem item : assignments) {
@@ -170,42 +169,6 @@ public class Roster {
 
 	public String toString() {
 		return courseName + " " + time;
-	}
-	
-	// TODO Delete (only for debugging)
-	public void print() {
-		getStudentsByName();
-		spacer();
-		System.out.println(courseName + " " + time);
-		spacer();
-		System.out.print("\t\t\t\t\t\t\t");
-		for (GradedItem a : assignments) {
-			System.out.print(a.name() + '\t');
-		}
-		System.out.println();
-		spacer();
-		for (Student s : students) {
-			System.out.print(s.getName() + "\t\t" + s.getId() + "\t\t");
-			System.out.print("Total Score: " + s.getTotalScore() + "\t");
-			for (GradedItem a : assignments) {
-				if (s.getAssignmentScore(a.name()) != null) {
-					System.out.print("|"
-							+ s.getAssignmentScore(a.name()));
-				} else {
-					System.out.print("|    ");
-				}
-				System.out.print("|\t");
-			}
-			System.out.println();
-		}
-		spacer();
-	}
-
-	// TODO DELETE
-	private void spacer() {
-		for (int i = 0; i < 2000; i++)
-			System.out.print("=");
-		System.out.println();
 	}
 
 	public void Save() {

@@ -3,6 +3,7 @@ package view.administration;
 import run.Launcher;
 import model.administration.User;
 import model.administration.UserDB;
+import model.driver.Debug;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +47,7 @@ public class UserLoginController {
 	 * Handles the login button click. If login is successful, launches the MainPage view.
 	 */
 	public void login() {
-		System.out.println("logging in");
+		Debug.log("Login", "attempting login...");
 
 		UserDB users = new UserDB();
 		String userName = user_name.getText();
@@ -54,12 +55,10 @@ public class UserLoginController {
 
 		User targetUser = users.login(userName, pass);
 
-		System.out.println("user: " + userName + " pass: " + pass);
-
 		// check db
 		if (targetUser != null) {
-			System.out.println("login successful!");
-
+			Debug.log("Login", "logged in as " + userName + '\n');
+			
 			// LAUNCH GRADER TOOL HERE
 			launchMainPage();
 

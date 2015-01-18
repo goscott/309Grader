@@ -43,12 +43,10 @@ public class Student implements Comparable<Student> {
 	}
 
 	public Double getAssignmentScore(String asgn) {
-		System.out.println("!!! getting score for " + asgn + ": " + scoreValues.get(asgn));
 		return scoreValues.get(asgn);
 	}
 	
 	public SimpleDoubleProperty getAssignmentScoreAsProperty(String asgn) {
-		System.out.println("checking score for " + asgn);
 		if(getAssignmentScore(asgn) != null)
 			return new SimpleDoubleProperty(getAssignmentScore(asgn));
 		else
@@ -57,7 +55,6 @@ public class Student implements Comparable<Student> {
 
 	public void addAssignment(String asgn) {
 		scores.put(asgn, new ScoreNode("temp", 0));
-		System.out.println("adding assignment: " + asgn);
 		scoreValues.put(asgn, 0.0);
 	}
 

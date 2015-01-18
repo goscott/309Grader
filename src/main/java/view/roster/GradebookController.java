@@ -86,25 +86,19 @@ public class GradebookController {
 	}
 
 	private boolean columnExists(String name) {
-		System.out.println("CHECKING FOR "  + name);
 		for (TableColumn<?, ?> col : mainTable.getColumns()) {
 			if(checkChildren(col, name))
 				return true;
-				
 		}
 		return false;
 	}
 	
 	private boolean checkChildren(TableColumn<?, ?> col, String name) {
-		System.out.println("Checking " + col.getText() + "...");
 		if(col.getText().equals(name)) {
-			System.out.println("returning true(1)");
-			System.out.println(col.getText() + " == " + name);
 			return true;
 		}
 		for(TableColumn<?, ?> sub : col.getColumns()) {
 			if(checkChildren(sub, name)) {
-				System.out.println("returning true(2)");
 				return true;
 			}
 		}
@@ -139,7 +133,6 @@ public class GradebookController {
 							.setOnEditCommit(new EventHandler<CellEditEvent<Student, String>>() {
 								public void handle(
 										CellEditEvent<Student, String> t) {
-									System.out.println("typing...");
 								}
 							});
 					if (!item.hasParent()) {
