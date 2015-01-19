@@ -32,7 +32,7 @@ public class Debug {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			if (category.toLowerCase().equals("error")) {
+			if (category.toLowerCase().contains("error")) {
 				try (PrintWriter out = new PrintWriter(new BufferedWriter(
 						new FileWriter(fileName, true)))) {
 					out.println(category.toUpperCase() + " : " + msg + '\n');

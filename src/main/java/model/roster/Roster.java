@@ -69,6 +69,14 @@ public class Roster {
 			stud.setScore(asgn.name(), score.value());
 		}
 	}
+	
+	public double getScore(Student student, String asgn) {
+		if (students.contains(student) && assignments.contains(asgn)) {
+			Student stud = students.get(students.indexOf(student));
+			return stud.getAssignmentScore(asgn);
+		}
+		return -1;
+	}
 
 	public Student getStudentByID(String id) {
 		return ids.get(id);
@@ -96,11 +104,6 @@ public class Roster {
 		Collections.sort(students, new IDComparator());
 		return students;
 	}
-
-	/*public ArrayList<Student> getStudentsByAssignmentScore(String asgn) {
-		Collections.sort(students, new AssignmentComparator(asgn));
-		return students;
-	}*/
 	
 	private class ScoreComparator implements Comparator<Student> {
 		public int compare(Student s1, Student s2) {
@@ -115,29 +118,6 @@ public class Roster {
 		}
 
 	}
-/*
-	private class AssignmentComparator implements Comparator<Student> {
-		private String asgn;
-
-		public AssignmentComparator(String asgn) {
-			this.asgn = asgn;
-		}
-
-		public int compare(Student s1, Student s2) {
-			return (int) (s1.getAssignmentScore(asgn).value() - s2
-					.getAssignmentScore(asgn).value());
-		}
-
-	}*/
-
-	/*public boolean equals(Object other) {
-		return true;
-		/*if ((other == null) || !(other instanceof GradedItem)) {
-			return false;
-		}
-		Roster rost = (Roster) other;
-		return rost.courseName().equals(courseName);
-	}*/
 	
 	public boolean equals(Object other) {
 		if ((other == null) || !(other instanceof GradedItem)) {

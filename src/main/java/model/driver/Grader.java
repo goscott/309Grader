@@ -54,12 +54,15 @@ public class Grader {
 		currentRoster.getStudentByID(student.getId()).setScore(asgn, score);
 	}
 	
+	public static double getScore(Student student, String asgn) {
+		return currentRoster.getScore(student, asgn);
+	}
+	
 	/* For FXML stuff */
 	public static ObservableList<Student> getStudentList() {
 		ObservableList<Student> data = FXCollections
 				.observableArrayList();
 		for(Student s : currentRoster.getStudentsByName()) {
-			Debug.log("Grader Test", "checking student: " + s.getName());
 			data.add(s);
 		}
 		return data;
