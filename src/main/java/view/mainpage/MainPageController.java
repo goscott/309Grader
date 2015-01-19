@@ -28,6 +28,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.administration.User;
 import model.administration.UserDB;
@@ -37,6 +38,12 @@ import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Student;
 
+/**
+ * Controller for the main GraderTool view
+ * @author Mason Stevenson
+ * @author Gavin Scott
+ *
+ */
 public class MainPageController {
 	@FXML
 	private TabPane tabPane;
@@ -78,6 +85,12 @@ public class MainPageController {
 					.load(getClass().getResource(
 							"../roster/gradebook_screen.fxml"));
 			gradebookTab.setContent(gradebookPage);
+			
+			// add historytab -Mason
+			HBox historyPage = (HBox) FXMLLoader
+                    .load(getClass().getResource(
+                            "../history/history_screen.fxml"));
+			historyTab.setContent(historyPage);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -98,7 +111,6 @@ public class MainPageController {
 
 	}
 
-	@FXML
 	// launches the permissions editor
 	public void permissions() {
 		System.out.println("Launching permissions editor");
