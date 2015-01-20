@@ -5,6 +5,8 @@ import java.io.IOException;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -71,6 +73,15 @@ public class AddAssignmentDialogController {
 		addButton.setDisable(true);
 		// populates parent list
 		resetDropdown();
+		parentDropdown.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0,
+					Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if (newPropertyValue) {
+					resetDropdown();
+				}
+			}
+		});
 	}
 
 	/**
@@ -184,10 +195,5 @@ public class AddAssignmentDialogController {
 		parentDropdown.setItems(Grader.getAssignmentNameList());
 		parentDropdown.getItems().add(0, noParent);
 		parentDropdown.setVisibleRowCount(numParentsShown);
-	}
-	
-	@FXML
-	private void handleRefreshButton(ActionEvent event) {
-		resetDropdown();
 	}
 }
