@@ -17,19 +17,7 @@
 					<Tooltip text="Enter the name of the assignment (Note: Assignment names must be unique)" />
 			    </tooltip>
             </TextField>
-            <ComboBox fx:id="parentDropdown" layoutX="304.0" layoutY="22.0" prefHeight="25.0" prefWidth="245.0" promptText="Select Parent" />
-		 	<Button fx:id="refreshButton" onAction="#handleRefreshButton" layoutX="556.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
-		 		<tooltip>
-					<Tooltip text="Refreshes the list of possible parents" />
-			    </tooltip>
-			    <graphic>
-			    	<ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@../../view/roster/refresh_img.png"/>
-                        </image>                            
-                    </ImageView>
-                </graphic>
-		 	</Button>
+            <ComboBox fx:id="parentDropdown" layoutX="304.0" layoutY="22.0" prefHeight="25.0" prefWidth="283" promptText="Select Parent" />
          </children>
       </Pane>
    </top>
