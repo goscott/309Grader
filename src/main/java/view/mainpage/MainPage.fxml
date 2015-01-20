@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -8,32 +8,32 @@
    <center>
       <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Classes" fx:id="classTab">
+          <Tab fx:id="classTab" text="Classes">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
-          <Tab text="GradeBook" fx:id="gradebookTab">
+          <Tab fx:id="gradebookTab" text="GradeBook">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
-            <Tab text="Graphs" fx:id="graphTab">
+            <Tab fx:id="graphTab" text="Graphs">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="History" fx:id="historyTab" >
+            <Tab fx:id="historyTab" text="History">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="Predictions" fx:id="predictionsTab" >
+            <Tab fx:id="predictionsTab" text="Predictions">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="Announcements" fx:id="announcementsTab" >
+            <Tab fx:id="announcementsTab" text="Announcements">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
@@ -49,12 +49,14 @@
                   <MenuItem id="Save" mnemonicParsing="false" text="Save" />
                   <MenuItem id="Export" mnemonicParsing="false" text="Export" />
                   <MenuItem id="Load" mnemonicParsing="false" text="Load" />
-                  <MenuItem id="Quit" mnemonicParsing="false" text="Quit" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem id="Load" fx:id="logout" mnemonicParsing="false" onAction="#logout" text="Logout" />
+                  <MenuItem id="Load" fx:id="user_exit" mnemonicParsing="false" onAction="#exit" text="Exit" />
                </items>
             </Menu>
             <Menu fx:id="classMenu" mnemonicParsing="false" text="Class">
                <items>
-                  <MenuItem fx:id="addAssignment" mnemonicParsing="false" text="Add Assignment"/>
+                  <MenuItem fx:id="addAssignment" mnemonicParsing="false" text="Add Assignment" />
                   <MenuItem fx:id="dropAssignment" mnemonicParsing="false" text="Drop Assignment" />
                   <MenuItem fx:id="importAssignment" mnemonicParsing="false" text="Import Assignment" />
 				  <SeparatorMenuItem mnemonicParsing="false" />

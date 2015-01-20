@@ -76,6 +76,10 @@ public class MainPageController {
 	private MenuItem dropStudent;
 	@FXML
 	private MenuItem rosterSync;
+	@FXML
+	private MenuItem logout;
+	@FXML
+	private MenuItem user_exit;
 
 	public void initialize() {
 		// gives it some initial data
@@ -147,7 +151,7 @@ public class MainPageController {
 				list.add(String.format("%-40s%51s", target.getId(),
 						UserTypes.fullName(target.getType())));
 			}
-
+ 
 			view.setItems(list);
 
 			stage.setScene(scene);
@@ -160,6 +164,19 @@ public class MainPageController {
 			Logger.getLogger(PermissionsTester.class.getName()).log(
 					Level.SEVERE, null, ex);
 		}
+	}
+	
+	public void logout() {
+	    UserDB users = new UserDB();
+	    users.logout();
+	    
+	    //launch login window
+	    
+	    //close this window
+	}
+	
+	public void exit() {
+	    //close the program
 	}
 
 	private EventHandler<ActionEvent> handleMenuItems() {
