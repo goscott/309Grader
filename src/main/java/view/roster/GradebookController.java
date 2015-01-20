@@ -92,18 +92,10 @@ public class GradebookController {
 		MenuItem dropStudent = new MenuItem("Drop Student");
 		MenuItem rosterSynch = new MenuItem("Roster Synch");
 
-		addAssignment.setOnAction(new DisplayAssignmentPopupEvenHandler(
+		addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
 				addAssignment, this));
-		addStudent.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				// TODO temp (make better)
-				String name = JOptionPane
-						.showInputDialog("Please input a name");
-				Grader.addStudent(new Student(name, ""
-						+ (name.length() * 236 - name.charAt(0))));
-			}
-		});
+		addStudent.setOnAction(new DisplayAddStudentPopupEventHandler(
+				addStudent, this));
 
 		rightClickMenu.getItems().add(addAssignment);
 		rightClickMenu.getItems().add(dropAssignment);

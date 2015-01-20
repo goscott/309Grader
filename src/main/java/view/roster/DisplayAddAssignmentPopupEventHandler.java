@@ -5,11 +5,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
-public class DisplayAssignmentPopupEvenHandler extends ActionEvent implements EventHandler<ActionEvent> {
+public class DisplayAddAssignmentPopupEventHandler extends ActionEvent implements EventHandler<ActionEvent> {
 	private GradebookController contr;
 	private MenuItem callingItem;
 	
-	public DisplayAssignmentPopupEvenHandler(MenuItem callingItem, GradebookController contr) {
+	public DisplayAddAssignmentPopupEventHandler(MenuItem callingItem, GradebookController contr) {
 		this.contr = contr;
 		this.callingItem = callingItem;
 	}
