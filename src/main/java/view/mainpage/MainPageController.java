@@ -123,9 +123,6 @@ public class MainPageController {
 		buttonSetUp.getChildren().add(new Button("309"));
         buttonSetUp.getChildren().add(new Button("308"));
 		//TODO make buttons mean something and build based on files found.
-		EventHandler<ActionEvent> action = handleMenuItems();
-		addAssignment.setOnAction(action);
-		addStudent.setOnAction(action);
 
 	}
 
@@ -177,22 +174,5 @@ public class MainPageController {
 	
 	public void exit() {
 	    //close the program
-	}
-
-	private EventHandler<ActionEvent> handleMenuItems() {
-		return new EventHandler<ActionEvent>() {
-
-			public void handle(ActionEvent event) {
-				MenuItem mItem = (MenuItem) event.getSource();
-				switch (mItem.getText()) {
-				case "Add Student":
-					String name = JOptionPane
-							.showInputDialog("Please input a name");
-					Grader.addStudent(new Student(name, ""
-							+ (name.length() * 236 - name.charAt(0))));
-					break;
-				}
-			}
-		};
 	}
 }

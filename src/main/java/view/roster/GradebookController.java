@@ -83,17 +83,6 @@ public class GradebookController {
 						"totalScore"));
 		refresh();
 
-		// update whenever tab selected
-		/**mainTable.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0,
-					Boolean oldPropertyValue, Boolean newPropertyValue) {
-				if (newPropertyValue) {
-					refreshAssignments();
-				}
-			}
-		});**/
-
 		// create popup menu
 		rightClickMenu = new ContextMenu();
 		MenuItem addAssignment = new MenuItem("Add Assignment");
@@ -102,9 +91,20 @@ public class GradebookController {
 		MenuItem addStudent = new MenuItem("Add Student");
 		MenuItem dropStudent = new MenuItem("Drop Student");
 		MenuItem rosterSynch = new MenuItem("Roster Synch");
-		
-		addAssignment.setOnAction(new DisplayAssignmentPopupEvenHandler(addAssignment, this));
-		
+
+		addAssignment.setOnAction(new DisplayAssignmentPopupEvenHandler(
+				addAssignment, this));
+		addStudent.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO temp (make better)
+				String name = JOptionPane
+						.showInputDialog("Please input a name");
+				Grader.addStudent(new Student(name, ""
+						+ (name.length() * 236 - name.charAt(0))));
+			}
+		});
+
 		rightClickMenu.getItems().add(addAssignment);
 		rightClickMenu.getItems().add(dropAssignment);
 		rightClickMenu.getItems().add(importAssignment);
@@ -113,7 +113,7 @@ public class GradebookController {
 		rightClickMenu.getItems().add(dropStudent);
 		rightClickMenu.getItems().add(new SeparatorMenuItem());
 		rightClickMenu.getItems().add(rosterSynch);
-		
+
 		// show popup menu on right click
 		mainTable.addEventFilter(MouseEvent.MOUSE_PRESSED,
 				new EventHandler<MouseEvent>() {
