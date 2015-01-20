@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -47,6 +48,8 @@ public class AddAssignmentDialogController {
 	@FXML
 	private Button refreshButton;
 
+	@SuppressWarnings("rawtypes")
+	private static GradebookController gbook;
 	private static MenuItem parent;
 	private final int maxChars = 25;
 	private final int numParentsShown = 10;
@@ -59,7 +62,9 @@ public class AddAssignmentDialogController {
 	 * @param newParent
 	 *            the parent
 	 */
-	public void setParent(MenuItem newParent) {
+	@SuppressWarnings("rawtypes")
+	public void setParent(MenuItem newParent, GradebookController gbook) {
+		this.gbook = gbook;
 		parent = newParent;
 		parent.setDisable(true);
 	}
@@ -123,6 +128,7 @@ public class AddAssignmentDialogController {
 		nameField.setText("");
 		descrField.setText("");
 		resetDropdown();
+		gbook.refresh();
 	}
 
 	@FXML

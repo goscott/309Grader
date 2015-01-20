@@ -14,7 +14,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -22,6 +25,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -45,13 +49,15 @@ public class GradebookController {
 	@FXML
 	private ScrollPane scrollPane;
 	@FXML
-	Button asgnButton;
+	private Button asgnButton;
 	@FXML
-	Button studentButton;
+	private Button studentButton;
 	@FXML
-	Button removeStudentButton;
+	private Button removeStudentButton;
 	@FXML
-	Button removeAsgnButton;
+	private Button removeAsgnButton;
+
+	private ContextMenu rightClickMenu;
 
 	@FXML
 	/**
@@ -75,10 +81,10 @@ public class GradebookController {
 		totalGradeCol
 				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 						"totalScore"));
-		refreshAssignments();
+		refresh();
 
 		// update whenever tab selected
-		mainTable.focusedProperty().addListener(new ChangeListener<Boolean>() {
+		/**mainTable.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0,
 					Boolean oldPropertyValue, Boolean newPropertyValue) {
@@ -86,7 +92,41 @@ public class GradebookController {
 					refreshAssignments();
 				}
 			}
-		});
+		});**/
+
+		// create popup menu
+		rightClickMenu = new ContextMenu();
+		MenuItem addAssignment = new MenuItem("Add Assignment");
+		MenuItem dropAssignment = new MenuItem("Drop Assignment");
+		MenuItem importAssignment = new MenuItem("Import Assignment");
+		MenuItem addStudent = new MenuItem("Add Student");
+		MenuItem dropStudent = new MenuItem("Drop Student");
+		MenuItem rosterSynch = new MenuItem("Roster Synch");
+		
+		addAssignment.setOnAction(new DisplayAssignmentPopupEvenHandler(addAssignment, this));
+		
+		rightClickMenu.getItems().add(addAssignment);
+		rightClickMenu.getItems().add(dropAssignment);
+		rightClickMenu.getItems().add(importAssignment);
+		rightClickMenu.getItems().add(new SeparatorMenuItem());
+		rightClickMenu.getItems().add(addStudent);
+		rightClickMenu.getItems().add(dropStudent);
+		rightClickMenu.getItems().add(new SeparatorMenuItem());
+		rightClickMenu.getItems().add(rosterSynch);
+		
+		// show popup menu on right click
+		mainTable.addEventFilter(MouseEvent.MOUSE_PRESSED,
+				new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						if (event.isSecondaryButtonDown()) {
+							rightClickMenu.show(mainTable.getScene()
+									.getWindow(), event.getScreenX(), event
+									.getScreenY());
+							event.consume();
+						}
+					}
+				});
 	}
 
 	private boolean columnExists(String name) {
@@ -110,7 +150,7 @@ public class GradebookController {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void refreshAssignments() {
+	void refresh() {
 		if (Grader.getRoster() != null) {
 			for (GradedItem item : Grader.getRoster().getAssignments()) {
 				if (!columnExists(item.name())) {
