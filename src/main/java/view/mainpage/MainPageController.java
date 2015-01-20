@@ -111,6 +111,7 @@ public class MainPageController {
 	}
 
 	// launches the permissions editor
+	@FXML
 	public void permissions() {
 		System.out.println("Launching permissions editor");
 		UserDB users = new UserDB();
@@ -147,6 +148,7 @@ public class MainPageController {
 		}
 	}
 	
+	@FXML
 	public void logout() {
 	    UserDB users = new UserDB();
 	    users.logout();
@@ -156,6 +158,7 @@ public class MainPageController {
 	    //close this window
 	}
 	
+	@FXML
 	public void exit() {
 	    //close the program
 	}
