@@ -54,18 +54,6 @@
                   <MenuItem id="Load" fx:id="user_exit" mnemonicParsing="false" onAction="#exit" text="Exit" />
                </items>
             </Menu>
-            <Menu fx:id="classMenu" mnemonicParsing="false" text="Class">
-               <items>
-                  <MenuItem fx:id="addAssignment" mnemonicParsing="false" text="Add Assignment" />
-                  <MenuItem fx:id="dropAssignment" mnemonicParsing="false" text="Drop Assignment" />
-                  <MenuItem fx:id="importAssignment" mnemonicParsing="false" text="Import Assignment" />
-				  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="addStudent" mnemonicParsing="false" text="Add Student" />
-                  <MenuItem fx:id="dropStudent" mnemonicParsing="false" text="Drop Student" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="rosterSync" mnemonicParsing="false" text="Roster Sync" />
-               </items>
-            </Menu>
             <Menu mnemonicParsing="false" text="Settings">
                <items>
                   <MenuItem id="Permissions" mnemonicParsing="false" onAction="#permissions" text="Permissions " />

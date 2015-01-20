@@ -4,19 +4,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JOptionPane;
-
-import view.roster.AddAssignmentDialogController;
-import view.roster.GradebookController;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +18,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -39,7 +28,6 @@ import model.administration.UserTypes;
 import model.administration.tests.PermissionsTester;
 import model.driver.Debug;
 import model.driver.Grader;
-import model.roster.Student;
 
 /**
  * Controller for the main GraderTool view
@@ -63,8 +51,6 @@ public class MainPageController {
 	@FXML
 	private Tab announcmentsTab;
 	@FXML
-	private Menu classMenu;
-	@FXML
 	private MenuItem addAssignment;
 	@FXML
 	private MenuItem dropAssignment;
@@ -84,7 +70,6 @@ public class MainPageController {
 	public void initialize() {
 		// gives it some initial data
 		Debug.autoPopulate();
-		
 		
 		// loads tab contents
 		try {
@@ -107,7 +92,7 @@ public class MainPageController {
 		// FILE MENU
 
 		// disable class menu if no current roster
-		classMenu.disableProperty().bind(new BooleanBinding() {
+		gradebookTab.disableProperty().bind(new BooleanBinding() {
 			@Override
 			protected boolean computeValue() {
 				return Grader.getRoster() == null;
@@ -123,7 +108,6 @@ public class MainPageController {
 		buttonSetUp.getChildren().add(new Button("309"));
         buttonSetUp.getChildren().add(new Button("308"));
 		//TODO make buttons mean something and build based on files found.
-
 	}
 
 	// launches the permissions editor
