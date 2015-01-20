@@ -49,6 +49,7 @@
                   <MenuItem id="Save" mnemonicParsing="false" text="Save" />
                   <MenuItem id="Export" mnemonicParsing="false" text="Export" />
                   <MenuItem id="Load" mnemonicParsing="false" text="Load" />
+                  <MenuItem id="Quit" mnemonicParsing="false" text="Quit" />
                </items>
             </Menu>
             <Menu fx:id="classMenu" mnemonicParsing="false" text="Class">
