@@ -1,5 +1,12 @@
 package model.roster;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,9 +19,14 @@ import javafx.collections.ObservableList;
  * The class Roster that stores students and assignments
  * 
  * @author Gavin Scott
+ * @author Michael Lenz
  */
-public class Roster {
-	private String courseName;
+public class Roster implements Serializable{
+	/**
+     * generated serial ID
+     */
+    private static final long serialVersionUID = -8021729176053193523L;
+    private String courseName;
 	private String instructor;
 	private String time;
 	private ArrayList<Student> students;
@@ -156,11 +168,41 @@ public class Roster {
 	}
 
 	public static void save(Roster rost) {
-		char secret = 1;
-		String save = rost.courseName + secret + rost.instructor + secret
-				+ rost.time + "\n";
-		save += GradedItem.Save(rost.assignments);
-		save += Student.Save(rost.students);
+		try {
+		    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(rost.courseName + ".rost"));
+		    out.writeObject(rost);
+		    out.close();
+		}
+		catch(IOException ex)
+		{
+		    System.err.println("failed to save Roster " + rost.courseName);
+		}
+	}
+	public static Roster load(String url) {
+	    Roster toReturn = null;
+        try
+        {
+            FileInputStream in = new FileInputStream(url);
+            ObjectInputStream obj = new ObjectInputStream(in);
+            toReturn = (Roster) obj.readObject();
+            
+        }
+        catch (FileNotFoundException e)
+        {
+            System.err.println("failed to find roster " + url.substring(0, url.length() - 4));
+            
+        }
+        catch (IOException e)
+        {
+            System.err.println("failed to load roster " + url.substring(0, url.length() - 4));
+        }
+        catch (ClassNotFoundException e)
+        {
+            System.err.println("failed to load roster " + url.substring(0, url.length() - 4));
+        }
+        return toReturn;
+	        
+	    
 	}
 
 }

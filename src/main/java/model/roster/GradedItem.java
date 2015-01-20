@@ -1,5 +1,6 @@
 package model.roster;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +8,12 @@ import java.util.List;
  * A grade-able assignment, and a category in the gradebook
  * @author Gavin Scott
  */
-public class GradedItem {
-	private String name;
+public class GradedItem implements Serializable {
+	/**
+     * generated serial ID
+     */
+    private static final long serialVersionUID = 8994764986930533573L;
+    private String name;
 	private String descr;
 	private double score;
 	private ArrayList<GradedItem> children;

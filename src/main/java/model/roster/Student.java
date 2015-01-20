@@ -1,5 +1,6 @@
 package model.roster;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,8 +16,12 @@ import javafx.beans.value.ObservableValue;
  * @author Gavin Scott
  *
  */
-public class Student implements Comparable<Student> {
-	private final SimpleStringProperty name;
+public class Student implements Comparable<Student>, Serializable {
+	/**
+     * generated serial ID
+     */
+    private static final long serialVersionUID = 6298208303690715171L;
+    private final SimpleStringProperty name;
 	private final SimpleStringProperty id;
 	private HashMap<String, ScoreNode> scores;
 	private HashMap<String, Double> scoreValues;

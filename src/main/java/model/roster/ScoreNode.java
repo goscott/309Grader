@@ -1,5 +1,6 @@
 package model.roster;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -7,8 +8,12 @@ import java.util.HashMap;
  * A score for an assignment, with sub-assignments
  * @author Gavin Scott
  */
-public class ScoreNode {
-	private ArrayList<ScoreNode> subnodes;
+public class ScoreNode implements Serializable {
+	/**
+     * generated serial ID
+     */
+    private static final long serialVersionUID = 3189041012899607191L;
+    private ArrayList<ScoreNode> subnodes;
 	private String name;
 	private double value;
 	
