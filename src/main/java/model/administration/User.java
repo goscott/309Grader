@@ -33,7 +33,7 @@ public class User {
      * @return Returns true if the edit was successful.
      */
     public boolean editType(char newType) {
-        Debug.log("model", "User.editType() envoked.");
+        Debug.log("model", "User.editType() invoked.");
         if (UserTypes.isValidType(newType)) {
             type = newType;
             return true;

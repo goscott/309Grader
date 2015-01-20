@@ -99,7 +99,7 @@ public class UserDB {
      * @return Returns true if the add was successful.
      */
     public boolean addUser(User newUser) {
-        Debug.log("model", "UserDB.addUser() envoked.");
+        Debug.log("model", "UserDB.addUser() invoked.");
         
         BufferedWriter writer = null;
 
@@ -135,7 +135,7 @@ public class UserDB {
      * @return Returns true if the remove was successful. 
      */
     public boolean removeUser(User target) {
-        Debug.log("model", "UserDB.removeUser() envoked.");
+        Debug.log("model", "UserDB.removeUser() invoked.");
         
         // check to see if user exists
         if (users.contains(target)) {
@@ -157,7 +157,7 @@ public class UserDB {
      * @return Returns true if the change was successful.
      */
     public boolean editUserType(User target, char newType) {
-        Debug.log("model", "UserDB.editUserType() envoked.");
+        Debug.log("model", "UserDB.editUserType() invoked.");
         
         // check if target exists
         if (users.contains(target)) {
@@ -174,7 +174,7 @@ public class UserDB {
      * @return Returns the db.
      */
     public Collection<User> getUsers() {
-        Debug.log("model", "UserDB.getUsers() envoked.");
+        Debug.log("model", "UserDB.getUsers() invoked.");
         return users;
     }
 
@@ -187,7 +187,7 @@ public class UserDB {
      *         database.
      */
     public User get(String id) {
-        Debug.log("model", "UserDB.get() envoked.");
+        Debug.log("model", "UserDB.get() invoked.");
         for (User target : users) {
             if (target.getId().equals(id)) {
                 return users.get(users.indexOf(target));
@@ -204,7 +204,7 @@ public class UserDB {
      * @return Returns a User object, or null.
      */
     public User login(String id, String password) {
-        Debug.log("model", "UserDB.login() envoked.");
+        Debug.log("model", "UserDB.login() invoked.");
         
         User temp = get(id);
         String filename = "src/main/java/model/administration/login.txt";
