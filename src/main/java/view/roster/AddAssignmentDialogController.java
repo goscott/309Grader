@@ -105,7 +105,7 @@ public class AddAssignmentDialogController {
 		if(parentDropdown.getValue() != null && !parentDropdown.getValue().equals(noParent)) {
 			asgnParent = Grader.getRoster().getAssignment(parentDropdown.getValue());
 		}
-		GradedItem item = new GradedItem(nameField.getText(),  descrField.getText(), asgnParent);
+		GradedItem item = new GradedItem(nameField.getText(), descrField.getText(), asgnParent);
 		Grader.addAssignment(item);
 		nameField.setText("");
 		descrField.setText("");
