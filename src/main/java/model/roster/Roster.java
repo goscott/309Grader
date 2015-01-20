@@ -33,34 +33,65 @@ public class Roster implements Serializable{
 	private ArrayList<GradedItem> assignments;
 	private HashMap<String, Student> ids;
 
-	public Roster(String name, String time) {
+	/**
+	 * Creates a roster with the given information
+	 * @param name The name of the course
+	 * @param time The time (i.e. quarter, year, etc.)
+	 * of the course.
+	 * @param instructor The name of the instructor
+	 */
+	public Roster(String name, String time, String instructor) {
 		courseName = name;
 		this.time = time;
 		students = new ArrayList<Student>();
 		assignments = new ArrayList<GradedItem>();
 		ids = new HashMap<String, Student>();
+		this.instructor = instructor;
 	}
 
-	public void addStudent(Student s) {
-		students.add(s);
-		ids.put(s.getId(), s);
+	/**
+	 * Adds a student to the course roster, giving
+	 * the new student a default grade for every
+	 * existing assignment in the roster
+	 * @param student the new student
+	 */
+	public void addStudent(Student student) {
+		students.add(student);
+		ids.put(student.getId(), student);
 		for(GradedItem item : assignments) {
-			s.addAssignment(item.name());
+			student.addAssignment(item.name());
 		}
 	}
 
+	/**
+	 * Gets the course instructor
+	 * @return String the instructor
+	 */
 	public String getInstructor() {
 		return instructor;
 	}
 
+	/**
+	 * Gets the course time
+	 * @return String the time
+	 */
 	public String getTime() {
 		return time;
 	}
 
+	/**
+	 * Gets the course name
+	 * @return String the course name
+	 */
 	public String courseName() {
 		return courseName;
 	}
 
+	/**
+	 * Adds an assignment to the course
+	 * @param asgn The GradedItem being added to
+	 * the roster
+	 */
 	public void addAssignment(GradedItem asgn) {
 		assignments.add(asgn);
 		for (Student stud : students) {
@@ -68,6 +99,14 @@ public class Roster implements Serializable{
 		}
 	}
 
+	/**
+	 * Gets a reference to the assignment with the
+	 * given name in the roster, if it exists
+	 * @param name the assignment name that will be
+	 * searched for.
+	 * @return GradedItem the GradedItem in the roster
+	 * with that name
+	 */
 	public GradedItem getAssignment(String name) {
 		for (GradedItem item : assignments)
 			if (item.name().equals(name))
@@ -75,6 +114,14 @@ public class Roster implements Serializable{
 		return null;
 	}
 
+	/**
+	 * Scores a student for a particular assignment.
+	 * @param student The student being scored
+	 * @param asgn The assignment being scored
+	 * @param score The score that will be recorded in
+	 * the roster for this particular student and 
+	 * assignment.
+	 */
 	public void addScore(Student student, GradedItem asgn, ScoreNode score) {
 		if (students.contains(student) && assignments.contains(asgn)) {
 			Student stud = students.get(students.indexOf(student));
@@ -82,6 +129,13 @@ public class Roster implements Serializable{
 		}
 	}
 	
+	/**
+	 * Gets the score of a student on an assignment with the
+	 * given name
+	 * @param student The student in question
+	 * @param asgn The name of the assignment
+	 * @return double the student's score on the assignment
+	 */
 	public double getScore(Student student, String asgn) {
 		if (students.contains(student) && assignments.contains(asgn)) {
 			Student stud = students.get(students.indexOf(student));
@@ -90,28 +144,63 @@ public class Roster implements Serializable{
 		return -1;
 	}
 
+	/**
+	 * Searches for a student by their ID
+	 * @param id the ID of the student
+	 * @return the student, or null if no student
+	 * with that id exists in the roster
+	 */
 	public Student getStudentByID(String id) {
 		return ids.get(id);
 	}
 
+	/**
+	 * Checks if a student with the given ID
+	 * exist in the roster
+	 * @param id The ID of the student
+	 * @return boolean true if there is a 
+	 * student with that ID in the roster
+	 */
 	public boolean containsStudent(String id) {
 		return students.contains(id);
 	}
 
+	/**
+	 * Gets the number of students in the roster
+	 * @return int the number of students
+	 */
 	public int numStudents() {
 		return students.size();
 	}
 
+	/**
+	 * Gets all the students in the roster, sorted
+	 * by name.
+	 * @return A sorted list of all of the students
+	 * in the roster
+	 */
 	public ArrayList<Student> getStudentsByName() {
 		Collections.sort(students);
 		return students;
 	}
 
+	/**
+	 * Gets all the students in the roster, sorted
+	 * by score.
+	 * @return A sorted list of all of the students
+	 * in the roster
+	 */
 	public ArrayList<Student> getStudentsByScore() {
 		Collections.sort(students, new ScoreComparator());
 		return students;
 	}
 
+	/**
+	 * Gets all the students in the roster, sorted
+	 * by ID.
+	 * @return A sorted list of all of the students
+	 * in the roster
+	 */
 	public ArrayList<Student> getStudentsById() {
 		Collections.sort(students, new IDComparator());
 		return students;
@@ -131,6 +220,10 @@ public class Roster implements Serializable{
 
 	}
 	
+	/**
+	 * Checks this roster with an object for equality
+	 * @return boolean true if they are logically equal
+	 */
 	public boolean equals(Object other) {
 		if ((other == null) || !(other instanceof GradedItem)) {
 			return false;
@@ -155,18 +248,34 @@ public class Roster implements Serializable{
 		return true;
 	}
 
+	/**
+	 * Gets a list of all the assignments associated
+	 * with this roster
+	 * @return The list of GradedItems
+	 */
 	public ArrayList<GradedItem> getAssignments() {
 		return assignments;
 	}
 
+	/**
+	 * Returns a string representation of the roster
+	 * @return String the representation
+	 */
 	public String toString() {
-		return courseName + " " + time;
+		return courseName + " " + time + " " + instructor;
 	}
 
+	/**
+	 * Saves the roster to the computer
+	 */
 	public void Save() {
 		save(this);
 	}
 
+	/**
+	 * Saves a roster to the computer
+	 * @param rost The roster to be saved
+	 */
 	public static void save(Roster rost) {
 		try {
 		    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(rost.courseName + ".rost"));
@@ -178,6 +287,12 @@ public class Roster implements Serializable{
 		    System.err.println("failed to save Roster " + rost.courseName);
 		}
 	}
+	
+	/**
+	 * Loads a roster from the computer
+	 * @param url the path to the roster
+	 * @return Roster the loaded roster
+	 */
 	public static Roster load(String url) {
 	    Roster toReturn = null;
         try
@@ -200,9 +315,6 @@ public class Roster implements Serializable{
         {
             System.err.println("failed to load roster " + url.substring(0, url.length() - 4));
         }
-        return toReturn;
-	        
-	    
+        return toReturn; 
 	}
-
 }

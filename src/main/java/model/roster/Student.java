@@ -27,6 +27,11 @@ public class Student implements Comparable<Student>, Serializable {
 	private HashMap<String, Double> scoreValues;
 	private double totalScore;
 
+	/**
+	 * Creates a student with the given information
+	 * @param name The student's name
+	 * @param id The student's ID
+	 */
 	public Student(String name, String id) {
 		this.name = new SimpleStringProperty(name);
 		this.id = new SimpleStringProperty(id);
@@ -35,22 +40,48 @@ public class Student implements Comparable<Student>, Serializable {
 		totalScore = 0;
 	}
 
+	/**
+	 * Gets the student's name
+	 * @return String the name of the student
+	 */
 	public String getName() {
 		return name.get();
 	}
 
+	/**
+	 * Gets the student's ID
+	 * @return String the student's ID
+	 */
 	public String getId() {
 		return id.get();
 	}
 
+	/**
+	 * Gets the student's overall grade
+	 * @return double the total grade
+	 */
 	public double getTotalScore() {
 		return totalScore;
 	}
 
+	/**
+	 * Gets the student's score on an individual
+	 * assignment
+	 * @param asgn The name of the assignment
+	 * @return Double the student's score on the
+	 * assignment
+	 */
 	public Double getAssignmentScore(String asgn) {
 		return scoreValues.get(asgn);
 	}
 	
+	/**
+	 * Gets the student's score on an individual
+	 * assignment
+	 * @param asgn The name of the assignment
+	 * @return SimpleDoubleProperty the student's 
+	 * score on the assignment
+	 */
 	public SimpleDoubleProperty getAssignmentScoreAsProperty(String asgn) {
 		if(getAssignmentScore(asgn) != null)
 			return new SimpleDoubleProperty(getAssignmentScore(asgn));
@@ -58,24 +89,47 @@ public class Student implements Comparable<Student>, Serializable {
 			return new SimpleDoubleProperty(-1);
 	}
 
+	/**
+	 * Adds an assignment for this student, where their score
+	 * will be recorded. The assignment will have a default 
+	 * grade of zero
+	 * @param asgn The name of the new assignment
+	 */
 	public void addAssignment(String asgn) {
 		scores.put(asgn, new ScoreNode("temp", 0));
 		scoreValues.put(asgn, 0.0);
 	}
 
+	/**
+	 * Sets the score for an assignment
+	 * @param asgn The name of the assignment
+	 * @param sc the new score
+	 */
 	public void setScore(String asgn, double sc) {
 		//scores.put(asgn, sc);
 		scoreValues.put(asgn, sc);
 	}
 
+	/**
+	 * Removes an assignment
+	 * @param asgn The name of the assignment
+	 */
 	public void removeScore(String asgn) {
 		scores.remove(asgn);
 	}
 
+	/**
+	 * Compares two students by their names
+	 */
 	public int compareTo(Student other) {
 		return name.toString().compareTo(other.name.toString());
 	}
 
+	/**
+	 * Checks two students for logical equality
+	 * @param other The other object
+	 * @return boolean true if logically equal
+	 */
 	public boolean equals(Object other) {
 		if ((other != null) && (other instanceof Student)) {
 			Student oth = (Student) other;
@@ -84,6 +138,11 @@ public class Student implements Comparable<Student>, Serializable {
 		return false;
 	}
 
+	/**
+	 * Saves a list of students
+	 * @param students the list
+	 * @return String a representation of the list of students
+	 */
 	public static String Save(ArrayList<Student> students) {
 		String toReturn = "";
 		char secret = 1;

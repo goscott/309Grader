@@ -54,6 +54,9 @@ public class GradebookController {
 	Button removeAsgnButton;
 
 	@FXML
+	/**
+	 * Initializes the gradebook view
+	 */
 	protected void initialize() {
 		mainTable.setEditable(true);
 
@@ -164,14 +167,6 @@ public class GradebookController {
 			}
 			mainTable.setItems(Grader.getStudentList());
 		}
-	}
-
-	@FXML
-	void studentButton(ActionEvent e) {
-		String name = JOptionPane.showInputDialog("Please input a name");
-		Grader.addStudent(new Student(name, ""
-				+ (name.length() * 236 - name.charAt(0))));
-		mainTable.setItems(Grader.getStudentList());
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

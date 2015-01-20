@@ -16,12 +16,26 @@ import model.roster.Roster;
 import model.roster.ScoreNode;
 import model.roster.Student;
 
+/**
+ * A class that offers standardized debugging
+ * output and saved output/error logs
+ * 
+ * @author Gavin Scott
+ *
+ */
 public class Debug {
 	private final static boolean loggerPrint = true;
 	private final static boolean loggerRecord = true;
 	private final static String fileName = "log.txt";
 	private final static String errorFileName = "error_log.txt";
 
+	/**
+	 * Logs a message. Outputs it to the screen, and saves it to the
+	 * output log
+	 * 
+	 * @param category Disaplays a category before the message
+	 * @param msg The message
+	 */
 	public static void log(String category, String msg) {
 		if (loggerPrint)
 			System.out.println(category.toUpperCase() + " : " + msg);
@@ -43,6 +57,11 @@ public class Debug {
 		}
 	}
 
+	/**
+	 * Logs a message with no category
+	 * 
+	 * @param msg The message
+	 */
 	public static void log(String msg) {
 		if (loggerPrint)
 			System.out.println(msg);
@@ -55,8 +74,11 @@ public class Debug {
 			}
 	}
 
+	/**
+	 * Initializes the program with some data
+	 */
 	public static void autoPopulate() {
-		Roster roster = new Roster("CPE 309", "Winter 2015");
+		Roster roster = new Roster("CPE 309", "Winter 2015", "Gene Fisher");
 		Grader.addRoster(roster);
 		Grader.setCurrentRoster(roster);
 		Grader.addAssignment(new GradedItem("Test", "sfds"));
@@ -82,6 +104,9 @@ public class Debug {
 		Grader.addScore(bill, "Midterm 3", 59);
 	}
 
+	/**
+	 * Wipes the old log files
+	 */
 	public static void newFile() {
 		if (loggerRecord) {
 			PrintWriter writer = null;
@@ -104,7 +129,7 @@ public class Debug {
 		}
 	}
 
-	public static void newErrorFile() {
+	private static void newErrorFile() {
 		PrintWriter writer = null;
 		try {
 			writer = new PrintWriter(errorFileName, "UTF-8");
