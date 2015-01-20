@@ -41,6 +41,7 @@ public class Launcher extends Application {
             
         } catch (Exception ex) {
             Logger.getLogger(LoginTest.class.getName()).log(Level.SEVERE, null, ex);
+            Debug.log("ERROR", "Exception thrown during application start");
         }
     }
     

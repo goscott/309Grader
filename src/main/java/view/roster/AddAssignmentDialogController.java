@@ -2,6 +2,7 @@ package view.roster;
 
 import java.io.IOException;
 
+import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
 import javafx.event.ActionEvent;
@@ -88,6 +89,7 @@ public class AddAssignmentDialogController {
 			stage.setResizable(false);
 			stage.show();
 		} catch (IOException e1) {
+			Debug.log("IO ERROR", "Could not load file to start popup");
 			e1.printStackTrace();
 		}
 

@@ -142,19 +142,21 @@ public class GradebookController {
 									try {
 										double newGrade = Double.parseDouble(t
 												.getNewValue());
-										if(newGrade < 0 || newGrade > 100) {
+										if (newGrade < 0 || newGrade > 100) {
 											throw new NumberFormatException();
 										}
 										Grader.addScore(t.getRowValue(), t
 												.getTableColumn().getText(),
 												newGrade);
-										Debug.log("Grade Change", "Chanaged grade to " + newGrade);
 									} catch (NumberFormatException ex) {
-										Tooltip tip = new Tooltip("Invalid input");
+										Tooltip tip = new Tooltip(
+												"Invalid input");
 										tip.setAutoFix(true);
 										tip.setAutoHide(true);
-										tip.show(t.getTableView().getScene().getWindow());
-										Debug.log("User Input Error", "Entered invalid grade");
+										tip.show(t.getTableView().getScene()
+												.getWindow());
+										Debug.log("User Input Error",
+												"Entered invalid grade");
 									}
 								}
 							});

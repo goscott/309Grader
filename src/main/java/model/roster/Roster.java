@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import model.driver.Debug;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -284,7 +285,7 @@ public class Roster implements Serializable{
 		}
 		catch(IOException ex)
 		{
-		    System.err.println("failed to save Roster " + rost.courseName);
+			Debug.log("SAVE ERROR", "failed to save Roster " + rost.courseName);
 		}
 	}
 	
@@ -304,16 +305,18 @@ public class Roster implements Serializable{
         }
         catch (FileNotFoundException e)
         {
-            System.err.println("failed to find roster " + url.substring(0, url.length() - 4));
+        	Debug.log("IO ERROR", "Could not locate file at " + url.substring(0, url.length() - 4));
             
         }
         catch (IOException e)
         {
-            System.err.println("failed to load roster " + url.substring(0, url.length() - 4));
+            Debug.log("IO ERROR", "Could not locate file at " + url.substring(0, url.length() - 4) + 
+            		"(IOException)");
         }
         catch (ClassNotFoundException e)
         {
-            System.err.println("failed to load roster " + url.substring(0, url.length() - 4));
+            Debug.log("IO ERROR", "Could not locate file at " + url.substring(0, url.length() - 4) + 
+            		"(Class Not Found)");
         }
         return toReturn; 
 	}
