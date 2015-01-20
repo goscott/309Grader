@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import model.driver.Debug;
+
 /**
  * Holds login info for multiple users.
  * @author Mason Stevenson
@@ -97,7 +99,8 @@ public class UserDB {
      * @return Returns true if the add was successful.
      */
     public boolean addUser(User newUser) {
-
+        Debug.log("model", "UserDB.addUser() invoked.");
+        
         BufferedWriter writer = null;
 
         // check the db
@@ -132,7 +135,8 @@ public class UserDB {
      * @return Returns true if the remove was successful. 
      */
     public boolean removeUser(User target) {
-
+        Debug.log("model", "UserDB.removeUser() invoked.");
+        
         // check to see if user exists
         if (users.contains(target)) {
             // remove from users
@@ -153,6 +157,8 @@ public class UserDB {
      * @return Returns true if the change was successful.
      */
     public boolean editUserType(User target, char newType) {
+        Debug.log("model", "UserDB.editUserType() invoked.");
+        
         // check if target exists
         if (users.contains(target)) {
             // edit User object type
@@ -168,6 +174,7 @@ public class UserDB {
      * @return Returns the db.
      */
     public Collection<User> getUsers() {
+        Debug.log("model", "UserDB.getUsers() invoked.");
         return users;
     }
 
@@ -180,6 +187,7 @@ public class UserDB {
      *         database.
      */
     public User get(String id) {
+        Debug.log("model", "UserDB.get() invoked.");
         for (User target : users) {
             if (target.getId().equals(id)) {
                 return users.get(users.indexOf(target));
@@ -196,6 +204,8 @@ public class UserDB {
      * @return Returns a User object, or null.
      */
     public User login(String id, String password) {
+        Debug.log("model", "UserDB.login() invoked.");
+        
         User temp = get(id);
         String filename = "src/main/java/model/administration/login.txt";
         File file;

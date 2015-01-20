@@ -1,5 +1,7 @@
 package model.administration;
 
+import model.driver.Debug;
+
 /**
  * Holds login info for one user.
  * @author Mason Stevenson
@@ -31,6 +33,7 @@ public class User {
      * @return Returns true if the edit was successful.
      */
     public boolean editType(char newType) {
+        Debug.log("model", "User.editType() invoked.");
         if (UserTypes.isValidType(newType)) {
             type = newType;
             return true;
