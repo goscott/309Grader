@@ -229,6 +229,17 @@ public class UserDB {
         
         return null;
     }
+    
+    /**
+     * Logs the current user out.
+     * @return Returns true if the logout was successful.
+     */
+    public boolean logout() {
+        Debug.log("model", "UserDB.logout() invoked");
+        
+        //set current user to null
+        return true;
+    }
 
     /**
      * Prints the user database to system.out
