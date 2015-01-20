@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -28,6 +29,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.administration.User;
@@ -77,7 +80,8 @@ public class MainPageController {
 	public void initialize() {
 		// gives it some initial data
 		Debug.autoPopulate();
-
+		
+		
 		// loads tab contents
 		try {
 			// add gradebook
@@ -105,6 +109,16 @@ public class MainPageController {
 				return Grader.getRoster() == null;
 			}
 		});
+		AnchorPane classPane = (AnchorPane) classTab.getContent();
+		FlowPane buttonSetUp = new FlowPane();
+		classPane.getChildren().add(buttonSetUp);
+		buttonSetUp.setTranslateX(25);
+		buttonSetUp.setTranslateY(25);
+		buttonSetUp.setVgap(50);
+		buttonSetUp.setHgap(50);
+		buttonSetUp.getChildren().add(new Button("309"));
+        buttonSetUp.getChildren().add(new Button("308"));
+		//TODO make buttons mean something and build based on files found.
 		EventHandler<ActionEvent> action = handleMenuItems();
 		addAssignment.setOnAction(action);
 		addStudent.setOnAction(action);
