@@ -1,11 +1,14 @@
 package view.administration;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
+import model.administration.User;
 import model.administration.UserDB;
 import model.administration.UserTypes;
 
@@ -72,6 +75,16 @@ public class PermissionsEditorController {
         //Edit that user's permissions based on selected permission type
         if (users.get(user_id.getText()).getType() != userType) {
             users.editUserType(users.get(user_id.getText()), userType);
+            
+            ObservableList<String> list = FXCollections.observableArrayList();
+
+            for (User target : users.getUsers()) {
+                list.add(String.format("%-40s%51s", target.getId(),
+                        UserTypes.fullName(target.getType())));
+            }
+ 
+            user_list.getItems().clear();
+            user_list.setItems(list);
         }
         
         user_select.setVisible(true);
