@@ -31,8 +31,7 @@ import model.driver.Grader;
 
 /**
  * Controller for the main GraderTool view
- * @author Mason Stevenson
- * @author Gavin Scott
+ * @author Mason Stevenson, Gavin Scott
  *
  */
 public class MainPageController {
