@@ -13,6 +13,7 @@ import javafx.stage.Stage;
  * An ActionEvent that handles displaying the
  * "Add Assignment" dialog.
  * @author Gavin Scott
+ * @author Shelli Crispen
  *
  */
 public class DisplayAddStudentPopupEventHandler extends ActionEvent implements EventHandler<ActionEvent> {
@@ -34,10 +35,9 @@ public class DisplayAddStudentPopupEventHandler extends ActionEvent implements E
 	 * @param event The ActionEvent
 	 */
 	public void handle(ActionEvent event) {
-		String name = JOptionPane
-				.showInputDialog("Please input a name");
-		Grader.addStudent(new Student(name, ""
-				+ (name.length() * 236 - name.charAt(0))));
-		contr.refresh();
+		Stage newStage = new Stage();
+		AddStudentDialogController popup = new AddStudentDialogController();
+		popup.setParent(callingItem, contr);
+		popup.start(newStage);
 	}
 }
