@@ -234,7 +234,6 @@ public class GradedItem implements Serializable {
 			toReturn += "A" + secret;
 			toReturn += item.name + secret + item.descr + secret + item.score()
 					+ secret;
-			// + ScoreNode.Save(item.score);
 			toReturn += "\n";
 		}
 		return toReturn;

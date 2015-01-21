@@ -207,14 +207,36 @@ public class Roster implements Serializable{
 		return students;
 	}
 	
+	/**
+	 * Compares two students by their scores.
+	 * @author Gavin Scott
+	 *
+	 */
 	private class ScoreComparator implements Comparator<Student> {
+		/**
+		 * Compares two students by their scores
+		 * @param s1 The first student
+		 * @param s2 The second student
+		 * @return int the comparison value
+		 */
 		public int compare(Student s1, Student s2) {
 			return (int) (s1.getTotalScore() - s2.getTotalScore());
 		}
 
 	}
 
+	/**
+	 * Compares two students by their IDs.
+	 * @author Gavin Scott
+	 *
+	 */
 	private class IDComparator implements Comparator<Student> {
+		/**
+		 * Compares two students by their IDs
+		 * @param s1 The first student
+		 * @param s2 The second student
+		 * @return int the comparison value
+		 */
 		public int compare(Student s1, Student s2) {
 			return s1.getId().compareTo(s2.getId());
 		}
