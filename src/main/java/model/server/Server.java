@@ -2,16 +2,19 @@ package model.server;
 
 import java.util.ArrayList;
 
+import javafx.collections.ObservableList;
 import model.driver.Debug;
 import model.roster.Student;
 
 /**
  * A "Server" emulating PolyLearn
  * @author Gavin Scott
+ * @author Shelli Crispen
  *
  */
 public class Server {
 	private static ArrayList<Student> students = new ArrayList<Student>();
+	private static ObservableList<String> studentNames;
 	
 	/**
 	 * Gets the list of all students stored in the
@@ -21,6 +24,13 @@ public class Server {
 	public static ArrayList<Student> getStudents() {
 		Debug.log("Accessing Server", "Students pulled from server");
 		return students;
+	}
+	
+	public static ObservableList<String> getObserableStudentList() {
+		for(Student student: students){
+			studentNames.add(student.getName());
+		}
+		return studentNames;
 	}
 	
 	/**

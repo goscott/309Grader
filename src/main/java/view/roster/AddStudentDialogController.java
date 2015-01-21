@@ -41,15 +41,13 @@ public class AddStudentDialogController {
 	private static GradebookController gbook;
 	private static MenuItem parent;
 	private final int maxChars = 25;
-	private final int numParentsShown = 10;
 	private final String noParent = "<None>";
 	
 	/**
 	 * Sets the parent of the window, so it can grab information from the
 	 * gradebook table
 	 * 
-	 * @param newParent
-	 *            the parent
+	 * @param newParent the parent
 	 */
 	public void setParent(MenuItem newParent, GradebookController gbook) {
 		this.gbook = gbook;
@@ -80,8 +78,7 @@ public class AddStudentDialogController {
 	/**
 	 * Creates the popup on the given stage
 	 * 
-	 * @param stage
-	 *            the stage
+	 * @param stage the stage
 	 */
 	public void start(Stage stage) {
 		try {
@@ -104,6 +101,18 @@ public class AddStudentDialogController {
 		});
 	}
 	
+	@FXML
+	/**
+	 * Handles the Add button. Closes the window.
+	 * @param event the button's event
+	 */
+	private void handleAddButton(ActionEvent event){
+		
+		//Closes the popup
+		Node source = (Node) event.getSource();
+		Stage stage = (Stage) source.getScene().getWindow();
+		stage.hide();
+	}
 	
 	@FXML
 	/**
@@ -117,14 +126,14 @@ public class AddStudentDialogController {
 	}
 	
 	/**
-	 * Checks if an assignment exists with a given name.
-	 * @param name The name
-	 * @return boolean true if an assignment with the 
-	 * given name already exists in the roster
+	 * Checks if a student exists with a given name.
+	 * @param id is the ID of student to input
+	 * @return boolean true if a student with the 
+	 * given ID already exists in the roster
 	 */
-	private boolean nameTaken(String name) {
+	private boolean idTaken(String id) {
 		for (Student item : Server.getStudents()) {
-			if (item.getName().equals(name)) {
+			if (item.getId().equals(id)) {
 				return true;
 			}
 		}
@@ -133,11 +142,10 @@ public class AddStudentDialogController {
 
 	/**
 	 * Resets the parent dropdown menu to reflect
-	 * any new assignments
+	 * any new Students
 	 */
 	private void resetDropdown() {
-		SelectStudentMenu.setItems(Grader.getAssignmentNameList());
+		SelectStudentMenu.setItems(Server.getObserableStudentList());
 		SelectStudentMenu.getItems().add(0, noParent);
-		SelectStudentMenu.setVisibleRowCount(numParentsShown);
 	}
 }
