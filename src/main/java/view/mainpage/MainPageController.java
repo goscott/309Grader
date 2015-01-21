@@ -32,7 +32,7 @@ import model.driver.Grader;
 
 /**
  * Controller for the main GraderTool view
- * @author Mason Stevenson, Gavin Scott
+ * @author Mason Stevenson, Gavin Scott, Frank Poole
  *
  */
 public class MainPageController {
@@ -43,7 +43,7 @@ public class MainPageController {
 	@FXML
 	private Tab gradebookTab;
 	@FXML
-	private Tab graphsTab;
+	private Tab graphTab;
 	@FXML
 	private Tab historyTab;
 	@FXML
@@ -79,15 +79,11 @@ public class MainPageController {
 							"../roster/gradebook_screen.fxml"));
 			gradebookTab.setContent(gradebookPage);
 			
-	        // Abnormal local behavior, commented out in meantime,
-            // can anyone figure this out?
-            /*
             // Add graphs
-            SplitPane graphsPage = (SplitPane) FXMLLoader
+            SplitPane graphPage = (SplitPane) FXMLLoader
                     .load(getClass().getResource(
                             "../graphs/graphs.fxml"));
-            graphsTab.setContent(graphsPage);
-            */
+            graphTab.setContent(graphPage);
 			
 			// add historytab -Mason
 			HBox historyPage = (HBox) FXMLLoader
@@ -97,8 +93,10 @@ public class MainPageController {
             
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch(Throwable e) {
+		    e.printStackTrace();
 		}
-
+ 
 		// FILE MENU
 
 		// disable class menu if no current roster
@@ -122,6 +120,9 @@ public class MainPageController {
         button.setOnAction(new ClassButtonEventHandler());
         buttonSetUp.getChildren().add(button);
 		//TODO make buttons mean something and build based on files found.
+        button = new Button("Add Class");
+        button.setOnAction(new AddClassButtonEventHandler());
+        buttonSetUp.getChildren().add(button);
 	}
 
 	// launches the permissions editor
