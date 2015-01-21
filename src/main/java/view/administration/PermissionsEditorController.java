@@ -85,7 +85,7 @@ public class PermissionsEditorController {
  
             user_list.getItems().clear();
             user_list.setItems(list);
-        }
+        } 
         
         user_select.setVisible(true);
         user_edit.setVisible(false);

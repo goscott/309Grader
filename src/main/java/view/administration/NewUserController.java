@@ -117,7 +117,7 @@ public class NewUserController {
         else {
             error_message.setVisible(true);
         }
-    }
+    } 
     
     /**
      * Closes the window.
