@@ -279,6 +279,20 @@ public class Roster implements Serializable{
 	public ArrayList<GradedItem> getAssignments() {
 		return assignments;
 	}
+	
+	/**
+	 * Gets all assignments associated with this roster,
+	 * sorted by depth (deepest first)
+	 * @return The sorted list of GradedItems
+	 */
+	public ArrayList<GradedItem> getAssignmentsByDepth() {
+		ArrayList<GradedItem> sortedList = new ArrayList<GradedItem>();
+		for(GradedItem item : assignments) {
+			sortedList.add(item.copy());
+		}
+		sortedList.sort(new DepthComparator());
+		return sortedList;
+	}
 
 	/**
 	 * Returns a string representation of the roster
@@ -341,5 +355,18 @@ public class Roster implements Serializable{
             		"(Class Not Found)");
         }
         return toReturn; 
+	}
+	
+	private class DepthComparator implements Comparator<GradedItem> {
+		/**
+		 * Compares two GradedItems by depth
+		 * @param item1 The first assignment
+		 * @param item2 The second assignment
+		 * @return int the comparison value
+		 */
+		public int compare(GradedItem item1, GradedItem item2) {
+			return item1.getDepth() - item2.getDepth();
+		}
+
 	}
 }

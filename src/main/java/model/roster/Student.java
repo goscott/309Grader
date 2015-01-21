@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.driver.Grader;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -109,6 +110,17 @@ public class Student implements Comparable<Student>, Serializable {
 		//scores.put(asgn, sc);
 		scoreValues.put(asgn, sc);
 		calcTotalScore();
+	}
+	
+	/**
+	 * Sets the assignment's score to a percentage of the assignment's maximum
+	 * score
+	 * @param asgn the name of the assignment
+	 * @param percent
+	 *            the percent (90.0, etc)
+	 */
+	public void setPercentScore(String asgn, double percent) {
+		setScore(asgn, percent/100*Grader.getAssignment(asgn).maxScore());
 	}
 
 	/**
