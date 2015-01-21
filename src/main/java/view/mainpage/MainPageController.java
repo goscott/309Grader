@@ -111,6 +111,9 @@ public class MainPageController {
         button = new Button("308");
         button.setOnAction(new ClassButtonEventHandler());
         buttonSetUp.getChildren().add(button);
+        button = new Button("Add Class");
+        button.setOnAction(new AddClassButtonEventHandler());
+        buttonSetUp.getChildren().add(button);
 		//TODO make buttons mean something and build based on files found.
 	}
 
