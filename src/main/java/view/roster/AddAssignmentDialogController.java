@@ -62,7 +62,6 @@ public class AddAssignmentDialogController {
 	 * @param newParent
 	 *            the parent
 	 */
-	@SuppressWarnings("rawtypes")
 	public void setParent(MenuItem newParent, GradebookController gbook) {
 		this.gbook = gbook;
 		parent = newParent;
@@ -117,7 +116,11 @@ public class AddAssignmentDialogController {
 	}
 
 	@FXML
-	// adds a new assignment
+	/**
+	 * Handles the add button. Adds a new assignment and
+	 * clears the fields in the dialog.
+	 * @param event the button's actionevent
+	 */
 	private void handleAddButton(ActionEvent event) {
 		GradedItem asgnParent = null;
 		if(parentDropdown.getValue() != null && !parentDropdown.getValue().equals(noParent)) {
@@ -132,7 +135,10 @@ public class AddAssignmentDialogController {
 	}
 
 	@FXML
-	// close the window without adding a student
+	/**
+	 * Handles the cancel button. Closes the window.
+	 * @param event the button's event
+	 */
 	private void handleCancelButton(ActionEvent event) {
 		Node source = (Node) event.getSource();
 		Stage stage = (Stage) source.getScene().getWindow();
@@ -140,7 +146,12 @@ public class AddAssignmentDialogController {
 	}
 
 	@FXML
-	// check name for validity, informs user if wrong
+	/**
+	 * Checks the name for validity every time the user
+	 * changes it. Names must be unique and between 1 and
+	 * a maximum number of characters.
+	 * @param event The key event
+	 */
 	private void nameChangeHandler(KeyEvent event) {
 		Tooltip tooltip = new Tooltip();
 
@@ -187,7 +198,12 @@ public class AddAssignmentDialogController {
 		}
 	}
 
-	// checks if an assignment already exists with that name
+	/**
+	 * Checks if an assignment exists with a given name.
+	 * @param name The name
+	 * @return boolean true if an assignment with the 
+	 * given name already exists in the roster
+	 */
 	private boolean nameTaken(String name) {
 		for (GradedItem item : Grader.getRoster().getAssignments()) {
 			if (item.name().equals(name)) {
@@ -197,6 +213,10 @@ public class AddAssignmentDialogController {
 		return false;
 	}
 
+	/**
+	 * Resets the parent dropdown menu to reflect
+	 * any new assignments
+	 */
 	private void resetDropdown() {
 		parentDropdown.setItems(Grader.getAssignmentNameList());
 		parentDropdown.getItems().add(0, noParent);

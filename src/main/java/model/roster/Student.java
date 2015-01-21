@@ -157,6 +157,10 @@ public class Student implements Comparable<Student>, Serializable {
 		return toReturn;
 	}
 	
+	/**
+	 * Sets the total score of a student based on the
+	 * sum of the scores for every assignment
+	 */
 	private void calcTotalScore() {
 		totalScore = 0;
 		for(double score : scoreValues.values()) {

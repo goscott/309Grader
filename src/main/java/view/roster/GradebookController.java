@@ -121,6 +121,12 @@ public class GradebookController {
 				});
 	}
 
+	/**
+	 * Checks if a column exists with the given name
+	 * @param name the name being checked
+	 * @return boolean true if there is already a 
+	 * column in the gradebook with that name
+	 */
 	private boolean columnExists(String name) {
 		for (TableColumn<?, ?> col : mainTable.getColumns()) {
 			if (checkChildren(col, name))
@@ -129,6 +135,14 @@ public class GradebookController {
 		return false;
 	}
 
+	/**
+	 * Checks if a column exists with the given name
+	 * as a child of a column. Checks recursively.
+	 * @param col The column being checked
+	 * @param name The name beign searched for
+	 * @return boolean true if a column exists with the 
+	 * given name in any child column
+	 */
 	private boolean checkChildren(TableColumn<?, ?> col, String name) {
 		if (col.getText().equals(name)) {
 			return true;
@@ -142,6 +156,11 @@ public class GradebookController {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	/**
+	 * Forces a refresh of the gradebook GUI to ensure new
+	 * students, assignments, or scores will be accurately
+	 * visible at all times.
+	 */
 	void refresh() {
 		if (Grader.getRoster() != null) {
 			for (GradedItem item : Grader.getRoster().getAssignments()) {
@@ -208,6 +227,11 @@ public class GradebookController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
+	/**
+	 * Adds a sub-column to the gradebook
+	 * @param item The new GradedItem
+	 * @param newColumn the new Column
+	 */
 	private void addSubColumn(GradedItem item, TableColumn newColumn) {
 		for (int ndx = 0; ndx < mainTable.getColumns().size(); ndx++) {
 			if (mainTable.getColumns().get(ndx).getText()
