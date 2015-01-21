@@ -10,8 +10,8 @@ import model.roster.Roster;
 import model.roster.Student;
 
 /**
- * Main class (singleton) for the program. Holds references to each roster
- * (class)
+ * Main class for the program. Holds references 
+ * to each roster.
  * 
  * @author Gavin Scott
  */
@@ -20,6 +20,9 @@ public class Grader {
 	private static Roster currentRoster;
 	private static ArrayList<Roster> classList;
 
+	/**
+	 * Initiates a Grader
+	 */
 	private Grader() {
 		currentRoster = null;
 		classList = new ArrayList<Roster>();

@@ -108,6 +108,7 @@ public class Student implements Comparable<Student>, Serializable {
 	public void setScore(String asgn, double sc) {
 		//scores.put(asgn, sc);
 		scoreValues.put(asgn, sc);
+		calcTotalScore();
 	}
 
 	/**
@@ -154,5 +155,12 @@ public class Student implements Comparable<Student>, Serializable {
 		}
 
 		return toReturn;
+	}
+	
+	private void calcTotalScore() {
+		totalScore = 0;
+		for(double score : scoreValues.values()) {
+			totalScore += score;
+		}
 	}
 }

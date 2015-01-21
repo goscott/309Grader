@@ -16,6 +16,7 @@ public class GradedItem implements Serializable {
     private String name;
 	private String descr;
 	private double score;
+	private double maxScore;
 	private ArrayList<GradedItem> children;
 	private GradedItem parent;
 
@@ -27,7 +28,7 @@ public class GradedItem implements Serializable {
 	 * @param descr the assignment's description
 	 */
 	public GradedItem(String name, String descr) {
-		this(name, descr, null, 0);
+		this(name, descr, null, 0, 100);
 	}
 	
 	/**
@@ -38,7 +39,7 @@ public class GradedItem implements Serializable {
 	 * @param score The assignment's score
 	 */
 	public GradedItem(String name, String descr, double score) {
-		this(name, descr, null, score);
+		this(name, descr, null, score, 100);
 	}
 
 	/**
@@ -50,7 +51,7 @@ public class GradedItem implements Serializable {
 	 * category
 	 */
 	public GradedItem(String name, String descr, GradedItem parent) {
-		this(name, descr, parent, 0);
+		this(name, descr, parent, 0, 100);
 	}
 
 	/**
@@ -60,11 +61,12 @@ public class GradedItem implements Serializable {
 	 * @param parent The assignment's parent or parent category
 	 * @param score The assignment's score
 	 */
-	public GradedItem(String name, String descr, GradedItem parent, double score) {
+	public GradedItem(String name, String descr, GradedItem parent, double score, double maxScore) {
 		this.name = name;
 		this.descr = descr;
 		this.score = score;
 		this.parent = parent;
+		this.maxScore = maxScore;
 		if(parent != null) {
 			parent.addChild(this);
 		}
@@ -90,12 +92,29 @@ public class GradedItem implements Serializable {
 
 	/**
 	 * Gets the assignment's score
-	 * @return double the sccore of the assignment
+	 * @return double the score of the assignment
 	 */
 	public double score() {
 		return score;
 	}
+	
+	/**
+	 * Gets the assignment's maximum score
+	 * @return double the max score of the assignment
+	 */
+	public double maxScore() {
+		return maxScore;
+	}
 
+	/**
+	 * Sets the assignment's score to a percentage
+	 * of the assignment's maximum score
+	 * @param percent the percent (90.0, etc)
+	 */
+	public void setPercentScore(double percent) {
+		score = percent/100 * maxScore;
+	}
+	
 	/**
 	 * Sets the assignment's score to the
 	 * given value
@@ -103,6 +122,14 @@ public class GradedItem implements Serializable {
 	 */
 	public void setScore(double sc) {
 		score = sc;
+	}
+	
+	/**
+	 * Sets the assignment's maximum score
+	 * @param sc the new max score
+	 */
+	public void setMaxScore(double sc) {
+		maxScore = sc;
 	}
 
 	/**
@@ -191,7 +218,7 @@ public class GradedItem implements Serializable {
 	 * @return GradedItem the copy
 	 */
 	public GradedItem copy() {
-		return new GradedItem(name, descr, parent, score);
+		return new GradedItem(name, descr, parent, score, maxScore);
 	}
 
 	/**

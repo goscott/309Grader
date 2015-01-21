@@ -190,6 +190,7 @@ public class GradebookController {
 										Debug.log("User Input Error",
 												"Entered invalid grade");
 									}
+									refresh();
 								}
 							});
 					if (!item.hasParent()) {
@@ -200,6 +201,9 @@ public class GradebookController {
 				}
 			}
 			mainTable.setItems(Grader.getStudentList());
+			// force hard refresh
+			mainTable.getColumns().add(0, new TableColumn<Student, String>());
+			mainTable.getColumns().remove(0);
 		}
 	}
 
@@ -211,5 +215,6 @@ public class GradebookController {
 				mainTable.getColumns().get(ndx).getColumns().add(newColumn);
 			}
 		}
+		refresh();
 	}
 }

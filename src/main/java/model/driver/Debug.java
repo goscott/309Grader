@@ -129,6 +129,9 @@ public class Debug {
 		}
 	}
 
+	/**
+	 * Wipes the old error file
+	 */
 	private static void newErrorFile() {
 		PrintWriter writer = null;
 		try {

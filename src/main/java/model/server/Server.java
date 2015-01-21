@@ -2,10 +2,11 @@ package model.server;
 
 import java.util.ArrayList;
 
+import model.driver.Debug;
 import model.roster.Student;
 
 /**
- * A "Server" emulateing PolyLearn
+ * A "Server" emulating PolyLearn
  * @author Gavin Scott
  *
  */
@@ -18,6 +19,7 @@ public class Server {
 	 * @return ArrayList<Student> the list of students
 	 */
 	public static ArrayList<Student> getStudents() {
+		Debug.log("Accessing Server", "Students pulled from server");
 		return students;
 	}
 	
@@ -33,5 +35,6 @@ public class Server {
 		students.add(new Student("Mason Stevenson", "87123"));
 		students.add(new Student("Michael Lenz", "98012"));
 		students.add(new Student("Jacob Hardi", "01968"));
+		Debug.log("Initializing Server", "Server students populated");
 	}
 }
