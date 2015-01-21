@@ -105,8 +105,12 @@ public class MainPageController {
 		buttonSetUp.setTranslateY(25);
 		buttonSetUp.setVgap(50);
 		buttonSetUp.setHgap(50);
-		buttonSetUp.getChildren().add(new Button("309"));
-        buttonSetUp.getChildren().add(new Button("308"));
+		Button button = new Button("309");
+		button.setOnAction(new ClassButtonEventHandler());
+		buttonSetUp.getChildren().add(button);
+        button = new Button("308");
+        button.setOnAction(new ClassButtonEventHandler());
+        buttonSetUp.getChildren().add(button);
 		//TODO make buttons mean something and build based on files found.
 	}
 
