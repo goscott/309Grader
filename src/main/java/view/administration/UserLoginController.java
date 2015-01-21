@@ -86,6 +86,9 @@ public class UserLoginController {
         ((Stage) new_user.getScene().getWindow()).close();
 	}
 
+	/**
+	 * Launches the main page.
+	 */
 	private void launchMainPage() {
 
 		try {
@@ -104,6 +107,9 @@ public class UserLoginController {
 		}
 	}
 	
+	/**
+	 * Launches the new user dialog.
+	 */
 	private void launchNewUser() {
 	    try {
             Stage stage = new Stage();

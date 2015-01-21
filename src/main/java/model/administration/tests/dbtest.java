@@ -2,7 +2,7 @@ package model.administration.tests;
 
 import model.administration.*;
 
-/**
+/*
  * 
  * @author Mason Stevenson
  *

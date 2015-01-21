@@ -17,14 +17,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-/**
+/*
  * 
  * @author Mason Stevenson
  *
  */
 public class PermissionsTester extends Application {
 
-    /**
+    /*
      * @param args the command line arguments
      */
     public static void main(String[] args) {

@@ -14,14 +14,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/**
+/*
  * 
  * @author Mason Stevenson
  *
  */
 public class LoginTest extends Application {
 
-    /**
+    /*
      * @param args the command line arguments
      */
     public static void main(String[] args) {

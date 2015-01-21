@@ -25,7 +25,7 @@ public class Launcher extends Application {
     	Server.init();
         Application.launch(Launcher.class, (java.lang.String[])null);
     }
-
+    
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -47,6 +47,10 @@ public class Launcher extends Application {
         }
     }
     
+    /**
+     * Fills in the username that was last logged into.
+     * @param scene The current scene.
+     */
     private void setUser(Scene scene) {
         String filename = "src/main/java/model/administration/login.txt";
         File file = new File(filename);

@@ -116,6 +116,9 @@ public class MainPageController {
 
 	// launches the permissions editor
 	@FXML
+	/**
+	 * Launches the permissions editor.
+	 */
 	public void permissions() {
 		System.out.println("Launching permissions editor");
 		UserDB users = new UserDB();
@@ -153,6 +156,9 @@ public class MainPageController {
 	}
 	
 	@FXML
+	/**
+	 * Logs the user out
+	 */
 	public void logout() {
 	    UserDB users = new UserDB();
 	    users.logout();
@@ -163,6 +169,9 @@ public class MainPageController {
 	}
 	
 	@FXML
+	/**
+	 * Exits the grader tool program.
+	 */
 	public void exit() {
 	    //close the program
 	}
