@@ -29,7 +29,7 @@ public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getResource("../view/administration/user_login.fxml")));
+            Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getResource("/view/administration/user_login.fxml")));
             
             primaryStage.setTitle("GraderTool: Login");
             primaryStage.setScene(scene);

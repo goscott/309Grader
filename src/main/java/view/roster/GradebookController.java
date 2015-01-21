@@ -1,5 +1,7 @@
 package view.roster;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import model.driver.Debug;
@@ -9,6 +11,7 @@ import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -123,34 +126,16 @@ public class GradebookController {
 
 	/**
 	 * Checks if a column exists with the given name
-	 * @param name the name being checked
-	 * @return boolean true if there is already a 
-	 * column in the gradebook with that name
+	 * 
+	 * @param name
+	 *            the name being checked
+	 * @return boolean true if there is already a column in the gradebook with
+	 *         that name
 	 */
 	private boolean columnExists(String name) {
 		for (TableColumn<?, ?> col : mainTable.getColumns()) {
 			if (checkChildren(col, name))
 				return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Checks if a column exists with the given name
-	 * as a child of a column. Checks recursively.
-	 * @param col The column being checked
-	 * @param name The name beign searched for
-	 * @return boolean true if a column exists with the 
-	 * given name in any child column
-	 */
-	private boolean checkChildren(TableColumn<?, ?> col, String name) {
-		if (col.getText().equals(name)) {
-			return true;
-		}
-		for (TableColumn<?, ?> sub : col.getColumns()) {
-			if (checkChildren(sub, name)) {
-				return true;
-			}
 		}
 		return false;
 	}
@@ -163,9 +148,12 @@ public class GradebookController {
 	 */
 	void refresh() {
 		if (Grader.getRoster() != null) {
-			for (GradedItem item : Grader.getRoster().getAssignments()) {
+			for (GradedItem item : Grader.getRoster().getAssignmentsByDepth()) {
+				System.out.println(item);
+			}
+			for (GradedItem item : Grader.getRoster().getAssignmentsByDepth()) {
 				if (!columnExists(item.name())) {
-					final TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
+					TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
 							item.name());
 					newColumn.setMinWidth(100);
 					newColumn.setEditable(true);
@@ -185,33 +173,8 @@ public class GradebookController {
 					newColumn.setCellFactory(TextFieldTableCell
 							.<Student> forTableColumn());
 					/* When a user types a change */
-					newColumn
-							.setOnEditCommit(new EventHandler<CellEditEvent<Student, String>>() {
-								// commit grade change to the gradebook
-								public void handle(
-										CellEditEvent<Student, String> t) {
-									try {
-										double newGrade = Double.parseDouble(t
-												.getNewValue());
-										if (newGrade < 0 || newGrade > 100) {
-											throw new NumberFormatException();
-										}
-										Grader.addScore(t.getRowValue(), t
-												.getTableColumn().getText(),
-												newGrade);
-									} catch (NumberFormatException ex) {
-										Tooltip tip = new Tooltip(
-												"Invalid input");
-										tip.setAutoFix(true);
-										tip.setAutoHide(true);
-										tip.show(t.getTableView().getScene()
-												.getWindow());
-										Debug.log("User Input Error",
-												"Entered invalid grade");
-									}
-									refresh();
-								}
-							});
+					newColumn.setOnEditCommit(new CellEditEventHandler());
+					
 					if (!item.hasParent()) {
 						mainTable.getColumns().add(newColumn);
 					} else {
@@ -233,12 +196,76 @@ public class GradebookController {
 	 * @param newColumn the new Column
 	 */
 	private void addSubColumn(GradedItem item, TableColumn newColumn) {
-		for (int ndx = 0; ndx < mainTable.getColumns().size(); ndx++) {
-			if (mainTable.getColumns().get(ndx).getText()
-					.equals(item.getParent().name())) {
-				mainTable.getColumns().get(ndx).getColumns().add(newColumn);
+		TableColumn parentCol = findColumn(item.getParent().name());
+		parentCol.getColumns().add(newColumn);
+
+		if (item.getParent().getParent() != null) {
+			TableColumn grandpa = findColumn(item.getParent().getParent()
+					.name());
+			int ndx = grandpa.getColumns().indexOf(parentCol);
+			grandpa.getColumns().remove(ndx);
+			grandpa.getColumns().add(ndx, parentCol);
+		}
+
+	}
+
+	/**
+	 * Finds a column with the given name. If no such column exists, returns
+	 * null
+	 * 
+	 * @param name
+	 *            The desired name
+	 * @return TableColumn the colummn if it exists, or null if it does not.
+	 */
+	private TableColumn<?, ?> findColumn(String name) {
+		for (TableColumn<?, ?> topColumn : mainTable.getColumns()) {
+			if (checkChildren(topColumn, name)) {
+				return findSubColumn(topColumn, name);
 			}
 		}
-		refresh();
+		return null;
+	}
+
+	/**
+	 * Finds a column with the given name under the given column. If no such
+	 * column exists, returns null
+	 * 
+	 * @param name
+	 *            The desired name
+	 * @return TableColumn the colummn if it exists, or null if it does not.
+	 */
+	private TableColumn<?, ?> findSubColumn(TableColumn<?, ?> col, String name) {
+		if (col.getText().equals(name)) {
+			return col;
+		}
+		for (TableColumn<?, ?> sub : col.getColumns()) {
+			TableColumn<?, ?> temp = findSubColumn(sub, name);
+			if (temp != null)
+				return temp;
+		}
+		return null;
+	}
+
+	/**
+	 * Checks if a column exists with the given name as a child of a column.
+	 * Checks recursively.
+	 * 
+	 * @param col
+	 *            The column being checked
+	 * @param name
+	 *            The name beign searched for
+	 * @return boolean true if a column exists with the given name in any child
+	 *         column
+	 */
+	private boolean checkChildren(TableColumn<?, ?> col, String name) {
+		if (col.getText().equals(name)) {
+			return true;
+		}
+		for (TableColumn<?, ?> sub : col.getColumns()) {
+			if (checkChildren(sub, name)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

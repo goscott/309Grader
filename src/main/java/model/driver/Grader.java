@@ -101,6 +101,17 @@ public class Grader {
 		currentRoster.addAssignment(item);
 		Debug.log("Grader model updated", "Assignment added to current roster");
 	}
+	
+	/**
+	 * Adds an assigment to the current roster
+	 * 
+	 * @param item
+	 *            the GradedItem that will be added to the roster
+	 */
+	public static GradedItem getAssignment(String asgn) {
+		Debug.log("Grader model accessed", "Assignment pulled from current roster");
+		return currentRoster.getAssignment(asgn);
+	}
 
 	/**
 	 * Changes a student's score on an assignment, in the currently selected
@@ -117,6 +128,22 @@ public class Grader {
 		currentRoster.getStudentByID(student.getId()).setScore(asgn, score);
 		Debug.log("Grader model updated", "Score added -> " + student.getName()
 				+ " has score " + score + " on " + asgn + '.');
+	}
+	
+	/**
+	 * Changes a student's score on an assignment in the currently selected
+	 * roster as a percentage
+	 * 
+	 * @param student
+	 *            The student whose score will be changed
+	 * @param asgn
+	 *            The name of the assignment that is being scored
+	 * @param score
+	 *            The student's new score as a percantage of the maximum score
+	 */
+	public static void addPercentageScore(Student student, String asgn, double percent) {
+		currentRoster.getStudentByID(student.getId()).setPercentScore(asgn, percent);
+		Debug.log("Grader model updated", "Score added");
 	}
 
 	/**

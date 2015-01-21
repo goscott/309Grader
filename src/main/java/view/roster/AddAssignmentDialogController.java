@@ -22,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -47,8 +48,9 @@ public class AddAssignmentDialogController {
 	private ComboBox<String> parentDropdown;
 	@FXML
 	private Button refreshButton;
+	@FXML
+	private TextField maxScoreField;
 
-	@SuppressWarnings("rawtypes")
 	private static GradebookController gbook;
 	private static MenuItem parent;
 	private final int maxChars = 25;
@@ -62,6 +64,7 @@ public class AddAssignmentDialogController {
 	 * @param newParent
 	 *            the parent
 	 */
+	@SuppressWarnings("static-access")
 	public void setParent(MenuItem newParent, GradebookController gbook) {
 		this.gbook = gbook;
 		parent = newParent;
@@ -77,15 +80,18 @@ public class AddAssignmentDialogController {
 		addButton.setDisable(true);
 		// populates parent list
 		resetDropdown();
-		parentDropdown.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0,
-					Boolean oldPropertyValue, Boolean newPropertyValue) {
-				if (newPropertyValue) {
-					resetDropdown();
-				}
-			}
-		});
+		parentDropdown.focusedProperty().addListener(
+				new ChangeListener<Boolean>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends Boolean> arg0,
+							Boolean oldPropertyValue, Boolean newPropertyValue) {
+						if (newPropertyValue) {
+							resetDropdown();
+						}
+					}
+				});
+		maxScoreField.setText("100");
 	}
 
 	/**
@@ -123,10 +129,14 @@ public class AddAssignmentDialogController {
 	 */
 	private void handleAddButton(ActionEvent event) {
 		GradedItem asgnParent = null;
-		if(parentDropdown.getValue() != null && !parentDropdown.getValue().equals(noParent)) {
-			asgnParent = Grader.getRoster().getAssignment(parentDropdown.getValue());
+		if (parentDropdown.getValue() != null
+				&& !parentDropdown.getValue().equals(noParent)) {
+			asgnParent = Grader.getRoster().getAssignment(
+					parentDropdown.getValue());
 		}
-		GradedItem item = new GradedItem(nameField.getText(), descrField.getText(), asgnParent);
+		GradedItem item = new GradedItem(nameField.getText(),
+				descrField.getText(), Double.parseDouble(maxScoreField
+						.getText()), asgnParent);
 		Grader.addAssignment(item);
 		nameField.setText("");
 		descrField.setText("");
@@ -153,13 +163,13 @@ public class AddAssignmentDialogController {
 	 * @param event The key event
 	 */
 	private void nameChangeHandler(KeyEvent event) {
-		Tooltip tooltip = new Tooltip();
-
-		if (nameField.getText().length() > maxChars) {
-			// ENFORCE MAXIMUM LENGTH
-			addButton.setDisable(true);
+		addButton.setDisable(checkValid());
+		if (nameField.getText().length() == 0) {
 			nameField.setBackground(new Background(new BackgroundFill(
 					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+		}
+		Tooltip tooltip = new Tooltip();
+		if (nameField.getText().length() > maxChars) {
 			// make tooltip
 			tooltip.setText("Assignment names must not exceed " + maxChars
 					+ " characters");
@@ -172,9 +182,6 @@ public class AddAssignmentDialogController {
 
 		} else if (nameTaken(nameField.getText())) {
 			// NEED UNIQUE NAMES
-			addButton.setDisable(true);
-			nameField.setBackground(new Background(new BackgroundFill(
-					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 			// make tooltip
 			tooltip.setText("Assignment names must be unique");
 			tooltip.setAutoHide(true);
@@ -185,24 +192,67 @@ public class AddAssignmentDialogController {
 					stage.getY() + 2 * nameField.getLayoutY() + 37);
 
 		} else {
-			addButton.setDisable(false);
 			tooltip.hide();
-			nameField.setStyle("-fx-background: #FFFFFF;");
-			nameField.setBackground(new Background(new BackgroundFill(
-					Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		}
+	}
 
-		// NOT TOO SHORT
-		if (nameField.getText().length() == 0) {
-			addButton.setDisable(true);
+	@FXML
+	private boolean checkValid() {
+		checkNameValid();
+		checkScoreValid();
+		return checkNameValid() || checkScoreValid() || nameField.getText().length() == 0;
+	}
+	
+	private boolean checkNameValid() {
+		if (nameTaken(nameField.getText())
+				|| nameField.getText().length() > maxChars) {
+			nameField.setBackground(new Background(new BackgroundFill(
+					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+			return true;
 		}
+		nameField.setStyle("-fx-background: #FFFFFF;");
+		nameField.setBackground(new Background(new BackgroundFill(
+				Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		return false;
+	}
+	
+	private boolean checkScoreValid() {
+		if (maxScoreField.getText().length() == 0) {
+			maxScoreField.setBackground(new Background(new BackgroundFill(
+					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+			return true;
+		}
+		try {
+			Double.parseDouble(maxScoreField.getText());
+			maxScoreField.setStyle("-fx-background: #FFFFFF;");
+			maxScoreField.setBackground(new Background(new BackgroundFill(
+					Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		} catch (NumberFormatException ex) {
+			maxScoreField.setBackground(new Background(new BackgroundFill(
+					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+			return true;
+		}
+		return false;
+	}
+
+	@FXML
+	/**
+	 * Checks the score for validity every time the user
+	 * changes it. Max scores must be greater than 1
+	 * and valid doubles.
+	 * @param event The key event
+	 */
+	private void scoreChangeHandler(KeyEvent event) {
+		addButton.setDisable(checkValid());
 	}
 
 	/**
 	 * Checks if an assignment exists with a given name.
-	 * @param name The name
-	 * @return boolean true if an assignment with the 
-	 * given name already exists in the roster
+	 * 
+	 * @param name
+	 *            The name
+	 * @return boolean true if an assignment with the given name already exists
+	 *         in the roster
 	 */
 	private boolean nameTaken(String name) {
 		for (GradedItem item : Grader.getRoster().getAssignments()) {
@@ -214,8 +264,7 @@ public class AddAssignmentDialogController {
 	}
 
 	/**
-	 * Resets the parent dropdown menu to reflect
-	 * any new assignments
+	 * Resets the parent dropdown menu to reflect any new assignments
 	 */
 	private void resetDropdown() {
 		parentDropdown.setItems(Grader.getAssignmentNameList());

@@ -4,77 +4,98 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.driver.Debug;
+
 /**
  * A grade-able assignment, and a category in the gradebook
+ * 
  * @author Gavin Scott
  */
 public class GradedItem implements Serializable {
 	/**
-     * generated serial ID
-     */
-    private static final long serialVersionUID = 8994764986930533573L;
-    private String name;
+	 * generated serial ID
+	 */
+	private static final long serialVersionUID = 8994764986930533573L;
+	private String name;
 	private String descr;
 	private double score;
 	private double maxScore;
 	private ArrayList<GradedItem> children;
 	private GradedItem parent;
+	private int depth;
 
 	/**
-	 * Creates a graded item with the given information. 
-	 * The parent will be set to null, and the score will
-	 * be set to zero.
-	 * @param name the assignment's name
-	 * @param descr the assignment's description
+	 * Creates a graded item with the given information. The parent will be set
+	 * to null, and the score will be set to zero.
+	 * 
+	 * @param name
+	 *            the assignment's name
+	 * @param descr
+	 *            the assignment's description
 	 */
-	public GradedItem(String name, String descr) {
-		this(name, descr, null, 0, 100);
-	}
-	
-	/**
-	 * Creates a graded item with the given information. The
-	 * parent will be set to zero.
-	 * @param name The assignment's name
-	 * @param descr The assignment's description
-	 * @param score The assignment's score
-	 */
-	public GradedItem(String name, String descr, double score) {
-		this(name, descr, null, score, 100);
+	public GradedItem(String name, String descr, double maxScore) {
+		this(name, descr, null, 0, maxScore);
 	}
 
 	/**
-	 * Creates a graded item with the given information. The
-	 * score will be set to zero
-	 * @param name The assignment's name
-	 * @param descr The assignment's description
-	 * @param parent The assignment's parent assignment or
-	 * category
+	 * Creates a graded item with the given information. The parent will be set
+	 * to zero.
+	 * 
+	 * @param name
+	 *            The assignment's name
+	 * @param descr
+	 *            The assignment's description
+	 * @param score
+	 *            The assignment's score
 	 */
-	public GradedItem(String name, String descr, GradedItem parent) {
-		this(name, descr, parent, 0, 100);
+	public GradedItem(String name, String descr, double score, double maxScore) {
+		this(name, descr, null, score, maxScore);
+	}
+
+	/**
+	 * Creates a graded item with the given information. The score will be set
+	 * to zero
+	 * 
+	 * @param name
+	 *            The assignment's name
+	 * @param descr
+	 *            The assignment's description
+	 * @param parent
+	 *            The assignment's parent assignment or category
+	 */
+	public GradedItem(String name, String descr, double maxScore, GradedItem parent) {
+		this(name, descr, parent, 0, maxScore);
 	}
 
 	/**
 	 * Creates a graded item with the given input
-	 * @param name The assignment's name
-	 * @param descr The assignment's description
-	 * @param parent The assignment's parent or parent category
-	 * @param score The assignment's score
+	 * 
+	 * @param name
+	 *            The assignment's name
+	 * @param descr
+	 *            The assignment's description
+	 * @param parent
+	 *            The assignment's parent or parent category
+	 * @param score
+	 *            The assignment's score
 	 */
-	public GradedItem(String name, String descr, GradedItem parent, double score, double maxScore) {
+	public GradedItem(String name, String descr, GradedItem parent,
+			double score, double maxScore) {
 		this.name = name;
 		this.descr = descr;
 		this.score = score;
 		this.parent = parent;
 		this.maxScore = maxScore;
-		if(parent != null) {
+		if (parent != null) {
 			parent.addChild(this);
 		}
 		children = new ArrayList<GradedItem>();
+		depth = calcDepth();
 	}
 
 	/**
 	 * Gets the graded item's name
+	 * 
 	 * @return String the name of the assignment
 	 */
 	public String name() {
@@ -83,8 +104,8 @@ public class GradedItem implements Serializable {
 
 	/**
 	 * Gets the graded item's description
-	 * @return String the description of the
-	 * assignment
+	 * 
+	 * @return String the description of the assignment
 	 */
 	public String descr() {
 		return descr;
@@ -92,14 +113,16 @@ public class GradedItem implements Serializable {
 
 	/**
 	 * Gets the assignment's score
+	 * 
 	 * @return double the score of the assignment
 	 */
 	public double score() {
 		return score;
 	}
-	
+
 	/**
 	 * Gets the assignment's maximum score
+	 * 
 	 * @return double the max score of the assignment
 	 */
 	public double maxScore() {
@@ -107,45 +130,60 @@ public class GradedItem implements Serializable {
 	}
 
 	/**
-	 * Sets the assignment's score to a percentage
-	 * of the assignment's maximum score
-	 * @param percent the percent (90.0, etc)
-	 */
-	public void setPercentScore(double percent) {
-		score = percent/100 * maxScore;
-	}
-	
-	/**
-	 * Sets the assignment's score to the
-	 * given value
-	 * @param sc The new score
+	 * Sets the assignment's score to the given value
+	 * 
+	 * @param sc
+	 *            The new score
 	 */
 	public void setScore(double sc) {
 		score = sc;
 	}
-	
+
 	/**
 	 * Sets the assignment's maximum score
-	 * @param sc the new max score
+	 * 
+	 * @param sc
+	 *            the new max score
 	 */
 	public void setMaxScore(double sc) {
 		maxScore = sc;
 	}
 
 	/**
-	 * Adds another graded item to the assignment's
-	 * list of children
-	 * @param item The child assignment; such as a 
-	 * specific question or a subcategory
+	 * Calculates the depth of the assignment
+	 * 
+	 * @return int the depth
+	 */
+	private int calcDepth() {
+		return parent == null ? 0 : parent.calcDepth() + 1;
+	}
+
+	/**
+	 * Gets the assignment depth
+	 * 
+	 * @return int the depth
+	 */
+	public int getDepth() {
+		//Debug.log("Depth", name + " has depth " + depth);
+		return depth;
+	}
+
+	/**
+	 * Adds another graded item to the assignment's list of children
+	 * 
+	 * @param item
+	 *            The child assignment; such as a specific question or a
+	 *            subcategory
 	 */
 	public void addChild(GradedItem item) {
 		children.add(item);
 	}
 
 	/**
-	 * Removes a child from the assignment and marks
-	 * the child as parentless
-	 * @param item the child assignment to be removed
+	 * Removes a child from the assignment and marks the child as parentless
+	 * 
+	 * @param item
+	 *            the child assignment to be removed
 	 */
 	public void removeChild(GradedItem item) {
 		if (children.contains(item)) {
@@ -156,15 +194,16 @@ public class GradedItem implements Serializable {
 
 	/**
 	 * Checks if the assignment has a parent
-	 * @return boolean true if the assignment
-	 * has a parent
+	 * 
+	 * @return boolean true if the assignment has a parent
 	 */
 	public boolean hasParent() {
 		return parent != null;
 	}
-	
+
 	/**
 	 * Gets the assignment's parent
+	 * 
 	 * @return GradedItem the parent
 	 */
 	public GradedItem getParent() {
@@ -172,12 +211,12 @@ public class GradedItem implements Serializable {
 	}
 
 	/**
-	 * Sets another assignment as the parent of
-	 * this GradedItem, and marks this assignment
-	 * as a child of the new parent. It also
-	 * removes itself from its old parent's list
-	 * of children.
-	 * @param newParent The new parent assignment
+	 * Sets another assignment as the parent of this GradedItem, and marks this
+	 * assignment as a child of the new parent. It also removes itself from its
+	 * old parent's list of children.
+	 * 
+	 * @param newParent
+	 *            The new parent assignment
 	 */
 	public void setParent(GradedItem newParent) {
 		parent.removeChild(this);
@@ -186,10 +225,10 @@ public class GradedItem implements Serializable {
 	}
 
 	/**
-	 * Calculates a score based on the assignment's
-	 * children.
-	 * @return double the sum of this assignment's 
-	 * score and all of its children's scores
+	 * Calculates a score based on the assignment's children.
+	 * 
+	 * @return double the sum of this assignment's score and all of its
+	 *         children's scores
 	 */
 	public double calcScore() {
 		double sc = 0;
@@ -200,9 +239,10 @@ public class GradedItem implements Serializable {
 	}
 
 	/**
-	 * Compares this assignmnt with another object
-	 * for logical euquivalence.
-	 * @param other The other Object
+	 * Compares this assignmnt with another object for logical euquivalence.
+	 * 
+	 * @param other
+	 *            The other Object
 	 */
 	public boolean equals(Object other) {
 		if ((other != null) && (other instanceof GradedItem)) {
@@ -215,6 +255,7 @@ public class GradedItem implements Serializable {
 
 	/**
 	 * Creates and returns a copy of this GradedItem
+	 * 
 	 * @return GradedItem the copy
 	 */
 	public GradedItem copy() {
@@ -223,9 +264,10 @@ public class GradedItem implements Serializable {
 
 	/**
 	 * Saves the assignment
-	 * @param assignments The lit of assignments
-	 * @return A String representing the assignment, which 
-	 * can be saved
+	 * 
+	 * @param assignments
+	 *            The lit of assignments
+	 * @return A String representing the assignment, which can be saved
 	 */
 	public static String Save(List<GradedItem> assignments) {
 		String toReturn = "";
@@ -237,5 +279,17 @@ public class GradedItem implements Serializable {
 			toReturn += "\n";
 		}
 		return toReturn;
+	}
+
+	/**
+	 * Gives a String representation of a GradedItem
+	 * 
+	 * @return String the assignment as a String
+	 */
+	public String toString() {
+		if (parent != null)
+			return name + " " + descr + " parent: " + parent.name();
+		else
+			return name + " " + descr + " parent: None";
 	}
 }
