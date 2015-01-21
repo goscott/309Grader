@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.administration.tests.LoginTest;
 import model.driver.Debug;
+import model.server.Server;
 
 
 public class Launcher extends Application {
@@ -21,6 +22,7 @@ public class Launcher extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+    	Server.init();
         Application.launch(Launcher.class, (java.lang.String[])null);
     }
 

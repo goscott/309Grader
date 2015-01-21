@@ -77,6 +77,16 @@ public class Grader {
 		currentRoster.addStudent(student);
 		Debug.log("Grader model updated", "Student added to current roster");
 	}
+	
+	/**
+	 * Checks if a student is enrolled in the currently
+	 * seleted roster
+	 * @param student the student in question
+	 * @return boolean true if the student is enrolled
+	 */
+	public static boolean studentEnrolled(Student student) {
+		return currentRoster.getStudentsByName().contains(student);
+	}
 
 	/**
 	 * Adds an assigment to the current roster
