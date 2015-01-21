@@ -5,7 +5,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.administration.PermissionsEditorController">
    <children>
       <VBox fx:id="user_select" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="362.0">
@@ -42,13 +41,15 @@
                   <Label text="Name: " GridPane.halignment="CENTER" />
                   <Label text="ID: " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Label alignment="CENTER" text="Permission Level:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <MenuButton alignment="CENTER" mnemonicParsing="false" text="PERMISSION LEVEL" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <MenuButton fx:id="select_permissions" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="PERMISSION LEVEL" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                      <MenuItem fx:id="item_student" mnemonicParsing="false" onAction="#studentSelected" text="Student" />
+                      <MenuItem fx:id="item_ta" mnemonicParsing="false" onAction="#taSelected" text="Teacher's Aid" />
+                        <MenuItem fx:id="item_instructor" mnemonicParsing="false" onAction="#instructorSelected" text="Instructor" />
+                        <MenuItem fx:id="item_admin" mnemonicParsing="false" onAction="#adminSelected" text="Admin" />
                     </items>
                   </MenuButton>
-                  <Label text="FIRSTNAME LASTNAME" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Label fx:id="user_first_last" text="FIRSTNAME LASTNAME" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                   <Label fx:id="user_id" text="userid00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
             </GridPane>

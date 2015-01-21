@@ -155,5 +155,6 @@ public class NewUserController {
      */
     public void adminSelected() {
         button_select_permissions.setText("Admin");
+        userType = UserTypes.USER_ADMIN;
     }
 }
