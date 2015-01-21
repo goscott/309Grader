@@ -14,8 +14,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
@@ -79,12 +79,22 @@ public class MainPageController {
 							"../roster/gradebook_screen.fxml"));
 			gradebookTab.setContent(gradebookPage);
 			
+	        // Abnormal local behavior, commented out in meantime,
+            // can anyone figure this out?
+            /*
+            // Add graphs
+            SplitPane graphsPage = (SplitPane) FXMLLoader
+                    .load(getClass().getResource(
+                            "../graphs/graphs.fxml"));
+            graphsTab.setContent(graphsPage);
+            */
+			
 			// add historytab -Mason
 			HBox historyPage = (HBox) FXMLLoader
                     .load(getClass().getResource(
                             "../history/history_screen.fxml"));
 			historyTab.setContent(historyPage);
-
+            
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
