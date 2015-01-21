@@ -10,13 +10,23 @@ import model.roster.Student;
  *
  */
 public class Server {
-	private static ArrayList<Student> students;
+	private static ArrayList<Student> students = new ArrayList<Student>();
 	
+	/**
+	 * Gets the list of all students stored in the
+	 * server
+	 * @return ArrayList<Student> the list of students
+	 */
 	public static ArrayList<Student> getStudents() {
 		return students;
 	}
 	
+	/**
+	 * Populates the server with some default students
+	 */
 	public static void init() {
+		students.add(new Student("Bill", "00000"));
+		students.add(new Student("Bob", "11111"));
 		students.add(new Student("Gavin Scott", "12345"));
 		students.add(new Student("Shelli Crispen", "21549"));
 		students.add(new Student("Frank Poole", "34718"));
