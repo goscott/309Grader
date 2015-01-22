@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.administration.User;
 import model.administration.UserDB;
 import model.roster.GradedItem;
 import model.roster.Roster;
@@ -19,6 +20,7 @@ public class Grader {
 	private static Grader grader = new Grader();
 	private static Roster currentRoster;
 	private static ArrayList<Roster> classList;
+	private static User user;
 
 	/**
 	 * Initiates a Grader
@@ -37,6 +39,22 @@ public class Grader {
 		return grader;
 	}
 
+	/**
+	 * Sets the current user of the Grader tool
+	 * @param newUser the new user
+	 */
+	public static void setUser(User newUser) {
+		user = newUser;
+	}
+	
+	/**
+	 * Gets the current user of the Grader tool
+	 * @return User the current user
+	 */
+	public static User getUser() {
+		return user;
+	}
+	
 	/**
 	 * Gets the currently seleected roster
 	 * 
