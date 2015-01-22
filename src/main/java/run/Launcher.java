@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -65,6 +66,7 @@ public class Launcher extends Application {
                 reader = new BufferedReader(new FileReader(file));
                 field.setText(reader.readLine());
                 reader.close();
+                ((PasswordField) scene.lookup("#password")).requestFocus();
             }
             catch (Exception e) {
             	Debug.log("ERROR", "Could not read login file");
