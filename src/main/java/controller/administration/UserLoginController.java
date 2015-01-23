@@ -94,7 +94,7 @@ public class UserLoginController {
 		try {
 			Stage stage = new Stage();
 			Scene scene = new Scene((BorderPane) FXMLLoader.load(getClass()
-					.getResource("../mainpage/MainPage.fxml")));
+					.getResource("../../view/mainpage/MainPage.fxml")));
 
 			stage.setScene(scene);
 			stage.setTitle("GraderTool");
