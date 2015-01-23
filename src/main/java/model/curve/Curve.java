@@ -56,4 +56,9 @@ public class Curve {
     public void adjust(Grade grade, float max, float min) {
         grade.set(max, min);
     }
+    
+    public TreeSet<Grade> getGrades()
+    {
+        return curve;
+    }
 }

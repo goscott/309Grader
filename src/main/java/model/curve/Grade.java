@@ -1,11 +1,13 @@
 package model.curve;
 
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  * A representation of a percentage based grade.
  * @author Frank Poole
  */
 public class Grade implements Comparable<Grade> {
-    private String name;    // Grade Name
+    private final SimpleStringProperty name;    // Grade Name
     private float max;      // Maximum percentage required
     private float min;      // Minimum percentage required
 
@@ -15,8 +17,8 @@ public class Grade implements Comparable<Grade> {
      * @param max the maximum percentage required
      * @param min the minimum percentage required
      */
-    public Grade(String name, int max, int min) {
-        this.name = name;
+    public Grade(String name, float max, float min) {
+        this.name = new SimpleStringProperty(name);
         this.set(max, min);
     }
 
@@ -44,8 +46,8 @@ public class Grade implements Comparable<Grade> {
      * Returns the grade name designation.
      * @return the grade name designation
      */
-    public String name() {
-        return name;
+    public String getName() {
+        return name.get();
     }
     
     /**

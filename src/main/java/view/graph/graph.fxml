@@ -31,11 +31,11 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Label>
-                        <TableView VBox.vgrow="SOMETIMES">
+                        <TableView fx:id="studentTable" VBox.vgrow="SOMETIMES">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Grade" />
-                            <TableColumn prefWidth="108.0" text="Percentage" />
-                              <TableColumn prefWidth="75.0" text="Students" />
+                            <TableColumn fx:id="gradeCol" prefWidth="75.0" text="Grade" />
+                            <TableColumn fx:id="percentageCol" prefWidth="108.0" text="Percentage" />
+                              <TableColumn fx:id="studentsCol" prefWidth="75.0" text="Students" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -46,9 +46,9 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Label>
-                        <TableView VBox.vgrow="SOMETIMES">
+                        <TableView fx:id="curveTable" VBox.vgrow="SOMETIMES">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Grade" />
+                            <TableColumn fx:id="gradeCol" prefWidth="75.0" text="Grade" />
                             <TableColumn prefWidth="75.0" text="Max" />
                               <TableColumn prefWidth="75.0" text="Min" />
                           </columns>
