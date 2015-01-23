@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<SplitPane dividerPositions="0.33277591973244147, 0.6655518394648829" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.graph.GraphController">
+  <items>
+      <TitledPane collapsible="false" minWidth="0.0" prefHeight="600.0" prefWidth="133.3333" text="Statistics" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <content>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
+                           <children>
+                              <Label alignment="CENTER" text="Average Grade: " />
+                              <Label fx:id="gradeLabel" />
+                              <Label text=" (" />
+                              <Label fx:id="percentageLabel" />
+                              <Label text="\%)" />
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </HBox>
+                        <Label contentDisplay="CENTER" text="Students Per Grade">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TableView VBox.vgrow="SOMETIMES">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="Grade" />
+                            <TableColumn prefWidth="108.0" text="Percentage" />
+                              <TableColumn prefWidth="75.0" text="Students" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label text="Current Curve">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TableView VBox.vgrow="SOMETIMES">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="Grade" />
+                            <TableColumn prefWidth="75.0" text="Max" />
+                              <TableColumn prefWidth="75.0" text="Min" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </content>
+      </TitledPane>
+      <TitledPane collapsible="false" minWidth="0.0" prefHeight="600.0" prefWidth="133.3333" text="Curve" />
+      <TitledPane collapsible="false" minWidth="0.0" prefHeight="600.0" prefWidth="133.3333" text="Breakdown" />
+  </items>
+</SplitPane>

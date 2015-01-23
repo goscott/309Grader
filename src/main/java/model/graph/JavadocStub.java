@@ -1,4 +1,4 @@
-package model.graphs;
+package model.graph;
 
 /****
 *

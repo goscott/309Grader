@@ -82,7 +82,7 @@ public class MainPageController {
             // Add graphs
             SplitPane graphPage = (SplitPane) FXMLLoader
                     .load(getClass().getResource(
-                            "../graphs/graphs.fxml"));
+                            "../graph/graph.fxml"));
             graphTab.setContent(graphPage);
 			
 			// add historytab -Mason
