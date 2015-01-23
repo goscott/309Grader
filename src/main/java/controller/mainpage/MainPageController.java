@@ -76,7 +76,7 @@ public class MainPageController {
 			// add gradebook
 			TableView<?> gradebookPage = (TableView<?>) FXMLLoader
 					.load(getClass().getResource(
-							"../roster/gradebook_screen.fxml"));
+							"../../roster/gradebook_screen.fxml"));
 			gradebookTab.setContent(gradebookPage);
 			
             // Add graphs
