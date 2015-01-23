@@ -76,19 +76,19 @@ public class MainPageController {
 			// add gradebook
 			TableView<?> gradebookPage = (TableView<?>) FXMLLoader
 					.load(getClass().getResource(
-							"../../roster/gradebook_screen.fxml"));
+							"../../view/roster/gradebook_screen.fxml"));
 			gradebookTab.setContent(gradebookPage);
 			
             // Add graphs
             SplitPane graphPage = (SplitPane) FXMLLoader
                     .load(getClass().getResource(
-                            "../graph/graph.fxml"));
+                            "../../view/graph/graph.fxml"));
             graphTab.setContent(graphPage);
 			
 			// add historytab -Mason
 			HBox historyPage = (HBox) FXMLLoader
                     .load(getClass().getResource(
-                            "../history/history_screen.fxml"));
+                            "../../view/history/history_screen.fxml"));
 			historyTab.setContent(historyPage);
             
 		} catch (IOException e) {
@@ -140,7 +140,7 @@ public class MainPageController {
 			// BorderPane page = (BorderPane)
 			// FXMLLoader.load(getClass().getResource("PermissionsEditor.fxml"));
 			Scene scene = new Scene((Parent) FXMLLoader.load(getClass()
-					.getResource("../administration/permissions_editor.fxml")));
+					.getResource("../../view/administration/permissions_editor.fxml")));
 
 			@SuppressWarnings("unchecked")
 			ListView<String> view = (ListView<String>) scene
