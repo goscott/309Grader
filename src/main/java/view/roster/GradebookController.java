@@ -94,12 +94,24 @@ public class GradebookController {
 		MenuItem addStudent = new MenuItem("Add Student");
 		MenuItem dropStudent = new MenuItem("Drop Student");
 		MenuItem rosterSynch = new MenuItem("Roster Synch");
+		MenuItem TEST = new MenuItem("TEST");
 
 		addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
 				addAssignment, this));
 		addStudent.setOnAction(new DisplayAddStudentPopupEventHandler(
 				addStudent, this));
+		TEST.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("*******************************");
+				for (GradedItem item : Grader.getRoster().getAssignmentsByDepth()) {
+					System.out.println(item);
+				}
+				System.out.println("*******************************");
+			}
+		});
 
+		rightClickMenu.getItems().add(TEST);
 		rightClickMenu.getItems().add(addAssignment);
 		rightClickMenu.getItems().add(dropAssignment);
 		rightClickMenu.getItems().add(importAssignment);
@@ -148,9 +160,14 @@ public class GradebookController {
 	 */
 	void refresh() {
 		if (Grader.getRoster() != null) {
+			/*System.out.println("*******************************");
 			for (GradedItem item : Grader.getRoster().getAssignmentsByDepth()) {
 				System.out.println(item);
 			}
+			System.out.println("*******************************");*/
+			totalGradeCol
+					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
+							"totalScore"));
 			for (GradedItem item : Grader.getRoster().getAssignmentsByDepth()) {
 				if (!columnExists(item.name())) {
 					TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
@@ -174,7 +191,7 @@ public class GradebookController {
 							.<Student> forTableColumn());
 					/* When a user types a change */
 					newColumn.setOnEditCommit(new CellEditEventHandler());
-					
+
 					if (!item.hasParent()) {
 						mainTable.getColumns().add(newColumn);
 					} else {
@@ -188,7 +205,7 @@ public class GradebookController {
 			mainTable.getColumns().remove(0);
 		}
 	}
-
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	/**
 	 * Adds a sub-column to the gradebook

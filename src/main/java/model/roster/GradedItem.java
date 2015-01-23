@@ -81,6 +81,7 @@ public class GradedItem implements Serializable {
 	 */
 	public GradedItem(String name, String descr, GradedItem parent,
 			double score, double maxScore) {
+		children = new ArrayList<GradedItem>();
 		this.name = name;
 		this.descr = descr;
 		this.score = score;
@@ -89,7 +90,6 @@ public class GradedItem implements Serializable {
 		if (parent != null) {
 			parent.addChild(this);
 		}
-		children = new ArrayList<GradedItem>();
 		depth = calcDepth();
 	}
 
@@ -176,6 +176,7 @@ public class GradedItem implements Serializable {
 	 *            subcategory
 	 */
 	public void addChild(GradedItem item) {
+		Debug.log("Child Added", item.name() + " added as a child of " + name);
 		children.add(item);
 	}
 
@@ -287,9 +288,15 @@ public class GradedItem implements Serializable {
 	 * @return String the assignment as a String
 	 */
 	public String toString() {
+		String ret = "";
 		if (parent != null)
-			return name + " " + descr + " parent: " + parent.name();
+			ret += name + " parent: " + parent.name();
 		else
-			return name + " " + descr + " parent: None";
+			ret += name + " parent: None";
+		ret += " children:";
+		for(GradedItem child : children) {
+			ret += " " + child.name();
+		}
+		return ret;
 	}
 }

@@ -44,6 +44,7 @@ public class Grader {
 	 * @param newUser the new user
 	 */
 	public static void setUser(User newUser) {
+		Debug.log("New User", newUser.getfName() + " " + newUser.getlName() + " logged in");
 		user = newUser;
 	}
 	
@@ -52,6 +53,7 @@ public class Grader {
 	 * @return User the current user
 	 */
 	public static User getUser() {
+		Debug.log("Grader Accessed", "Current User checked");
 		return user;
 	}
 	
