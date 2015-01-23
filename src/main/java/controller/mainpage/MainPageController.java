@@ -1,4 +1,4 @@
-package view.mainpage;
+package controller.mainpage;
 
 import java.io.IOException;
 import java.util.logging.Level;

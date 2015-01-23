@@ -1,6 +1,6 @@
-package view.mainpage;
+package controller.mainpage;
 
-import view.roster.AddClassDialogController;
+import controller.roster.AddClassDialogController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;

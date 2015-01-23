@@ -10,7 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import view.roster.AddAssignmentDialogController;
+import controller.roster.AddAssignmentDialogController;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.ScoreNode;

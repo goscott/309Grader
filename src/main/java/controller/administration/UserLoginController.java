@@ -1,4 +1,4 @@
-package view.administration;
+package controller.administration;
 
 import run.Launcher;
 import model.administration.User;

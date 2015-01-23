@@ -1,4 +1,4 @@
-package view.administration;
+package controller.administration;
 
 import model.administration.User;
 import model.administration.UserDB;

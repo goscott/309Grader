@@ -1,4 +1,4 @@
-package view.graph;
+package controller.graph;
 
 import model.curve.Grade;
 import javafx.fxml.FXML;

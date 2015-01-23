@@ -1,4 +1,4 @@
-package view.roster;
+package controller.roster;
 
 
 import java.io.IOException;

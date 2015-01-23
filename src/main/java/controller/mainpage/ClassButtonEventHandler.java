@@ -1,4 +1,4 @@
-package view.mainpage;
+package controller.mainpage;
 
 
 import model.driver.Debug;
