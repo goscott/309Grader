@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +20,8 @@ import model.driver.Debug;
  */
 public class UserDB {
     private ArrayList<User> users;
-    private static final String DATABASE = "src/main/java/model/administration/users.udb";
+    //private static final String DATABASE = "src/main/java/model/administration/users.udb";
+    private static final String DATABASE = "model/administration/users.udb";
 
     public UserDB() {
         loadUserDB();
@@ -38,17 +40,18 @@ public class UserDB {
 
         users = new ArrayList<User>();
 
-        targetFile = new File(DATABASE);
+        //targetFile = new File(DATABASE);
 
         try {
 
             // check if file exists
-            if (!targetFile.exists()) {
-                targetFile.createNewFile();
-            }
+            //if (!targetFile.exists()) {
+            //    targetFile.createNewFile();
+            //}
 
-            reader = new BufferedReader(new FileReader(targetFile));
-
+            //reader = new BufferedReader(new FileReader(targetFile));
+            reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(DATABASE)));
+            
             while ((line = reader.readLine()) != null) {
                 tokens = line.split(",");
                 index = 0;
@@ -70,13 +73,14 @@ public class UserDB {
      * Overwrites the db file with the current list of users
      */
     private void updateDB() {
-        BufferedWriter writer = null;
-        File userData = new File(DATABASE);
-
-        userData.delete();
+        //BufferedWriter writer = null;
+        //File userData = new File(DATABASE);
+        PrintWriter writer;
+        //userData.delete();
 
         try {
-            writer = new BufferedWriter(new FileWriter(DATABASE, true));
+            //writer = new BufferedWriter(new FileWriter(DATABASE, true));
+            writer = new PrintWriter(new File(this.getClass().getClassLoader().getResource(DATABASE).getPath()));
             
             for (User newUser : users) {
                 // add the user to the db file
@@ -105,6 +109,7 @@ public class UserDB {
 
         // check the db
         if (!users.contains(newUser)) {
+            /*
             try {
                 writer = new BufferedWriter(new FileWriter(DATABASE, true));
 
@@ -121,7 +126,9 @@ public class UserDB {
             catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
+            }*/
+            users.add(newUser);
+            updateDB();
 
             return true;
         }
@@ -207,14 +214,16 @@ public class UserDB {
         Debug.log("model", "UserDB.login() invoked.");
         
         User temp = get(id);
-        String filename = "src/main/java/model/administration/login.txt";
+        //String filename = "src/main/java/model/administration/login.txt";
+        String filename = "model/administration/login.txt";
         File file;
         PrintWriter writer;
         
         //if id exists and password matches, return true        
         if (temp != null && temp.getPassword().equals(password)) {
             try {
-                file = new File(filename);
+                file = new File(this.getClass().getClassLoader().getResource(filename).getPath());
+                Debug.log("Writing to file" + file.getAbsolutePath());
                 writer = new PrintWriter(file);
                 writer.println(id);
                 writer.close();

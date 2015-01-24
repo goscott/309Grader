@@ -2,6 +2,7 @@ package run;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +31,7 @@ public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getResource("/view/administration/user_login.fxml")));
+            Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getClassLoader().getResource("view/administration/user_login.fxml")));
             
             primaryStage.setTitle("GraderTool: Login");
             primaryStage.setScene(scene);
@@ -63,7 +64,7 @@ public class Launcher extends Application {
             field = (TextField) scene.lookup("#user_name");
             
             try {
-                reader = new BufferedReader(new FileReader(file));
+                reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("model/administration/login.txt")));
                 field.setText(reader.readLine());
                 reader.close();
                 ((PasswordField) scene.lookup("#password")).requestFocus();

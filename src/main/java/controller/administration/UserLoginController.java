@@ -94,7 +94,7 @@ public class UserLoginController {
 		try {
 			Stage stage = new Stage();
 			Scene scene = new Scene((BorderPane) FXMLLoader.load(getClass()
-					.getResource("../../view/mainpage/MainPage.fxml")));
+					.getClassLoader().getResource("view/mainpage/MainPage.fxml")));
 
 			stage.setScene(scene);
 			stage.setTitle("GraderTool");
@@ -114,7 +114,7 @@ public class UserLoginController {
 	    try {
             Stage stage = new Stage();
             Scene scene = new Scene((Parent) FXMLLoader.load(getClass()
-                    .getResource("new_user.fxml")));
+                    .getClassLoader().getResource("view/administration/new_user.fxml")));
 
             stage.setScene(scene);
             stage.setTitle("Create New User");
