@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.administration.User;
-import model.administration.UserDB;
+import model.curve.Curve;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.Student;
@@ -55,6 +55,22 @@ public class Grader {
 	public static User getUser() {
 		Debug.log("Grader Accessed", "Current User checked");
 		return user;
+	}
+	
+	/**
+	 * Sets the curve of the current roster
+	 * @param curve the new curve
+	 */
+	public static void setCurve(Curve curve) {
+		currentRoster.setCurve(curve);
+	}
+	
+	/**
+	 * Gets the curve of the current roster
+	 * @return the current roster's curve
+	 */
+	public static Curve getCurve() {
+		return currentRoster.getCurve();
 	}
 	
 	/**

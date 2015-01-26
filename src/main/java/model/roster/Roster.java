@@ -12,9 +12,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import model.curve.Curve;
 import model.driver.Debug;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * The class Roster that stores students and assignments
@@ -33,6 +32,7 @@ public class Roster implements Serializable{
 	private ArrayList<Student> students;
 	private ArrayList<GradedItem> assignments;
 	private HashMap<String, Student> ids;
+	private Curve curve;
 
 	/**
 	 * Creates a roster with the given information
@@ -48,6 +48,7 @@ public class Roster implements Serializable{
 		assignments = new ArrayList<GradedItem>();
 		ids = new HashMap<String, Student>();
 		this.instructor = instructor;
+		curve = new Curve();
 	}
 
 	/**
@@ -368,5 +369,21 @@ public class Roster implements Serializable{
 			return item1.getDepth() - item2.getDepth();
 		}
 
+	}
+
+	/**
+	 * Sets the curve
+	 * @param curve the new curve
+	 */
+	public void setCurve(Curve curve) {
+		this.curve = curve;
+	}
+	
+	/**
+	 * Gets the curve
+	 * @return the curve
+	 */
+	public Curve getCurve() {
+		return curve;
 	}
 }
