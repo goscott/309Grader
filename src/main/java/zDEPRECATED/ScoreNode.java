@@ -1,4 +1,4 @@
-package model.roster;
+package zDEPRECATED;
 
 import java.io.Serializable;
 import java.util.ArrayList;

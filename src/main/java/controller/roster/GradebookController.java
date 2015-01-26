@@ -160,11 +160,6 @@ public class GradebookController {
 	 */
 	void refresh() {
 		if (Grader.getRoster() != null) {
-			/*System.out.println("*******************************");
-			for (GradedItem item : Grader.getRoster().getAssignmentsByDepth()) {
-				System.out.println(item);
-			}
-			System.out.println("*******************************");*/
 			totalGradeCol
 					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 							"totalScore"));

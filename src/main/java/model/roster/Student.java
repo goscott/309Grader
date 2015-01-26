@@ -24,8 +24,7 @@ public class Student implements Comparable<Student>, Serializable {
     private static final long serialVersionUID = 6298208303690715171L;
     private final SimpleStringProperty name;
 	private final SimpleStringProperty id;
-	private HashMap<String, ScoreNode> scores;
-	private HashMap<String, Double> scoreValues;
+	private HashMap<String, GradedItem> scores;
 	private double totalScore;
 
 	/**
@@ -36,8 +35,7 @@ public class Student implements Comparable<Student>, Serializable {
 	public Student(String name, String id) {
 		this.name = new SimpleStringProperty(name);
 		this.id = new SimpleStringProperty(id);
-		scores = new HashMap<String, ScoreNode>();
-		scoreValues = new HashMap<String, Double>();
+		scores = new HashMap<String, GradedItem>();
 		totalScore = 0;
 	}
 
@@ -73,7 +71,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 * assignment
 	 */
 	public Double getAssignmentScore(String asgn) {
-		return scoreValues.get(asgn);
+		return scores.get(asgn)!=null ? scores.get(asgn).score() : null;
 	}
 	
 	/**
@@ -96,9 +94,10 @@ public class Student implements Comparable<Student>, Serializable {
 	 * grade of zero
 	 * @param asgn The name of the new assignment
 	 */
-	public void addAssignment(String asgn) {
-		scores.put(asgn, new ScoreNode("temp", 0));
-		scoreValues.put(asgn, 0.0);
+	public void addAssignment(GradedItem asgn) {
+		GradedItem item = asgn.copy();
+		item.setScore(0);
+		scores.put(item.name(), item);
 	}
 
 	/**
@@ -107,8 +106,9 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @param sc the new score
 	 */
 	public void setScore(String asgn, double sc) {
-		//scores.put(asgn, sc);
-		scoreValues.put(asgn, sc);
+		GradedItem item = scores.get(asgn);
+		item.setScore(sc);
+		scores.put(asgn, item);
 		calcTotalScore();
 	}
 	
@@ -162,7 +162,7 @@ public class Student implements Comparable<Student>, Serializable {
 		for (Student stu : students) {
 			toReturn += "S" + secret;
 			toReturn += stu.name.toString() + secret + stu.id + secret;
-			toReturn += ScoreNode.Save(stu.scores);
+			//toReturn += ScoreNode.Save(stu.scores);
 			toReturn += "\n";
 		}
 
@@ -175,8 +175,8 @@ public class Student implements Comparable<Student>, Serializable {
 	 */
 	private void calcTotalScore() {
 		totalScore = 0;
-		for(double score : scoreValues.values()) {
-			totalScore += score;
+		for(GradedItem item : scores.values()) {
+			totalScore += item.score();
 		}
 	}
 }

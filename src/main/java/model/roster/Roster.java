@@ -60,7 +60,7 @@ public class Roster implements Serializable{
 		students.add(student);
 		ids.put(student.getId(), student);
 		for(GradedItem item : assignments) {
-			student.addAssignment(item.name());
+			student.addAssignment(item);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class Roster implements Serializable{
 	public void addAssignment(GradedItem asgn) {
 		assignments.add(asgn);
 		for (Student stud : students) {
-			stud.addAssignment(asgn.name());
+			stud.addAssignment(asgn);
 		}
 	}
 
@@ -123,10 +123,10 @@ public class Roster implements Serializable{
 	 * the roster for this particular student and 
 	 * assignment.
 	 */
-	public void addScore(Student student, GradedItem asgn, ScoreNode score) {
+	public void addScore(Student student, GradedItem asgn, double score) {
 		if (students.contains(student) && assignments.contains(asgn)) {
 			Student stud = students.get(students.indexOf(student));
-			stud.setScore(asgn.name(), score.value());
+			stud.setScore(asgn.name(), score);
 		}
 	}
 	

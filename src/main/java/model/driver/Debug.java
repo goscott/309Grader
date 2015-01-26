@@ -13,7 +13,6 @@ import java.util.Calendar;
 import controller.roster.AddAssignmentDialogController;
 import model.roster.GradedItem;
 import model.roster.Roster;
-import model.roster.ScoreNode;
 import model.roster.Student;
 
 /**
