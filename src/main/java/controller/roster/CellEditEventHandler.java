@@ -21,6 +21,16 @@ import javafx.stage.Stage;
  */
 public class CellEditEventHandler implements
 		EventHandler<CellEditEvent<Student, String>> {
+	private GradebookController controller;
+	
+	/**
+	 * Initializes an event, with the given controller
+	 * @param ctrl the gradebook's controller
+	 */
+	public CellEditEventHandler(GradebookController ctrl) {
+		controller = ctrl;
+	}
+	
 	/**
 	 * Handles the event
 	 * 
@@ -58,5 +68,6 @@ public class CellEditEventHandler implements
 				Debug.log("User Input Error", "Entered invalid grade");
 			}
 		}
+		controller.refresh();
 	}
 }

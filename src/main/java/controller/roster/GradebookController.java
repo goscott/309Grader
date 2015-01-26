@@ -185,7 +185,7 @@ public class GradebookController {
 					newColumn.setCellFactory(TextFieldTableCell
 							.<Student> forTableColumn());
 					/* When a user types a change */
-					newColumn.setOnEditCommit(new CellEditEventHandler());
+					newColumn.setOnEditCommit(new CellEditEventHandler(this));
 
 					if (!item.hasParent()) {
 						mainTable.getColumns().add(newColumn);
