@@ -15,6 +15,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
@@ -50,6 +51,8 @@ public class AddAssignmentDialogController {
 	private Button refreshButton;
 	@FXML
 	private TextField maxScoreField;
+	@FXML
+	private CheckBox ecBox;
 
 	private static GradebookController gbook;
 	private static MenuItem parent;
@@ -136,7 +139,7 @@ public class AddAssignmentDialogController {
 		}
 		GradedItem item = new GradedItem(nameField.getText(),
 				descrField.getText(), Double.parseDouble(maxScoreField
-						.getText()), asgnParent);
+						.getText()), asgnParent, ecBox.isSelected());
 		Grader.addAssignment(item);
 		nameField.setText("");
 		descrField.setText("");

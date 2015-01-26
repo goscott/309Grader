@@ -69,12 +69,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 * scored out of total points possible
 	 */
 	public double getTotalPercentage() {
-		double maxTotal = 0;
-		
-		for(GradedItem item : scores.values()) {
-			maxTotal += item.maxScore();
-		}
-		
+		double maxTotal = Grader.getMaxPoints();
 		return maxTotal > 0 ? getTotalScore() / maxTotal : 0;
 	}
 	
@@ -208,7 +203,6 @@ public class Student implements Comparable<Student>, Serializable {
 		for (Student stu : students) {
 			toReturn += "S" + secret;
 			toReturn += stu.name.toString() + secret + stu.id + secret;
-			//toReturn += ScoreNode.Save(stu.scores);
 			toReturn += "\n";
 		}
 

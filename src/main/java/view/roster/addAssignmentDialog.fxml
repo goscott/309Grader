@@ -42,10 +42,12 @@
             </Button>
             <TextField fx:id="maxScoreField" layoutX="74.0" layoutY="275.0" onKeyReleased="#scoreChangeHandler">
             	<tooltip>
-					<Tooltip text='The "100%" value for the assignment' />
+					<Tooltip text="The &quot;100%&quot; value for the assignment" />
 			    </tooltip>
             </TextField>
             <Label layoutX="14.0" layoutY="279.0" text="Max Score" />
+            <Label layoutX="262.0" layoutY="279.0" text="Extra Credit" />
+            <CheckBox fx:id="ecBox" layoutX="330.0" layoutY="279.0" mnemonicParsing="false" />
          </children>
       </Pane>
    </center>

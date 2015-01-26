@@ -85,6 +85,15 @@ public class Grader {
 	}
 
 	/**
+	 * Gets the maximum points possible for all
+	 * assignments in the current roster
+	 * @return double the max points
+	 */
+	public static double getMaxPoints() {
+		return currentRoster.getMaxPoints();
+	}
+	
+	/**
 	 * Adds a new class to the class list, but does not change the currently
 	 * selected roster
 	 * 

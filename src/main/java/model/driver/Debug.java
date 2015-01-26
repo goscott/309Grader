@@ -80,17 +80,17 @@ public class Debug {
 		Roster roster = new Roster("CPE 309", "Winter 2015", "Gene Fisher");
 		Grader.addRoster(roster);
 		Grader.setCurrentRoster(roster);
-		Grader.addAssignment(new GradedItem("Test", "sfds", 100));
-		GradedItem test2 = new GradedItem("Midterms", "sfds", 150);
-		GradedItem test3 = new GradedItem("Midterm 1", "sfds", 150, test2);
-		GradedItem test4 = new GradedItem("Midterm 2", "sfds", 150, test2);
-		GradedItem test5 = new GradedItem("Midterm 3", "sfds", 150, test2);
+		Grader.addAssignment(new GradedItem("Test", "sfds", 100, false));
+		GradedItem test2 = new GradedItem("Midterms", "sfds", 150, false);
+		GradedItem test3 = new GradedItem("Midterm 1", "sfds", 150, test2, false);
+		GradedItem test4 = new GradedItem("Midterm 2", "sfds", 150, test2, false);
+		GradedItem test5 = new GradedItem("Midterm 3", "sfds", 150, test2, false);
 		Grader.addAssignment(test2);
 		Grader.addAssignment(test3);
 		Grader.addAssignment(test4);
 		Grader.addAssignment(test5);
-		Grader.addAssignment(new GradedItem("Q1", "wefgr", 75, test3));
-		Grader.addAssignment(new GradedItem("Q2", "wefgr", 75, test3));
+		Grader.addAssignment(new GradedItem("Q1", "wefgr", 75, test3, false));
+		Grader.addAssignment(new GradedItem("Q2", "wefgr", 75, test3, false));
 
 		Student bob = new Student("Bob", "123");
 		Student bill = new Student("Bill", "321");

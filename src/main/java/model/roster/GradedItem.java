@@ -23,6 +23,7 @@ public class GradedItem implements Serializable {
 	private ArrayList<GradedItem> children;
 	private GradedItem parent;
 	private int depth;
+	private boolean extraCredit;
 
 	/**
 	 * Creates a graded item with the given information. The parent will be set
@@ -33,8 +34,8 @@ public class GradedItem implements Serializable {
 	 * @param descr
 	 *            the assignment's description
 	 */
-	public GradedItem(String name, String descr, double maxScore) {
-		this(name, descr, null, 0, maxScore);
+	public GradedItem(String name, String descr, double maxScore, boolean extraCredit) {
+		this(name, descr, null, 0, maxScore, extraCredit);
 	}
 
 	/**
@@ -48,8 +49,8 @@ public class GradedItem implements Serializable {
 	 * @param score
 	 *            The assignment's score
 	 */
-	public GradedItem(String name, String descr, double score, double maxScore) {
-		this(name, descr, null, score, maxScore);
+	public GradedItem(String name, String descr, double score, double maxScore, boolean extraCredit) {
+		this(name, descr, null, score, maxScore, extraCredit);
 	}
 
 	/**
@@ -63,8 +64,8 @@ public class GradedItem implements Serializable {
 	 * @param parent
 	 *            The assignment's parent assignment or category
 	 */
-	public GradedItem(String name, String descr, double maxScore, GradedItem parent) {
-		this(name, descr, parent, 0, maxScore);
+	public GradedItem(String name, String descr, double maxScore, GradedItem parent, boolean extraCredit) {
+		this(name, descr, parent, 0, maxScore, extraCredit);
 	}
 
 	/**
@@ -80,13 +81,14 @@ public class GradedItem implements Serializable {
 	 *            The assignment's score
 	 */
 	public GradedItem(String name, String descr, GradedItem parent,
-			double score, double maxScore) {
+			double score, double maxScore, boolean extraCredit) {
 		children = new ArrayList<GradedItem>();
 		this.name = name;
 		this.descr = descr;
 		this.score = score;
 		this.parent = parent;
 		this.maxScore = maxScore;
+		this.extraCredit = extraCredit;
 		if (parent != null) {
 			parent.addChild(this);
 		}
@@ -260,9 +262,17 @@ public class GradedItem implements Serializable {
 	 * @return GradedItem the copy
 	 */
 	public GradedItem copy() {
-		return new GradedItem(name, descr, parent, score, maxScore);
+		return new GradedItem(name, descr, parent, score, maxScore, extraCredit);
 	}
 
+	/**
+	 * Checks if the assignment is extra credit
+	 * @return boolean true if it is extra credit
+	 */
+	public boolean isExtraCredit() {
+		return extraCredit;
+	}
+	
 	/**
 	 * Saves the assignment
 	 * 

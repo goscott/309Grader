@@ -372,6 +372,21 @@ public class Roster implements Serializable{
 	}
 
 	/**
+	 * Gets the maximum points possible for all
+	 * assignments
+	 * @return double the max points
+	 */
+	public double getMaxPoints() {
+		double max = 0;
+		for(GradedItem item : assignments) {
+			if(!item.isExtraCredit()) {
+				max += item.maxScore();
+			}
+		}
+		return max;
+	}
+	
+	/**
 	 * Sets the curve
 	 * @param curve the new curve
 	 */
