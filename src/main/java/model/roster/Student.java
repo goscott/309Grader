@@ -6,12 +6,8 @@ import java.util.HashMap;
 
 import model.curve.Grade;
 import model.driver.Grader;
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableNumberValue;
-import javafx.beans.value.ObservableValue;
 
 /**
  * A student in a class
@@ -26,7 +22,6 @@ public class Student implements Comparable<Student>, Serializable {
     private final SimpleStringProperty name;
 	private final SimpleStringProperty id;
 	private HashMap<String, GradedItem> scores;
-	private double totalScore;
 
 	/**
 	 * Creates a student with the given information
@@ -37,7 +32,6 @@ public class Student implements Comparable<Student>, Serializable {
 		this.name = new SimpleStringProperty(name);
 		this.id = new SimpleStringProperty(id);
 		scores = new HashMap<String, GradedItem>();
-		totalScore = 0;
 	}
 
 	/**
@@ -61,7 +55,11 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return double the total grade
 	 */
 	public double getTotalScore() {
-		return totalScore;
+		double total = 0;
+		for(GradedItem item : scores.values()) {
+			total += item.score();
+		}
+		return total;
 	}
 	
 	/**
@@ -77,7 +75,7 @@ public class Student implements Comparable<Student>, Serializable {
 			maxTotal += item.maxScore();
 		}
 		
-		return maxTotal > 0 ? totalScore / maxTotal : 0;
+		return maxTotal > 0 ? getTotalScore() / maxTotal : 0;
 	}
 	
 	/**
@@ -158,7 +156,6 @@ public class Student implements Comparable<Student>, Serializable {
 		GradedItem item = scores.get(asgn);
 		item.setScore(sc);
 		scores.put(asgn, item);
-		calcTotalScore();
 	}
 	
 	/**
@@ -216,16 +213,5 @@ public class Student implements Comparable<Student>, Serializable {
 		}
 
 		return toReturn;
-	}
-	
-	/**
-	 * Sets the total score of a student based on the
-	 * sum of the scores for every assignment
-	 */
-	private void calcTotalScore() {
-		totalScore = 0;
-		for(GradedItem item : scores.values()) {
-			totalScore += item.score();
-		}
 	}
 }

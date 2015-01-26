@@ -31,7 +31,8 @@ public class CellEditEventHandler implements
 		String input = t.getNewValue();
 		try {
 			double newGrade = Double.parseDouble(input);
-			if (newGrade < 0) {
+			double maxScore = Grader.getAssignment(t.getTableColumn().getText()).maxScore();
+			if (newGrade < 0 || newGrade > maxScore) {
 				throw new NumberFormatException();
 			}
 			Grader.addScore(t.getRowValue(), t.getTableColumn().getText(),
@@ -43,7 +44,7 @@ public class CellEditEventHandler implements
 				}
 				input = input.substring(0, input.length() - 1);
 				double newGrade = Double.parseDouble(input);
-				if (newGrade < 0) {
+				if (newGrade < 0 || newGrade > 100) {
 					throw new NumberFormatException();
 				}
 				Grader.addPercentageScore(t.getRowValue(), t.getTableColumn().getText(),
