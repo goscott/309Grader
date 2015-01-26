@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.administration.User;
 import model.curve.Curve;
+import model.history.CourseHistory;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.Student;
@@ -21,6 +22,7 @@ public class Grader {
 	private static Roster currentRoster;
 	private static ArrayList<Roster> classList;
 	private static User user;
+	private static CourseHistory history;
 
 	/**
 	 * Initiates a Grader
