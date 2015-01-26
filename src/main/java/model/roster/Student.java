@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.curve.Grade;
 import model.driver.Grader;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -56,11 +57,59 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Gets the student's overall grade
+	 * Gets the student's total number of points
 	 * @return double the total grade
 	 */
 	public double getTotalScore() {
 		return totalScore;
+	}
+	
+	/**
+	 * Gets the student's grade, represented by
+	 * a percentage of possible points
+	 * @return double the percentage of total points
+	 * scored out of total points possible
+	 */
+	public double getTotalPercentage() {
+		double maxTotal = 0;
+		
+		for(GradedItem item : scores.values()) {
+			maxTotal += item.maxScore();
+		}
+		
+		return maxTotal > 0 ? totalScore / maxTotal : 0;
+	}
+	
+	/**
+	 * Gets the students total grade as a Grade object,
+	 * based on the classes current curve
+	 * @return Grade the student's total Grade
+	 */
+	public Grade getGrade() {
+		double percent = getTotalPercentage();
+		Grade studentGrade = null;
+		for(Grade grade : Grader.getCurve().getGrades()) {
+			if(grade.min() <= percent && grade.max() >= percent) {
+				studentGrade = grade;
+			}
+		}
+		
+		return studentGrade;
+	}
+	
+	/**
+	 * Gets the student's grade on a particular assignment
+	 * @param asgn the assignment
+	 * @return Grade the grade
+	 */
+	public Grade getGrade(String asgn) {
+		double score = scores.get(asgn).score() / scores.get(asgn).maxScore();
+		for(Grade grade : Grader.getCurve().getGrades()) {
+			if(grade.min() <= score && grade.max() >= score) {
+				return grade;
+			}
+		}
+		return null;
 	}
 
 	/**
