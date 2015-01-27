@@ -22,6 +22,7 @@ public class UserDB {
     private ArrayList<User> users;
     //private static final String DATABASE = "src/main/java/model/administration/users.udb";
     private static final String DATABASE = "model/administration/users.udb";
+    private static final String DELIM = Character.toString((char) 0);
 
     public UserDB() {
         loadUserDB();
@@ -53,7 +54,7 @@ public class UserDB {
             reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(DATABASE)));
             
             while ((line = reader.readLine()) != null) {
-                tokens = line.split(",");
+                tokens = line.split(DELIM);
                 index = 0;
                 users.add(new User(tokens[index++], tokens[index++],
                         tokens[index++], tokens[index++], tokens[index++]
@@ -84,9 +85,9 @@ public class UserDB {
             
             for (User newUser : users) {
                 // add the user to the db file
-                writer.append(newUser.getfName() + "," + newUser.getlName()
-                        + "," + newUser.getId() + "," + newUser.getPassword()
-                        + "," + newUser.getType() + "\n");
+                writer.append(newUser.getfName() + DELIM + newUser.getlName()
+                        + DELIM + newUser.getId() + DELIM + newUser.getPassword()
+                        + DELIM + newUser.getType() + "\n");
             }
             
             writer.close();
@@ -114,9 +115,9 @@ public class UserDB {
                 writer = new BufferedWriter(new FileWriter(DATABASE, true));
 
                 // add the user to the db file
-                writer.append(newUser.getfName() + "," + newUser.getlName()
-                        + "," + newUser.getId() + "," + newUser.getPassword()
-                        + "," + newUser.getType() + "\n");
+                writer.append(newUser.getfName() + DELIM + newUser.getlName()
+                        + DELIM + newUser.getId() + DELIM + newUser.getPassword()
+                        + DELIM + newUser.getType() + "\n");
                 writer.close();
 
                 // add the user to the db
