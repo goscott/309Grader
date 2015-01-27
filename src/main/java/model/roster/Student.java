@@ -1,32 +1,36 @@
 package model.roster;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.curve.Grade;
 import model.driver.Grader;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
  * A student in a class
+ * 
  * @author Gavin Scott
  *
  */
 public class Student implements Comparable<Student>, Serializable {
 	/**
-     * generated serial ID
-     */
-    private static final long serialVersionUID = 6298208303690715171L;
-    private final SimpleStringProperty name;
+	 * generated serial ID
+	 */
+	private static final long serialVersionUID = 6298208303690715171L;
+	private final SimpleStringProperty name;
 	private final SimpleStringProperty id;
 	private HashMap<String, GradedItem> scores;
 
 	/**
 	 * Creates a student with the given information
-	 * @param name The student's name
-	 * @param id The student's ID
+	 * 
+	 * @param name
+	 *            The student's name
+	 * @param id
+	 *            The student's ID
 	 */
 	public Student(String name, String id) {
 		this.name = new SimpleStringProperty(name);
@@ -36,6 +40,7 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * Gets the student's name
+	 * 
 	 * @return String the name of the student
 	 */
 	public String getName() {
@@ -44,6 +49,7 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * Gets the student's ID
+	 * 
 	 * @return String the student's ID
 	 */
 	public String getId() {
@@ -52,53 +58,59 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * Gets the student's total number of points
+	 * 
 	 * @return double the total grade
 	 */
 	public double getTotalScore() {
 		double total = 0;
-		for(GradedItem item : scores.values()) {
+		for (GradedItem item : scores.values()) {
 			total += item.score() != null ? item.score() : 0;
 		}
 		return total;
 	}
-	
+
 	/**
-	 * Gets the student's grade, represented by
-	 * a percentage of possible points
-	 * @return double the percentage of total points
-	 * scored out of total points possible
+	 * Gets the student's grade, represented by a percentage of possible points
+	 * 
+	 * @return double the percentage of total points scored out of total points
+	 *         possible
 	 */
 	public double getTotalPercentage() {
 		double maxTotal = Grader.getMaxPoints();
-		return maxTotal > 0 ? getTotalScore() / maxTotal : 0;
+		DecimalFormat twoDForm = new DecimalFormat("#.##");
+		return maxTotal > 0 ? Double.valueOf(twoDForm.format(getTotalScore()
+				/ maxTotal * 100)) : 0;
 	}
-	
+
 	/**
-	 * Gets the students total grade as a Grade object,
-	 * based on the classes current curve
+	 * Gets the students total grade as a Grade object, based on the classes
+	 * current curve
+	 * 
 	 * @return Grade the student's total Grade
 	 */
 	public Grade getGrade() {
 		double percent = getTotalPercentage();
 		Grade studentGrade = null;
-		for(Grade grade : Grader.getCurve().getGrades()) {
-			if(grade.min() <= percent && grade.max() >= percent) {
+		for (Grade grade : Grader.getCurve().getGrades()) {
+			if (grade.min() <= percent && grade.max() >= percent) {
 				studentGrade = grade;
 			}
 		}
-		
+
 		return studentGrade;
 	}
-	
+
 	/**
 	 * Gets the student's grade on a particular assignment
-	 * @param asgn the assignment
+	 * 
+	 * @param asgn
+	 *            the assignment
 	 * @return Grade the grade
 	 */
 	public Grade getGrade(String asgn) {
 		double score = scores.get(asgn).score() / scores.get(asgn).maxScore();
-		for(Grade grade : Grader.getCurve().getGrades()) {
-			if(grade.min() <= score && grade.max() >= score) {
+		for (Grade grade : Grader.getCurve().getGrades()) {
+			if (grade.min() <= score && grade.max() >= score) {
 				return grade;
 			}
 		}
@@ -106,38 +118,38 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Gets the student's score on an individual
-	 * assignment
-	 * @param asgn The name of the assignment
-	 * @return Double the student's score on the
-	 * assignment
+	 * Gets the student's score on an individual assignment
+	 * 
+	 * @param asgn
+	 *            The name of the assignment
+	 * @return Double the student's score on the assignment
 	 */
 	public String getAssignmentScore(String asgn) {
-		if(scores.get(asgn) != null && scores.get(asgn).score() != null) {
-			return scores.get(asgn).score()+"";
+		if (scores.get(asgn) != null && scores.get(asgn).score() != null) {
+			return scores.get(asgn).score() + "";
 		}
 		return "";
 	}
-	
-	/**
-	 * Gets the student's score on an individual
-	 * assignment
-	 * @param asgn The name of the assignment
-	 * @return SimpleDoubleProperty the student's 
-	 * score on the assignment
-	 *
-	public SimpleDoubleProperty getAssignmentScoreAsProperty(String asgn) {
-		if(getAssignmentScore(asgn) != null)
-			return new SimpleDoubleProperty(getAssignmentScore(asgn));
-		else
-			return new SimpleDoubleProperty(-1);
-	}*/
 
 	/**
-	 * Adds an assignment for this student, where their score
-	 * will be recorded. The assignment will have a default 
-	 * grade of zero
-	 * @param asgn The name of the new assignment
+	 * Gets the student's score on an individual assignment
+	 * 
+	 * @param asgn
+	 *            The name of the assignment
+	 * @return SimpleDoubleProperty the student's score on the assignment
+	 *
+	 *         public SimpleDoubleProperty getAssignmentScoreAsProperty(String
+	 *         asgn) { if(getAssignmentScore(asgn) != null) return new
+	 *         SimpleDoubleProperty(getAssignmentScore(asgn)); else return new
+	 *         SimpleDoubleProperty(-1); }
+	 */
+
+	/**
+	 * Adds an assignment for this student, where their score will be recorded.
+	 * The assignment will have a default grade of zero
+	 * 
+	 * @param asgn
+	 *            The name of the new assignment
 	 */
 	public void addAssignment(GradedItem asgn) {
 		GradedItem item = asgn.copy();
@@ -147,29 +159,36 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * Sets the score for an assignment
-	 * @param asgn The name of the assignment
-	 * @param sc the new score
+	 * 
+	 * @param asgn
+	 *            The name of the assignment
+	 * @param sc
+	 *            the new score
 	 */
 	public void setScore(String asgn, double sc) {
 		GradedItem item = scores.get(asgn);
 		item.setScore(sc);
 		scores.put(asgn, item);
 	}
-	
+
 	/**
 	 * Sets the assignment's score to a percentage of the assignment's maximum
 	 * score
-	 * @param asgn the name of the assignment
+	 * 
+	 * @param asgn
+	 *            the name of the assignment
 	 * @param percent
 	 *            the percent (90.0, etc)
 	 */
 	public void setPercentScore(String asgn, double percent) {
-		setScore(asgn, percent/100*Grader.getAssignment(asgn).maxScore());
+		setScore(asgn, percent / 100 * Grader.getAssignment(asgn).maxScore());
 	}
 
 	/**
 	 * Removes an assignment
-	 * @param asgn The name of the assignment
+	 * 
+	 * @param asgn
+	 *            The name of the assignment
 	 */
 	public void removeScore(String asgn) {
 		scores.remove(asgn);
@@ -184,7 +203,9 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * Checks two students for logical equality
-	 * @param other The other object
+	 * 
+	 * @param other
+	 *            The other object
 	 * @return boolean true if logically equal
 	 */
 	public boolean equals(Object other) {
@@ -197,7 +218,9 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * Saves a list of students
-	 * @param students the list
+	 * 
+	 * @param students
+	 *            the list
 	 * @return String a representation of the list of students
 	 */
 	public static String Save(ArrayList<Student> students) {

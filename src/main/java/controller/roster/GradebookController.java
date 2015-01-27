@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
@@ -84,6 +85,24 @@ public class GradebookController {
 		totalGradeCol
 				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 						"totalScore"));
+		
+		TableColumn<Student, Double> percentCol = new TableColumn<Student, Double>(
+				"Percentage");
+		percentCol.setEditable(false);
+		percentCol.setMinWidth(100);
+		percentCol
+				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
+						"totalPercentage"));
+		mainTable.getColumns().add(percentCol);
+
+		TableColumn<Student, Grade> gradeCol = new TableColumn<Student, Grade>(
+				"Grade");
+		gradeCol.setMinWidth(100);
+		gradeCol.setEditable(false);
+		gradeCol.setCellValueFactory(new PropertyValueFactory<Student, Grade>(
+				"grade"));
+		mainTable.getColumns().add(gradeCol);
+		
 		refresh();
 
 		// create popup menu
@@ -104,7 +123,8 @@ public class GradebookController {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("*******************************");
-				for (GradedItem item : Grader.getRoster().getAssignmentsByDepth()) {
+				for (GradedItem item : Grader.getRoster()
+						.getAssignmentsByDepth()) {
 					System.out.println(item);
 				}
 				System.out.println("*******************************");
@@ -160,6 +180,8 @@ public class GradebookController {
 	 */
 	void refresh() {
 		if (Grader.getRoster() != null) {
+			int endNdx = mainTable.getColumns().size() - 2;
+			mainTable.getColumns().remove(endNdx, endNdx + 2);
 			totalGradeCol
 					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 							"totalScore"));
@@ -194,13 +216,31 @@ public class GradebookController {
 					}
 				}
 			}
+
+			TableColumn<Student, Double> percentCol = new TableColumn<Student, Double>(
+					"Percentage");
+			percentCol.setEditable(false);
+			percentCol.setMinWidth(100);
+			percentCol
+					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
+							"totalPercentage"));
+			mainTable.getColumns().add(percentCol);
+
+			TableColumn<Student, Grade> gradeCol = new TableColumn<Student, Grade>(
+					"Grade");
+			gradeCol.setMinWidth(100);
+			gradeCol.setEditable(false);
+			gradeCol.setCellValueFactory(new PropertyValueFactory<Student, Grade>(
+					"grade"));
+			mainTable.getColumns().add(gradeCol);
+
 			mainTable.setItems(Grader.getStudentList());
 			// force hard refresh
 			mainTable.getColumns().add(0, new TableColumn<Student, String>());
 			mainTable.getColumns().remove(0);
 		}
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	/**
 	 * Adds a sub-column to the gradebook
