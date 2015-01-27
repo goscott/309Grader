@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import model.driver.Debug;
+import model.server.Server;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +16,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -50,7 +53,9 @@ public class AddClassDialogController {
     @FXML
     void initialize() {
         ObservableList<String> items = FXCollections.observableArrayList ("There will be students here someday");
-        students.setItems(items);
+        students.setItems(Server.getObserableStudentList());
+        students.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+     //   students.setItems(items);
     }
     
     @FXML
@@ -74,8 +79,9 @@ public class AddClassDialogController {
     public void start(Stage stage) {
 
         try {
-            Pane page = (Pane) FXMLLoader.load(getClass()
-                    .getResource("../../view/roster/addClassDialog.fxml"));
+            Pane page = (Pane) FXMLLoader
+                .load(getClass().getClassLoader().getResource((
+                    "view/roster/addClassDialog.fxml")));
             Scene popup = new Scene(page);
             stage.setTitle("Add Class");
             stage.setScene(popup);
@@ -85,7 +91,7 @@ public class AddClassDialogController {
             Debug.log("IO ERROR", "Could not load file to start popup");
             e1.printStackTrace();
         }
-
+        
         stage.setOnHiding(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent event) {
         //        parent.setDisable(false);

@@ -3,6 +3,7 @@ package model.server;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.curve.Curve;
 import model.curve.Grade;
@@ -30,7 +31,8 @@ public class Server {
 		return students;
 	}
 	
-	public static ObservableList<String> getObserableStudentList() {
+	public static ObservableList<String> getObserableStudentList() { 
+	    studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
 			studentNames.add(student.getName());
 		}
