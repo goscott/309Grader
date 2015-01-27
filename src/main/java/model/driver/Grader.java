@@ -61,6 +61,10 @@ public class Grader {
 		return user;
 	}
 	
+	/**
+	 * Gets the user database.
+	 * @return Returns the static UserDB object held by this class.
+	 */
 	public static UserDB getUserDB() {
 	    return userDB;
 	}
