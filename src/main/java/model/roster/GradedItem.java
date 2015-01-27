@@ -18,7 +18,7 @@ public class GradedItem implements Serializable {
 	private static final long serialVersionUID = 8994764986930533573L;
 	private String name;
 	private String descr;
-	private double score;
+	private Double score;
 	private double maxScore;
 	private ArrayList<GradedItem> children;
 	private GradedItem parent;
@@ -35,7 +35,7 @@ public class GradedItem implements Serializable {
 	 *            the assignment's description
 	 */
 	public GradedItem(String name, String descr, double maxScore, boolean extraCredit) {
-		this(name, descr, null, 0, maxScore, extraCredit);
+		this(name, descr, null, null, maxScore, extraCredit);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class GradedItem implements Serializable {
 	 * @param score
 	 *            The assignment's score
 	 */
-	public GradedItem(String name, String descr, double score, double maxScore, boolean extraCredit) {
+	public GradedItem(String name, String descr, Double score, double maxScore, boolean extraCredit) {
 		this(name, descr, null, score, maxScore, extraCredit);
 	}
 
@@ -65,7 +65,7 @@ public class GradedItem implements Serializable {
 	 *            The assignment's parent assignment or category
 	 */
 	public GradedItem(String name, String descr, double maxScore, GradedItem parent, boolean extraCredit) {
-		this(name, descr, parent, 0, maxScore, extraCredit);
+		this(name, descr, parent, null, maxScore, extraCredit);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class GradedItem implements Serializable {
 	 *            The assignment's score
 	 */
 	public GradedItem(String name, String descr, GradedItem parent,
-			double score, double maxScore, boolean extraCredit) {
+			Double score, double maxScore, boolean extraCredit) {
 		children = new ArrayList<GradedItem>();
 		this.name = name;
 		this.descr = descr;
@@ -118,7 +118,7 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return double the score of the assignment
 	 */
-	public double score() {
+	public Double score() {
 		return score;
 	}
 
@@ -137,7 +137,7 @@ public class GradedItem implements Serializable {
 	 * @param sc
 	 *            The new score
 	 */
-	public void setScore(double sc) {
+	public void setScore(Double sc) {
 		score = sc;
 	}
 

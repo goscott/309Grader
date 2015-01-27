@@ -97,10 +97,8 @@ public class Debug {
 
 		Grader.addStudent(new Student("Bob", "123"));
 		Grader.addStudent(new Student("Bill", "321"));
-		Grader.addScore(bob, "Midterm 1", 90);
 		Grader.addScore(bob, "Midterm 2", 86);
 		Grader.addScore(bob, "Midterm 3", 95);
-		Grader.addScore(bill, "Midterm 1", 54);
 		Grader.addScore(bill, "Midterm 2", 67);
 		Grader.addScore(bill, "Midterm 3", 59);
 	}

@@ -172,14 +172,14 @@ public class GradebookController {
 
 					newColumn.setCellValueFactory(new Callback() {
 						public SimpleStringProperty call(
-								CellDataFeatures<Student, Double> param) {
+								CellDataFeatures<Student, String> param) {
 							return new SimpleStringProperty(param.getValue()
 									.getAssignmentScore(newColumn.getText())
 									.toString());
 						}
 
 						public Object call(Object param) {
-							return call((CellDataFeatures<Student, Double>) (param));
+							return call((CellDataFeatures<Student, String>) (param));
 						}
 					});
 					newColumn.setCellFactory(TextFieldTableCell

@@ -57,7 +57,7 @@ public class Student implements Comparable<Student>, Serializable {
 	public double getTotalScore() {
 		double total = 0;
 		for(GradedItem item : scores.values()) {
-			total += item.score();
+			total += item.score() != null ? item.score() : 0;
 		}
 		return total;
 	}
@@ -112,8 +112,11 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return Double the student's score on the
 	 * assignment
 	 */
-	public Double getAssignmentScore(String asgn) {
-		return scores.get(asgn)!=null ? scores.get(asgn).score() : null;
+	public String getAssignmentScore(String asgn) {
+		if(scores.get(asgn) != null && scores.get(asgn).score() != null) {
+			return scores.get(asgn).score()+"";
+		}
+		return "";
 	}
 	
 	/**
@@ -122,13 +125,13 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @param asgn The name of the assignment
 	 * @return SimpleDoubleProperty the student's 
 	 * score on the assignment
-	 */
+	 *
 	public SimpleDoubleProperty getAssignmentScoreAsProperty(String asgn) {
 		if(getAssignmentScore(asgn) != null)
 			return new SimpleDoubleProperty(getAssignmentScore(asgn));
 		else
 			return new SimpleDoubleProperty(-1);
-	}
+	}*/
 
 	/**
 	 * Adds an assignment for this student, where their score
@@ -138,7 +141,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 */
 	public void addAssignment(GradedItem asgn) {
 		GradedItem item = asgn.copy();
-		item.setScore(0);
+		item.setScore(null);
 		scores.put(item.name(), item);
 	}
 
