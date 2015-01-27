@@ -3,6 +3,7 @@ package controller.administration;
 import model.administration.User;
 import model.administration.UserDB;
 import model.administration.UserTypes;
+import model.driver.Grader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -85,7 +86,7 @@ public class NewUserController {
      */
     public void createUser() {
         
-        UserDB users = new UserDB();
+        UserDB users = Grader.getUserDB();
         
         if (first_name.getText().isEmpty()) {
             error_message.setVisible(true);

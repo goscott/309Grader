@@ -132,7 +132,7 @@ public class MainPageController {
 	 */
 	public void permissions() {
 		System.out.println("Launching permissions editor");
-		UserDB users = new UserDB();
+		UserDB users = Grader.getUserDB();
 
 		try {
 			Stage stage = new Stage();
@@ -171,7 +171,7 @@ public class MainPageController {
 	 * Logs the user out
 	 */
 	public void logout() {
-	    UserDB users = new UserDB();
+	    UserDB users = Grader.getUserDB();
 	    users.logout();
 	    
 	    //launch login window

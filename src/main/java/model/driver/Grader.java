@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.administration.User;
+import model.administration.UserDB;
 import model.curve.Curve;
 import model.history.CourseHistory;
 import model.roster.GradedItem;
@@ -23,6 +24,7 @@ public class Grader {
 	private static ArrayList<Roster> classList;
 	private static User user;
 	private static CourseHistory history;
+	private static UserDB userDB = new UserDB();
 
 	/**
 	 * Initiates a Grader
@@ -57,6 +59,10 @@ public class Grader {
 	public static User getUser() {
 		Debug.log("Grader Accessed", "Current User checked");
 		return user;
+	}
+	
+	public static UserDB getUserDB() {
+	    return userDB;
 	}
 	
 	/**

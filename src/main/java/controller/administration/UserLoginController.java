@@ -4,6 +4,7 @@ import run.Launcher;
 import model.administration.User;
 import model.administration.UserDB;
 import model.driver.Debug;
+import model.driver.Grader;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,7 +50,7 @@ public class UserLoginController {
 	public void login() {
 		Debug.log("Login", "attempting login...");
 
-		UserDB users = new UserDB();
+		UserDB users = Grader.getUserDB();
 		String userName = user_name.getText();
 		String pass = password.getText();
 

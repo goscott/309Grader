@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import model.administration.User;
 import model.administration.UserDB;
 import model.administration.UserTypes;
+import model.driver.Grader;
 
 /**
  * Controls the permissions_editor view.
@@ -49,7 +50,7 @@ public class PermissionsEditorController {
     @FXML
     private MenuItem item_admin;
     
-    private UserDB users = new UserDB();
+    private UserDB users = Grader.getUserDB();
     
     private char userType;
     

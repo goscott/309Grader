@@ -25,6 +25,7 @@ public class UserDB {
     private static final String DELIM = Character.toString((char) 0);
 
     public UserDB() {
+        Debug.log("model", "UserDB Created");
         loadUserDB();
         //print();
     }
