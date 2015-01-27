@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.shape.*?>
@@ -9,74 +10,106 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.history.HistoryController">
    <children>
-      <ScrollPane fitToHeight="true" prefHeight="200.0" prefWidth="212.0">
-         <content>
+      <HBox fx:id="history_view" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="891.0">
+         <children>
             <VBox>
                <children>
-                  <Button minWidth="200.0" mnemonicParsing="false" text="PLACEHOLDER">
-                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button minWidth="200.0" mnemonicParsing="false" text="PLACEHOLDER">
-                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button layoutX="15.0" layoutY="45.0" minWidth="200.0" mnemonicParsing="false" text="PLACEHOLDER">
-                     <VBox.margin>
-                        <Insets left="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button minWidth="200.0" mnemonicParsing="false" text="PLACEHOLDER">
-                     <VBox.margin>
-                        <Insets left="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button minWidth="200.0" mnemonicParsing="false" text="PLACEHOLDER">
-                     <VBox.margin>
-                        <Insets left="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button minWidth="200.0" mnemonicParsing="false" text="PLACEHOLDER">
-                     <VBox.margin>
-                        <Insets left="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
+                  <ScrollPane fitToHeight="true" prefWidth="212.0" VBox.vgrow="ALWAYS">
+                     <content>
+                        <VBox>
+                           <children>
+                              <Accordion minWidth="200.0" prefWidth="200.0">
+                                <panes>
+                                  <TitledPane text="Class">
+                                       <content>
+                                          <VBox alignment="CENTER">
+                                             <children>
+                                                <Button minWidth="190.0" mnemonicParsing="false" text="Section" />
+                                                <Button minWidth="190.0" mnemonicParsing="false" text="Section">
+                                                   <VBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                  </TitledPane>
+                                  <TitledPane animated="false" text="Class">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                       <padding>
+                                          <Insets top="5.0" />
+                                       </padding>
+                                  </TitledPane>
+                                  <TitledPane animated="false" text="Class">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                       <padding>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </padding>
+                                  </TitledPane>
+                                </panes>
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </Accordion>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
                </children>
             </VBox>
-         </content>
-      </ScrollPane>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-         <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                     <center>
+                        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="History Tab Under Construction">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <LineChart>
+                                      <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                      </yAxis>
+                                    </LineChart>
+                                 </children>
+                              </FlowPane>
+                           </children>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+                  <HBox alignment="CENTER">
                      <children>
-                        <Label text="History Tab Under Construction">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
+                        <Button mnemonicParsing="false" text="TEST: Add Class" />
+                        <Button mnemonicParsing="false" text="TEST: Add section" />
+                        <Button mnemonicParsing="false" text="TEST: SWITCH GRAPH" />
+                        <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" text="TEST: See Gradebook" />
                      </children>
                   </HBox>
-                  <FlowPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <ImageView pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../history/graph.jpg" />
-                           </image>
-                           <FlowPane.margin>
-                              <Insets left="15.0" />
-                           </FlowPane.margin>
-                        </ImageView>
-                     </children>
-                  </FlowPane>
                </children>
             </VBox>
-         </center>
+         </children>
+      </HBox>
+      <BorderPane fx:id="gradebook_view" prefHeight="200.0" prefWidth="200.0" visible="false">
+         <bottom>
+            <Button fx:id="button_history" mnemonicParsing="false" onAction="#switchToHistory" text="TEST: Back to History" BorderPane.alignment="CENTER" />
+         </bottom>
       </BorderPane>
    </children>
-</HBox>
+</StackPane>

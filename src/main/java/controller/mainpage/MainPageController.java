@@ -22,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.administration.User;
 import model.administration.UserDB;
@@ -86,7 +87,7 @@ public class MainPageController {
             graphTab.setContent(graphPage);
 			
 			// add historytab -Mason
-			HBox historyPage = (HBox) FXMLLoader
+			StackPane historyPage = (StackPane) FXMLLoader
                     .load(getClass().getClassLoader().getResource(
                             "view/history/history_screen.fxml"));
 			historyTab.setContent(historyPage);
