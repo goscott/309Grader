@@ -51,6 +51,10 @@ public class AddStudentDialogController {
 		parent.setDisable(true);
 	}
 	
+	
+	/**
+	 * Initializes the dropdown box. 
+	 */
 	public void initialize() {
 		resetDropdown();
 	}
@@ -99,7 +103,6 @@ public class AddStudentDialogController {
 		}
 		resetDropdown();
 		gbook.refresh();
-
 	}
 	
 	@FXML

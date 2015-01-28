@@ -29,6 +29,11 @@ public class Server {
 		return students;
 	}
 	
+	/**
+	 * Gets the list of all students stored in the
+	 * server and turns the ArrayList to an ObservableList.
+	 * @return ObservableList<Student> the list of students
+	 */
 	public static ObservableList<Student> getObservableStudentList() { 
 	    studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -37,6 +42,12 @@ public class Server {
 		return studentNames;
 	}
 	
+	/**
+	 * Gets the list of all students stored in the
+	 * server and turns the ArrayList to an ObservableList.
+	 * This only gets a list of the students not in the Roster.
+	 * @return ObservableList<Student> the list of students
+	 */
 	public static ObservableList<Student> getStudentListNotRoster() { 
 	    studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -47,6 +58,11 @@ public class Server {
 		return studentNames;
 	}
 	
+	/**
+	 * Gets the list of all students stored in the
+	 * server and turns the ArrayList to an ObservableList.
+	 * @return ObservableList<Student> the list of student's names.
+	 */
 	public static ObservableList<String> getStudentListName() { 
 		ObservableList<String> studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -55,6 +71,12 @@ public class Server {
 		return studentNames;
 	}
 	
+	/**
+	 * Gets the list of all students stored in the
+	 * server and turns the ArrayList to an ObservableList.
+	 * This only gets a list of the students not in the Roster.
+	 * @return ObservableList<Student> the list of student's names.
+	 */
 	public static ObservableList<String> getStudentListNameNotRoster() { 
 		ObservableList<String> studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -64,9 +86,6 @@ public class Server {
 		}
 		return studentNames;
 	}
-
-	
-
 	
 	/*public static TreeSet<Grade> getGrades()
 	{
