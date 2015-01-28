@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -302,7 +301,7 @@ public class Roster implements Serializable {
 	 * (deepest first)
 	 * 
 	 * @return The sorted list of GradedItems
-	 */
+	 *
 	public ArrayList<GradedItem> getAssignmentsByDepth() {
 		ArrayList<GradedItem> sortedList = new ArrayList<GradedItem>();
 		for (GradedItem item : assignments) {
@@ -310,7 +309,7 @@ public class Roster implements Serializable {
 		}
 		sortedList.sort(new DepthComparator());
 		return sortedList;
-	}
+	}*/
 
 	/**
 	 * Returns a string representation of the roster
@@ -359,6 +358,7 @@ public class Roster implements Serializable {
 			FileInputStream in = new FileInputStream(url);
 			ObjectInputStream obj = new ObjectInputStream(in);
 			toReturn = (Roster) obj.readObject();
+			obj.close();
 
 		} catch (FileNotFoundException e) {
 			Debug.log(

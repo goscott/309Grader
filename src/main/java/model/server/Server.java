@@ -97,8 +97,8 @@ public class Server {
 	 * Populates the server with some default students
 	 */
 	public static void init() {
-		students.add(new Student("Bill", "00000"));
-		students.add(new Student("Bob", "11111"));
+		students.add(new Student("Jim", "00000"));
+		students.add(new Student("Tim", "11111"));
 		students.add(new Student("Gavin Scott", "12345"));
 		students.add(new Student("Shelli Crispen", "21549"));
 		students.add(new Student("Frank Poole", "34718"));

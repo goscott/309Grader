@@ -1,37 +1,25 @@
 package controller.roster;
 
-import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
 import model.curve.Grade;
-import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
 import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -63,6 +51,7 @@ public class GradebookController {
 
 	private ContextMenu rightClickMenu;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@FXML
 	/**
 	 * Initializes the gradebook view
@@ -99,8 +88,19 @@ public class GradebookController {
 				"Grade");
 		gradeCol.setMinWidth(100);
 		gradeCol.setEditable(false);
-		gradeCol.setCellValueFactory(new PropertyValueFactory<Student, Grade>(
-				"grade"));
+		/*gradeCol.setCellValueFactory(new PropertyValueFactory<Student, Grade>(
+				"grade"));*/
+		gradeCol.setCellValueFactory(new Callback() {
+			public SimpleStringProperty call(
+					CellDataFeatures<Student, Grade> param) {
+				return new SimpleStringProperty(param.getValue()
+						.getGrade().getName());
+			}
+
+			public Object call(Object param) {
+				return call((CellDataFeatures<Student, Grade>) (param));
+			}
+		});
 		mainTable.getColumns().add(gradeCol);
 		
 		refresh();
@@ -124,7 +124,7 @@ public class GradebookController {
 			public void handle(ActionEvent event) {
 				System.out.println("*******************************");
 				for (GradedItem item : Grader.getRoster()
-						.getAssignmentsByDepth()) {
+						.getAssignments()) {
 					System.out.println(item);
 				}
 				System.out.println("*******************************");
@@ -185,7 +185,7 @@ public class GradebookController {
 			totalGradeCol
 					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 							"totalScore"));
-			for (GradedItem item : Grader.getRoster().getAssignmentsByDepth()) {
+			for (GradedItem item : Grader.getRoster().getAssignments()) {
 				if (!columnExists(item.name())) {
 					TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
 							item.name());
@@ -230,8 +230,19 @@ public class GradebookController {
 					"Grade");
 			gradeCol.setMinWidth(100);
 			gradeCol.setEditable(false);
-			gradeCol.setCellValueFactory(new PropertyValueFactory<Student, Grade>(
-					"grade"));
+			/*gradeCol.setCellValueFactory(new PropertyValueFactory<Student, Grade>(
+					"grade"));*/
+			gradeCol.setCellValueFactory(new Callback() {
+				public SimpleStringProperty call(
+						CellDataFeatures<Student, Grade> param) {
+					return new SimpleStringProperty(param.getValue()
+							.getGrade().getName());
+				}
+
+				public Object call(Object param) {
+					return call((CellDataFeatures<Student, Grade>) (param));
+				}
+			});
 			mainTable.getColumns().add(gradeCol);
 
 			mainTable.setItems(Grader.getStudentList());
