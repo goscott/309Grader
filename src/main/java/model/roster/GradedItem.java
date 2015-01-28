@@ -192,6 +192,14 @@ public class GradedItem implements Serializable {
 	}
 	
 	/**
+	 * Gets all the children of this graded item
+	 * @return ArrayList<GradedItem> the children
+	 */
+	public ArrayList<GradedItem> getChildren() {
+		return children;
+	}
+	
+	/**
 	 * Removes a child from the assignment and marks the child as parentless
 	 * 
 	 * @param item
