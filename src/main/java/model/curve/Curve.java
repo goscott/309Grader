@@ -7,10 +7,15 @@ public class Curve {
     private TreeSet<Grade> curve;    // Set of grades that define this curve
     
     /**
-     * Returns an empty curve.
+     * Returns an initialized curve.
      */
     public Curve() {
         curve = new TreeSet<Grade>();
+        curve.add(new Grade("A", 100, 90));
+		curve.add(new Grade("B", 90, 80));
+		curve.add(new Grade("C", 80, 70));
+		curve.add(new Grade("D", 70, 60));
+		curve.add(new Grade("F", 60, 0));
     }
     
     /**

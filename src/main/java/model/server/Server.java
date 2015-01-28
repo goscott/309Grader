@@ -1,12 +1,9 @@
 package model.server;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.curve.Curve;
-import model.curve.Grade;
 import model.driver.Debug;
 import model.roster.Student;
 
@@ -19,7 +16,7 @@ import model.roster.Student;
 public class Server {
 	private static ArrayList<Student> students = new ArrayList<Student>();
 	private static ObservableList<String> studentNames;
-	private static Curve curve;
+	//private static Curve curve;
 	
 	/**
 	 * Gets the list of all students stored in the
@@ -39,11 +36,11 @@ public class Server {
 		return studentNames;
 	}
 	
-	public static TreeSet<Grade> getGrades()
+	/*public static TreeSet<Grade> getGrades()
 	{
 	    Debug.log("Accessing Server", "Curve pulled from server");
 	    return curve.getGrades();
-	}
+	}*/
 	
 	/**
 	 * Populates the server with some default students
@@ -59,12 +56,12 @@ public class Server {
 		students.add(new Student("Jacob Hardi", "01968"));
 		Debug.log("Initializing Server", "Server students populated");
 		
-		curve = new Curve();
+		/*curve = new Curve();
 		curve.add(new Grade("A", 100, 90));
 		curve.add(new Grade("B", 90, 80));
 		curve.add(new Grade("C", 80, 70));
 		curve.add(new Grade("D", 70, 60));
 		curve.add(new Grade("F", 60, 0));
-		Debug.log("Initializing Server", "Server curve populated");
+		Debug.log("Initializing Server", "Server curve populated");*/
 	}
 }
