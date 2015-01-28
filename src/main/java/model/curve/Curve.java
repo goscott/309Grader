@@ -66,11 +66,19 @@ public class Curve implements Serializable{
         grade.set(max, min);
     }
     
-    public TreeSet<Grade> getGrades()
-    {
+    /**
+     * Returns the set of grades that defines this curve.
+     * @return the set of grades that defines this curve
+     */
+    public TreeSet<Grade> getGrades() {
         return curve;
     }
     
+    /**
+     * Returns the grade that represents the percentage score.
+     * @param percentage the percentage score
+     * @return the grade that represents the percentage score
+     */
     public Grade get(double percentage) {
         for (Grade grade : curve) {
             if (grade.contains(percentage)) {
