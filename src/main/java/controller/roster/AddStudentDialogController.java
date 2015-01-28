@@ -4,11 +4,9 @@ import java.io.IOException;
 
 import model.driver.Debug;
 import model.driver.Grader;
-import model.roster.GradedItem;
 import model.roster.Student;
 import model.server.Server;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -32,16 +30,14 @@ public class AddStudentDialogController {
 	private ComboBox<String> SelectStudentMenu;
 	
 	@FXML
-	private Button AddStudentButton;
+	private Button addButton;
 	
 	@FXML
-	private Button CancelStudentButton;
+	private Button cancelButton;
 	
-	@SuppressWarnings("rawtypes")
 	private static GradebookController gbook;
 	private static MenuItem parent;
-	private final int maxChars = 25;
-	private final String noParent = "<None>";
+	private static Server server;
 	
 	/**
 	 * Sets the parent of the window, so it can grab information from the
@@ -55,24 +51,8 @@ public class AddStudentDialogController {
 		parent.setDisable(true);
 	}
 	
-	/**
-	 * Initializes some of the properties. Makes the add button the default.
-	 * Populates the parent list.
-	 */
 	public void initialize() {
-		// disables the add button
-		AddStudentButton.setDisable(true);
-		// populates parent list
 		resetDropdown();
-		SelectStudentMenu.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0,
-					Boolean oldPropertyValue, Boolean newPropertyValue) {
-				if (newPropertyValue) {
-					resetDropdown();
-				}
-			}
-		});
 	}
 	
 	/**
@@ -89,9 +69,9 @@ public class AddStudentDialogController {
 			stage.setScene(popup);
 			stage.setResizable(false);
 			stage.show();
-		} catch (IOException e1) {
+		} catch (IOException ex) {
 			Debug.log("IO ERROR", "Could not load file to start popup");
-			e1.printStackTrace();
+			ex.printStackTrace();
 		}
 
 		stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -107,11 +87,19 @@ public class AddStudentDialogController {
 	 * @param event the button's event
 	 */
 	private void handleAddButton(ActionEvent event){
-		
-		//Closes the popup
-		Node source = (Node) event.getSource();
-		Stage stage = (Stage) source.getScene().getWindow();
-		stage.hide();
+		if (SelectStudentMenu.getValue() != null) {
+			Student addS = null;
+			for(Student student: server.getObservableStudentList()){
+				if(student.getName() == SelectStudentMenu.getValue()){
+					addS = student;
+				}
+			}
+					
+			Grader.getRoster().addStudent(addS);
+		}
+		resetDropdown();
+		gbook.refresh();
+
 	}
 	
 	@FXML
@@ -126,26 +114,13 @@ public class AddStudentDialogController {
 	}
 	
 	/**
-	 * Checks if a student exists with a given name.
-	 * @param id is the ID of student to input
-	 * @return boolean true if a student with the 
-	 * given ID already exists in the roster
-	 */
-	private boolean idTaken(String id) {
-		for (Student item : Server.getStudents()) {
-			if (item.getId().equals(id)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Resets the parent dropdown menu to reflect
-	 * any new Students
+	 * that students are added to the gradebook and no longer only in the server
 	 */
 	private void resetDropdown() {
-		SelectStudentMenu.setItems(Server.getObserableStudentList());
-		SelectStudentMenu.getItems().add(0, noParent);
+		ObservableList<String> studentList = Server.getStudentListNameNotRoster();
+		if(studentList != null){
+			SelectStudentMenu.setItems(studentList);
+		}
 	}
 }

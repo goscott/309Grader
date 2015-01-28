@@ -55,7 +55,7 @@ public class AddClassDialogController {
 	void initialize() {
 		ObservableList<String> items = FXCollections
 				.observableArrayList("There will be students here someday");
-		students.setItems(Server.getObserableStudentList());
+		students.setItems(Server.getStudentListName());
 		students.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		// students.setItems(items);
 	}

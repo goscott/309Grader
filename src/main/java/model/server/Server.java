@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.driver.Debug;
+import model.driver.Grader;
 import model.roster.Student;
 
 /**
@@ -15,7 +16,7 @@ import model.roster.Student;
  */
 public class Server {
 	private static ArrayList<Student> students = new ArrayList<Student>();
-	private static ObservableList<String> studentNames;
+	private static ObservableList<Student> studentNames;
 	//private static Curve curve;
 	
 	/**
@@ -28,13 +29,44 @@ public class Server {
 		return students;
 	}
 	
-	public static ObservableList<String> getObserableStudentList() { 
+	public static ObservableList<Student> getObservableStudentList() { 
 	    studentNames = FXCollections.observableArrayList ();
+		for(Student student: students){
+			studentNames.add(student);
+		}
+		return studentNames;
+	}
+	
+	public static ObservableList<Student> getStudentListNotRoster() { 
+	    studentNames = FXCollections.observableArrayList ();
+		for(Student student: students){
+			if(student != null && Grader.getRoster().getStudentByID(student.getId()) == null){
+				studentNames.add(student);
+			}
+		}
+		return studentNames;
+	}
+	
+	public static ObservableList<String> getStudentListName() { 
+		ObservableList<String> studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
 			studentNames.add(student.getName());
 		}
 		return studentNames;
 	}
+	
+	public static ObservableList<String> getStudentListNameNotRoster() { 
+		ObservableList<String> studentNames = FXCollections.observableArrayList ();
+		for(Student student: students){
+			if(student != null && Grader.getRoster().getStudentByID(student.getId()) == null){
+				studentNames.add(student.getName());
+			}
+		}
+		return studentNames;
+	}
+
+	
+
 	
 	/*public static TreeSet<Grade> getGrades()
 	{
@@ -64,4 +96,5 @@ public class Server {
 		curve.add(new Grade("F", 60, 0));
 		Debug.log("Initializing Server", "Server curve populated");*/
 	}
+
 }
