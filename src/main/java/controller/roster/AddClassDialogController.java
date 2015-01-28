@@ -2,6 +2,7 @@ package controller.roster;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import model.driver.Debug;
@@ -61,8 +62,8 @@ public class AddClassDialogController {
 
 	@FXML
 	private void AddClass(ActionEvent event) {
-		Roster roster = new Roster(className.getText(), null, 0, null, null,
-				null);
+		Roster roster = new Roster(className.getText(), "DefaultInstructor", 1, "Winter", new Date(),
+				new Date());
 		roster.Save();
 		Debug.log("roster saved");
 		((Stage) AddClassButton.getScene().getWindow()).close();

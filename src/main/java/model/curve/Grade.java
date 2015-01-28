@@ -1,12 +1,18 @@
 package model.curve;
 
+import java.io.Serializable;
+
 import javafx.beans.property.SimpleStringProperty;
 
 /**
  * A representation of a percentage based grade.
  * @author Frank Poole
  */
-public class Grade implements Comparable<Grade> {
+public class Grade implements Comparable<Grade>, Serializable {
+    /**
+     * auto Generated serial ID
+     */
+    private static final long serialVersionUID = -8509411443331361582L;
     private final SimpleStringProperty name;    // Grade Name
     private float max;      // Maximum percentage required
     private float min;      // Minimum percentage required

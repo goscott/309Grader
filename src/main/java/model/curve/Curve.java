@@ -1,8 +1,13 @@
 package model.curve;
 
+import java.io.Serializable;
 import java.util.TreeSet;
 
-public class Curve {
+public class Curve implements Serializable{
+    /**
+     * auto generated serial Version
+     */
+    private static final long serialVersionUID = 6753830198895233150L;
     private String name;             // Curve name designation
     private TreeSet<Grade> curve;    // Set of grades that define this curve
     

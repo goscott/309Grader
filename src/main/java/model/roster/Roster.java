@@ -30,7 +30,7 @@ public class Roster implements Serializable {
 	private ArrayList<Student> students;
 	private ArrayList<GradedItem> assignments;
 	private HashMap<String, Student> ids;
-	private Curve curve;
+	private transient Curve curve;
 
 	private String courseName;
 	private String instructor;
@@ -342,6 +342,7 @@ public class Roster implements Serializable {
 			out.close();
 		} catch (IOException ex) {
 			Debug.log("SAVE ERROR", "failed to save Roster " + rost.courseName);
+			ex.printStackTrace();
 		}
 	}
 
