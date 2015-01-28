@@ -14,8 +14,8 @@ public class Grade implements Comparable<Grade>, Serializable {
      */
     private static final long serialVersionUID = -8509411443331361582L;
     private final SimpleStringProperty name;    // Grade Name
-    private float max;      // Maximum percentage required
-    private float min;      // Minimum percentage required
+    private double max;      // Maximum percentage required
+    private double min;      // Minimum percentage required
 
     /**
      * Create a new Grade object with
@@ -40,12 +40,16 @@ public class Grade implements Comparable<Grade>, Serializable {
             return 0;
         }
         else {
-            return Float.compare(this.max, other.max);
+            return Double.compare(this.max, other.max);
         }
     }
     
     public boolean overlap(Grade other) {
         return this.min <= other.max && other.min <= this.max;
+    }
+    
+    public boolean contains(double percentage) {
+        return percentage >= this.min && percentage <= this.max;
     }
     
     /**
@@ -60,7 +64,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      * Returns the maximum percentage required.
      * @return the maximum percentage required
      */
-    public float max() {
+    public double max() {
         return max;
     }
     
@@ -68,7 +72,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      * Returns the minimum percentage required.
      * @return the minimum percentage required
      */
-    public float min() {
+    public double min() {
         return min;
     }
     
@@ -76,7 +80,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      * Returns the range of the percentage required.
      * @return the range of the percentage
      */
-    public float range() {
+    public double range() {
         return max - min;
     }
     
@@ -85,7 +89,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param max the new maximum percentage required
      * @param min the new minimum percentage required
      */
-    public void set(float max, float min) {
+    public void set(double max, double min) {
         if (max <= 100 && min >= 0 && max >= min) {
             this.max = max;
             this.min = min;

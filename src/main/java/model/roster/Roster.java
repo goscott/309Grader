@@ -359,6 +359,7 @@ public class Roster implements Serializable {
 			ObjectInputStream obj = new ObjectInputStream(in);
 			toReturn = (Roster) obj.readObject();
 			obj.close();
+			toReturn.setCurve(new Curve());
 
 		} catch (FileNotFoundException e) {
 			Debug.log(
@@ -411,5 +412,17 @@ public class Roster implements Serializable {
 			}
 		}
 		return max;
+	}
+	
+	public double getPercentAverage() {
+	    double avg = 0.0;
+	    for (Student student : students) {
+	        avg += student.getTotalPercentage();
+	    }
+	    return avg;
+	}
+	
+	public String getLetterAverage() {
+	    return curve.get(getPercentAverage()).getName();
 	}
 }

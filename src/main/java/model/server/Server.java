@@ -34,6 +34,8 @@ public class Server {
 	 * server and turns the ArrayList to an ObservableList.
 	 * @return ObservableList<Student> the list of students
 	 */
+	//@ requires students != null;
+    //@ assignable \forall studentNames;
 	public static ObservableList<Student> getObservableStudentList() { 
 	    studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -48,6 +50,8 @@ public class Server {
 	 * This only gets a list of the students not in the Roster.
 	 * @return ObservableList<Student> the list of students
 	 */
+	//@ requires student != null && student.id == null;
+    //@ assignable \forall studentNames;
 	public static ObservableList<Student> getStudentListNotRoster() { 
 	    studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -63,6 +67,8 @@ public class Server {
 	 * server and turns the ArrayList to an ObservableList.
 	 * @return ObservableList<Student> the list of student's names.
 	 */
+	//@ requires \forall students != null;
+    //@ assignable studentNames;
 	public static ObservableList<String> getStudentListName() { 
 		ObservableList<String> studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -71,12 +77,15 @@ public class Server {
 		return studentNames;
 	}
 	
+
 	/**
 	 * Gets the list of all students stored in the
 	 * server and turns the ArrayList to an ObservableList.
 	 * This only gets a list of the students not in the Roster.
 	 * @return ObservableList<Student> the list of student's names.
 	 */
+	//@ requires \forall student != null && student.id == null;
+    //@ assignable studentNames;
 	public static ObservableList<String> getStudentListNameNotRoster() { 
 		ObservableList<String> studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -86,12 +95,6 @@ public class Server {
 		}
 		return studentNames;
 	}
-	
-	/*public static TreeSet<Grade> getGrades()
-	{
-	    Debug.log("Accessing Server", "Curve pulled from server");
-	    return curve.getGrades();
-	}*/
 	
 	/**
 	 * Populates the server with some default students
@@ -106,14 +109,6 @@ public class Server {
 		students.add(new Student("Michael Lenz", "98012"));
 		students.add(new Student("Jacob Hardi", "01968"));
 		Debug.log("Initializing Server", "Server students populated");
-		
-		/*curve = new Curve();
-		curve.add(new Grade("A", 100, 90));
-		curve.add(new Grade("B", 90, 80));
-		curve.add(new Grade("C", 80, 70));
-		curve.add(new Grade("D", 70, 60));
-		curve.add(new Grade("F", 60, 0));
-		Debug.log("Initializing Server", "Server curve populated");*/
 	}
 
 }
