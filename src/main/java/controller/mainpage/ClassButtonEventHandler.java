@@ -2,6 +2,7 @@ package controller.mainpage;
 
 
 import model.driver.Debug;
+import model.driver.Grader;
 import model.roster.Roster;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -21,7 +22,7 @@ public class ClassButtonEventHandler implements EventHandler<ActionEvent>
        Roster rost = Roster.load(((Button)event.getSource()).getText() + ".rost");
        if(rost != null)
        {
-           
+           Grader.setCurrentRoster(rost);
        }
        
     }
