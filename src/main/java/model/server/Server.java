@@ -96,12 +96,6 @@ public class Server {
 		return studentNames;
 	}
 	
-	/*public static TreeSet<Grade> getGrades()
-	{
-	    Debug.log("Accessing Server", "Curve pulled from server");
-	    return curve.getGrades();
-	}*/
-	
 	/**
 	 * Populates the server with some default students
 	 */
@@ -115,14 +109,6 @@ public class Server {
 		students.add(new Student("Michael Lenz", "98012"));
 		students.add(new Student("Jacob Hardi", "01968"));
 		Debug.log("Initializing Server", "Server students populated");
-		
-		/*curve = new Curve();
-		curve.add(new Grade("A", 100, 90));
-		curve.add(new Grade("B", 90, 80));
-		curve.add(new Grade("C", 80, 70));
-		curve.add(new Grade("D", 70, 60));
-		curve.add(new Grade("F", 60, 0));
-		Debug.log("Initializing Server", "Server curve populated");*/
 	}
 
 }

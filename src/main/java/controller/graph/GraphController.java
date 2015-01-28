@@ -1,17 +1,19 @@
 package controller.graph;
 
 import model.curve.Grade;
+import model.driver.Grader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * Controls the Graphs tab visuals and interface
  * @author Frank Poole
  */
 public class GraphController {
+    @FXML
+    private Label studentsLabel;
     @FXML
     private Label gradeLabel;
     @FXML
@@ -21,12 +23,20 @@ public class GraphController {
     @FXML
     private TableColumn<Grade, String> gradeCol;
     
+    /**
+     * Initialize the graph tab view.
+     */
     public void initialize()
     {
-        gradeLabel.setText("A+");
-        percentageLabel.setText("100");
-        
-        gradeCol.setCellValueFactory(new PropertyValueFactory<Grade, String>(
-                "name"));
+        this.update();
+    }
+    
+    /**
+     * Update the graph tab view with class roster information.
+     */
+    public void update() {
+        studentsLabel.setText(Integer.toString(Grader.getRoster().numStudents()));
+        gradeLabel.setText(Grader.getRoster().getLetterAverage());
+        percentageLabel.setText(Double.toString(Grader.getRoster().getPercentAverage()));
     }
 }

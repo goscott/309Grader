@@ -9,13 +9,11 @@ import javafx.beans.property.SimpleStringProperty;
  * @author Frank Poole
  */
 public class Grade implements Comparable<Grade>, Serializable {
-    /**
-     * auto Generated serial ID
-     */
+    /** auto Generated serial ID */
     private static final long serialVersionUID = -8509411443331361582L;
     private final SimpleStringProperty name;    // Grade Name
-    private float max;      // Maximum percentage required
-    private float min;      // Minimum percentage required
+    private double max;                         // Maximum percentage required
+    private double min;                         // Minimum percentage required
 
     /**
      * Create a new Grade object with
@@ -40,12 +38,26 @@ public class Grade implements Comparable<Grade>, Serializable {
             return 0;
         }
         else {
-            return Float.compare(this.max, other.max);
+            return Double.compare(this.max, other.max);
         }
     }
     
+    /**
+     * Returns true if the two grades percentage scores overlap ranges.
+     * @param other another grade to compare with
+     * @return true if the grades percentage scores overlap
+     */
     public boolean overlap(Grade other) {
-        return this.min <= other.max && other.min <= this.max;
+        return this.min < other.max && other.min < this.max;
+    }
+    
+    /**
+     * Return true if the given percentage score lies within this grade's range.
+     * @param percentage the percentage score
+     * @return true if percentage score is in range
+     */
+    public boolean contains(double percentage) {
+        return percentage >= this.min && percentage < this.max;
     }
     
     /**
@@ -60,7 +72,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      * Returns the maximum percentage required.
      * @return the maximum percentage required
      */
-    public float max() {
+    public double max() {
         return max;
     }
     
@@ -68,7 +80,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      * Returns the minimum percentage required.
      * @return the minimum percentage required
      */
-    public float min() {
+    public double min() {
         return min;
     }
     
@@ -76,7 +88,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      * Returns the range of the percentage required.
      * @return the range of the percentage
      */
-    public float range() {
+    public double range() {
         return max - min;
     }
     
@@ -85,8 +97,8 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param max the new maximum percentage required
      * @param min the new minimum percentage required
      */
-    public void set(float max, float min) {
-        if (max <= 100 && min >= 0 && max >= min) {
+    public void set(double max, double min) {
+        if (max <= 100.0 && min >= 0.0 && max > min) {
             this.max = max;
             this.min = min;
         }
