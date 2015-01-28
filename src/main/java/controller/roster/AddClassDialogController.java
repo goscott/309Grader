@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import model.driver.Debug;
+import model.roster.Roster;
 import model.server.Server;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,7 +61,7 @@ public class AddClassDialogController {
     
     @FXML
     private void AddClass(ActionEvent event) {
-        model.roster.Roster roster = new model.roster.Roster(className.getText(), "0:00", "current user goes here maybe");
+        Roster roster = new Roster(className.getText(), null, 0, null, null, null);
         roster.Save();
         Debug.log("roster saved");
         ((Stage) AddClassButton.getScene().getWindow()).close();

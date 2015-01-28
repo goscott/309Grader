@@ -166,7 +166,6 @@ public class GradedItem implements Serializable {
 	 * @return int the depth
 	 */
 	public int getDepth() {
-		//Debug.log("Depth", name + " has depth " + depth);
 		return depth;
 	}
 

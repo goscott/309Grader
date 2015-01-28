@@ -7,8 +7,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.Calendar;
+import java.util.Date;
 
 import controller.roster.AddAssignmentDialogController;
 import model.roster.GradedItem;
@@ -16,8 +19,7 @@ import model.roster.Roster;
 import model.roster.Student;
 
 /**
- * A class that offers standardized debugging
- * output and saved output/error logs
+ * A class that offers standardized debugging output and saved output/error logs
  * 
  * @author Gavin Scott
  *
@@ -29,11 +31,12 @@ public class Debug {
 	private final static String errorFileName = "error_log.txt";
 
 	/**
-	 * Logs a message. Outputs it to the screen, and saves it to the
-	 * output log
+	 * Logs a message. Outputs it to the screen, and saves it to the output log
 	 * 
-	 * @param category Disaplays a category before the message
-	 * @param msg The message
+	 * @param category
+	 *            Disaplays a category before the message
+	 * @param msg
+	 *            The message
 	 */
 	public static void log(String category, String msg) {
 		if (loggerPrint)
@@ -59,7 +62,8 @@ public class Debug {
 	/**
 	 * Logs a message with no category
 	 * 
-	 * @param msg The message
+	 * @param msg
+	 *            The message
 	 */
 	public static void log(String msg) {
 		if (loggerPrint)
@@ -77,14 +81,25 @@ public class Debug {
 	 * Initializes the program with some data
 	 */
 	public static void autoPopulate() {
-		Roster roster = new Roster("CPE 309", "Winter 2015", "Gene Fisher");
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		Roster roster = null;
+		try {
+			roster = new Roster("CPE 309", "Winter 2015", 1,
+					"Gene Fisher", format.parse("01/01/2015"), format.parse("04/01/2015"));
+		} catch (ParseException e) {
+			Debug.log("Error", "Error initializing roster");
+			e.printStackTrace();
+		}
 		Grader.addRoster(roster);
 		Grader.setCurrentRoster(roster);
 		Grader.addAssignment(new GradedItem("Test", "sfds", 100, false));
 		GradedItem test2 = new GradedItem("Midterms", "sfds", 150, false);
-		GradedItem test3 = new GradedItem("Midterm 1", "sfds", 150, test2, false);
-		GradedItem test4 = new GradedItem("Midterm 2", "sfds", 150, test2, false);
-		GradedItem test5 = new GradedItem("Midterm 3", "sfds", 150, test2, false);
+		GradedItem test3 = new GradedItem("Midterm 1", "sfds", 150, test2,
+				false);
+		GradedItem test4 = new GradedItem("Midterm 2", "sfds", 150, test2,
+				false);
+		GradedItem test5 = new GradedItem("Midterm 3", "sfds", 150, test2,
+				false);
 		Grader.addAssignment(test2);
 		Grader.addAssignment(test3);
 		Grader.addAssignment(test4);

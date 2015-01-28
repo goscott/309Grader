@@ -145,7 +145,7 @@ public class Grader {
 	 * @return boolean true if the student is enrolled
 	 */
 	public static boolean studentEnrolled(Student student) {
-		return currentRoster.getStudentsByName().contains(student);
+		return currentRoster.getStudents().contains(student);
 	}
 
 	/**
@@ -227,7 +227,7 @@ public class Grader {
 	public static ObservableList<Student> getStudentList() {
 		Debug.log("Grader model accessed", "Student list retrieved");
 		ObservableList<Student> data = FXCollections.observableArrayList();
-		for (Student s : currentRoster.getStudentsByName()) {
+		for (Student s : currentRoster.getStudents()) {
 			data.add(s);
 		}
 		return data;
