@@ -22,11 +22,23 @@
                               <Label fx:id="percentageLabel" />
                               <Label text="\%)" />
                            </children>
-                           <padding>
+                           <VBox.margin>
                               <Insets top="10.0" />
-                           </padding>
+                           </VBox.margin>
                         </HBox>
-                        <Label contentDisplay="CENTER" text="Students Per Grade">
+                        <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
+                           <children>
+                              <Label text="Total Students: " />
+                              <Label fx:id="studentsLabel" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets top="10.0" />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label contentDisplay="CENTER" text="Students Per Grade" VBox.vgrow="SOMETIMES">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
@@ -41,7 +53,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Label text="Current Curve">
+                        <Label text="Current Curve" VBox.vgrow="SOMETIMES">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
