@@ -22,6 +22,10 @@ public class HistoryController {
     @FXML
     private Button button_history;
     
+    public void initialize() {
+        //load classes from history db
+    }
+    
     public void switchToGradebook() {
         history_view.setVisible(false);
         gradebook_view.setVisible(true);

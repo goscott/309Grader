@@ -2,6 +2,7 @@ package model.history;
 import java.util.*;
 
 import model.roster.Roster;
+import model.roster.Student;
 
 /**
  * Class that holds a record of a sections taught of a Single course.
@@ -12,11 +13,12 @@ public class CourseHistory {
 	public ArrayList<Roster> history;
 	public ArrayList<Roster> hidden;
 	public int totalStudents;
-	public int averageGrade;
+	public double averageGrade;
 	public int startYear;
 	public int endYear;
 	public int numSectionsTaught;
 	private String courseName;
+	private double totalGradeValue;
 	
 	/**
 	 * Constructor for history.
@@ -31,6 +33,17 @@ public class CourseHistory {
 	 * @param newRoster A roster to add.
 	 */
 	public void addRoster(Roster newRoster) {
+	    //check newRoster's year to see if we need to update start year/end year
+	    
+	    //add students to total students
+	    totalStudents += newRoster.getStudents().size();
+	    
+	    //recalculate average
+	    for (Student student : newRoster.getStudents()) {
+	        totalGradeValue += student.getTotalScore();
+	    }
+	    averageGrade = totalGradeValue / (double) totalStudents;
+	    
 	    history.add(newRoster);
 	}
 	
