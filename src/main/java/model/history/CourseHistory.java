@@ -16,6 +16,23 @@ public class CourseHistory {
 	public int startYear;
 	public int endYear;
 	public int numSectionsTaught;
+	private String courseName;
+	
+	/**
+	 * Constructor for history.
+	 * @param newCourseName The name of a course.
+	 */
+	public CourseHistory(String newCourseName) {
+	    courseName = newCourseName;
+	}
+	
+	/**
+	 * Adds a roster to the history.
+	 * @param newRoster A roster to add.
+	 */
+	public void addRoster(Roster newRoster) {
+	    history.add(newRoster);
+	}
 	
 	/**
 	 * @return returns the course history.
@@ -89,5 +106,13 @@ public class CourseHistory {
 	 */
 	public int getNumSectionsTaught() {
         	return 0;
+	}
+	
+	/**
+	 * Returns the name for this course.
+	 * @return The course name. Example: "CSC/CPE 309"
+	 */
+	public String getCourseName() {
+	    return courseName;
 	}
 }

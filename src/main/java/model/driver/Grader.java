@@ -8,6 +8,7 @@ import model.administration.User;
 import model.administration.UserDB;
 import model.curve.Curve;
 import model.history.CourseHistory;
+import model.history.HistoryDB;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.Student;
@@ -23,7 +24,7 @@ public class Grader {
 	private static Roster currentRoster;
 	private static ArrayList<Roster> classList;
 	private static User user;
-	private static CourseHistory history;
+	private static HistoryDB history;
 	private static UserDB userDB = new UserDB();
 
 	/**
