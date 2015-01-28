@@ -359,6 +359,7 @@ public class Roster implements Serializable {
 			ObjectInputStream obj = new ObjectInputStream(in);
 			toReturn = (Roster) obj.readObject();
 			obj.close();
+			toReturn.setCurve(new Curve());
 
 		} catch (FileNotFoundException e) {
 			Debug.log(

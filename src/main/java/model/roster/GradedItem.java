@@ -178,9 +178,19 @@ public class GradedItem implements Serializable {
 	 */
 	public void addChild(GradedItem item) {
 		Debug.log("Child Added", item.name() + " added as a child of " + name);
-		children.add(item);
+		if(!children.contains(item)) {
+			children.add(item);
+		}
 	}
 
+	/**
+	 * Returns the numer of children this GradedItem has
+	 * @return int the number of children
+	 */
+	public int numChildren() {
+		return children.size();
+	}
+	
 	/**
 	 * Removes a child from the assignment and marks the child as parentless
 	 * 

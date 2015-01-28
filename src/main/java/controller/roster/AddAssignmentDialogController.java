@@ -141,10 +141,16 @@ public class AddAssignmentDialogController {
 				descrField.getText(), Double.parseDouble(maxScoreField
 						.getText()), asgnParent, ecBox.isSelected());
 		Grader.addAssignment(item);
+		gbook.setAssignmentExpansion(item.name(), true);
 		nameField.setText("");
 		descrField.setText("");
 		resetDropdown();
-		gbook.refresh();
+		if(asgnParent != null && asgnParent.numChildren() == 1) {
+			gbook.fullRefresh();
+		}
+		else {
+			gbook.refresh();
+		}
 	}
 
 	@FXML
@@ -270,8 +276,12 @@ public class AddAssignmentDialogController {
 	 * Resets the parent dropdown menu to reflect any new assignments
 	 */
 	private void resetDropdown() {
+		/*GradedItem curChoice = Grader.getRoster().getAssignment(
+				parentDropdown.getValue());*/
+		String curChoice = parentDropdown.getValue();
 		parentDropdown.setItems(Grader.getAssignmentNameList());
 		parentDropdown.getItems().add(0, noParent);
 		parentDropdown.setVisibleRowCount(numParentsShown);
+		parentDropdown.setValue(curChoice);
 	}
 }

@@ -1,5 +1,7 @@
 package controller.roster;
 
+import java.util.ArrayList;
+
 import model.curve.Grade;
 import model.driver.Grader;
 import model.roster.GradedItem;
@@ -50,6 +52,7 @@ public class GradebookController {
 	private Button removeAsgnButton;
 
 	private ContextMenu rightClickMenu;
+	private ArrayList<String> expanded;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@FXML
@@ -58,52 +61,11 @@ public class GradebookController {
 	 */
 	protected void initialize() {
 		mainTable.setEditable(true);
-
-		nameCol.setMinWidth(100);
-		nameCol.setEditable(false);
-		nameCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
-				"name"));
-
-		idCol.setMinWidth(100);
-		idCol.setEditable(false);
-		idCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
-				"id"));
-
-		totalGradeCol.setEditable(false);
-		totalGradeCol.setMinWidth(100);
-		totalGradeCol
-				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
-						"totalScore"));
-		
-		TableColumn<Student, Double> percentCol = new TableColumn<Student, Double>(
-				"Percentage");
-		percentCol.setEditable(false);
-		percentCol.setMinWidth(100);
-		percentCol
-				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
-						"totalPercentage"));
-		mainTable.getColumns().add(percentCol);
-
-		TableColumn<Student, Grade> gradeCol = new TableColumn<Student, Grade>(
-				"Grade");
-		gradeCol.setMinWidth(100);
-		gradeCol.setEditable(false);
-		/*gradeCol.setCellValueFactory(new PropertyValueFactory<Student, Grade>(
-				"grade"));*/
-		gradeCol.setCellValueFactory(new Callback() {
-			public SimpleStringProperty call(
-					CellDataFeatures<Student, Grade> param) {
-				return new SimpleStringProperty(param.getValue()
-						.getGrade().getName());
-			}
-
-			public Object call(Object param) {
-				return call((CellDataFeatures<Student, Grade>) (param));
-			}
-		});
-		mainTable.getColumns().add(gradeCol);
-		
-		refresh();
+		expanded = new ArrayList<String>();
+		for(String item : Grader.getAssignmentNameList()) {
+			setAssignmentExpansion(item, true);
+		}
+		fullRefresh();
 
 		// create popup menu
 		rightClickMenu = new ContextMenu();
@@ -123,11 +85,11 @@ public class GradebookController {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("*******************************");
-				for (GradedItem item : Grader.getRoster()
-						.getAssignments()) {
+				for (GradedItem item : Grader.getRoster().getAssignments()) {
 					System.out.println(item);
 				}
 				System.out.println("*******************************");
+				fullRefresh();
 			}
 		});
 
@@ -154,6 +116,57 @@ public class GradebookController {
 						}
 					}
 				});
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void endColumns() {
+		TableColumn<Student, Double> percentCol = new TableColumn<Student, Double>(
+				"Percentage");
+		percentCol.setEditable(false);
+		percentCol.setMinWidth(100);
+		percentCol
+				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
+						"totalPercentage"));
+		mainTable.getColumns().add(percentCol);
+
+		TableColumn<Student, Grade> gradeCol = new TableColumn<Student, Grade>(
+				"Grade");
+		gradeCol.setMinWidth(100);
+		gradeCol.setEditable(false);
+		/*
+		 * gradeCol.setCellValueFactory(new PropertyValueFactory<Student,
+		 * Grade>( "grade"));
+		 */
+		gradeCol.setCellValueFactory(new Callback() {
+			public SimpleStringProperty call(
+					CellDataFeatures<Student, Grade> param) {
+				return new SimpleStringProperty(param.getValue().getGrade()
+						.getName());
+			}
+
+			public Object call(Object param) {
+				return call((CellDataFeatures<Student, Grade>) (param));
+			}
+		});
+		mainTable.getColumns().add(gradeCol);
+	}
+
+	private void studentColumns() {
+		nameCol.setMinWidth(100);
+		nameCol.setEditable(false);
+		nameCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
+				"name"));
+
+		idCol.setMinWidth(100);
+		idCol.setEditable(false);
+		idCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
+				"id"));
+
+		totalGradeCol.setEditable(false);
+		totalGradeCol.setMinWidth(100);
+		totalGradeCol
+				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
+						"totalScore"));
 	}
 
 	/**
@@ -186,7 +199,7 @@ public class GradebookController {
 					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 							"totalScore"));
 			for (GradedItem item : Grader.getRoster().getAssignments()) {
-				if (!columnExists(item.name())) {
+				if (!columnExists(item.name()) && expanded.contains(item.name())) {
 					TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
 							item.name());
 					newColumn.setMinWidth(100);
@@ -217,39 +230,34 @@ public class GradebookController {
 				}
 			}
 
-			TableColumn<Student, Double> percentCol = new TableColumn<Student, Double>(
-					"Percentage");
-			percentCol.setEditable(false);
-			percentCol.setMinWidth(100);
-			percentCol
-					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
-							"totalPercentage"));
-			mainTable.getColumns().add(percentCol);
-
-			TableColumn<Student, Grade> gradeCol = new TableColumn<Student, Grade>(
-					"Grade");
-			gradeCol.setMinWidth(100);
-			gradeCol.setEditable(false);
-			/*gradeCol.setCellValueFactory(new PropertyValueFactory<Student, Grade>(
-					"grade"));*/
-			gradeCol.setCellValueFactory(new Callback() {
-				public SimpleStringProperty call(
-						CellDataFeatures<Student, Grade> param) {
-					return new SimpleStringProperty(param.getValue()
-							.getGrade().getName());
-				}
-
-				public Object call(Object param) {
-					return call((CellDataFeatures<Student, Grade>) (param));
-				}
-			});
-			mainTable.getColumns().add(gradeCol);
+			endColumns();
 
 			mainTable.setItems(Grader.getStudentList());
 			// force hard refresh
 			mainTable.getColumns().add(0, new TableColumn<Student, String>());
 			mainTable.getColumns().remove(0);
 		}
+	}
+
+	void setAssignmentExpansion(String asgnName, boolean expand) {
+		if(expand && !expanded.contains(asgnName)) {
+			expanded.add(asgnName);
+		}
+		if(!expand && expanded.contains(asgnName)) {
+			expanded.remove(asgnName);
+			fullRefresh();
+		}
+	}
+	
+	void fullRefresh() {
+		if (mainTable.getColumns().size() > 0) {
+			for (int i = mainTable.getColumns().size() - 1; i > 0; i--) {
+				mainTable.getColumns().remove(i);
+			}
+		}
+		studentColumns();
+		endColumns();
+		refresh();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -261,15 +269,6 @@ public class GradebookController {
 	private void addSubColumn(GradedItem item, TableColumn newColumn) {
 		TableColumn parentCol = findColumn(item.getParent().name());
 		parentCol.getColumns().add(newColumn);
-
-		if (item.getParent().getParent() != null) {
-			TableColumn grandpa = findColumn(item.getParent().getParent()
-					.name());
-			int ndx = grandpa.getColumns().indexOf(parentCol);
-			grandpa.getColumns().remove(ndx);
-			grandpa.getColumns().add(ndx, parentCol);
-		}
-
 	}
 
 	/**
