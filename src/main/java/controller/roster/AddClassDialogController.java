@@ -32,25 +32,27 @@ import javafx.stage.WindowEvent;
  * 
  */
 public class AddClassDialogController {
-
+    /** contains the resource bundle **/
 	@FXML
 	private ResourceBundle resources;
-
+	/** the location of the main fxml file **/
 	@FXML
 	private URL location;
-
+	/** the cancel button  **/
 	@FXML
 	private Button CancelButton;
-
+	/** the viewable list of students **/
 	@FXML
 	private ListView<String> students;
-
+	/** Text field to enter the class name  **/
 	@FXML
 	private TextField className;
-
+	/** button to add the class **/
 	@FXML
 	private Button AddClassButton;
-
+	/**
+	 * initializes and displays a new 
+	 */
 	@FXML
 	void initialize() {
 		ObservableList<String> items = FXCollections
@@ -59,7 +61,10 @@ public class AddClassDialogController {
 		students.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		// students.setItems(items);
 	}
-
+	/**
+	 * Handels the event of when the addClass button is pressed
+	 * @param event event to be handeled
+	 */
 	@FXML
 	private void AddClass(ActionEvent event) {
 		Roster roster = new Roster(className.getText(), "DefaultInstructor", 1, "Winter", new Date(),
@@ -68,7 +73,10 @@ public class AddClassDialogController {
 		Debug.log("roster saved");
 		((Stage) AddClassButton.getScene().getWindow()).close();
 	}
-
+	/**
+	 * cances and closes the dialog
+	 * @param event
+	 */
 	@FXML
 	void Cancel(ActionEvent event) {
 		((Stage) AddClassButton.getScene().getWindow()).close();

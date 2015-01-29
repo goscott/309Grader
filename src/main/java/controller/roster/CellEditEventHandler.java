@@ -1,16 +1,11 @@
 package controller.roster;
 
-import javax.swing.JOptionPane;
-
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Student;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.stage.Stage;
 
 /**
  * An ActionEvent that handles displaying the "Add Assignment" dialog.
@@ -21,6 +16,7 @@ import javafx.stage.Stage;
  */
 public class CellEditEventHandler implements
 		EventHandler<CellEditEvent<Student, String>> {
+	/** The controller for the gradebook **/
 	private GradebookController controller;
 	
 	/**

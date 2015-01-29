@@ -20,8 +20,11 @@ public class Student implements Comparable<Student>, Serializable {
 	 * generated serial ID
 	 */
 	private static final long serialVersionUID = 6298208303690715171L;
+	/** The student's name **/
 	private final SimpleStringProperty name;
+	/** The student's id **/
 	private final SimpleStringProperty id;
+	/** A map of assignment names to the assignments in the class **/
 	private HashMap<String, GradedItem> scores;
 
 	/**
@@ -130,19 +133,6 @@ public class Student implements Comparable<Student>, Serializable {
 		}
 		return "";
 	}
-
-	/**
-	 * Gets the student's score on an individual assignment
-	 * 
-	 * @param asgn
-	 *            The name of the assignment
-	 * @return SimpleDoubleProperty the student's score on the assignment
-	 *
-	 *         public SimpleDoubleProperty getAssignmentScoreAsProperty(String
-	 *         asgn) { if(getAssignmentScore(asgn) != null) return new
-	 *         SimpleDoubleProperty(getAssignmentScore(asgn)); else return new
-	 *         SimpleDoubleProperty(-1); }
-	 */
 
 	/**
 	 * Adds an assignment for this student, where their score will be recorded.

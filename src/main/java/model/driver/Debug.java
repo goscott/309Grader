@@ -25,9 +25,13 @@ import model.roster.Student;
  *
  */
 public class Debug {
+	/** Controls whether log entries are printed to the console **/
 	private final static boolean loggerPrint = true;
+	/** Controls whether log entries are recorded in a log **/
 	private final static boolean loggerRecord = true;
+	/** The file name of the standard log **/
 	private final static String fileName = "log.txt";
+	/** The file name of the error log **/
 	private final static String errorFileName = "error_log.txt";
 
 	/**

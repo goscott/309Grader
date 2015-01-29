@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -30,31 +29,27 @@ import javafx.util.Callback;
  * @author Gavin Scott
  */
 public class GradebookController {
+	/** The main gradebook table **/
 	@FXML
 	private TableView<Student> mainTable;
-	@FXML
-	private BorderPane mainPane;
+	/** The column showing the students' ids **/
 	@FXML
 	private TableColumn<Student, String> idCol;
+	/** The column showing the students' total grades **/
 	@FXML
 	private TableColumn<Student, Double> totalGradeCol;
+	/** The column showing the students' names **/
 	@FXML
 	private TableColumn<Student, String> nameCol;
+	/** The scrollpane that holds the TableView **/
 	@FXML
 	private ScrollPane scrollPane;
-	@FXML
-	private Button asgnButton;
-	@FXML
-	private Button studentButton;
-	@FXML
-	private Button removeStudentButton;
-	@FXML
-	private Button removeAsgnButton;
 
+	/** The right-click menu **/
 	private ContextMenu rightClickMenu;
+	/** An ArrayList holding the names of the columns that are expanded **/
 	private ArrayList<String> expanded;
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@FXML
 	/**
 	 * Initializes the gradebook view
@@ -62,7 +57,7 @@ public class GradebookController {
 	protected void initialize() {
 		mainTable.setEditable(true);
 		expanded = new ArrayList<String>();
-		for(String item : Grader.getAssignmentNameList()) {
+		for (String item : Grader.getAssignmentNameList()) {
 			setAssignmentExpansion(item, true);
 		}
 		fullRefresh();
@@ -75,25 +70,19 @@ public class GradebookController {
 		MenuItem addStudent = new MenuItem("Add Student");
 		MenuItem dropStudent = new MenuItem("Drop Student");
 		MenuItem rosterSynch = new MenuItem("Roster Synch");
-		MenuItem TEST = new MenuItem("TEST");
+		MenuItem refresh = new MenuItem("Refresh");
 
 		addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
 				addAssignment, this));
 		addStudent.setOnAction(new DisplayAddStudentPopupEventHandler(
 				addStudent, this));
-		TEST.setOnAction(new EventHandler<ActionEvent>() {
+		refresh.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("*******************************");
-				for (GradedItem item : Grader.getRoster().getAssignments()) {
-					System.out.println(item);
-				}
-				System.out.println("*******************************");
 				fullRefresh();
 			}
 		});
-
-		rightClickMenu.getItems().add(TEST);
+		rightClickMenu.getItems().add(refresh);
 		rightClickMenu.getItems().add(addAssignment);
 		rightClickMenu.getItems().add(dropAssignment);
 		rightClickMenu.getItems().add(importAssignment);
@@ -118,7 +107,13 @@ public class GradebookController {
 				});
 	}
 
+	/**
+	 * Supresses unnecessary warnings
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	/**
+	 * Adds the far-right columns (Total percentage and Grade) to the gradebook.
+	 */
 	private void endColumns() {
 		TableColumn<Student, Double> percentCol = new TableColumn<Student, Double>(
 				"Percentage");
@@ -133,10 +128,6 @@ public class GradebookController {
 				"Grade");
 		gradeCol.setMinWidth(100);
 		gradeCol.setEditable(false);
-		/*
-		 * gradeCol.setCellValueFactory(new PropertyValueFactory<Student,
-		 * Grade>( "grade"));
-		 */
 		gradeCol.setCellValueFactory(new Callback() {
 			public SimpleStringProperty call(
 					CellDataFeatures<Student, Grade> param) {
@@ -151,6 +142,9 @@ public class GradebookController {
 		mainTable.getColumns().add(gradeCol);
 	}
 
+	/** 
+	 * Adds the far-left student columns to the gradebook
+	 */
 	private void studentColumns() {
 		nameCol.setMinWidth(100);
 		nameCol.setEditable(false);
@@ -185,6 +179,9 @@ public class GradebookController {
 		return false;
 	}
 
+	/**
+	 * Supresses unnecessary warnings
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	/**
 	 * Forces a refresh of the gradebook GUI to ensure new
@@ -199,7 +196,9 @@ public class GradebookController {
 					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 							"totalScore"));
 			for (GradedItem item : Grader.getRoster().getAssignments()) {
-				if (!columnExists(item.name()) && expanded.contains(item.name())) {
+				if (!columnExists(item.name())
+						&& (item.getParent() == null || expanded.contains(item
+								.getParent().name()))) {
 					TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
 							item.name());
 					newColumn.setMinWidth(100);
@@ -239,16 +238,53 @@ public class GradebookController {
 		}
 	}
 
+	/**
+	 * Expands or collapses a column
+	 * @param asgnName The name of the column
+	 * @param expand Whether to expand or collapse (true expands)
+	 */
 	void setAssignmentExpansion(String asgnName, boolean expand) {
-		if(expand && !expanded.contains(asgnName)) {
-			expanded.add(asgnName);
+		if (expand) {
+			open(asgnName);
+			fullRefresh();
 		}
-		if(!expand && expanded.contains(asgnName)) {
-			expanded.remove(asgnName);
+		if (!expand) {
+			close(asgnName);
 			fullRefresh();
 		}
 	}
-	
+
+	/**
+	 * Recursively expands a column and its children
+	 * @param asgnName
+	 */
+	private void open(String asgnName) {
+		if (!expanded.contains(asgnName)) {
+			expanded.add(asgnName);
+			GradedItem item = Grader.getAssignment(asgnName);
+			for (GradedItem child : item.getChildren()) {
+				open(child.name());
+			}
+		}
+	}
+
+	/**
+	 * Recursively collapses a column an its children
+	 * @param asgnName The name of the column
+	 */
+	private void close(String asgnName) {
+		if (expanded.contains(asgnName)) {
+			expanded.remove(asgnName);
+			GradedItem item = Grader.getAssignment(asgnName);
+			for (GradedItem child : item.getChildren()) {
+				close(child.name());
+			}
+		}
+	}
+
+	/**
+	 * Completely refreshes the gradebook
+	 */
 	void fullRefresh() {
 		if (mainTable.getColumns().size() > 0) {
 			for (int i = mainTable.getColumns().size() - 1; i > 0; i--) {
@@ -260,6 +296,9 @@ public class GradebookController {
 		refresh();
 	}
 
+	/**
+	 * Supresses unnecessary warnings
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	/**
 	 * Adds a sub-column to the gradebook

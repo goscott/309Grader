@@ -8,12 +8,19 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-
+/**
+ * 
+ * handles the event of a class button being pressed
+ * @author Michael Lenz
+ *
+ */
 public class ClassButtonEventHandler implements EventHandler<ActionEvent>
 {
 
 
-
+    /**
+     * handdles the event of a class button being pressed by attempting to  load the roster.
+     */
     @Override
     public void handle(ActionEvent event)
     {

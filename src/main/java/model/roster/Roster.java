@@ -26,16 +26,26 @@ public class Roster implements Serializable {
 	 * generated serial ID
 	 */
 	private static final long serialVersionUID = -8021729176053193523L;
+	/** The students enrolled in the class **/
 	private ArrayList<Student> students;
+	/** The assignments associated with the class **/
 	private ArrayList<GradedItem> assignments;
+	/** A map of student ids to the students in the class **/
 	private HashMap<String, Student> ids;
+	/** The class curve **/
 	private transient Curve curve;
 
+	/** The course's name **/
 	private String courseName;
+	/** The course's instructor **/
 	private String instructor;
+	/** The course's section **/
 	private int section;
+	/** The course's quarter (or semester) **/
 	private String quarter;
+	/** The first date of the course **/
 	private Date startDate;
+	/** The last date of the course **/
 	private Date endDate;
 
 	/**
@@ -297,21 +307,6 @@ public class Roster implements Serializable {
 	}
 
 	/**
-	 * Gets all assignments associated with this roster, sorted by depth
-	 * (deepest first)
-	 * 
-	 * @return The sorted list of GradedItems
-	 *
-	public ArrayList<GradedItem> getAssignmentsByDepth() {
-		ArrayList<GradedItem> sortedList = new ArrayList<GradedItem>();
-		for (GradedItem item : assignments) {
-			sortedList.add(item.copy());
-		}
-		sortedList.sort(new DepthComparator());
-		return sortedList;
-	}*/
-
-	/**
 	 * Returns a string representation of the roster
 	 * 
 	 * @return String the representation
@@ -381,22 +376,6 @@ public class Roster implements Serializable {
 							+ "(Class Not Found)");
 		}
 		return toReturn;
-	}
-
-	private class DepthComparator implements Comparator<GradedItem> {
-		/**
-		 * Compares two GradedItems by depth
-		 * 
-		 * @param item1
-		 *            The first assignment
-		 * @param item2
-		 *            The second assignment
-		 * @return int the comparison value
-		 */
-		public int compare(GradedItem item1, GradedItem item2) {
-			return item1.getDepth() - item2.getDepth();
-		}
-
 	}
 
 	/**

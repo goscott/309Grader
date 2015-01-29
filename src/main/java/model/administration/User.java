@@ -7,7 +7,30 @@ import model.driver.Debug;
  * @author Mason Stevenson
  */
 public class User {
-    private String fName, lName, id, password;
+    
+    /**
+     * First Name.
+     */
+    private String fName;
+    
+    /**
+     * Last Name.
+     */
+    private String lName;
+    
+    /**
+     * User login id (should be same as calpoly id).
+     */
+    private String id;
+    
+    /**
+     * User password.
+     */
+    private String password;
+    
+    /**
+     * User type. See model/administration/UserTypes.java
+     */
     private char type;
 
     /**

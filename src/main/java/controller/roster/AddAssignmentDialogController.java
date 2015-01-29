@@ -39,25 +39,37 @@ import javafx.stage.WindowEvent;
  *
  */
 public class AddAssignmentDialogController {
+	/** The field for the assignment's name **/
 	@FXML
 	private TextField nameField;
+	/** The add button **/
 	@FXML
 	private Button addButton;
+	/** The text area for entering the description **/
 	@FXML
 	private TextArea descrField;
+	/** The dropdown that let's the user choose a parent assignment **/
 	@FXML
 	private ComboBox<String> parentDropdown;
+	/** The refresh button **/
 	@FXML
 	private Button refreshButton;
+	/** The textfield for entering the maximum score **/
 	@FXML
 	private TextField maxScoreField;
+	/** The checkbox determining if an assignment is extra credit **/
 	@FXML
 	private CheckBox ecBox;
 
+	/** The controller for the gradebook **/
 	private static GradebookController gbook;
+	/** The MenuItem that was clicked to display the window **/
 	private static MenuItem parent;
+	/** The max number of characters allowed in a name **/
 	private final int maxChars = 25;
+	/** Number of parents shown before a scrollbar appears **/
 	private final int numParentsShown = 10;
+	/** The string displayed that lets the user choose no parent **/
 	private final String noParent = "<None>";
 
 	/**
@@ -206,12 +218,21 @@ public class AddAssignmentDialogController {
 	}
 
 	@FXML
+	/**
+	 * Checks if the entered data is valid
+	 * @return boolean true if the data is valid
+	 */
 	private boolean checkValid() {
 		checkNameValid();
 		checkScoreValid();
 		return checkNameValid() || checkScoreValid() || nameField.getText().length() == 0;
 	}
 	
+	/**
+	 * Checks if the entered name is valid. Valid names must be
+	 * under 25 characters, and unique.
+	 * @return boolean true if the name is valid
+	 */
 	private boolean checkNameValid() {
 		if (nameTaken(nameField.getText())
 				|| nameField.getText().length() > maxChars) {
@@ -225,6 +246,10 @@ public class AddAssignmentDialogController {
 		return false;
 	}
 	
+	/**
+	 * Checks if the max score field is valid
+	 * @return boolean true if the data is valid
+	 */
 	private boolean checkScoreValid() {
 		if (maxScoreField.getText().length() == 0) {
 			maxScoreField.setBackground(new Background(new BackgroundFill(

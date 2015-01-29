@@ -16,13 +16,21 @@ public class GradedItem implements Serializable {
 	 * generated serial ID
 	 */
 	private static final long serialVersionUID = 8994764986930533573L;
+	/** The name of the assignment **/
 	private String name;
+	/** The description of the assignment **/
 	private String descr;
+	/** The assignment's score **/
 	private Double score;
+	/** The assignment's max score **/
 	private double maxScore;
+	/** The assignment's children **/
 	private ArrayList<GradedItem> children;
+	/** The assignment's parent **/
 	private GradedItem parent;
+	/** The assignment's depth **/
 	private int depth;
+	/** Determines whether or not an assignment is extra credit **/
 	private boolean extraCredit;
 
 	/**
@@ -34,7 +42,8 @@ public class GradedItem implements Serializable {
 	 * @param descr
 	 *            the assignment's description
 	 */
-	public GradedItem(String name, String descr, double maxScore, boolean extraCredit) {
+	public GradedItem(String name, String descr, double maxScore,
+			boolean extraCredit) {
 		this(name, descr, null, null, maxScore, extraCredit);
 	}
 
@@ -49,7 +58,8 @@ public class GradedItem implements Serializable {
 	 * @param score
 	 *            The assignment's score
 	 */
-	public GradedItem(String name, String descr, Double score, double maxScore, boolean extraCredit) {
+	public GradedItem(String name, String descr, Double score, double maxScore,
+			boolean extraCredit) {
 		this(name, descr, null, score, maxScore, extraCredit);
 	}
 
@@ -64,7 +74,8 @@ public class GradedItem implements Serializable {
 	 * @param parent
 	 *            The assignment's parent assignment or category
 	 */
-	public GradedItem(String name, String descr, double maxScore, GradedItem parent, boolean extraCredit) {
+	public GradedItem(String name, String descr, double maxScore,
+			GradedItem parent, boolean extraCredit) {
 		this(name, descr, parent, null, maxScore, extraCredit);
 	}
 
@@ -178,19 +189,29 @@ public class GradedItem implements Serializable {
 	 */
 	public void addChild(GradedItem item) {
 		Debug.log("Child Added", item.name() + " added as a child of " + name);
-		if(!children.contains(item)) {
+		if (!children.contains(item)) {
 			children.add(item);
 		}
 	}
 
 	/**
 	 * Returns the numer of children this GradedItem has
+	 * 
 	 * @return int the number of children
 	 */
 	public int numChildren() {
 		return children.size();
 	}
-	
+
+	/**
+	 * Gets all the children of this graded item
+	 * 
+	 * @return ArrayList<GradedItem> the children
+	 */
+	public ArrayList<GradedItem> getChildren() {
+		return children;
+	}
+
 	/**
 	 * Removes a child from the assignment and marks the child as parentless
 	 * 
@@ -276,12 +297,13 @@ public class GradedItem implements Serializable {
 
 	/**
 	 * Checks if the assignment is extra credit
+	 * 
 	 * @return boolean true if it is extra credit
 	 */
 	public boolean isExtraCredit() {
 		return extraCredit;
 	}
-	
+
 	/**
 	 * Saves the assignment
 	 * 
@@ -313,7 +335,7 @@ public class GradedItem implements Serializable {
 		else
 			ret += name + " parent: None";
 		ret += " children:";
-		for(GradedItem child : children) {
+		for (GradedItem child : children) {
 			ret += " " + child.name();
 		}
 		return ret;

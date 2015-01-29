@@ -16,8 +16,11 @@ import javafx.stage.Stage;
  * @author Shelli Crispen
  *
  */
+@SuppressWarnings("serial")
 public class DisplayAddStudentPopupEventHandler extends ActionEvent implements EventHandler<ActionEvent> {
+	/** The gradebook controller **/
 	private GradebookController contr;
+	/** The menu item that displayed the popup **/
 	private MenuItem callingItem;
 	
 	/**
