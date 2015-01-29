@@ -74,7 +74,7 @@ public class Debug {
 			System.out.println(msg);
 		if (loggerRecord)
 			try (PrintWriter out = new PrintWriter(new BufferedWriter(
-					new FileWriter("log.txt", true)))) {
+					new FileWriter(fileName, true)))) {
 				out.println(msg + '\n');
 			} catch (IOException e) {
 				e.printStackTrace();
