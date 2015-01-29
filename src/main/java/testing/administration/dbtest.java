@@ -1,4 +1,4 @@
-package model.administration.tests;
+package testing.administration;
 
 import model.administration.*;
 

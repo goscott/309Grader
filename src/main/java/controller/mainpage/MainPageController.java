@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import run.Launcher;
+import testing.administration.PermissionsTester;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +28,6 @@ import javafx.stage.Stage;
 import model.administration.User;
 import model.administration.UserDB;
 import model.administration.UserTypes;
-import model.administration.tests.PermissionsTester;
 import model.driver.Debug;
 import model.driver.Grader;
 

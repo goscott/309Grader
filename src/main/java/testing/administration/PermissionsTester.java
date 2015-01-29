@@ -1,4 +1,4 @@
-package model.administration.tests;
+package testing.administration;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

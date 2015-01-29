@@ -1,4 +1,4 @@
-package model.administration.tests;
+package testing.administration;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,7 +31,7 @@ public class LoginTest extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getResource("../../../view/administration/user_login.fxml")));
+            Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getClassLoader().getResource("view/administration/user_login.fxml")));
             
             primaryStage.setScene(scene);
             primaryStage.setTitle("GraderTool: Login");
