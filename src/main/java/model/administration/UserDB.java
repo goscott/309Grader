@@ -19,11 +19,26 @@ import model.driver.Debug;
  *
  */
 public class UserDB {
+    
+    /**
+     * A list of all registered users.
+     */
     private ArrayList<User> users;
     //private static final String DATABASE = "src/main/java/model/administration/users.udb";
+    
+    /**
+     * Relative (from project root) path to the file containing user info.
+     */
     private static final String DATABASE = "model/administration/users.udb";
+    
+    /**
+     * The string that delimits the items in the user info file.
+     */
     private static final String DELIM = Character.toString((char) 0);
 
+    /**
+     * Constructor for UserDB. Calls loadUserDB(), which loads users from users.udb.
+     */
     public UserDB() {
         Debug.log("model", "UserDB Created");
         loadUserDB();

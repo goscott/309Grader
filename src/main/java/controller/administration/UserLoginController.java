@@ -26,21 +26,39 @@ import javafx.stage.WindowEvent;
  */
 public class UserLoginController {
 
+    /**
+     * Users enter their user name in here.
+     */
 	@FXML
 	private TextField user_name;
 
+	/**
+	 * Users enter their password in here.
+	 */
 	@FXML
 	private PasswordField password;
 
+	/**
+	 * Launches the new user dialog.
+	 */
 	@FXML
 	private Hyperlink new_user;
 
+	/**
+	 * Launches the main page, provided user login info is correct.
+	 */
 	@FXML
 	private Button button_login;
 
+	/**
+	 * Exits the program.
+	 */
 	@FXML
 	private Button button_cancel;
 
+	/**
+	 * Becomes visible if the user's login info is incorrect.
+	 */
 	@FXML
 	private Label login_invalid;
 

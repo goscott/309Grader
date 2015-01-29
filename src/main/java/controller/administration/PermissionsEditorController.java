@@ -20,38 +20,74 @@ import model.driver.Grader;
  */
 public class PermissionsEditorController {
     
+    /**
+     * The main user selection pane.
+     */
     @FXML
     private VBox user_select;
     
+    /**
+     * The main user editing pane.
+     */
     @FXML
     private VBox user_edit;
     
+    /**
+     * The list of users in user_select.
+     */
     @FXML
     private ListView user_list;
     
+    /**
+     * The user id of a user.
+     */
     @FXML
     private Label user_id;
     
+    /**
+     * The first and last name of a user.
+     */
     @FXML
     private Label user_first_last;
     
+    /**
+     * A dropdown menu allowing the user to select a permissions-level for a user.
+     */
     @FXML
     private MenuButton select_permissions;
     
+    /**
+     * An item in the the dropdown menu, select_permissions.
+     */
     @FXML
     private MenuItem item_student;
     
+    /**
+     * An item in the the dropdown menu, select_permissions.
+     */
     @FXML
     private MenuItem item_ta;
     
+    /**
+     * An item in the the dropdown menu, select_permissions.
+     */
     @FXML
     private MenuItem item_instructor;
     
+    /**
+     * An item in the the dropdown menu, select_permissions.
+     */
     @FXML
     private MenuItem item_admin;
     
+    /**
+     * A list of all currently registered users.
+     */
     private UserDB users = Grader.getUserDB();
     
+    /**
+     * Keeps track of a user type.
+     */
     private char userType;
     
     /**
