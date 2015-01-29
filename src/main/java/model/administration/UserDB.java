@@ -197,7 +197,7 @@ public class UserDB {
         Debug.log("model", "UserDB.editUserType() invoked.");
         
         // check if target exists
-        if (users.contains(target)) {
+        if (users.contains(target) && UserTypes.isValidType(newType)) {
             // edit User object type
             ((User) users.get(users.indexOf(target))).setType(newType);
             // edit User in udb
