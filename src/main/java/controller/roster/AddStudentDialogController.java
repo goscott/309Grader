@@ -25,18 +25,20 @@ import javafx.stage.WindowEvent;
  * 
  */
 public class AddStudentDialogController {
-
+	/** contains the ComboBox with all the students names to add **/
 	@FXML
 	private ComboBox<String> SelectStudentMenu;
-	
+	/** the add button  **/
 	@FXML
 	private Button addButton;
-	
+	/** the cancel button  **/
 	@FXML
 	private Button cancelButton;
-	
+	/** The controller for the gradebook **/
 	private static GradebookController gbook;
+	/** the MenuItem to set the gradebook to **/
 	private static MenuItem parent;
+	/** the server that holds all student info **/
 	private static Server server;
 	
 	/**
