@@ -15,9 +15,10 @@ import model.roster.Student;
  *
  */
 public class Server {
+	/** The students stored in the server **/
 	private static ArrayList<Student> students = new ArrayList<Student>();
+	/** An ObservableList of the students in the server **/
 	private static ObservableList<Student> studentNames;
-	//private static Curve curve;
 	
 	/**
 	 * Gets the list of all students stored in the
@@ -110,5 +111,4 @@ public class Server {
 		students.add(new Student("Jacob Hardi", "01968"));
 		Debug.log("Initializing Server", "Server students populated");
 	}
-
 }
