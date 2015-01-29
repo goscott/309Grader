@@ -6,14 +6,16 @@ import java.util.TreeSet;
 public class Curve implements Serializable{
     /** auto generated serial Version */
     private static final long serialVersionUID = 6753830198895233150L;
-    private String name;             // Curve name designation
-    private TreeSet<Grade> curve;    // Set of grades that define this curve
+    /** Curve name designation */
+    private String name;
+    /** Set of grades that defines this curve */
+    private TreeSet<Grade> curve;
     
     /**
      * Returns an initialized curve.
      */
     public Curve() {
-        this.name = null;
+        this.name = "";
         curve = new TreeSet<Grade>();
         curve.add(new Grade("A", 100, 90));
 		curve.add(new Grade("B", 90, 80));
@@ -36,6 +38,9 @@ public class Curve implements Serializable{
      * overlap with existing grades.
      * @param grade the grade to add
      */
+    /*@
+       requires !curve.contains(grade);
+    @*/
     public void add(Grade grade) {
         curve.add(grade);
     }
@@ -51,9 +56,20 @@ public class Curve implements Serializable{
     /**
      * Remove the given grade from this curve.
      * @param grade the grade to remove
+     * @return false if not such grade is in the curve
      */
-    public void remove(Grade grade) {
-        curve.remove(grade);
+    /*@
+       public normal_behavior
+           requires curve.contains(grade);
+           assignable \nothing;
+           ensures !curve.contains(grade) && \result == true;
+       also
+       public normal_behavior
+           assignable \nothing;
+           ensures \result == false;
+    @*/
+    public boolean remove(Grade grade) {
+        return curve.remove(grade);
     }
 
     /**
@@ -62,6 +78,14 @@ public class Curve implements Serializable{
      * @param max the new maximum percentage
      * @param min the new minimum percentage
      */
+    /*@
+    public normal_behavior
+        requires max <= 100.0 && min >= 0.0 && max > min;
+    also
+    public exceptional_behavior
+        requires !(max <= 100.0 && min >= 0.0 && max > min);
+        signals_only IllegalArgumentException;
+    @*/
     public void adjust(Grade grade, float max, float min) {
         grade.set(max, min);
     }
@@ -79,6 +103,9 @@ public class Curve implements Serializable{
      * @param percentage the percentage score
      * @return the grade that represents the percentage score
      */
+    /*@
+       requires \forall grade != null;
+     @*/
     public Grade get(double percentage) {
         for (Grade grade : curve) {
             if (grade.contains(percentage)) {

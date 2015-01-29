@@ -11,9 +11,12 @@ import javafx.beans.property.SimpleStringProperty;
 public class Grade implements Comparable<Grade>, Serializable {
     /** auto Generated serial ID */
     private static final long serialVersionUID = -8509411443331361582L;
-    private final SimpleStringProperty name;    // Grade Name
-    private double max;                         // Maximum percentage required
-    private double min;                         // Minimum percentage required
+    /** Grade Name */
+    private final SimpleStringProperty name;
+    /** Maximum percentage required */
+    private double max;
+    /** Minimum percentage required */
+    private double min;
 
     /**
      * Create a new Grade object with
@@ -56,6 +59,19 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param percentage the percentage score
      * @return true if percentage score is in range
      */
+    /*@
+    public normal_behavior
+        requires percentage <= 100.0 && percentage >= 0.0 && 
+            percentage >= min && percentage < max;
+        assignable \nothing;
+        ensures \result == true;
+    also
+    public normal_behavior
+        requires !(percentage <= 100.0 && percentage >= 0.0 && 
+            percentage >= min && percentage < max);
+        assignable \nothing;
+        ensures \result == false;
+    @*/
     public boolean contains(double percentage) {
         return percentage >= this.min && percentage < this.max;
     }
@@ -97,6 +113,18 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param max the new maximum percentage required
      * @param min the new minimum percentage required
      */
+    /*@
+       public normal_behavior
+           requires max <= 100.0 && min >= 0.0 && max > min;
+           assignable max;
+           assignable min;
+           ensures max == max;
+           ensures min == min;
+       also
+       public exceptional_behavior
+           requires !(max <= 100.0 && min >= 0.0 && max > min);
+           signals_only IllegalArgumentException;
+    @*/
     public void set(double max, double min) {
         if (max <= 100.0 && min >= 0.0 && max > min) {
             this.max = max;
