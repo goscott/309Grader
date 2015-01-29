@@ -393,14 +393,24 @@ public class Roster implements Serializable {
 		return max;
 	}
 	
+	/**
+	 * Returns the class average percentage grade.
+	 * @return the average percentage grade
+	 */
 	public double getPercentAverage() {
-	    double avg = 0.0;
+	    double sum = 0.0;
+	    int num = 0;
 	    for (Student student : students) {
-	        avg += student.getTotalPercentage();
+	        sum += student.getTotalPercentage();
+	        ++num;
 	    }
-	    return avg;
+	    return sum / num;
 	}
 	
+	/**
+	 * Returns the class average letter grade.
+	 * @return the class average letter grade
+	 */
 	public String getLetterAverage() {
 	    return curve.get(getPercentAverage()).getName();
 	}

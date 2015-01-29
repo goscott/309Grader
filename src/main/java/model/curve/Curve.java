@@ -3,6 +3,10 @@ package model.curve;
 import java.io.Serializable;
 import java.util.TreeSet;
 
+/**
+ * A representation of a course curve defined by percentage grades.
+ * @author Frank Poole
+ */
 public class Curve implements Serializable{
     /** auto generated serial Version */
     private static final long serialVersionUID = 6753830198895233150L;

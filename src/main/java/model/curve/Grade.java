@@ -1,7 +1,6 @@
 package model.curve;
 
 import java.io.Serializable;
-
 import javafx.beans.property.SimpleStringProperty;
 
 /**
