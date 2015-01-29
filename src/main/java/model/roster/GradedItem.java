@@ -158,6 +158,14 @@ public class GradedItem implements Serializable {
 	 * @param sc
 	 *            the new max score
 	 */
+	/*@
+		requires(
+			sc >= 0
+		);
+		ensures(
+			maxScore == sc
+		);
+	@*/
 	public void setMaxScore(double sc) {
 		maxScore = sc;
 	}
@@ -187,10 +195,29 @@ public class GradedItem implements Serializable {
 	 *            The child assignment; such as a specific question or a
 	 *            subcategory
 	 */
+	/*@
+	 	requires(
+	 		item != null
+	 			&&
+	 		!children.contains(item)
+	 	);
+	 	ensures(
+	 		item.hasParent() => !item.getParent().getChildren().contains(item)
+	 			&&
+	 		item.getParent().equals(this)
+	 			&&
+	 		// The new child is the only change to the list of children
+	 		(\forall GradedItem other ; 
+	 			children.contains(other) <==>
+	 				other.equals(item) || \old(children).contains(other)
+	 	);
+	@*/
 	public void addChild(GradedItem item) {
-		Debug.log("Child Added", item.name() + " added as a child of " + name);
+		//TODO unattach old parent
 		if (!children.contains(item)) {
+			Debug.log("Child Added", item.name() + " added as a child of " + name);
 			children.add(item);
+			//item.setParent(this);
 		}
 	}
 

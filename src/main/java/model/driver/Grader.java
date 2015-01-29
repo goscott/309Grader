@@ -7,11 +7,11 @@ import javafx.collections.ObservableList;
 import model.administration.User;
 import model.administration.UserDB;
 import model.curve.Curve;
-import model.history.CourseHistory;
 import model.history.HistoryDB;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.Student;
+import model.server.Server;
 
 /**
  * Main class for the program. Holds references 
@@ -117,9 +117,26 @@ public class Grader {
 	 * @param newRoster
 	 *            the new roster
 	 */
+	/*@
+		requires(
+			// The roster is valid
+			newRoster != null
+				&&
+			// The roster is not already registered
+			!classList.contains(newRoster)
+		);
+		ensures(
+			// The new roster is the only change to the list of rosters
+			\forall Roster other ;
+				(classList.contains(other) <==>
+					other.equals(newRoster) || \old(classList).contains(other))
+		);
+	@*/
 	public static void addRoster(Roster newRoster) {
-		classList.add(newRoster);
-		Debug.log("Grader model updated", "New roster registered");
+		//if(!classList.contains(newRoster)) {
+			classList.add(newRoster);
+			Debug.log("Grader model updated", "New roster registered");
+		//}
 	}
 
 	/**
@@ -140,7 +157,26 @@ public class Grader {
 	 * @param student
 	 *            The student to be added to the roster
 	 */
+	/*@
+	 	requires(
+	 		student != null
+	 			&&
+	 		// The student is not already enrolled
+	 		!currentRoster.containsStudent(student.getId())
+	 			&&
+	 		// The server contains a record of the student
+			Server.getStudents().contains(student)
+	 	);
+	 	ensures(
+	 		// The new student is the only change to the list of students enrolled
+			\forall Student other ;
+				(currentRoster.getStudents().contains(other) <==>
+					other.equals(student) || \old(currentRoster.getStudents()).contains(other))
+	 	);
+	@*/
 	public static void addStudent(Student student) {
+		/*if(!currentRoster.containsStudent(student.getId()) &&
+				Server.getStudents().contains(student))*/
 		currentRoster.addStudent(student);
 		Debug.log("Grader model updated", "Student added to current roster");
 	}
@@ -161,6 +197,22 @@ public class Grader {
 	 * @param item
 	 *            the GradedItem that will be added to the roster
 	 */
+	/*@
+	 	requires(
+	 		// The new item is not null
+	 		item != null
+	 			&&
+	 		// The assignment is not already in the roster
+	 		!currentRoster.getAssignments().contains(item)
+	 	);
+	 	ensures(
+	 		// The new assignment is the only change to the list of assignments
+	 		// in the roster
+	 		(\forall GradedItem other ; 
+	 			currentRoster.getAssignments().contains(other) <==>
+	 				other.equals(item) || \old(currentRoster.getAssignments()).contains(other)
+	 	);
+	 @*/
 	public static void addAssignment(GradedItem item) {
 		currentRoster.addAssignment(item);
 		Debug.log("Grader model updated", "Assignment added to current roster");
@@ -188,6 +240,22 @@ public class Grader {
 	 * @param score
 	 *            The student's new score
 	 */
+	/*@
+	 	requires(
+	 		// The assignment name references a valid assignment
+	 		getAssignmentNameList().contains(asgn)
+	 			&&
+	 		// The score is valid
+	 		score >= 0 && score <= getAssignment(asgn).maxScore()
+	 			&&
+	 		// The given student is valid and enrolled in the current roster
+	 		currentRoster.getStudents().contains(student)
+	 	);
+	 	ensures(
+	 		// The assignment's score has been set to the new value
+	 		getAssignment(asgn).score() == score
+	 	);
+	 @*/
 	public static void addScore(Student student, String asgn, double score) {
 		currentRoster.getStudentByID(student.getId()).setScore(asgn, score);
 		Debug.log("Grader model updated", "Score added -> " + student.getName()
@@ -205,6 +273,22 @@ public class Grader {
 	 * @param score
 	 *            The student's new score as a percantage of the maximum score
 	 */
+	/*@
+	 	requires(
+	 		// The assignment name references a valid assignment
+	 		getAssignmentNameList().contains(asgn)
+	 			&&
+	 		// The percentage is valid
+	 		percent >= 0 && percent <= 100
+	 			&&
+	 		// The given student is valid and enrolled in the current roster
+	 		currentRoster.getStudents().contains(student)
+	 	);
+	 	ensures(
+	 		// The assignment's score has been set to the new value
+	 		getAssignment(asgn).score() == percent/100*getAssignment(asgn).maxScore()
+	 	);
+	 @*/
 	public static void addPercentageScore(Student student, String asgn, double percent) {
 		currentRoster.getStudentByID(student.getId()).setPercentScore(asgn, percent);
 		Debug.log("Grader model updated", "Score added");
