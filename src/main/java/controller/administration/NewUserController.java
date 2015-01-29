@@ -151,11 +151,11 @@ public class NewUserController {
         else if (users.get(user_name.getText()) == null) {
             
             if (!checkbox_show.isSelected()) {
-                users.addUser(new User(first_name.getText(), last_name.getText(), user_name.getText(), password_masked.getText(), userType));
+                users.addUser(new User(first_name.getText(), last_name.getText(), user_name.getText(), password_masked.getText(), userType), true);
             }
             
             else {
-                users.addUser(new User(first_name.getText(), last_name.getText(), user_name.getText(), password_plain_text.getText(), userType));
+                users.addUser(new User(first_name.getText(), last_name.getText(), user_name.getText(), password_plain_text.getText(), userType), true);
             }
             
             ((Stage) button_create.getScene().getWindow()).close();

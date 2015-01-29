@@ -119,7 +119,7 @@ public class UserDB {
      * @param newUser A user to add.
      * @return Returns true if the add was successful.
      */
-    public boolean addUser(User newUser) {
+    public boolean addUser(User newUser, boolean doUpdate) {
         Debug.log("model", "UserDB.addUser() invoked.");
         
         BufferedWriter writer = null;
@@ -145,7 +145,12 @@ public class UserDB {
                 e.printStackTrace();
             }*/
             users.add(newUser);
-            updateDB();
+            
+            //if do update if false, it wont overwrite the dbfile
+            //this is helpful for testing.
+            if (doUpdate) {
+                updateDB();
+            }
 
             return true;
         }

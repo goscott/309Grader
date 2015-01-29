@@ -60,11 +60,6 @@ public class CourseHistory {
 	 * Constructor for history.
 	 * @param newCourseName The name of a course.
 	 */
-	/*@
-        ensures (
-            (\result == history)
-        );
-    @*/
 	public CourseHistory(String newCourseName) {
 	    courseName = newCourseName;
 	}
@@ -104,6 +99,11 @@ public class CourseHistory {
 	/**
 	 * @return returns the course history.
 	 */
+	/*@
+        ensures (
+            (\result == history)
+        );
+    @*/
 	public Collection<Roster> getHistory () {
 		return history;
 	}
