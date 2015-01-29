@@ -10,6 +10,7 @@ import model.roster.Roster;
  *
  */
 public class HistoryDB {
+    /** Master list of all courses in the history. */
     ArrayList<CourseHistory> history;
     
     /**

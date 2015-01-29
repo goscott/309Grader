@@ -19,11 +19,26 @@ import model.driver.Debug;
  *
  */
 public class UserDB {
+    
+    /**
+     * A list of all registered users.
+     */
     private ArrayList<User> users;
     //private static final String DATABASE = "src/main/java/model/administration/users.udb";
+    
+    /**
+     * Relative (from project root) path to the file containing user info.
+     */
     private static final String DATABASE = "model/administration/users.udb";
+    
+    /**
+     * The string that delimits the items in the user info file.
+     */
     private static final String DELIM = Character.toString((char) 0);
 
+    /**
+     * Constructor for UserDB. Calls loadUserDB(), which loads users from users.udb.
+     */
     public UserDB() {
         Debug.log("model", "UserDB Created");
         loadUserDB();
@@ -165,6 +180,14 @@ public class UserDB {
      * @param newType A permission type. (See UserTypes.java)
      * @return Returns true if the change was successful.
      */
+    /*@
+          requires
+              (UserTypes.isValidType(newType));
+          
+          ensures
+              ((\result = true) => users.contains(target));
+                  
+     @*/
     public boolean editUserType(User target, char newType) {
         Debug.log("model", "UserDB.editUserType() invoked.");
         
@@ -195,6 +218,17 @@ public class UserDB {
      * @return Returns a user, or null if the id does not match the one in the
      *         database.
      */
+    /*@
+          ensures
+              (\exists User target ;
+                  users.contains(target) ;
+                      target.getId.equals(id) 
+                      && \result == users.get(users.indexOf(target)))
+               
+               ||
+               
+               \result == null;
+     @*/
     public User get(String id) {
         Debug.log("model", "UserDB.get() invoked.");
         for (User target : users) {
@@ -212,6 +246,18 @@ public class UserDB {
      * @param password A user password.
      * @return Returns a User object, or null.
      */
+    /*@
+          ensures
+              \exists User user;
+                  Users.contains(user);
+                      user.getId.equals(id)
+                      && user.getPassword().equals(password) 
+                      && \result == users.get(users.indexOf(target)))
+              
+              ||
+              
+              (\result == null);
+     @*/
     public User login(String id, String password) {
         Debug.log("model", "UserDB.login() invoked.");
         

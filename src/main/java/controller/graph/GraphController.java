@@ -23,11 +23,17 @@ public class GraphController {
     @FXML
     private TableColumn<Grade, String> gradeCol;
     
+    /**
+     * Initialize the graph tab view.
+     */
     public void initialize()
     {
         this.update();
     }
     
+    /**
+     * Update the graph tab view with class roster information.
+     */
     public void update() {
         studentsLabel.setText(Integer.toString(Grader.getRoster().numStudents()));
         gradeLabel.setText(Grader.getRoster().getLetterAverage());

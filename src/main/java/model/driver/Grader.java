@@ -20,11 +20,17 @@ import model.roster.Student;
  * @author Gavin Scott
  */
 public class Grader {
+	/** A singleton instance of the Grader **/
 	private static Grader grader = new Grader();
+	/** The current roster being viewed in the GUI **/
 	private static Roster currentRoster;
+	/** A list of all of the rosters contained in the Grader **/
 	private static ArrayList<Roster> classList;
+	/** The User that is currently logged in to the program **/
 	private static User user;
+	/** A database containing past rosters **/
 	private static HistoryDB history;
+	/** A database of all users **/
 	private static UserDB userDB = new UserDB();
 
 	/**

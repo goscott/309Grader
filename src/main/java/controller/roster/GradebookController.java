@@ -62,7 +62,7 @@ public class GradebookController {
 	protected void initialize() {
 		mainTable.setEditable(true);
 		expanded = new ArrayList<String>();
-		for(String item : Grader.getAssignmentNameList()) {
+		for (String item : Grader.getAssignmentNameList()) {
 			setAssignmentExpansion(item, true);
 		}
 		fullRefresh();
@@ -75,7 +75,8 @@ public class GradebookController {
 		MenuItem addStudent = new MenuItem("Add Student");
 		MenuItem dropStudent = new MenuItem("Drop Student");
 		MenuItem rosterSynch = new MenuItem("Roster Synch");
-		MenuItem TEST = new MenuItem("TEST");
+		MenuItem TEST = new MenuItem("Toggle 'Midterms' expand/collapse");
+		MenuItem refresh = new MenuItem("Refresh");
 
 		addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
 				addAssignment, this));
@@ -84,15 +85,19 @@ public class GradebookController {
 		TEST.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("*******************************");
-				for (GradedItem item : Grader.getRoster().getAssignments()) {
-					System.out.println(item);
-				}
-				System.out.println("*******************************");
+				if (expanded.contains("Midterms"))
+					setAssignmentExpansion("Midterms", false);
+				else
+					setAssignmentExpansion("Midterms", false);
+			}
+		});
+		refresh.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
 				fullRefresh();
 			}
 		});
-
+		rightClickMenu.getItems().add(refresh);
 		rightClickMenu.getItems().add(TEST);
 		rightClickMenu.getItems().add(addAssignment);
 		rightClickMenu.getItems().add(dropAssignment);
@@ -199,7 +204,9 @@ public class GradebookController {
 					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 							"totalScore"));
 			for (GradedItem item : Grader.getRoster().getAssignments()) {
-				if (!columnExists(item.name()) && expanded.contains(item.name())) {
+				if (!columnExists(item.name())
+						&& (item.getParent() == null || expanded.contains(item
+								.getParent().name()))) {
 					TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
 							item.name());
 					newColumn.setMinWidth(100);
@@ -240,15 +247,36 @@ public class GradebookController {
 	}
 
 	void setAssignmentExpansion(String asgnName, boolean expand) {
-		if(expand && !expanded.contains(asgnName)) {
-			expanded.add(asgnName);
+		if (expand) {
+			open(asgnName);
+			fullRefresh();
 		}
-		if(!expand && expanded.contains(asgnName)) {
-			expanded.remove(asgnName);
+		if (!expand) {
+			close(asgnName);
 			fullRefresh();
 		}
 	}
 	
+	private void open(String asgnName) {
+		if (!expanded.contains(asgnName)) {
+			expanded.add(asgnName);
+			GradedItem item = Grader.getAssignment(asgnName);
+			for (GradedItem child : item.getChildren()) {
+				open(child.name());
+			}
+		}
+	}
+	
+	private void close(String asgnName) {
+		if (expanded.contains(asgnName)) {
+			expanded.remove(asgnName);
+			GradedItem item = Grader.getAssignment(asgnName);
+			for (GradedItem child : item.getChildren()) {
+				close(child.name());
+			}
+		}
+	}
+
 	void fullRefresh() {
 		if (mainTable.getColumns().size() > 0) {
 			for (int i = mainTable.getColumns().size() - 1; i > 0; i--) {

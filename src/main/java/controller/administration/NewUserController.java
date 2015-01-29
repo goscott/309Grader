@@ -20,48 +20,94 @@ import javafx.stage.Stage;
  *
  */
 public class NewUserController {
+    
+    /**
+     * Users enter their first name here.
+     */
     @FXML
     private TextField first_name;
     
+    /**
+     * Users enter their last name here.
+     */
     @FXML
     private TextField last_name;
     
+    /**
+     * Users enter their username here. It sould be the same as their cal poly id.
+     */
     @FXML
     private TextField user_name;
     
+    /**
+     * Users enter their password here. It shows up as dots. Example: **********
+     */
     @FXML
     private PasswordField password_masked;
     
+    /**
+     * Users enter their password here. It shows up as plain text. Example: myPassword
+     */
     @FXML
     private TextField password_plain_text;
     
+    /**
+     * Toggles the password_masked field on and off.
+     */
     @FXML
     private CheckBox checkbox_show;
     
+    /**
+     * Creates a new user, provided user info is valid.
+     */
     @FXML 
     private Button button_create;
     
+    /**
+     * Exits the dialog.
+     */
     @FXML 
     private Button button_cancel;
     
+    /**
+     * Becomes visible when invalid user info has be entered.
+     */
     @FXML
     private Label error_message;
     
+    /**
+     * An item in the dropdown menu, button_select_permissions.
+     */
     @FXML
     private MenuItem item_student;
     
+    /**
+     * An item in the dropdown menu, button_select_permissions.
+     */
     @FXML
     private MenuItem item_ta;
     
+    /**
+     * An item in the dropdown menu, button_select_permissions.
+     */
     @FXML
     private MenuItem item_instructor;
     
+    /**
+     * An item in the dropdown menu, button_select_permissions.
+     */
     @FXML
     private MenuItem item_admin;
     
+    /**
+     * An item in the dropdown menu, button_select_permissions.
+     */
     @FXML
     private MenuButton button_select_permissions;
     
+    /**
+     * A dropdown menu allowing the user to select his permission level.
+     */
     private char userType = UserTypes.USER_STUDENT;
     
     /**
