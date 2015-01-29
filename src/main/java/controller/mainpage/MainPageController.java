@@ -50,7 +50,7 @@ public class MainPageController {
 	@FXML
 	private Tab predictionsTab;
 	@FXML
-	private Tab announcmentsTab;
+	private Tab announcementsTab;
 	@FXML
 	private MenuItem addAssignment;
 	@FXML
@@ -91,6 +91,13 @@ public class MainPageController {
                     .load(getClass().getClassLoader().getResource(
                             "view/history/history_screen.fxml"));
 			historyTab.setContent(historyPage);
+			
+			// add announcementsTab -Jacob
+			AnchorPane announcemetsPage = (AnchorPane) FXMLLoader
+					.load(getClass().getClassLoader().getResource(
+							"view/mainpage/announcementTab.fxml"));
+			announcementsTab.setContent(announcemetsPage);
+			
             
 		} catch (IOException e) {
 			e.printStackTrace();
