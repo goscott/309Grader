@@ -9,16 +9,34 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
+/**
+ * Controlls the history view.
+ * @author Mason Stevenson
+ *
+ */
 public class HistoryController {
+    
+    /**
+     * Shows course history info.
+     */
     @FXML
     private HBox history_view;
     
+    /**
+     * Shows completed (non-editable) gradebook for this course.
+     */
     @FXML 
     private BorderPane gradebook_view;
     
+    /**
+     * Switches to gradebook view.
+     */
     @FXML
     private Button button_gradebook;
     
+    /**
+     * Switches to history view.
+     */
     @FXML
     private Button button_history;
     
@@ -26,6 +44,9 @@ public class HistoryController {
         //load classes from history db
     }
     
+    /**
+     * Switches the view from history to gradebook.
+     */
     public void switchToGradebook() {
         history_view.setVisible(false);
         gradebook_view.setVisible(true);
@@ -41,6 +62,9 @@ public class HistoryController {
         }
     }
     
+    /**
+     * Switches the view from gradebook to history.
+     */
     public void switchToHistory() {
         history_view.setVisible(true);
         gradebook_view.setVisible(false);

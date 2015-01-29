@@ -29,6 +29,9 @@ public class Launcher extends Application {
         Application.launch(Launcher.class, (java.lang.String[])null);
     }
     
+    /**
+     * Launches the user login view.
+     */
     @Override
     public void start(Stage primaryStage) {
         try {

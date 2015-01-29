@@ -7,9 +7,24 @@ package model.administration;
  */
 public class UserTypes {
 
+    /**
+     * Identifying character for a Student user.
+     */
     public static final char USER_STUDENT = 's';
+    
+    /**
+     * Identifying character for a Instructor user.
+     */
     public static final char USER_INSTRUCTOR = 'i';
+    
+    /**
+     * Identifying character for a Teacher's aid user.
+     */
     public static final char USER_TA = 't';
+    
+    /**
+     * Identifying character for a Administrator user.
+     */
     public static final char USER_ADMIN = 'a';
 
     /**
