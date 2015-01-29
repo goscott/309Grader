@@ -35,8 +35,10 @@ public class Server {
 	 * server and turns the ArrayList to an ObservableList.
 	 * @return ObservableList<Student> the list of students
 	 */
-	//@ requires students != null;
-    //@ assignable \forall studentNames;
+	/*@
+	   requires 
+	      (\forall student != null);
+	 @*/
 	public static ObservableList<Student> getObservableStudentList() { 
 	    studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -51,8 +53,10 @@ public class Server {
 	 * This only gets a list of the students not in the Roster.
 	 * @return ObservableList<Student> the list of students
 	 */
-	//@ requires student != null && student.id == null;
-    //@ assignable \forall studentNames;
+	/*@
+	   requires 
+	      (\forall student != null && roster.contains(student.id) == null);
+	 @*/
 	public static ObservableList<Student> getStudentListNotRoster() { 
 	    studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -68,8 +72,10 @@ public class Server {
 	 * server and turns the ArrayList to an ObservableList.
 	 * @return ObservableList<Student> the list of student's names.
 	 */
-	//@ requires \forall students != null;
-    //@ assignable studentNames;
+	/*@
+	   requires 
+	      (\forall student != null);
+	 @*/
 	public static ObservableList<String> getStudentListName() { 
 		ObservableList<String> studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
@@ -85,8 +91,10 @@ public class Server {
 	 * This only gets a list of the students not in the Roster.
 	 * @return ObservableList<Student> the list of student's names.
 	 */
-	//@ requires \forall student != null && student.id == null;
-    //@ assignable studentNames;
+	/*@
+	   requires 
+	      (\forall student != null && roster.contains(student.id) == null);
+	 @*/
 	public static ObservableList<String> getStudentListNameNotRoster() { 
 		ObservableList<String> studentNames = FXCollections.observableArrayList ();
 		for(Student student: students){
