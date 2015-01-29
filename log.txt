@@ -1,0 +1,99 @@
+----------------------------------
+
+     GRADER TOOL LOG OUTPUT
+
+----------------------------------
+
+  Logged at 01/28/2015 23:43:09
+----------------------------------
+
+
+
+GRADER TOOL : Initializing...
+
+
+LOGIN : attempting login...
+
+MODEL : UserDB Created
+
+MODEL : UserDB.login() invoked.
+
+MODEL : UserDB.get() invoked.
+
+Writing to fileC:\Users\Jacob\git\309Grader\target\classes\model\administration\login.txt
+
+LOGIN : logged in as admin
+
+
+GRADER MODEL UPDATED : New roster registered
+
+GRADER MODEL UPDATED : Current roster changed
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+CHILD ADDED : Midterm 1 added as a child of Midterms
+
+CHILD ADDED : Midterm 2 added as a child of Midterms
+
+CHILD ADDED : Midterm 3 added as a child of Midterms
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+CHILD ADDED : Q1 added as a child of Midterm 1
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+CHILD ADDED : Q2 added as a child of Midterm 1
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL UPDATED : Student added to current roster
+
+GRADER MODEL UPDATED : Student added to current roster
+
+GRADER MODEL UPDATED : Score added -> Bob has score 86.0 on Midterm 2.
+
+GRADER MODEL UPDATED : Score added -> Bob has score 95.0 on Midterm 3.
+
+GRADER MODEL UPDATED : Score added -> Bill has score 67.0 on Midterm 2.
+
+GRADER MODEL UPDATED : Score added -> Bill has score 59.0 on Midterm 3.
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
