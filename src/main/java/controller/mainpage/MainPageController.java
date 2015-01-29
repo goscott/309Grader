@@ -93,7 +93,7 @@ public class MainPageController {
 			historyTab.setContent(historyPage);
 			
 			// add announcementsTab -Jacob
-			AnchorPane announcemetsPage = (AnchorPane) FXMLLoader
+			StackPane announcemetsPage = (StackPane) FXMLLoader
 					.load(getClass().getClassLoader().getResource(
 							"view/mainpage/announcementTab.fxml"));
 			announcementsTab.setContent(announcemetsPage);

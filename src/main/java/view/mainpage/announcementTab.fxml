@@ -4,31 +4,32 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL">
-        <items>
-          <AnchorPane>
+         <items>
+            <AnchorPane>
                <children>
                   <TableView>
-                    <columns>
-                      <TableColumn minWidth="200.0" prefWidth="-1.0" text="Subject" />
+                     <columns>
+                        <TableColumn minWidth="200.0" prefWidth="-1.0" text="Subject" />
                         <TableColumn minWidth="200.0" prefWidth="-1.0" text="Posted By" />
                         <TableColumn minWidth="200.0" prefWidth="-1.0" text="Date/Time Posted" />
-                    </columns>
+                     </columns>
                   </TableView>
                </children>
             </AnchorPane>
-          <AnchorPane>
+            <AnchorPane>
                <children>
                   <ToolBar>
-                    <items>
-                      <Button mnemonicParsing="false" text="Add Announcement" />
-                    </items>
+                     <items>
+                        <Button mnemonicParsing="false" text="Add Announcement" />
+                     </items>
                   </ToolBar>
                </children>
             </AnchorPane>
-        </items>
+         </items>
       </SplitPane>
    </children>
-</AnchorPane>
+</StackPane>
