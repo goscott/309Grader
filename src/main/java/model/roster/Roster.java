@@ -218,7 +218,7 @@ public class Roster implements Serializable {
 	public double getScore(Student student, String asgn) {
 		if (students.contains(student) && assignments.contains(asgn)) {
 			Student stud = students.get(students.indexOf(student));
-			return Double.parseDouble(stud.getAssignmentScore(asgn));
+			return /*Double.parseDouble(*/stud.getAssignmentScore(asgn);//);
 		}
 		return -1;
 	}

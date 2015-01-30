@@ -304,9 +304,10 @@ public class Grader {
 	 *            The name of the assignment being checked
 	 * @return double the student's score on that assignment
 	 */
-	public static double getScore(Student student, String asgn) {
+	public static Double getScore(Student student, String asgn) {
 		Debug.log("Grader model accessed", "Student score retrieved");
-		return currentRoster.getScore(student, asgn);
+		return currentRoster.getStudentByID(student.getId()).getAssignmentScore(asgn);
+		//return currentRoster.getScore(student, asgn);
 	}
 
 	/**

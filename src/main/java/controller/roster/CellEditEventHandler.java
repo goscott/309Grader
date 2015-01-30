@@ -11,7 +11,6 @@ import javafx.scene.control.TableColumn.CellEditEvent;
  * An ActionEvent that handles displaying the "Add Assignment" dialog.
  * 
  * @author Gavin Scott
- * @author Shelli Crispen
  *
  */
 public class CellEditEventHandler implements

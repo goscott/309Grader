@@ -1,7 +1,6 @@
 package testing.roster;
 
 import model.roster.GradedItem;
-import testing.Debug;
 import testing.Test;
 
 public class GradedItemTest extends Test {

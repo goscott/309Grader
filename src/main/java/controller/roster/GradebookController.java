@@ -207,9 +207,12 @@ public class GradebookController {
 					newColumn.setCellValueFactory(new Callback() {
 						public SimpleStringProperty call(
 								CellDataFeatures<Student, String> param) {
+							if(param.getValue().getAssignmentScore(newColumn.getText()) == null) {
+								return new SimpleStringProperty("");
+							}
 							return new SimpleStringProperty(param.getValue()
 									.getAssignmentScore(newColumn.getText())
-									.toString());
+									+"");
 						}
 
 						public Object call(Object param) {

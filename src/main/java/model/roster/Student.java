@@ -127,11 +127,11 @@ public class Student implements Comparable<Student>, Serializable {
 	 *            The name of the assignment
 	 * @return Double the student's score on the assignment
 	 */
-	public String getAssignmentScore(String asgn) {
+	public Double getAssignmentScore(String asgn) {
 		if (scores.get(asgn) != null && scores.get(asgn).score() != null) {
-			return scores.get(asgn).score() + "";
+			return scores.get(asgn).score();
 		}
-		return "";
+		return null;
 	}
 
 	/**
