@@ -1,5 +1,7 @@
 package testing.roster;
 
-public class StudentTest {
+import testing.Test;
+
+public class StudentTest extends Test {
 
 }

@@ -1,11 +1,12 @@
 package testing.administration;
 
 import testing.Test;
+import testing.TestRunner;
 
-public class AdminRunner extends Test {
+public class AdminRunner extends TestRunner {
 
 	@Override
-	public Object[] getTestObjects() {
+	public Test[] getTestObjects() {
 		// TODO Auto-generated method stub
 		return null;
 	}

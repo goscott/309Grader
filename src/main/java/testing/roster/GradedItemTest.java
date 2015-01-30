@@ -1,8 +1,9 @@
 package testing.roster;
 
 import testing.Debug;
+import testing.Test;
 
-public class GradedItemTest {
+public class GradedItemTest extends Test {
 
 	public void testSetMaxScore() {
 		Debug.log("Testing setMaxScore...");

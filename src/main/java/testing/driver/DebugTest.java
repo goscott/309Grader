@@ -1,5 +1,7 @@
 package testing.driver;
 
-public class DebugTest {
+import testing.Test;
+
+public class DebugTest extends Test {
 
 }

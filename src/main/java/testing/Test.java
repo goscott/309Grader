@@ -1,45 +1,29 @@
 package testing;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 public abstract class Test {
+	private final int stackLoc = 4;
 	/**
-	 * Gets a list of objects that we want to test.
+	 * Announces that a test has failed with a message
 	 * 
-	 * Example: If you write 200 test methods in CurveTest.java,
-	 * make a new CurveTest, add it to this list, and all the
-	 * methods will be tested automatically the next time 
-	 * AutomatedTester.java is run
-	 *
+	 * @throws TestFailureException
 	 */
-	public abstract Object[] getTestObjects();
+	public void fail(String message) {
+		Debug.log("Test Failure in " + getTestClass(), message);
+	}
 
 	/**
-	 * Tests all "testing" methods in the given objects. Testing methods have
-	 * "test" in the name and take no paramaters
+	 * Announces that a test has failed
 	 * 
-	 * @param list
-	 *            The objects to test
+	 * @throws TestFailureException
 	 */
-	public void test() {
-		if (getTestObjects() != null) {
-			for (Object obj : getTestObjects()) {
-				Class<?> c = obj.getClass();
-				for (Method method : c.getDeclaredMethods()) {
-					if (method.getName().toLowerCase().contains("test")
-							&& method.getParameterTypes().length == 0) {
-						Debug.logHeader("Running tests in " + c.getName() + "...");
-						try {
-							method.invoke(obj);
-						} catch (IllegalAccessException
-								| IllegalArgumentException
-								| InvocationTargetException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-		}
+	public void fail() {
+		fail("");
+	}
+
+	private String getTestClass() {
+		String name = getClass().getName();
+		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+		return name.substring(name.indexOf('.', name.indexOf('.') + 1) + 1)
+				+ "." + stack[stackLoc].getMethodName();
 	}
 }

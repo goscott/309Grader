@@ -1,12 +1,13 @@
 package testing.roster;
 
 import testing.Test;
+import testing.TestRunner;
 
-public class RosterRunner extends Test {
+public class RosterRunner extends TestRunner {
 
 	@Override
-	public Object[] getTestObjects() {
-		Object[] list = {
+	public Test[] getTestObjects() {
+		Test[] list = {
 				new GradedItemTest(),
 				new RosterTest(),
 				new StudentTest()

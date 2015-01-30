@@ -1,13 +1,14 @@
 package testing.driver;
 
 import testing.Test;
+import testing.TestRunner;
 
-public class DriverRunner extends Test {
+public class DriverRunner extends TestRunner {
 
 	@Override
-	public Object[] getTestObjects() {
+	public Test[] getTestObjects() {
 
-		Object[] list = {
+		Test[] list = {
 			new DebugTest(),
 			new GraderTest()
 		};

@@ -9,25 +9,20 @@ import testing.server.ServerRunner;
 
 public class AutomatedTester {
 
-	public static final Test[] tests = {
-		new ServerRunner(),
-		new RosterRunner(),
-		new HistoryRunner(),
-		new DriverRunner(),
-		new CurveRunner(),
-		new AdminRunner()
-	};
-	
+	public static final TestRunner[] tests = { new ServerRunner(),
+			new RosterRunner(), new HistoryRunner(), new DriverRunner(),
+			new CurveRunner(), new AdminRunner() };
+
 	/**
-	 * Runs every test the is mentioned in the files
-	 * listed in the list above
+	 * Runs every test the is mentioned in the files listed in the list above
+	 * 
 	 * @param args
 	 */
 	// TODO Add a bunch of cool reflection
 	public static void main(String[] args) {
 		Debug.initialize();
 		Debug.logHeader("STARTING TESTS");
-		for(Test test : tests) {
+		for (TestRunner test : tests) {
 			test.test();
 		}
 	}
