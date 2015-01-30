@@ -3,6 +3,8 @@ package model.curve;
 import java.io.Serializable;
 import java.util.TreeSet;
 
+import model.driver.Debug;
+
 /**
  * A representation of a course curve defined by percentage grades.
  * @author Frank Poole
@@ -86,12 +88,16 @@ public class Curve implements Serializable{
     public normal_behavior
         requires max <= 100.0 && min >= 0.0 && max > min;
     also
-    public exceptional_behavior
+    public normal_behavior
         requires !(max <= 100.0 && min >= 0.0 && max > min);
-        signals_only IllegalArgumentException;
     @*/
     public void adjust(Grade grade, float max, float min) {
-        grade.set(max, min);
+        try {
+            grade.set(max, min);
+        }
+        catch (IllegalArgumentException e) {
+            Debug.log("Grade Not Adjusted: Invalid Grade Range Argument(s)");
+        }
     }
     
     /**
