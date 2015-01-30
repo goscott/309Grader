@@ -22,8 +22,15 @@ public abstract class Test {
 
 	private String getTestClass() {
 		String name = getClass().getName();
-		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+		String methodName = "";
+		for(StackTraceElement element : Thread.currentThread().getStackTrace()) {
+			if(element.getMethodName().toLowerCase().contains("test") &&
+					!element.getMethodName().toLowerCase().equals("gettestclass")) {
+				methodName = element.getMethodName();
+				break;
+			}
+		}
 		return name.substring(name.indexOf('.', name.indexOf('.') + 1) + 1)
-				+ "." + stack[stackLoc].getMethodName();
+				+ "." + methodName;
 	}
 }
