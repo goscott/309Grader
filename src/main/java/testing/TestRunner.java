@@ -25,11 +25,11 @@ public abstract class TestRunner {
 		if (getTestObjects() != null) {
 			for (Object obj : getTestObjects()) {
 				Class<?> c = obj.getClass();
+				Debug.logHeader("\nRunning tests in " + c.getName()
+						+ "...");
 				for (Method method : c.getDeclaredMethods()) {
 					if (method.getName().toLowerCase().contains("test")
 							&& method.getParameterTypes().length == 0) {
-						Debug.logHeader("\nRunning tests in " + c.getName()
-								+ "...");
 						try {
 							method.invoke(obj);
 						} catch (IllegalAccessException

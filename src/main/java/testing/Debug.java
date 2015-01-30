@@ -35,7 +35,7 @@ public class Debug {
 	public static void log(String category, String msg) {
 		if (loggerPrint)
 			System.out.println("    " + category.toUpperCase() + "   " + msg);
-		if (loggerRecord) {
+		if (loggerRecord && category.toLowerCase().contains("fail")) {
 			try (PrintWriter out = new PrintWriter(new BufferedWriter(
 					new FileWriter(fileName, true)))) {
 				out.println("    " + category.toUpperCase() + "   " + msg + '\n');

@@ -20,6 +20,8 @@ public class AutomatedTester {
 	 */
 	// TODO Add a bunch of cool reflection
 	public static void main(String[] args) {
+		model.driver.Debug.loggerPrint = false;
+		model.driver.Debug.loggerRecord = false;
 		Debug.initialize();
 		Debug.logHeader("STARTING TESTS");
 		for (TestRunner test : tests) {

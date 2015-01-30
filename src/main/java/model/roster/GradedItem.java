@@ -167,7 +167,9 @@ public class GradedItem implements Serializable {
 		);
 	@*/
 	public void setMaxScore(double sc) {
-		maxScore = sc;
+		if(sc >= 0) {
+			maxScore = sc;
+		}
 	}
 
 	/**
@@ -217,7 +219,9 @@ public class GradedItem implements Serializable {
 		if (!children.contains(item)) {
 			Debug.log("Child Added", item.name() + " added as a child of " + name);
 			children.add(item);
-			//item.setParent(this);
+			if(!item.getParent().equals(this)) {
+				item.setParent(this);
+			}
 		}
 	}
 
