@@ -16,49 +16,9 @@
          <children>
             <VBox>
                <children>
-                  <ScrollPane fitToHeight="true" prefWidth="212.0" VBox.vgrow="ALWAYS">
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <content>
-                        <VBox>
-                           <children>
-                              <Accordion fx:id="class_selector" minWidth="200.0" prefWidth="200.0">
-                                <panes>
-                                  <TitledPane text="Class">
-                                       <content>
-                                          <VBox alignment="CENTER">
-                                             <children>
-                                                <Button minWidth="190.0" mnemonicParsing="false" text="Section" />
-                                                <Button minWidth="190.0" mnemonicParsing="false" text="Section">
-                                                   <VBox.margin>
-                                                      <Insets top="5.0" />
-                                                   </VBox.margin>
-                                                </Button>
-                                             </children>
-                                          </VBox>
-                                       </content>
-                                  </TitledPane>
-                                  <TitledPane animated="false" text="Class">
-                                    <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                    </content>
-                                       <padding>
-                                          <Insets top="5.0" />
-                                       </padding>
-                                  </TitledPane>
-                                  <TitledPane animated="false" text="Class">
-                                    <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                    </content>
-                                       <padding>
-                                          <Insets bottom="5.0" top="5.0" />
-                                       </padding>
-                                  </TitledPane>
-                                </panes>
-                                 <VBox.margin>
-                                    <Insets left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Accordion>
-                           </children>
-                        </VBox>
+                        <Accordion fx:id="class_selector" minWidth="200.0" prefWidth="200.0" />
                      </content>
                   </ScrollPane>
                </children>
@@ -100,14 +60,19 @@
                                     </HBox>
                                     <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <LineChart>
-                                            <xAxis>
-                                              <CategoryAxis side="BOTTOM" />
-                                            </xAxis>
-                                            <yAxis>
-                                              <NumberAxis side="LEFT" />
-                                            </yAxis>
-                                          </LineChart>
+                                          <StackPane>
+                                             <children>
+                                                <LineChart fx:id="line_chart">
+                                                  <xAxis>
+                                                    <CategoryAxis side="BOTTOM" />
+                                                  </xAxis>
+                                                  <yAxis>
+                                                    <NumberAxis side="LEFT" />
+                                                  </yAxis>
+                                                </LineChart>
+                                                <PieChart fx:id="pie_chart" />
+                                             </children>
+                                          </StackPane>
                                        </children>
                                     </FlowPane>
                                  </children>
@@ -117,12 +82,8 @@
                         <HBox alignment="CENTER">
                            <children>
                               <Button mnemonicParsing="false" onAction="#addClass" text="TEST: Add Class" />
-                              <Button mnemonicParsing="false" text="TEST: Add section" />
-                              <Button mnemonicParsing="false" text="TEST: SWITCH GRAPH" />
+                              <Button mnemonicParsing="false" onAction="#switchGraph" text="TEST: SWITCH GRAPH" />
                               <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" text="TEST: See Gradebook" />
-                              <Button mnemonicParsing="false" onAction="#switchToIntro" text="Intro" />
-                              <Button mnemonicParsing="false" onAction="#switchToCourse" text="Course" />
-                              <Button mnemonicParsing="false" onAction="#switchToSection" text="Section" />
                            </children>
                         </HBox>
                      </children>
