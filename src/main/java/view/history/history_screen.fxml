@@ -20,7 +20,7 @@
                      <content>
                         <VBox>
                            <children>
-                              <Accordion minWidth="200.0" prefWidth="200.0">
+                              <Accordion fx:id="class_selector" minWidth="200.0" prefWidth="200.0">
                                 <panes>
                                   <TitledPane text="Class">
                                        <content>
@@ -63,47 +63,72 @@
                   </ScrollPane>
                </children>
             </VBox>
-            <VBox HBox.hgrow="ALWAYS">
+            <StackPane HBox.hgrow="ALWAYS">
                <children>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                  <BorderPane fx:id="intro_view" prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label text="History Tab Under Construction">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                                 <children>
-                                    <LineChart>
-                                      <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
-                                      </xAxis>
-                                      <yAxis>
-                                        <NumberAxis side="LEFT" />
-                                      </yAxis>
-                                    </LineChart>
-                                 </children>
-                              </FlowPane>
-                           </children>
-                        </VBox>
+                        <Label text="Select a class to view its history" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                      </center>
                   </BorderPane>
-                  <HBox alignment="CENTER">
+                  <BorderPane fx:id="section_view" prefHeight="200.0" prefWidth="200.0" visible="false">
+                     <center>
+                        <Label text="Section View Under Construction" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </center>
+                  </BorderPane>
+                  <VBox HBox.hgrow="ALWAYS">
                      <children>
-                        <Button mnemonicParsing="false" text="TEST: Add Class" />
-                        <Button mnemonicParsing="false" text="TEST: Add section" />
-                        <Button mnemonicParsing="false" text="TEST: SWITCH GRAPH" />
-                        <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" text="TEST: See Gradebook" />
+                        <BorderPane fx:id="course_view" prefHeight="200.0" prefWidth="200.0" visible="false" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                           <center>
+                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Class View Under Construction">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <LineChart>
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </LineChart>
+                                       </children>
+                                    </FlowPane>
+                                 </children>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#addClass" text="TEST: Add Class" />
+                              <Button mnemonicParsing="false" text="TEST: Add section" />
+                              <Button mnemonicParsing="false" text="TEST: SWITCH GRAPH" />
+                              <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" text="TEST: See Gradebook" />
+                              <Button mnemonicParsing="false" onAction="#switchToIntro" text="Intro" />
+                              <Button mnemonicParsing="false" onAction="#switchToCourse" text="Course" />
+                              <Button mnemonicParsing="false" onAction="#switchToSection" text="Section" />
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
-            </VBox>
+            </StackPane>
          </children>
       </HBox>
       <BorderPane fx:id="gradebook_view" prefHeight="200.0" prefWidth="200.0" visible="false">

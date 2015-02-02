@@ -4,10 +4,13 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  * Controlls the history view.
@@ -40,8 +43,44 @@ public class HistoryController {
     @FXML
     private Button button_history;
     
+    @FXML
+    private Accordion class_selector;
+    
+    @FXML
+    private BorderPane intro_view;
+    
+    @FXML
+    private BorderPane course_view;
+    
+    @FXML
+    private BorderPane section_view;
+    
+    private int num = 1;
+    
     public void initialize() {
         //load classes from history db
+    }
+    
+    public void addClass() {
+        class_selector.getPanes().add(new TitledPane("Dynamic Pane #" + num++, null));
+    }
+    
+    public void switchToIntro() {
+        course_view.setVisible(false);
+        intro_view.setVisible(true);
+        section_view.setVisible(false);
+    }
+    
+    public void switchToCourse() {
+        course_view.setVisible(true);
+        intro_view.setVisible(false);
+        section_view.setVisible(false);
+    }
+    
+    public void switchToSection() {
+        course_view.setVisible(false);
+        intro_view.setVisible(false);
+        section_view.setVisible(true);
     }
     
     /**
@@ -50,6 +89,7 @@ public class HistoryController {
     public void switchToGradebook() {
         history_view.setVisible(false);
         gradebook_view.setVisible(true);
+        section_view.setVisible(false);
         
         try {
             TableView<?> gradebookPage = (TableView<?>) FXMLLoader
