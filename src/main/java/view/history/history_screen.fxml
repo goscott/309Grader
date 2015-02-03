@@ -16,7 +16,7 @@
          <children>
             <VBox>
                <children>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <content>
                         <Accordion fx:id="class_selector" minWidth="200.0" prefWidth="200.0" />
                      </content>
@@ -36,7 +36,7 @@
                   </BorderPane>
                   <BorderPane fx:id="section_view" prefHeight="200.0" prefWidth="200.0" visible="false">
                      <center>
-                        <Label text="Section View Under Construction" BorderPane.alignment="CENTER">
+                        <Label fx:id="section_label" text="Section View Under Construction" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -51,7 +51,7 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <Label text="Class View Under Construction">
+                                          <Label fx:id="course_label" text="Class View Under Construction">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
@@ -81,10 +81,16 @@
                         </BorderPane>
                         <HBox alignment="CENTER">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#addClass" text="TEST: Add Class" />
-                              <Button mnemonicParsing="false" onAction="#switchGraph" text="TEST: SWITCH GRAPH" />
+                              <Button mnemonicParsing="false" onAction="#addClass" text="TEST: Add Class" visible="false" />
+                              <Button fx:id="switch_graph" mnemonicParsing="false" onAction="#switchGraph" text="TEST: SWITCH GRAPH" visible="false">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin></Button>
                               <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" text="TEST: See Gradebook" />
                            </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </HBox>
                      </children>
                   </VBox>
