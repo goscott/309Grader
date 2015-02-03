@@ -14,12 +14,12 @@ public class CourseHistory {
     /**
      * All the rosters (different sections from different years) for this course.
      */
-	private ArrayList<Roster> history;
+	private ArrayList<Roster> history = new ArrayList<Roster>();
 	
 	/**
 	 * Hidden rosters go here.
 	 */
-	private ArrayList<Roster> hidden;
+	private ArrayList<Roster> hidden = new ArrayList<Roster>();
 	
 	/**
 	 * The sum of all students who have ever taken this course.

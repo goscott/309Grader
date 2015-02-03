@@ -11,7 +11,7 @@ import model.roster.Roster;
  */
 public class HistoryDB {
     /** Master list of all courses in the history. */
-    ArrayList<CourseHistory> history;
+    ArrayList<CourseHistory> history = new ArrayList<CourseHistory>();
     
     /**
      * Adds a roster to the history db.
@@ -58,6 +58,13 @@ public class HistoryDB {
         }
         
         return null;
+    }
+    
+    /**
+     * Returns all course history objects.
+     */
+    public ArrayList<CourseHistory> getHistory() {
+        return history;
     }
     
     /**

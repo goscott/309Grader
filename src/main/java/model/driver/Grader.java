@@ -77,6 +77,14 @@ public class Grader {
 	}
 	
 	/**
+	 * Gets the history database.
+	 */
+	public static HistoryDB getHistoryDB() {
+	    history = new HistoryDB();
+	    return history;
+	}
+	
+	/**
 	 * Sets the curve of the current roster
 	 * @param curve the new curve
 	 */

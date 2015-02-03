@@ -1,9 +1,14 @@
 package controller.history;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import model.driver.Grader;
+import model.history.CourseHistory;
+import model.history.HistoryDB;
+import model.roster.Roster;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -88,6 +93,8 @@ public class HistoryController {
     
     private ToggleButton selectedSection = null;
     
+    private HistoryDB history;
+    
     public void initialize() {
         //load classes from history db
         class_selector.expandedPaneProperty().addListener(new 
@@ -122,27 +129,38 @@ public class HistoryController {
         
         //this is where we would pull info from course history
         // to build the list of courses
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
+        history = Grader.getHistoryDB();
         
+        //populates history db with fake classes
+        fillHistoryDB();
+        
+        for (CourseHistory course : history.getHistory()) {
+            addClass(course);
+        }
+        
+        /*
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();
+        addClass();*/
+        
+        //fixes an issue with expanding titled panes getting cut off
         TitledPane padding = new TitledPane();
         padding.setVisible(false);
         class_selector.getPanes().add(padding);
@@ -170,15 +188,39 @@ public class HistoryController {
         class_selector.getPanes().add(toAdd);
     }
     
-    /*
-    public void addSection() {
-        VBox content;
+    public void addClass(CourseHistory course) {
+        VBox content = new VBox();
+        TitledPane toAdd;
         
-        for (TitledPane pane : class_selector.getPanes()) {
-            if (pane.getText().equals(targetCourse)) {
-            }
+        for (Roster section : course.getHistory()) {
+            SectionButton temp = new SectionButton(section.getQuarter() + " 2015" + " Section0" + section.getSection());
+            content.getChildren().add(temp);
+            VBox.setMargin(temp, new Insets(0, 0, 10, 0));
         }
-    }*/
+        
+        toAdd = new TitledPane(course.getCourseName(), content);
+        
+        toAdd.setAnimated(true);
+        toAdd.setPadding(new Insets(10, 20, 0, 5));
+        class_selector.getPanes().add(toAdd);
+    }
+    
+    private void fillHistoryDB() {
+        //history.addRoster(new Roster(name, String instructor, int section, String quarter, Date startDate, Date endDate));
+        
+        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 1, "Spring", null, null));
+        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 2, "Winter", null, null));
+        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 2, "Winter", null, null));
+        
+        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Spring", null, null));
+        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Winter", null, null));
+        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Fall", null, null));
+        
+        history.addRoster(new Roster("CSC/CPE 305", "John Dalbey", 1, "Fall", null, null));
+        
+        history.addRoster(new Roster("CSC/CPE 349", "Timothy Kearns", 1, "Winter", null, null));
+        
+    }
     
     public void switchGraph() {
         if (line_chart.isVisible()) {
