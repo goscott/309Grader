@@ -85,15 +85,26 @@ public class Debug {
 	 * Initializes the program with some data
 	 */
 	public static void autoPopulate() {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		//SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy"); //DEPRICATED
 		Roster roster = null;
-		try {
+		Calendar start = Calendar.getInstance();
+		Calendar end = Calendar.getInstance();
+		
+		//DEPRICATED
+		/*try {
 			roster = new Roster("CPE 309", "Winter 2015", 1,
-					"Gene Fisher", format.parse("01/01/2015"), format.parse("04/01/2015"));
+					"Gene Fisher", format.parse("01/01/2015"), format.parse("04/01/2015")); 
 		} catch (ParseException e) {
 			Debug.log("Error", "Error initializing roster");
 			e.printStackTrace();
-		}
+		}*/
+		
+		start.set(2015, 01, 01);
+        end.set(2015, 04, 01);
+        
+        roster = new Roster("CPE 309", "Winter 2015", 1,
+                "Gene Fisher", start, end);
+        
 		Grader.addRoster(roster);
 		Grader.setCurrentRoster(roster);
 		Grader.addAssignment(new GradedItem("Test", "sfds", 100, false));

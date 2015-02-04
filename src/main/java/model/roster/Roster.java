@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -44,10 +45,25 @@ public class Roster implements Serializable {
 	/** The course's quarter (or semester) **/
 	private String quarter;
 	/** The first date of the course **/
-	private Date startDate;
+	private Calendar startDate = Calendar.getInstance();
 	/** The last date of the course **/
-	private Date endDate;
+	private Calendar endDate = Calendar.getInstance();
 
+	public Roster(String name, String instructor, int section,
+            String quarter, Calendar startDate, Calendar endDate) {
+        courseName = name;
+        this.instructor = instructor;
+        this.section = section;
+        this.quarter = quarter;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        
+        students = new ArrayList<Student>();
+        assignments = new ArrayList<GradedItem>();
+        ids = new HashMap<String, Student>();
+        curve = new Curve();
+    }
+	
 	/**
 	 * Creates a roster with the given information
 	 * 
@@ -58,20 +74,21 @@ public class Roster implements Serializable {
 	 * @param instructor
 	 *            The name of the instructor
 	 */
+	/*DEPRICATED
 	public Roster(String name, String instructor, int section,
 			String quarter, Date startDate, Date endDate) {
 		courseName = name;
 		this.instructor = instructor;
 		this.section = section;
 		this.quarter = quarter;
-		this.startDate = startDate;
-		this.endDate = endDate;
+		this.startDate.setTime(startDate);
+		this.endDate.setTime(endDate);
 		
 		students = new ArrayList<Student>();
 		assignments = new ArrayList<GradedItem>();
 		ids = new HashMap<String, Student>();
 		curve = new Curve();
-	}
+	}*/
 
 	/**
 	 * Gets the course name
@@ -114,7 +131,7 @@ public class Roster implements Serializable {
 	 * @return Date the starting date
 	 */
 	public Date getStartDate() {
-		return startDate;
+		return startDate.getTime();
 	}
 	
 	/**
@@ -123,7 +140,7 @@ public class Roster implements Serializable {
 	 * @return Date the ending date
 	 */
 	public Date getEndDate() {
-		return endDate;
+		return endDate.getTime();
 	}
 	
 	/**
