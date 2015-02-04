@@ -130,8 +130,8 @@ public class Roster implements Serializable {
 	 * day of the class
 	 * @return Date the starting date
 	 */
-	public Date getStartDate() {
-		return startDate.getTime();
+	public Calendar getStartDate() {
+		return startDate;
 	}
 	
 	/**
@@ -139,8 +139,8 @@ public class Roster implements Serializable {
 	 * day of the class
 	 * @return Date the ending date
 	 */
-	public Date getEndDate() {
-		return endDate.getTime();
+	public Calendar getEndDate() {
+		return endDate;
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 package controller.history;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -42,7 +43,7 @@ public class HistoryController {
      * Shows course history info.
      */
     @FXML
-    private HBox history_view;
+    private BorderPane history_view;
     
     /**
      * Shows completed (non-editable) gradebook for this course.
@@ -193,7 +194,7 @@ public class HistoryController {
         TitledPane toAdd;
         
         for (Roster section : course.getHistory()) {
-            SectionButton temp = new SectionButton(section.getQuarter() + " 2015" + " Section0" + section.getSection());
+            SectionButton temp = new SectionButton(section.getQuarter() + " " + section.getStartDate().get(Calendar.YEAR) + " Section0" + section.getSection());
             content.getChildren().add(temp);
             VBox.setMargin(temp, new Insets(0, 0, 10, 0));
         }
@@ -207,18 +208,27 @@ public class HistoryController {
     
     private void fillHistoryDB() {
         //history.addRoster(new Roster(name, String instructor, int section, String quarter, Date startDate, Date endDate));
+        Calendar start;
         
-        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 1, "Spring", null, null));
-        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 2, "Winter", null, null));
-        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 2, "Winter", null, null));
+        start = Calendar.getInstance();
+        start.set(2012, 4, 1);
+        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 1, "Spring", start, null));
+        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Spring", start, null));
         
-        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Spring", null, null));
-        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Winter", null, null));
-        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Fall", null, null));
+        start = Calendar.getInstance();
+        start.set(2013, 1, 1);
+        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 1, "Winter", start, null));
+        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 3, "Winter", start, null));
+        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Winter", start, null));
         
-        history.addRoster(new Roster("CSC/CPE 305", "John Dalbey", 1, "Fall", null, null));
+        start = Calendar.getInstance();
+        start.set(2013, 8, 1);
+        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Fall", start, null));
+        history.addRoster(new Roster("CSC/CPE 305", "John Dalbey", 1, "Fall", start, null));
         
-        history.addRoster(new Roster("CSC/CPE 349", "Timothy Kearns", 1, "Winter", null, null));
+        start = Calendar.getInstance();
+        start.set(2014, 1, 1);
+        history.addRoster(new Roster("CSC/CPE 349", "Timothy Kearns", 1, "Winter", start, null));
         
     }
     

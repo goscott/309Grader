@@ -12,9 +12,9 @@
 
 <StackPane alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.history.HistoryController">
    <children>
-      <HBox fx:id="history_view" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="891.0">
-         <children>
-            <VBox>
+      <BorderPane fx:id="history_view" prefHeight="200.0" prefWidth="200.0">
+         <left>
+            <VBox BorderPane.alignment="CENTER">
                <children>
                   <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <content>
@@ -23,7 +23,9 @@
                   </ScrollPane>
                </children>
             </VBox>
-            <StackPane HBox.hgrow="ALWAYS">
+         </left>
+         <center>
+            <StackPane BorderPane.alignment="CENTER">
                <children>
                   <BorderPane fx:id="intro_view" prefHeight="200.0" prefWidth="200.0">
                      <center>
@@ -85,7 +87,8 @@
                               <Button fx:id="switch_graph" mnemonicParsing="false" onAction="#switchGraph" text="TEST: SWITCH GRAPH" visible="false">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
-                                 </HBox.margin></Button>
+                                 </HBox.margin>
+                              </Button>
                               <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" text="TEST: See Gradebook" />
                            </children>
                            <VBox.margin>
@@ -96,8 +99,8 @@
                   </VBox>
                </children>
             </StackPane>
-         </children>
-      </HBox>
+         </center>
+      </BorderPane>
       <BorderPane fx:id="gradebook_view" prefHeight="200.0" prefWidth="200.0" visible="false">
          <bottom>
             <Button fx:id="button_history" mnemonicParsing="false" onAction="#switchToHistory" text="TEST: Back to History" BorderPane.alignment="CENTER" />
