@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.announcements.AnnouncementsController">
+   <center>
+      <TableView fx:id="table">
+         <columns>
+            <TableColumn fx:id="subject_column" minWidth="200.0" prefWidth="-1.0" text="Subject" />
+            <TableColumn fx:id="posted_by_column" minWidth="200.0" prefWidth="-1.0" text="Posted By" />
+            <TableColumn fx:id="date_time_column" minWidth="200.0" prefWidth="-1.0" text="Date/Time Posted" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+    
+                                                            </TableView>
+  </center>
+   <bottom>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#addAnnouncement" text="Add Announcement" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
