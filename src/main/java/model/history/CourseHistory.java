@@ -254,6 +254,47 @@ public class CourseHistory {
 	}
 	
 	/**
+	 * Gets the average grade for a single quarter.
+	 */
+	public double getAverageGrade(int year, String quarter) {
+	    return 0;
+	}
+	
+	/**
+	 * Returns a list of all averages.
+	 */
+	public ArrayList<Double> getAverages() {
+	    double average;
+	    double count;
+	    
+	    ArrayList<Double> list = new ArrayList<Double>();
+	    
+	    for (Roster roster : history) {
+	        average = 0;
+	        count = 0;
+    	    
+	        for (Student student : roster.getStudents()) {
+                average += student.getTotalScore();
+            }
+	        
+	        list.add(average / count);
+	    }
+	    
+	    return list;
+	}
+	
+	public ArrayList<Double> getAveragesDumb() {
+	    ArrayList<Double> list = new ArrayList<Double>();
+	    list.add(60 + (Math.random()*100));
+	    list.add(60 + (Math.random()*100));
+	    list.add(60 + (Math.random()*100));
+	    list.add(60 + (Math.random()*100));
+	    list.add(60 + (Math.random()*100));
+	    
+	    return list;
+	}
+	
+	/**
 	 * @return returns the first year this course was taught.
 	 */
 	/*@
@@ -274,7 +315,7 @@ public class CourseHistory {
             (\result == endYear);
     @*/
 	public int getEndYear() {
-        	return endYear;
+	    return endYear;
 	}
 	
 	/**

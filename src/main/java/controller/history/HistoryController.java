@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -108,6 +109,17 @@ public class HistoryController {
                             course_label.setText(class_selector.getExpandedPane().getText() + ": View Under Construction");
                             
                             switch_graph.setVisible(true);
+                            
+                            XYChart.Series<String, Double> series = new XYChart.Series<String, Double>();
+                            int count = 0;
+                            
+                            for (double val : history.getCourseHistory(class_selector.getExpandedPane().getText()).getAveragesDumb()) {
+                                count++;
+                                series.getData().add(new XYChart.Data<String, Double>(count + "", val));
+                            }
+                            
+                            line_chart.getData().clear();
+                            line_chart.getData().add(series);
                         }
                         
                         //collapsed
