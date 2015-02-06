@@ -9,13 +9,13 @@
 <TableView id="table" fx:id="mainTable" prefHeight="20.0" prefWidth="10.0"
 xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.roster.GradebookController">
   <columns>
-  	<TableColumn id="studCat" text="Students">
-  		<columns>
-  			<TableColumn id="nameCol" fx:id="nameCol" prefWidth="100.0" text="Student Name"/>
-    		<TableColumn id="idCol" fx:id="idCol" prefWidth="100.0" text="Student ID" />
-    		<TableColumn id="totalGradeCol" fx:id="totalGradeCol" prefWidth="100.0" text="Overall Grade" />
-  		</columns>
-  	</TableColumn>
+  	<!--<TableColumn id="studCat" text="Students">
+  		<columns>-->
+		<TableColumn id="nameCol" fx:id="nameCol" prefWidth="100.0" text="Student Name"/>
+   		<TableColumn id="idCol" fx:id="idCol" prefWidth="100.0" text="Student ID" />
+   		<TableColumn id="totalGradeCol" fx:id="totalGradeCol" prefWidth="100.0" text="Overall Grade" />
+  		<!--</columns>
+  	</TableColumn>-->
   </columns>
 </TableView>
    

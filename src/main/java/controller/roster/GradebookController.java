@@ -1,12 +1,14 @@
 package controller.roster;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.curve.Grade;
 import model.driver.Grader;
 import model.roster.GradedItem;
 import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -254,6 +256,10 @@ public class GradebookController {
 		}
 	}
 
+	 ObservableList<TableColumn<Student, ?>> getTopLevelColumns() {
+		return mainTable.getColumns();
+	}
+	
 	/**
 	 * Expands or collapses a column
 	 * @param asgnName The name of the column

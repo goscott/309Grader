@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
@@ -44,21 +45,26 @@ public class ExpandCollapseController {
 	private void populateTree() {
 		TreeItem<String> root = new TreeItem<String>("All Columns");
 		root.setExpanded(true);
-		ArrayList<String> children = new ArrayList<String>();
 
-		for (String name : parent.getExpanded()) {
-			if (!children.contains(name)) {
-				GradedItem temp = Grader.getAssignment(name);
-				TreeItem<String> item = new TreeItem<String>(name);
-				root.getChildren().add(item);
-				for(GradedItem child : temp.getChildren()) {
-					children.add(child.name());
-					TreeItem<String> childItem = new TreeItem<String>(child.name());
-					item.getChildren().add(childItem);
-				}
-			}
+		for (TableColumn<?, ?> topColumn : parent.getTopLevelColumns()) {
+			TreeItem<String> item = makeTreeItem(topColumn.getText(), parent);
+			item.setExpanded(parent.getExpanded().contains(topColumn.getText()));
+			root.getChildren().add(item);
 		}
 		tree.setRoot(root);
+	}
+
+	private TreeItem<String> makeTreeItem(String name, GradebookController parent) {
+		GradedItem temp = Grader.getAssignment(name);
+		TreeItem<String> item = new TreeItem<String>(name);
+		if (temp != null) {
+			for (GradedItem child : temp.getChildren()) {
+				TreeItem<String> childItem = makeTreeItem(child.name(), parent);
+				childItem.setExpanded(parent.getExpanded().contains(child.name()));
+				item.getChildren().add(childItem);
+			}
+		}
+		return item;
 	}
 
 	public void start(Stage stage) {
