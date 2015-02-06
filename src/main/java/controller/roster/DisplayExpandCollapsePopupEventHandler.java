@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  *
  */
 @SuppressWarnings("serial")
-public class DisplayAddStudentPopupEventHandler extends ActionEvent implements EventHandler<ActionEvent> {
+public class DisplayExpandCollapsePopupEventHandler extends ActionEvent implements EventHandler<ActionEvent> {
 	/** The gradebook controller **/
 	private GradebookController contr;
 	/** The menu item that displayed the popup **/
@@ -24,7 +24,7 @@ public class DisplayAddStudentPopupEventHandler extends ActionEvent implements E
 	 * @param callingItem The MenuItem that triggered the event
 	 * @param contr The GradebookController that the dialog will edit
 	 */
-	public DisplayAddStudentPopupEventHandler(MenuItem callingItem, GradebookController contr) {
+	public DisplayExpandCollapsePopupEventHandler(MenuItem callingItem, GradebookController contr) {
 		this.contr = contr;
 		this.callingItem = callingItem;
 	}
@@ -35,7 +35,7 @@ public class DisplayAddStudentPopupEventHandler extends ActionEvent implements E
 	 */
 	public void handle(ActionEvent event) {
 		Stage newStage = new Stage();
-		ExpandCollapseController popup = new ExpandCollapseController();
+		AddStudentDialogController popup = new AddStudentDialogController();
 		popup.setParent(callingItem, contr);
 		popup.start(newStage);
 	}

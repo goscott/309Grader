@@ -155,7 +155,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @param sc
 	 *            the new score
 	 */
-	public void setScore(String asgn, double sc) {
+	public void setScore(String asgn, Double sc) {
 		GradedItem item = scores.get(asgn);
 		item.setScore(sc);
 		scores.put(asgn, item);

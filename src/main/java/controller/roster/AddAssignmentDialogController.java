@@ -224,8 +224,8 @@ public class AddAssignmentDialogController {
 	 */
 	private boolean checkValid() {
 		checkNameValid();
-		checkScoreValid();
-		return checkNameValid() || checkScoreValid() || nameField.getText().length() == 0;
+		checkScoreInvalid();
+		return checkNameValid() || checkScoreInvalid() || nameField.getText().length() == 0;
 	}
 	
 	/**
@@ -247,11 +247,12 @@ public class AddAssignmentDialogController {
 	}
 	
 	/**
-	 * Checks if the max score field is valid
-	 * @return boolean true if the data is valid
+	 * Checks if the max score field is invalid
+	 * @return boolean true if the data is invalid
 	 */
-	private boolean checkScoreValid() {
-		if (maxScoreField.getText().length() == 0) {
+	private boolean checkScoreInvalid() {
+		if (maxScoreField.getText().length() == 0
+				|| Double.parseDouble(maxScoreField.getText()) > Grader.getAssignment(parentDropdown.getValue()).maxScore()) {
 			maxScoreField.setBackground(new Background(new BackgroundFill(
 					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 			return true;

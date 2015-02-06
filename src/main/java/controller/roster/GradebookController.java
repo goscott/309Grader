@@ -20,7 +20,6 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 
 /**
@@ -49,7 +48,7 @@ public class GradebookController {
 	private ContextMenu rightClickMenu;
 	/** An ArrayList holding the names of the columns that are expanded **/
 	private ArrayList<String> expanded;
-
+	
 	@FXML
 	/**
 	 * Initializes the gradebook view
@@ -64,6 +63,7 @@ public class GradebookController {
 
 		// create popup menu
 		rightClickMenu = new ContextMenu();
+		MenuItem expandCollapse = new MenuItem("Expand/Collapse Columns");
 		MenuItem addAssignment = new MenuItem("Add Assignment");
 		MenuItem dropAssignment = new MenuItem("Drop Assignment");
 		MenuItem importAssignment = new MenuItem("Import Assignment");
@@ -72,6 +72,9 @@ public class GradebookController {
 		MenuItem rosterSynch = new MenuItem("Roster Synch");
 		MenuItem refresh = new MenuItem("Refresh");
 
+		expandCollapse.setOnAction(new DisplayAddStudentPopupEventHandler(
+				expandCollapse, this));
+		
 		addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
 				addAssignment, this));
 		addStudent.setOnAction(new DisplayAddStudentPopupEventHandler(
@@ -82,17 +85,10 @@ public class GradebookController {
 				fullRefresh();
 			}
 		});
-		rightClickMenu.getItems().add(refresh);
-		rightClickMenu.getItems().add(addAssignment);
-		rightClickMenu.getItems().add(dropAssignment);
-		rightClickMenu.getItems().add(importAssignment);
-		rightClickMenu.getItems().add(new SeparatorMenuItem());
-		rightClickMenu.getItems().add(addStudent);
-		rightClickMenu.getItems().add(dropStudent);
-		rightClickMenu.getItems().add(new SeparatorMenuItem());
-		rightClickMenu.getItems().add(rosterSynch);
-
-		// show popup menu on right click
+		rightClickMenu.getItems().addAll(expandCollapse, refresh, new SeparatorMenuItem(),
+				addAssignment, dropAssignment, importAssignment, new SeparatorMenuItem(), 
+				addStudent, dropStudent, new SeparatorMenuItem(), rosterSynch);
+		
 		mainTable.addEventFilter(MouseEvent.MOUSE_PRESSED,
 				new EventHandler<MouseEvent>() {
 					@Override
@@ -145,7 +141,7 @@ public class GradebookController {
 	/** 
 	 * Adds the far-left student columns to the gradebook
 	 */
-	private void studentColumns() {
+	private void studentColumns() {		
 		nameCol.setMinWidth(100);
 		nameCol.setEditable(false);
 		nameCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
@@ -177,6 +173,23 @@ public class GradebookController {
 				return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Sets which columns are visible
+	 * @param asgnNames the names of the assignments
+	 * that will now be visible
+	 */
+	void setExpanded(ArrayList<String> asgnNames) {
+		expanded = asgnNames;
+	}
+	
+	/**
+	 * Gets which assignments are currently visible in the
+	 * gradebook
+	 */
+	ArrayList<String> getExpanded() {
+		return expanded;
 	}
 
 	/**

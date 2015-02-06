@@ -1,7 +1,6 @@
 package testing;
 
 public abstract class Test {
-	private final int stackLoc = 4;
 	/**
 	 * Announces that a test has failed with a message
 	 * 

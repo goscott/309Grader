@@ -10,8 +10,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 
 import model.curve.Curve;
@@ -184,9 +182,15 @@ public class Roster implements Serializable {
 	 *            The GradedItem being added to the roster
 	 */
 	public void addAssignment(GradedItem asgn) {
-		assignments.add(asgn);
-		for (Student stud : students) {
-			stud.addAssignment(asgn);
+		if(asgn != null) {
+			assignments.add(asgn);
+			for (Student stud : students) {
+				stud.addAssignment(asgn);
+				stud.setScore(asgn.name(), asgn.score());
+				if(asgn.hasParent()) {
+					stud.setScore(asgn.getParent().name(), 0.0);
+				}
+			}
 		}
 	}
 
