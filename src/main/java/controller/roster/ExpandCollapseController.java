@@ -47,20 +47,21 @@ public class ExpandCollapseController {
 		root.setExpanded(true);
 
 		for (TableColumn<?, ?> topColumn : parent.getTopLevelColumns()) {
-			TreeItem<String> item = makeTreeItem(topColumn.getText(), parent);
+			TreeItem<String> item = makeTreeItem(topColumn.getText());
 			item.setExpanded(parent.getExpanded().contains(topColumn.getText()));
 			root.getChildren().add(item);
 		}
 		tree.setRoot(root);
 	}
 
-	private TreeItem<String> makeTreeItem(String name, GradebookController parent) {
+	private TreeItem<String> makeTreeItem(String name) {
 		GradedItem temp = Grader.getAssignment(name);
 		TreeItem<String> item = new TreeItem<String>(name);
 		if (temp != null) {
 			for (GradedItem child : temp.getChildren()) {
-				TreeItem<String> childItem = makeTreeItem(child.name(), parent);
-				childItem.setExpanded(parent.getExpanded().contains(child.name()));
+				TreeItem<String> childItem = makeTreeItem(child.name());
+				childItem.setExpanded(parent.getExpanded().contains(
+						child.name()));
 				item.getChildren().add(childItem);
 			}
 		}
@@ -89,16 +90,26 @@ public class ExpandCollapseController {
 		});
 	}
 
-	public void setParent(MenuItem callingItem, GradebookController contr) {
-		this.callingItem = callingItem;
-		this.parent = contr;
-		this.callingItem.setDisable(true);
+	public void setParent(MenuItem callItem, GradebookController contr) {
+		callingItem = callItem;
+		parent = contr;
+		callingItem.setDisable(true);
 	}
 
 	@FXML
 	private void handleButton(ActionEvent e) {
 		refreshButton.setDisable(true);
+		for (TreeItem<String> item : tree.getRoot().getChildren()) {
+			mirrorInGradebook(item);
+		}
 		if (parent != null)
-			parent.fullRefresh();
+			parent.refresh();
+	}
+
+	private void mirrorInGradebook(TreeItem<String> item) {
+		parent.setAssignmentExpansion(item.getValue(), item.isExpanded());
+		for(TreeItem<String> child : item.getChildren()) {
+			mirrorInGradebook(child);
+		}
 	}
 }
