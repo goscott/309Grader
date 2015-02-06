@@ -120,20 +120,8 @@ public class MainPageController {
 		AnchorPane classPane = (AnchorPane) classTab.getContent();
 		FlowPane buttonSetUp = new FlowPane();
 		classPane.getChildren().add(buttonSetUp);
-		buttonSetUp.setTranslateX(25);
-		buttonSetUp.setTranslateY(25);
-		buttonSetUp.setVgap(50);
-		buttonSetUp.setHgap(50);
-		Button button = new Button("309");
-		button.setOnAction(new ClassButtonEventHandler());
-		buttonSetUp.getChildren().add(button);
-        button = new Button("308");
-        button.setOnAction(new ClassButtonEventHandler());
-        buttonSetUp.getChildren().add(button);
-		//TODO make buttons mean something and build based on files found.
-        button = new Button("Add Class");
-        button.setOnAction(new AddClassButtonEventHandler());
-        buttonSetUp.getChildren().add(button);
+		ClassButtonsController con = new ClassButtonsController(buttonSetUp);
+
 	}
 
 	// launches the permissions editor
