@@ -9,6 +9,7 @@ import testing.administration.PermissionsTester;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,6 +27,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.administration.User;
 import model.administration.UserDB;
 import model.administration.UserTypes;
@@ -173,6 +175,33 @@ public class MainPageController {
 			Logger.getLogger(PermissionsTester.class.getName()).log(
 					Level.SEVERE, null, ex);
 		}
+	}
+	
+	public void launchAbout() {
+        try {
+            Stage stage = new Stage();
+
+            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getClassLoader()
+                    .getResource("view/mainpage/Abt.fxml")));
+
+            stage.setScene(scene);
+            stage.setTitle("About Team");
+            stage.setResizable(false);
+            stage.show();
+            
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+                @Override
+                public void handle(WindowEvent event) {
+                    // TODO Auto-generated method stub
+                    AbtController.muteStatic();
+                }
+            });
+
+        } catch (Exception ex) {
+            Logger.getLogger(PermissionsTester.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
 	}
 	
 	@FXML

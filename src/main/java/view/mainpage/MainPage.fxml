@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -63,6 +63,7 @@
                <items>
                   <MenuItem id="ViewHelp" mnemonicParsing="false" text="View Help" />
                   <MenuItem id="RequestHelp" mnemonicParsing="false" text="Request Help" />
+                  <MenuItem mnemonicParsing="false" onAction="#launchAbout" text="About" />
                </items>
             </Menu>
         </menus>
