@@ -103,13 +103,15 @@ public class ExpandCollapseController {
 			mirrorInGradebook(item);
 		}
 		if (parent != null)
-			parent.refresh();
+			parent.fullRefresh();
 	}
 
 	private void mirrorInGradebook(TreeItem<String> item) {
 		parent.setAssignmentExpansion(item.getValue(), item.isExpanded());
-		for(TreeItem<String> child : item.getChildren()) {
-			mirrorInGradebook(child);
+		if (item.isExpanded()) {
+			for (TreeItem<String> child : item.getChildren()) {
+				mirrorInGradebook(child);
+			}
 		}
 	}
 }

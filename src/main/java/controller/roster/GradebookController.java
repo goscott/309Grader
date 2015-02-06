@@ -268,11 +268,11 @@ public class GradebookController {
 	void setAssignmentExpansion(String asgnName, boolean expand) {
 		if (expand) {
 			open(asgnName);
-			fullRefresh();
+			//fullRefresh();
 		}
 		if (!expand) {
 			close(asgnName);
-			fullRefresh();
+			//fullRefresh();
 		}
 	}
 
