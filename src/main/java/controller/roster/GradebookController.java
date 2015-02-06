@@ -143,6 +143,7 @@ public class GradebookController {
 	/** 
 	 * Adds the far-left student columns to the gradebook
 	 */
+	@SuppressWarnings("unchecked")
 	private void studentColumns() {		
 		nameCol.setMinWidth(100);
 		nameCol.setEditable(false);
@@ -159,6 +160,7 @@ public class GradebookController {
 		totalGradeCol
 				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 						"totalScore"));
+		mainTable.getColumns().addAll(idCol, totalGradeCol);
 	}
 
 	/**

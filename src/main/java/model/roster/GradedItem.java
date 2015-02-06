@@ -226,14 +226,17 @@ public class GradedItem implements Serializable {
 		//TODO unattach old parent
 		if (!children.contains(item)) {
 			Debug.log("Child Added", item.name() + " added as a child of " + name);
-			if(children.isEmpty()) {
-				//item.setScore(score);
+			/*if(children.isEmpty()) {
 				score = null;
-			}
+			}*/
 			children.add(item);
 			if(!item.getParent().equals(this)) {
 				item.setParent(this);
 			}
+			/*score = 0.0;
+			for(GradedItem child : children) {
+				score += child.score();
+			}*/
 		}
 	}
 

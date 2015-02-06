@@ -1,7 +1,6 @@
 package controller.roster;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import model.driver.Debug;
 import model.driver.Grader;
@@ -104,6 +103,10 @@ public class ExpandCollapseController {
 		}
 		if (parent != null)
 			parent.fullRefresh();
+		
+		// TODO Have it refresh so it doesn't have to close
+		// closes the window on click
+		((Stage) refreshButton.getScene().getWindow()).hide();
 	}
 
 	private void mirrorInGradebook(TreeItem<String> item) {
