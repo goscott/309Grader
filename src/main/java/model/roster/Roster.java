@@ -19,6 +19,7 @@ import model.driver.Debug;
  * The class Roster that stores students and assignments
  * 
  * @author Gavin Scott
+ * @author Shelli Crispen
  */
 public class Roster implements Serializable {
 	/**
@@ -213,7 +214,7 @@ public class Roster implements Serializable {
      */
 	public void dropAssignment(GradedItem asgn) {
         if(asgn != null) {
-            assignments.add(asgn);
+            assignments.remove(asgn);
         }
 	}
 	

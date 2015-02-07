@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import model.driver.Debug;
 import model.driver.Grader;
+import model.roster.GradedItem;
+import model.roster.Roster;
+import model.roster.Student;
 import model.server.Server;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,6 +50,8 @@ public class DropAssignmentDialogController
     private final int numParentsShown = 10;
     /** The string displayed that lets the user choose no parent **/
     private final String noParent = "<None>";
+    /** The roster */
+    private static Roster roster;
     
     /**
      * Sets the parent of the window, so it can grab information from the
@@ -97,9 +102,20 @@ public class DropAssignmentDialogController
      * Handles the cancel button. Closes the window.
      * @param event the button's event
      */
-    private void handelDropButton(ActionEvent event)
+    private void handleDropButton(ActionEvent event)
     {
-        
+        if (dropAssignmentSelect.getValue() != null) {
+            GradedItem dropS = null;
+            for(GradedItem assignment: roster.getAssignments()){
+                if(assignment.name() == dropAssignmentSelect.getValue()){
+                    dropS = assignment;
+                }
+            }
+                    
+            Grader.getRoster().dropAssignment(dropS);
+        }
+        resetDropdown();
+        gbook.fullRefresh();
     }
     
     @FXML
