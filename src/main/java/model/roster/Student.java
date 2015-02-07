@@ -20,9 +20,9 @@ public class Student implements Comparable<Student>, Serializable {
 	 */
 	private static final long serialVersionUID = 6298208303690715171L;
 	/** The student's name **/
-	private final SimpleStringProperty name;
+	private final String name;
 	/** The student's id **/
-	private final SimpleStringProperty id;
+	private final String id;
 	/** A map of assignment names to the assignments in the class **/
 	private HashMap<String, GradedItem> scores;
 
@@ -35,8 +35,8 @@ public class Student implements Comparable<Student>, Serializable {
 	 *            The student's ID
 	 */
 	public Student(String name, String id) {
-		this.name = new SimpleStringProperty(name);
-		this.id = new SimpleStringProperty(id);
+		this.name = name;
+		this.id = id;
 		scores = new HashMap<String, GradedItem>();
 	}
 
@@ -46,7 +46,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return String the name of the student
 	 */
 	public String getName() {
-		return name.get();
+		return name;
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return String the student's ID
 	 */
 	public String getId() {
-		return id.get();
+		return id;
 	}
 
 	/**
