@@ -88,6 +88,8 @@ public class GradebookController {
 				addAssignment, this));
 		addStudent.setOnAction(new DisplayAddStudentPopupEventHandler(
 				addStudent, this));
+		dropStudent.setOnAction(new DisplayDropStudentPopupEventHandler(
+				dropStudent, this));
 		refresh.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {

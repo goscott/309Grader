@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -70,7 +71,7 @@ public class DropStudentDialogController
      */
     public void start(Stage stage) {
         try {
-            BorderPane page = (BorderPane) FXMLLoader.load(getClass()
+            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass()
                     .getResource("../../view/roster/DropStudent.fxml"));
             Scene popup = new Scene(page);
             stage.setTitle("Drop Student");
@@ -97,7 +98,7 @@ public class DropStudentDialogController
     private void handleDropButton(ActionEvent event){
         if (SelectAStudent.getValue() != null) {
             Student dropS = null;
-            for(Student student: server.getStudentListInRoster()){
+            for(Student student: Server.getStudentListInRoster()){
                 if(student.getName() == SelectAStudent.getValue()){
                     dropS = student;
                 }
@@ -106,7 +107,7 @@ public class DropStudentDialogController
             Grader.getRoster().dropStudent(dropS);
         }
         resetDropdown();
-        gbook.refresh();
+        gbook.fullRefresh();
     }
     
     @FXML
