@@ -26,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.administration.User;
@@ -102,6 +103,11 @@ public class MainPageController {
 							"view/announcements/announcementTab.fxml"));
 			announcementsTab.setContent(announcemetsPage);
 			
+			//add predictions
+			HBox predictionsPage = (HBox) FXMLLoader
+                    .load(getClass().getClassLoader().getResource(
+                            "view/predictions/predictions_view.fxml"));
+            predictionsTab.setContent(predictionsPage);
             
 		} catch (IOException e) {
 			e.printStackTrace();
