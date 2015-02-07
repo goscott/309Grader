@@ -352,7 +352,7 @@ public class Roster implements Serializable {
 	public static void save(Roster rost) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(
-					new FileOutputStream(rost.courseName + ".rost"));
+					new FileOutputStream("Rosters/" + rost.courseName + ".rost"));
 			out.writeObject(rost);
 			out.close();
 		} catch (IOException ex) {

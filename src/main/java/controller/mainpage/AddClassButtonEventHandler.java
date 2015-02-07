@@ -12,6 +12,13 @@ import javafx.stage.Stage;
 public class AddClassButtonEventHandler implements EventHandler<ActionEvent>
 {
 
+    private ClassButtonsController superClass;
+    public AddClassButtonEventHandler(
+        ClassButtonsController classButtonsController)
+    {
+        superClass = classButtonsController;
+    }
+
     /**
      * creates a new class dialog when the button is pressed.
      */
@@ -19,7 +26,7 @@ public class AddClassButtonEventHandler implements EventHandler<ActionEvent>
     public void handle(ActionEvent event)
     {
        new AddClassDialogController().start(new Stage());
-
+       superClass.refreshButtons();
     }
 
 }

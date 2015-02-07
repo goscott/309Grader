@@ -26,7 +26,7 @@ public class ClassButtonEventHandler implements EventHandler<ActionEvent>
     {
         Debug.log("class button clicked " + ((Button)event.getSource()).getText());
             
-       Roster rost = Roster.load(((Button)event.getSource()).getText() + ".rost");
+       Roster rost = Roster.load("Rosters/" + ((Button)event.getSource()).getText() + ".rost");
        if(rost != null)
        {
            Grader.setCurrentRoster(rost);
