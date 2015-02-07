@@ -44,11 +44,11 @@ public class AnnouncementsController {
         //Eventually, it should come from our "server" (A text file or something)
         data =
                 FXCollections.observableArrayList(
-                    new Announcement("Subject 1", "AnnouncementsController.java", "TODAY"),
-                    new Announcement("Subject 2", "AnnouncementsController.java", "TODAY"),
-                    new Announcement("Subject 3", "AnnouncementsController.java", "TODAY"),
-                    new Announcement("Subject 4", "AnnouncementsController.java", "TODAY"),
-                    new Announcement("Subject 5", "AnnouncementsController.java", "TODAY")
+                    new Announcement("Subject 1", "AnnouncementsController.java", "TODAY", "content1"),
+                    new Announcement("Subject 2", "AnnouncementsController.java", "TODAY", "content2"),
+                    new Announcement("Subject 3", "AnnouncementsController.java", "TODAY", "content3"),
+                    new Announcement("Subject 4", "AnnouncementsController.java", "TODAY", "content4"),
+                    new Announcement("Subject 5", "AnnouncementsController.java", "TODAY", "content5")
                 );
         
         //These dictate how the columns get the info from the announcement object
@@ -91,7 +91,8 @@ public class AnnouncementsController {
             public void handle(MouseEvent event) {
                 if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
                     //this is how you get a reference to the selected announcement
-                    JOptionPane.showMessageDialog(null, "You selected " + table.getSelectionModel().getSelectedItem().getSubject());                  
+                    JOptionPane.showMessageDialog(null, table.getSelectionModel().getSelectedItem().getContent(),
+                    	"" + table.getSelectionModel().getSelectedItem().getSubject(), JOptionPane.PLAIN_MESSAGE);
                 }
             }
         });
@@ -101,7 +102,20 @@ public class AnnouncementsController {
     
     //This should launch a new announcement dialog, and then add the announcement to the list
     public void addAnnouncement() {
-        data.add(new Announcement("Added Announcement", "You", "TODAY"));
-        table.setItems(data);
+    	String content, subject;
+    	subject = JOptionPane.showInputDialog(null, "Enter announcement subject:", "Add Announcement: Subject", JOptionPane.OK_CANCEL_OPTION);
+    	if (subject != null)
+    	{	content = JOptionPane.showInputDialog(null, "Enter announcement content:", "Add Announcement: Content", JOptionPane.OK_CANCEL_OPTION);
+    	
+    	}
+    	else
+    	{
+    		content = null;
+    	}
+    	if (content != null)
+    	{
+    		data.add(new Announcement(subject, "You", "TODAY", content));
+    		table.setItems(data);
+    	}
     }
 }

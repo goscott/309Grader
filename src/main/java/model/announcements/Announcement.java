@@ -2,16 +2,17 @@ package model.announcements;
 
 //here is a basic announcement model class you can build on
 public class Announcement {
-    public String subject;
-    public String postedBy;
-    public String dateTime; // you should swap this for a Calendar object or something
+    private String subject;
+    private String postedBy;
+    private String dateTime; // you should swap this for a Calendar object or something
     
     private String content;
     
-    public Announcement(String newSubject, String newPostedBy, String newDateTime) {
+    public Announcement(String newSubject, String newPostedBy, String newDateTime, String newContent) {
         subject = newSubject;
         postedBy = newPostedBy;
         dateTime = newDateTime;
+        content = newContent;
     }
     
     public String getSubject() {
@@ -24,5 +25,9 @@ public class Announcement {
     
     public String getDateTime() {
         return dateTime;
+    }
+    
+    public String getContent() {
+    	return content;
     }
 }
