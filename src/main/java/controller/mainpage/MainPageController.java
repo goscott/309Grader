@@ -40,6 +40,7 @@ import model.driver.Grader;
  *
  */
 public class MainPageController {
+    private static MainPageController thisController;
 	@FXML
 	private TabPane tabPane;
 	@FXML
@@ -121,7 +122,31 @@ public class MainPageController {
 		FlowPane buttonSetUp = new FlowPane();
 		classPane.getChildren().add(buttonSetUp);
 		ClassButtonsController con = new ClassButtonsController(buttonSetUp);
-
+		thisController = this;
+		
+	
+        graphTab.setDisable(true);
+        historyTab.setDisable(true);
+        predictionsTab.setDisable(true);
+        announcementsTab.setDisable(true);
+        //TODO fix this so it doesnt crash
+     //   gradebookTab.setDisable(true);
+	
+	}
+	
+	
+	private void enable()
+	{
+	  
+       // gradebookTab.setDisable(false);
+        graphTab.setDisable(false);
+        historyTab.setDisable(false);
+        predictionsTab.setDisable(false); 
+        announcementsTab.setDisable(false); 
+	}
+	public static void enableTabs()
+	{
+	    thisController.enable();
 	}
 
 	// launches the permissions editor

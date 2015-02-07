@@ -30,6 +30,7 @@ public class ClassButtonEventHandler implements EventHandler<ActionEvent>
        if(rost != null)
        {
            Grader.setCurrentRoster(rost);
+           MainPageController.enableTabs();
        }
        
     }
