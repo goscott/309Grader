@@ -1,5 +1,8 @@
 package model.announcements;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 //here is a basic announcement model class you can build on
 public class Announcement {
     private String subject;
@@ -8,10 +11,12 @@ public class Announcement {
     
     private String content;
     
-    public Announcement(String newSubject, String newPostedBy, String newDateTime, String newContent) {
+    public Announcement(String newSubject, String newPostedBy, String newContent) {
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    	Calendar cal = Calendar.getInstance();
         subject = newSubject;
         postedBy = newPostedBy;
-        dateTime = newDateTime;
+        dateTime = dateFormat.format(cal.getTime());
         content = newContent;
     }
     
