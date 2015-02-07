@@ -12,6 +12,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -36,6 +37,7 @@ import model.administration.UserDB;
 import model.administration.UserTypes;
 import model.driver.Debug;
 import model.driver.Grader;
+import model.roster.Roster;
 
 /**
  * Controller for the main GraderTool view
@@ -248,5 +250,11 @@ public class MainPageController {
 	public void exit() {
 		// close the program
 		((Stage) tabPane.getScene().getWindow()).close();
+	}
+	
+	@FXML
+	private void saveHandler(ActionEvent event) {
+		Debug.log("Save", Grader.getRoster().courseName() + " saved");
+		Roster.save(Grader.getRoster());
 	}
 }
