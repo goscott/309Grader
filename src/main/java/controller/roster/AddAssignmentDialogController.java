@@ -251,8 +251,8 @@ public class AddAssignmentDialogController {
 	 * @return boolean true if the data is invalid
 	 */
 	private boolean checkScoreInvalid() {
-		if (maxScoreField.getText().length() == 0
-				|| Double.parseDouble(maxScoreField.getText()) > Grader.getAssignment(parentDropdown.getValue()).maxScore()) {
+		if (maxScoreField.getText().length() == 0){
+				//|| Double.parseDouble(maxScoreField.getText()) > Grader.getAssignment(parentDropdown.getValue()).maxScore()) {
 			maxScoreField.setBackground(new Background(new BackgroundFill(
 					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 			return true;

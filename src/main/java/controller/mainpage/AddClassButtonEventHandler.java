@@ -27,9 +27,6 @@ public class AddClassButtonEventHandler implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent event) {
 		new AddClassDialogController().start(new Stage(), superClass);
-		((Stage) ((Button) event.getSource()).getScene().getWindow())
-				.setTitle("Grader Tool : "
-						+ ((Button) event.getSource()).getText());
 		superClass.refreshButtons();
 	}
 }
