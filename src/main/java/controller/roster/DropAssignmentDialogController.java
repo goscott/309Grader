@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -79,7 +80,7 @@ public class DropAssignmentDialogController
      */
     public void start(Stage stage) {
         try {
-            BorderPane page = (BorderPane) FXMLLoader.load(getClass()
+        	AnchorPane page = (AnchorPane) FXMLLoader.load(getClass()
                     .getResource("../../view/roster/dropAssignment.fxml"));
             Scene popup = new Scene(page);
             stage.setTitle("Drop Assignment");

@@ -7,7 +7,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.roster.DropAssignmentDialogController">
    <children>
       <ComboBox fx:id="dropAssignmentSelect" layoutY="1.0" prefHeight="26.0" prefWidth="300.0" promptText="Select an Assignment" style="-fx-background-color: #A9E2F3;"/>
-      <Button fx:id="cancelButton" layoutX="14.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleDropButton" prefHeight="26.0" prefWidth="121.0" text="Cancel" />
-      <Button fx:id="dropButton" layoutX="165.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleCancelButton" text="Drop Assignment" />
+      <Button fx:id="cancelButton" layoutX="14.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="26.0" prefWidth="121.0" text="Cancel" />
+      <Button fx:id="dropButton" layoutX="165.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleDropButton" text="Drop Assignment" />
    </children>
 </AnchorPane>
