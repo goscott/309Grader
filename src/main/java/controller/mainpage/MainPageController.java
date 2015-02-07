@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
@@ -26,7 +25,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.administration.User;
@@ -114,16 +112,7 @@ public class MainPageController {
 		} catch(Throwable e) {
 		    e.printStackTrace();
 		}
- 
-		// FILE MENU
 
-		// disable class menu if no current roster
-		gradebookTab.disableProperty().bind(new BooleanBinding() {
-			@Override
-			protected boolean computeValue() {
-				return Grader.getRoster() == null;
-			}
-		});
 		AnchorPane classPane = (AnchorPane) classTab.getContent();
 		FlowPane buttonSetUp = new FlowPane();
 		classPane.getChildren().add(buttonSetUp);
@@ -135,8 +124,7 @@ public class MainPageController {
         historyTab.setDisable(true);
         predictionsTab.setDisable(true);
         announcementsTab.setDisable(true);
-        //TODO fix this so it doesnt crash
-     //   gradebookTab.setDisable(true);
+        gradebookTab.setDisable(true);
 	
 	}
 	
@@ -144,7 +132,7 @@ public class MainPageController {
 	private void enable()
 	{
 	  
-       // gradebookTab.setDisable(false);
+        gradebookTab.setDisable(false);
         graphTab.setDisable(false);
         historyTab.setDisable(false);
         predictionsTab.setDisable(false); 
