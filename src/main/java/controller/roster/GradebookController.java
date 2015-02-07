@@ -86,6 +86,8 @@ public class GradebookController {
 		
 		addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
 				addAssignment, this));
+		dropAssignment.setOnAction(new DisplayDropAssignmentPopupEventHandler(
+		                dropAssignment, this));
 		addStudent.setOnAction(new DisplayAddStudentPopupEventHandler(
 				addStudent, this));
 		dropStudent.setOnAction(new DisplayDropStudentPopupEventHandler(
