@@ -13,7 +13,6 @@ import javafx.beans.property.SimpleStringProperty;
  * A student in a class
  * 
  * @author Gavin Scott
- *
  */
 public class Student implements Comparable<Student>, Serializable {
 	/**
