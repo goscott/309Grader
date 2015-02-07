@@ -1,7 +1,9 @@
 controller.administration
+controller.announcements
 controller.graph
 controller.history
 controller.mainpage
+controller.predictions
 controller.roster
 model.administration
 model.announcements
@@ -13,3 +15,10 @@ model.predictions
 model.roster
 model.server
 run
+testing
+testing.administration
+testing.curve
+testing.driver
+testing.history
+testing.roster
+testing.server

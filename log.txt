@@ -4,7 +4,7 @@
 
 ----------------------------------
 
-  Logged at 01/28/2015 23:43:09
+  Logged at 02/06/2015 23:16:18
 ----------------------------------
 
 
@@ -53,7 +53,63 @@ CHILD ADDED : Q2 added as a child of Midterm 1
 
 GRADER MODEL UPDATED : Assignment added to current roster
 
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
 GRADER MODEL UPDATED : Student added to current roster
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
 
 GRADER MODEL UPDATED : Student added to current roster
 
@@ -69,8 +125,6 @@ GRADER MODEL ACCESSED : Assignment names retrieved
 
 GRADER MODEL ACCESSED : Assignment pulled from current roster
 
-GRADER MODEL ACCESSED : Student list retrieved
-
 GRADER MODEL ACCESSED : Assignment pulled from current roster
 
 GRADER MODEL ACCESSED : Assignment pulled from current roster
@@ -85,15 +139,7 @@ GRADER MODEL ACCESSED : Assignment pulled from current roster
 
 GRADER MODEL ACCESSED : Student list retrieved
 
-GRADER MODEL ACCESSED : Student list retrieved
+class button clicked 309
 
-GRADER MODEL ACCESSED : Student list retrieved
-
-GRADER MODEL ACCESSED : Student list retrieved
-
-GRADER MODEL ACCESSED : Student list retrieved
-
-GRADER MODEL ACCESSED : Student list retrieved
-
-GRADER MODEL ACCESSED : Student list retrieved
+GRADER MODEL UPDATED : Current roster changed
 
