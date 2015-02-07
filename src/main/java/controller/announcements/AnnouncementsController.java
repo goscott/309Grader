@@ -44,11 +44,11 @@ public class AnnouncementsController {
         //Eventually, it should come from our "server" (A text file or something)
         data =
                 FXCollections.observableArrayList(
-                    new Announcement("Subject 1", "AnnouncementsController.java", "TODAY", "content1"),
-                    new Announcement("Subject 2", "AnnouncementsController.java", "TODAY", "content2"),
-                    new Announcement("Subject 3", "AnnouncementsController.java", "TODAY", "content3"),
-                    new Announcement("Subject 4", "AnnouncementsController.java", "TODAY", "content4"),
-                    new Announcement("Subject 5", "AnnouncementsController.java", "TODAY", "content5")
+                    new Announcement("Subject 1", "AnnouncementsController.java", "content1"),
+                    new Announcement("Subject 2", "AnnouncementsController.java", "content2"),
+                    new Announcement("Subject 3", "AnnouncementsController.java", "content3"),
+                    new Announcement("Subject 4", "AnnouncementsController.java", "content4"),
+                    new Announcement("Subject 5", "AnnouncementsController.java", "content5")
                 );
         
         //These dictate how the columns get the info from the announcement object
@@ -114,7 +114,7 @@ public class AnnouncementsController {
     	}
     	if (content != null)
     	{
-    		data.add(new Announcement(subject, "You", "TODAY", content));
+    		data.add(new Announcement(subject, "You", content));
     		table.setItems(data);
     	}
     }
