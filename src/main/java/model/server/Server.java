@@ -67,6 +67,26 @@ public class Server {
 		return studentNames;
 	}
 	
+	   /**
+     * Gets the list of all students stored in the
+     * roster and turns the ArrayList to an ObservableList.
+     * This only gets a list of the students not in the Roster.
+     * @return ObservableList<Student> the list of students
+     */
+    /*@
+       requires 
+          (\forall student != null && roster.contains(student.id) == null);
+     @*/
+    public static ObservableList<Student> getStudentListInRoster() { 
+        studentNames = FXCollections.observableArrayList ();
+        for(Student student: students){
+            if(student != null && Grader.getRoster().getStudentByID(student.getId()) != null){
+                studentNames.add(student);
+            }
+        }
+        return studentNames;
+    }
+	
 	/**
 	 * Gets the list of all students stored in the
 	 * server and turns the ArrayList to an ObservableList.
@@ -104,6 +124,26 @@ public class Server {
 		}
 		return studentNames;
 	}
+	
+	/**
+     * Gets the list of all students stored in the
+     * server and turns the ArrayList to an ObservableList.
+     * This only gets a list of the students not in the Roster.
+     * @return ObservableList<Student> the list of student's names.
+     */
+    /*@
+       requires 
+          (\forall student != null && roster.contains(student.id) == null);
+     @*/
+    public static ObservableList<String> getStudentListNameInRoster() { 
+        ObservableList<String> studentNames = FXCollections.observableArrayList ();
+        for(Student student: students){
+            if(student != null && Grader.getRoster().getStudentByID(student.getId()) != null){
+                studentNames.add(student.getName());
+            }
+        }
+        return studentNames;
+    }
 	
 	/**
 	 * Populates the server with some default students

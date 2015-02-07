@@ -174,6 +174,17 @@ public class Roster implements Serializable {
 			student.addAssignment(item);
 		}
 	}
+	
+    /**
+     * Drops a student from the gradebook.
+     * 
+     * @param asgn
+     *            The GradedItem being added to the roster
+     */
+	public void dropStudent(Student student)
+	{
+	    students.remove(student);
+	}
 
 	/**
 	 * Adds an assignment to the course
@@ -194,6 +205,18 @@ public class Roster implements Serializable {
 		}
 	}
 
+	/**
+     * Drop an assignment to the course
+     * 
+     * @param asgn
+     *            The GradedItem being added to the roster
+     */
+	public void dropAssignment(GradedItem asgn) {
+        if(asgn != null) {
+            assignments.add(asgn);
+        }
+	}
+	
 	/**
 	 * Gets a reference to the assignment with the given name in the roster, if
 	 * it exists

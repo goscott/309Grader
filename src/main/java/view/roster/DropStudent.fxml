@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.roster.DropStudentDialogController">
+   <children>
+      <ComboBox fx:id="SelectAStudent" layoutY="1.0" prefHeight="26.0" prefWidth="300.0" promptText="Select a Student" style="-fx-background-color: #A9E2F3;" />
+      <Button fx:id="cancelButton" layoutX="30.0" layoutY="160.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Cancel" />
+      <Button fx:id="dropButton" layoutX="190.0" layoutY="160.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Drop" />
+   </children>
+</AnchorPane>

@@ -20,7 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 /**
- * controls the Add Student dialog functionality incomplete
+ * controls the Add Student dialog functionality complete
  * @author Shelli Crispen
  * 
  */
