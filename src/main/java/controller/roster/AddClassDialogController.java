@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import controller.mainpage.ClassButtonsController;
 import model.driver.Debug;
 import model.roster.Roster;
 import model.server.Server;
@@ -33,6 +34,7 @@ import javafx.stage.WindowEvent;
  * 
  */
 public class AddClassDialogController {
+
     /** contains the resource bundle **/
 	@FXML
 	private ResourceBundle resources;
@@ -71,6 +73,7 @@ public class AddClassDialogController {
 		Roster roster = new Roster(className.getText(), "DefaultInstructor", 1, "Winter", Calendar.getInstance(),
 				Calendar.getInstance());
 		roster.Save();
+		
 		Debug.log("roster saved");
 		((Stage) AddClassButton.getScene().getWindow()).close();
 	}
@@ -87,9 +90,10 @@ public class AddClassDialogController {
 	 * starts the add class dialog
 	 * 
 	 * @param stage
+	 * @param superClass 
 	 */
-	public void start(Stage stage) {
-
+	public void start(Stage stage, ClassButtonsController superClass) {
+	    
 		try {
 			Pane page = (Pane) FXMLLoader.load(getClass().getClassLoader()
 					.getResource(("view/roster/addClassDialog.fxml")));

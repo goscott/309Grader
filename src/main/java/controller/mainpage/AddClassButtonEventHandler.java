@@ -25,7 +25,7 @@ public class AddClassButtonEventHandler implements EventHandler<ActionEvent>
     @Override
     public void handle(ActionEvent event)
     {
-       new AddClassDialogController().start(new Stage());
+       new AddClassDialogController().start(new Stage(), superClass);
        superClass.refreshButtons();
     }
 
