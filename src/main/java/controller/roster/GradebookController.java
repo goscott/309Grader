@@ -51,11 +51,18 @@ public class GradebookController {
 	/** An ArrayList holding the names of the columns that are expanded **/
 	private ArrayList<String> expanded;
 	
+	private static GradebookController singleton;
+	
+	public static GradebookController getController() {
+		return singleton;
+	}
+	
 	@FXML
 	/**
 	 * Initializes the gradebook view
 	 */
 	protected void initialize() {
+		singleton = this;
 		mainTable.setEditable(true);
 		expanded = new ArrayList<String>();
 		for (String item : Grader.getAssignmentNameList()) {
@@ -74,7 +81,7 @@ public class GradebookController {
 		MenuItem rosterSynch = new MenuItem("Roster Synch");
 		MenuItem refresh = new MenuItem("Refresh");
 
-		expandCollapse.setOnAction(new DisplayAddStudentPopupEventHandler(
+		expandCollapse.setOnAction(new DisplayExpandCollapsePopupEventHandler(
 				expandCollapse, this));
 		
 		addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
@@ -309,7 +316,7 @@ public class GradebookController {
 	/**
 	 * Completely refreshes the gradebook
 	 */
-	void fullRefresh() {
+	public void fullRefresh() {
 		if (mainTable.getColumns().size() > 0) {
 			for (int i = mainTable.getColumns().size() - 1; i > 0; i--) {
 				mainTable.getColumns().remove(i);

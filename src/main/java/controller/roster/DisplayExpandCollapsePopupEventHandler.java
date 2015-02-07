@@ -35,7 +35,7 @@ public class DisplayExpandCollapsePopupEventHandler extends ActionEvent implemen
 	 */
 	public void handle(ActionEvent event) {
 		Stage newStage = new Stage();
-		AddStudentDialogController popup = new AddStudentDialogController();
+		ExpandCollapseController popup = new ExpandCollapseController();
 		popup.setParent(callingItem, contr);
 		popup.start(newStage);
 	}
