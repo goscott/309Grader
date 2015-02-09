@@ -11,7 +11,6 @@ import model.history.HistoryDB;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.Student;
-import model.server.Server;
 
 /**
  * Main class for the program. Holds references 

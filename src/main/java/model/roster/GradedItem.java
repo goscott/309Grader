@@ -130,6 +130,9 @@ public class GradedItem implements Serializable {
 	 * @return double the score of the assignment
 	 */
 	public Double score() {
+		if(!children.isEmpty()) {
+			//calcScore();
+		}
 		return score;
 	}
 
@@ -139,9 +142,9 @@ public class GradedItem implements Serializable {
 	 * @return double the max score of the assignment
 	 */
 	public double maxScore() {
-		if(!children.isEmpty()) {
+		/*if(!children.isEmpty()) {
 			return 0;
-		}
+		}*/
 		return maxScore;
 	}
 
@@ -154,10 +157,12 @@ public class GradedItem implements Serializable {
 	 *            The new score
 	 */
 	public void setScore(Double sc) {
-		if(sc != null && sc >= 0 && sc <= maxScore)
-			score = sc;
-		else
-			Debug.log("Input error", "Invalid score: " + sc);
+		if(children.isEmpty()) {
+			if(sc != null && sc >= 0 && sc <= maxScore)
+				score = sc;
+			else
+				Debug.log("Input error", "Invalid score: " + sc);
+		}
 	}
 
 	/**
@@ -226,17 +231,13 @@ public class GradedItem implements Serializable {
 		//TODO unattach old parent
 		if (!children.contains(item)) {
 			Debug.log("Child Added", item.name() + " added as a child of " + name);
-			/*if(children.isEmpty()) {
-				score = null;
-			}*/
+			
 			children.add(item);
+			
 			if(!item.getParent().equals(this)) {
+				item.getParent().removeChild(item);
 				item.setParent(this);
 			}
-			/*score = 0.0;
-			for(GradedItem child : children) {
-				score += child.score();
-			}*/
 		}
 	}
 
@@ -309,12 +310,13 @@ public class GradedItem implements Serializable {
 	 * @return double the sum of this assignment's score and all of its
 	 *         children's scores
 	 */
-	public double calcScore() {
-		double sc = 0;
+	private void calcScore() {
+		System.out.println("calculating score for " + name);
+		score = 0.0;
 		for (GradedItem item : children) {
-			sc += item.score();
+			score += item.score();
 		}
-		return sc;
+		System.out.println(name + " has calculated score of " + score);
 	}
 
 	/**

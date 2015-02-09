@@ -118,7 +118,7 @@ public class Student implements Comparable<Student>, Serializable {
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Gets the student's score on an individual assignment
 	 * 
@@ -141,9 +141,35 @@ public class Student implements Comparable<Student>, Serializable {
 	 *            The name of the new assignment
 	 */
 	public void addAssignment(GradedItem asgn) {
-		GradedItem item = asgn.copy();
-		item.setScore(null);
-		scores.put(item.name(), item);
+		if(!scores.values().contains(asgn)) {
+			GradedItem item = asgn.copy();
+			scores.put(item.name(), item);
+			if(asgn.hasParent()) {
+				setScore(asgn.getParent().name(), 0.0);
+				//scores.get(asgn.getParent().name()).addChild(asgn);
+			}
+		}
+	}
+	
+	/**
+	 * Removes the student's reference to the assignment
+	 */
+	public void removeAssignment(GradedItem item) {
+		if(item.hasParent()) {
+			if(scores.get(item.getParent().name()) != null) {
+				scores.get(item.getParent().name()).removeChild(item);
+			}
+			scores.remove(item.getParent().name());
+		}
+		scores.remove(item);
+	}
+	
+	/**
+	 * Gets the student's copy of a graded assignment with the 
+	 * given name
+	 */
+	public GradedItem getAssignment(String name) {
+		return scores.get(name);
 	}
 
 	/**

@@ -4,7 +4,7 @@
 
 ----------------------------------
 
-  Logged at 02/06/2015 23:16:18
+  Logged at 02/09/2015 15:11:08
 ----------------------------------
 
 
@@ -20,7 +20,7 @@ MODEL : UserDB.login() invoked.
 
 MODEL : UserDB.get() invoked.
 
-Writing to fileC:\Users\Jacob\git\309Grader\target\classes\model\administration\login.txt
+Writing to fileC:\Users\Gavin\git\309Grader\target\classes\model\administration\login.txt
 
 LOGIN : logged in as admin
 
@@ -53,63 +53,7 @@ CHILD ADDED : Q2 added as a child of Midterm 1
 
 GRADER MODEL UPDATED : Assignment added to current roster
 
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
 GRADER MODEL UPDATED : Student added to current roster
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
-
-INPUT ERROR : Invalid score: null
 
 GRADER MODEL UPDATED : Student added to current roster
 
@@ -139,7 +83,127 @@ GRADER MODEL ACCESSED : Assignment pulled from current roster
 
 GRADER MODEL ACCESSED : Student list retrieved
 
-class button clicked 309
+class button clicked 123
 
 GRADER MODEL UPDATED : Current roster changed
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+CHILD ADDED : 1 added as a child of Test
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+CHILD ADDED : 2 added as a child of Test
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+CHILD ADDED : 3 added as a child of Test
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Assignment list retrieved
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+CHILD ADDED : a added as a child of Test 2
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+CHILD ADDED : b added as a child of Test 2
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+CHILD ADDED : c added as a child of Test 2
+
+INPUT ERROR : Invalid score: null
+
+INPUT ERROR : Invalid score: null
+
+GRADER MODEL UPDATED : Assignment added to current roster
+
+GRADER MODEL ACCESSED : Assignment pulled from current roster
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Assignment names retrieved
+
+GRADER MODEL ACCESSED : Student list retrieved
+
+GRADER MODEL ACCESSED : Assignment list retrieved
 

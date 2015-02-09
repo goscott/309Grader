@@ -62,32 +62,6 @@ public class Roster implements Serializable {
         ids = new HashMap<String, Student>();
         curve = new Curve();
     }
-	
-	/**
-	 * Creates a roster with the given information
-	 * 
-	 * @param name
-	 *            The name of the course
-	 * @param time
-	 *            The time (i.e. quarter, year, etc.) of the course.
-	 * @param instructor
-	 *            The name of the instructor
-	 */
-	/*DEPRICATED
-	public Roster(String name, String instructor, int section,
-			String quarter, Date startDate, Date endDate) {
-		courseName = name;
-		this.instructor = instructor;
-		this.section = section;
-		this.quarter = quarter;
-		this.startDate.setTime(startDate);
-		this.endDate.setTime(endDate);
-		
-		students = new ArrayList<Student>();
-		assignments = new ArrayList<GradedItem>();
-		ids = new HashMap<String, Student>();
-		curve = new Curve();
-	}*/
 
 	/**
 	 * Gets the course name
@@ -199,9 +173,9 @@ public class Roster implements Serializable {
 			for (Student stud : students) {
 				stud.addAssignment(asgn);
 				stud.setScore(asgn.name(), asgn.score());
-				if(asgn.hasParent()) {
+				/*if(asgn.hasParent()) {
 					stud.setScore(asgn.getParent().name(), 0.0);
-				}
+				}*/
 			}
 		}
 	}
@@ -214,6 +188,18 @@ public class Roster implements Serializable {
      */
 	public void dropAssignment(GradedItem asgn) {
         if(asgn != null) {
+        	for(Student student : students) {
+        		for(GradedItem child : asgn.getChildren()) {
+        			student.removeAssignment(child);
+        		}
+        		student.removeAssignment(asgn);
+        	}
+        	for(GradedItem child : asgn.getChildren()) {
+    			assignments.remove(child);
+    		}
+        	if(asgn.hasParent()) {
+        		assignments.get(assignments.indexOf(asgn.getParent())).removeChild(asgn);
+        	}
             assignments.remove(asgn);
         }
 	}

@@ -80,10 +80,30 @@ public class GradebookController {
 		MenuItem dropStudent = new MenuItem("Drop Student");
 		MenuItem rosterSynch = new MenuItem("Roster Synch");
 		MenuItem refresh = new MenuItem("Refresh");
+		
+		
+		
+		// TODO DELETE
+		MenuItem TEST = new MenuItem("TEST");
+		TEST.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Student student = Grader.getStudentList().get(0);
+				GradedItem asgn = Grader.getAssignmentList().get(0);
+				System.out.println("*******************************");
+				System.out.println(student.getName());
+				System.out.println("Grade on " + asgn.name() + ": " + student.getAssignmentScore(asgn.name()));
+				for(GradedItem child : student.getAssignment(asgn.name()).getChildren()) {
+					System.out.println("   child assignment: " + child.name() + " (score = " + student.getAssignmentScore(child.name()) + ")");
+				}
+				System.out.println("*******************************");
+			}
+		});
 
+		
+		
 		expandCollapse.setOnAction(new DisplayExpandCollapsePopupEventHandler(
 				expandCollapse, this));
-		
 		addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
 				addAssignment, this));
 		dropAssignment.setOnAction(new DisplayDropAssignmentPopupEventHandler(
@@ -98,7 +118,7 @@ public class GradebookController {
 				fullRefresh();
 			}
 		});
-		rightClickMenu.getItems().addAll(expandCollapse, refresh, new SeparatorMenuItem(),
+		rightClickMenu.getItems().addAll(TEST, expandCollapse, refresh, new SeparatorMenuItem(),
 				addAssignment, dropAssignment, importAssignment, new SeparatorMenuItem(), 
 				addStudent, dropStudent, new SeparatorMenuItem(), rosterSynch);
 		

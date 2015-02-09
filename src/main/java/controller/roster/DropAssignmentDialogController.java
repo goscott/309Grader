@@ -107,7 +107,7 @@ public class DropAssignmentDialogController
     {
         if (dropAssignmentSelect.getValue() != null) {
             GradedItem dropS = null;
-            for(GradedItem assignment: roster.getAssignments()){
+            for(GradedItem assignment: Grader.getRoster().getAssignments()){
                 if(assignment.name() == dropAssignmentSelect.getValue()){
                     dropS = assignment;
                 }
