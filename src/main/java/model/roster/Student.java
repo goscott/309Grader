@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.curve.Grade;
+import model.driver.Debug;
 import model.driver.Grader;
-import javafx.beans.property.SimpleStringProperty;
 
 /**
  * A student in a class
@@ -141,12 +141,20 @@ public class Student implements Comparable<Student>, Serializable {
 	 *            The name of the new assignment
 	 */
 	public void addAssignment(GradedItem asgn) {
+		Debug.log("Adding assignment to student", "New assignment: " + asgn);
 		if(!scores.values().contains(asgn)) {
 			GradedItem item = asgn.copy();
 			scores.put(item.name(), item);
 			if(asgn.hasParent()) {
-				setScore(asgn.getParent().name(), 0.0);
-				//scores.get(asgn.getParent().name()).addChild(asgn);
+				setScore(asgn.getParent().name(), null);
+				GradedItem parent = scores.get(asgn.getParent().name());
+				if(parent != null && !parent.getChildren().contains(asgn)) {
+					try {
+						parent.addChild(asgn);
+					} catch (Throwable t) {
+						t.printStackTrace();
+					}
+				}
 			}
 		}
 	}

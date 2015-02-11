@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.driver.Debug;
+import model.driver.Grader;
 
 /**
  * A grade-able assignment, and a category in the gradebook
@@ -131,7 +132,11 @@ public class GradedItem implements Serializable {
 	 */
 	public Double score() {
 		if(!children.isEmpty()) {
-			//calcScore();
+			try {
+				calcScore();
+			} catch(Throwable t) {
+				t.printStackTrace();
+			}
 		}
 		return score;
 	}
@@ -231,7 +236,7 @@ public class GradedItem implements Serializable {
 		//TODO unattach old parent
 		if (!children.contains(item)) {
 			Debug.log("Child Added", item.name() + " added as a child of " + name);
-			
+			score = null;
 			children.add(item);
 			
 			if(!item.getParent().equals(this)) {
@@ -299,7 +304,9 @@ public class GradedItem implements Serializable {
 	 *            The new parent assignment
 	 */
 	public void setParent(GradedItem newParent) {
-		parent.removeChild(this);
+		if (parent != null) {
+			parent.removeChild(this);
+		}
 		parent = newParent;
 		newParent.addChild(this);
 	}
@@ -312,11 +319,23 @@ public class GradedItem implements Serializable {
 	 */
 	private void calcScore() {
 		System.out.println("calculating score for " + name);
-		score = 0.0;
-		for (GradedItem item : children) {
-			score += item.score();
+		boolean scoreExists = false;
+		for (GradedItem child : children) {
+			System.out.println("!!!!!!!!!!!!!!!!!!!!   HIT CHILD " + child.name());
+			if(child.score() != null) {
+				System.out.println("dsfghjkgfdsdafghjgfhdsfdfghjy");
+				scoreExists = true;
+			}
 		}
-		System.out.println(name + " has calculated score of " + score);
+		if(scoreExists) {
+			score = 0.0;
+			for(GradedItem child : children) {
+				score += child.score() != null ? child.score() : 0;
+			}
+		}
+		else {
+			score = null;
+		}
 	}
 
 	/**
@@ -377,11 +396,11 @@ public class GradedItem implements Serializable {
 	 * @return String the assignment as a String
 	 */
 	public String toString() {
-		String ret = "";
+		String ret = "Name: ";
 		if (parent != null)
-			ret += name + " parent: " + parent.name();
+			ret += name + " | parent: " + parent.name() + " | ";
 		else
-			ret += name + " parent: None";
+			ret += name + " | parent: None | ";
 		ret += " children:";
 		for (GradedItem child : children) {
 			ret += " " + child.name();
