@@ -17,4 +17,23 @@ public class TestSeverJUnit
         fail("Not yet implemented");
     }
 
+    @Test
+    public void testGetObservableStudentList(){
+        
+    }
+    
+    @Test
+    public void testGetStudentListNotRoster(){
+        
+    }
+
+    @Test
+    public void testGetStudentListName() {
+        
+    }
+    
+    @Test
+    public void testGetStudentListNameNotRoster() {
+        
+    }
 }

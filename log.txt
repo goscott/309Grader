@@ -207,3 +207,7 @@ GRADER MODEL ACCESSED : Student list retrieved
 
 GRADER MODEL ACCESSED : Assignment list retrieved
 
+CHILD ADDED : child added as a child of parent1
+
+CHILD ADDED : child added as a child of parent2
+
