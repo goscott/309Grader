@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -85,7 +87,28 @@
       </VBox>
       <VBox>
          <children>
-            <TitledPane alignment="CENTER" collapsible="false" minWidth="0.0" prefHeight="5000.0" prefWidth="133.3333" text="Breakdown" VBox.vgrow="ALWAYS" />
+            <TitledPane alignment="CENTER" collapsible="false" minWidth="0.0" prefHeight="5000.0" prefWidth="133.3333" text="Breakdown" VBox.vgrow="ALWAYS">
+               <content>
+                  <ScrollPane>
+                     <content>
+                        
+                     </content>
+                     <content>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <BarChart fx:id="barChart" alternativeColumnFillVisible="true" verticalGridLinesVisible="false" VBox.vgrow="ALWAYS">
+                                <yAxis>
+                                  <CategoryAxis fx:id="yAxis" label="Percentage Score" side="LEFT" tickLabelGap="10.0" tickLength="10.0" />
+                                </yAxis>
+                                <xAxis>
+                                  <NumberAxis label="Number of Students" side="BOTTOM" fx:id="xAxis" />
+                                </xAxis>
+                              </BarChart>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </content></TitledPane>
          </children>
       </VBox>
   </items>
