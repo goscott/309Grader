@@ -92,14 +92,16 @@ public class Student implements Comparable<Student>, Serializable {
 	 */
 	public Grade getGrade() {
 		double percent = getTotalPercentage();
-		Grade studentGrade = null;
-		for (Grade grade : Grader.getCurve().getGrades()) {
+		Debug.log("Student Grade", percent + "%");
+		//Grade studentGrade = null;
+		return Grader.getCurve().get(percent);
+		/*for (Grade grade : Grader.getCurve().getGrades()) {
 			if (grade.min() <= percent && grade.max() >= percent) {
 				studentGrade = grade;
 			}
 		}
 
-		return studentGrade;
+		return studentGrade;*/
 	}
 
 	/**
@@ -190,8 +192,14 @@ public class Student implements Comparable<Student>, Serializable {
 	 */
 	public void setScore(String asgn, Double sc) {
 		GradedItem item = scores.get(asgn);
-		item.setScore(sc);
-		scores.put(asgn, item);
+		if(item != null) {
+			item.setScore(sc);
+			scores.put(asgn, item);
+			if(item.hasParent()) {
+				GradedItem parent = scores.get(item.getParent().name());
+				parent.getChild(item.name()).setScore(sc);
+			}
+		}
 	}
 
 	/**

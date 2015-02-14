@@ -245,6 +245,19 @@ public class GradedItem implements Serializable {
 			}
 		}
 	}
+	
+	/**
+	 * Returns the instance of the child with the given
+	 * name
+	 */
+	public GradedItem getChild(String name) {
+		for(GradedItem child : children) {
+			if(child.name().equals(name)) {
+				return child;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Returns the numer of children this GradedItem has
@@ -321,9 +334,7 @@ public class GradedItem implements Serializable {
 		System.out.println("calculating score for " + name);
 		boolean scoreExists = false;
 		for (GradedItem child : children) {
-			System.out.println("!!!!!!!!!!!!!!!!!!!!   HIT CHILD " + child.name());
 			if(child.score() != null) {
-				System.out.println("dsfghjkgfdsdafghjgfhdsfdfghjy");
 				scoreExists = true;
 			}
 		}

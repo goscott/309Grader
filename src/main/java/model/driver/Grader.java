@@ -264,7 +264,8 @@ public class Grader {
 	 	);
 	 @*/
 	public static void addScore(Student student, String asgn, double score) {
-		currentRoster.getStudentByID(student.getId()).setScore(asgn, score);
+		//currentRoster.getStudentByID(student.getId()).setScore(asgn, score);
+		currentRoster.addScore(student, getAssignment(asgn), score);
 		Debug.log("Grader model updated", "Score added -> " + student.getName()
 				+ " has score " + score + " on " + asgn + '.');
 	}
