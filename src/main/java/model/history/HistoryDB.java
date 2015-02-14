@@ -1,7 +1,13 @@
 package model.history;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import model.driver.Debug;
 import model.roster.Roster;
 
 /**
@@ -9,7 +15,8 @@ import model.roster.Roster;
  * @author Mason Stevenson
  *
  */
-public class HistoryDB {
+public class HistoryDB implements Serializable {
+    private static final long serialVersionUID = -3742583622867493094L;
     /** Master list of all courses in the history. */
     ArrayList<CourseHistory> history = new ArrayList<CourseHistory>();
     
@@ -26,6 +33,7 @@ public class HistoryDB {
         
         //add the roster to the course history
         getCourseHistory(newRoster.courseName()).addRoster(newRoster);
+        save();
     }
     
     /**
@@ -66,6 +74,27 @@ public class HistoryDB {
      */
     public ArrayList<CourseHistory> getHistory() {
         return history;
+    }
+    
+    public boolean save() {
+        File direc = new File("History");
+        
+        if (!direc.exists()) {
+            direc.mkdir();
+        }
+        
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("History/data.hdb"));
+            out.writeObject(this);
+            out.close();
+            return true;
+        } 
+        
+        catch (IOException ex) {
+            Debug.log("SAVE ERROR", "failed to save History to  History/data.hdb");
+            ex.printStackTrace();
+            return false;
+        }
     }
     
     /**

@@ -1,5 +1,10 @@
 package model.driver;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
@@ -28,7 +33,7 @@ public class Grader {
 	/** The User that is currently logged in to the program **/
 	private static User user;
 	/** A database containing past rosters **/
-	private static HistoryDB history;
+	private static HistoryDB history = loadHistory();
 	/** A database of all users **/
 	private static UserDB userDB = new UserDB();
 
@@ -79,8 +84,35 @@ public class Grader {
 	 * Gets the history database.
 	 */
 	public static HistoryDB getHistoryDB() {
-	    history = new HistoryDB();
+	    //history = new HistoryDB();
 	    return history;
+	}
+	
+	private static HistoryDB loadHistory() {
+        File database = new File("History/data.hdb");
+        HistoryDB toReturn = null;
+        
+        if (database.exists())
+        {
+    	    try 
+            {
+                ObjectInputStream obj = new ObjectInputStream(new FileInputStream(database));
+                toReturn = (HistoryDB) obj.readObject();
+                obj.close();
+    
+            } 
+            
+            catch (Exception e) {
+                Debug.log("IO Error", e.toString());
+                toReturn = new HistoryDB();
+            }
+        }
+        
+        else {
+            toReturn = new HistoryDB();
+        }
+        
+        return toReturn;
 	}
 	
 	/**

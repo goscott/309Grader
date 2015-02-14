@@ -145,7 +145,9 @@ public class HistoryController {
         history = Grader.getHistoryDB();
         
         //populates history db with fake classes
-        fillHistoryDB();
+        if (history.getHistory().isEmpty()) {
+            fillHistoryDB();
+        }
         
         for (CourseHistory course : history.getHistory()) {
             addClass(course);

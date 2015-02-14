@@ -1,4 +1,5 @@
 package model.history;
+import java.io.Serializable;
 import java.util.*;
 
 import model.roster.Roster;
@@ -9,8 +10,10 @@ import model.roster.Student;
  *
  * @author Mason Stevenson
  */
-public class CourseHistory {
+public class CourseHistory implements Serializable {
     
+    private static final long serialVersionUID = 6886136489500479622L;
+
     /**
      * All the rosters (different sections from different years) for this course.
      */
