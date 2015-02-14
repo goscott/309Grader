@@ -24,6 +24,9 @@ public class ClassButtonsController
     {
         buttonSetUp.getChildren().clear();
         File dir = new File("Rosters");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
         File[] rosters = dir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name)
