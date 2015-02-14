@@ -139,9 +139,9 @@ public class MainPageController {
 		thisController = this;
 
 		graphTab.setDisable(true);
-		historyTab.setDisable(true);
+		//historyTab.setDisable(true);
 		predictionsTab.setDisable(true);
-		announcementsTab.setDisable(true);
+		//announcementsTab.setDisable(true);
 		gradebookTab.setDisable(true);
 
 	}
@@ -149,9 +149,13 @@ public class MainPageController {
 	private void enable() {
 		gradebookTab.setDisable(false);
 		graphTab.setDisable(false);
-		historyTab.setDisable(false);
+		//historyTab.setDisable(false);
 		predictionsTab.setDisable(false);
-		announcementsTab.setDisable(false);
+		//announcementsTab.setDisable(false);
+		
+		gradebookTab.setText("GradeBook- " + Grader.getRoster().courseName());
+		graphTab.setText("Graphs- " + Grader.getRoster().courseName());
+		predictionsTab.setText("Predictions- " + Grader.getRoster().courseName());
 	}
 
 	public static void enableTabs() {
