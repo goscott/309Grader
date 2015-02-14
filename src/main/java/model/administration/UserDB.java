@@ -3,6 +3,7 @@ package model.administration;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,7 +30,12 @@ public class UserDB {
     /**
      * Relative (from project root) path to the file containing user info.
      */
-    private static final String DATABASE = "model/administration/users.udb";
+    //private static final String DATABASE = "model/administration/users.udb";
+    private static final String DATABASE = "LoginData/users.udb";
+    
+    private static final String LOGIN = "LoginData/login.txt";
+    
+    private static final String DIR = "LoginData";
     
     /**
      * The string that delimits the items in the user info file.
@@ -49,6 +55,7 @@ public class UserDB {
      * Loads a list of users into the db.
      */
     private void loadUserDB() {
+        File directory;
         File targetFile;
         BufferedReader reader;
         String line = "";
@@ -57,17 +64,23 @@ public class UserDB {
 
         users = new ArrayList<User>();
 
-        //targetFile = new File(DATABASE);
+        directory = new File(DIR);
+        targetFile = new File(DATABASE);
 
         try {
-
+            
+            if (!directory.exists()) {
+                directory.mkdir();
+            }
+            
             // check if file exists
-            //if (!targetFile.exists()) {
-            //    targetFile.createNewFile();
-            //}
+            if (!targetFile.exists()) {
+                targetFile.createNewFile();
+            }
 
             //reader = new BufferedReader(new FileReader(targetFile));
-            reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(DATABASE)));
+            //reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(DATABASE)));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(targetFile)));
             
             while ((line = reader.readLine()) != null) {
                 tokens = line.split(DELIM);
@@ -96,8 +109,8 @@ public class UserDB {
         //userData.delete();
 
         try {
-            //writer = new BufferedWriter(new FileWriter(DATABASE, true));
-            writer = new PrintWriter(new File(this.getClass().getClassLoader().getResource(DATABASE).getPath()));
+            writer = new PrintWriter(new File(DATABASE));
+            //writer = new PrintWriter(new File(this.getClass().getClassLoader().getResource(DATABASE).getPath()));
             
             for (User newUser : users) {
                 // add the user to the db file
@@ -126,30 +139,14 @@ public class UserDB {
 
         // check the db
         if (!users.contains(newUser)) {
-            /*
-            try {
-                writer = new BufferedWriter(new FileWriter(DATABASE, true));
-
-                // add the user to the db file
-                writer.append(newUser.getfName() + DELIM + newUser.getlName()
-                        + DELIM + newUser.getId() + DELIM + newUser.getPassword()
-                        + DELIM + newUser.getType() + "\n");
-                writer.close();
-
-                // add the user to the db
-                users.add(newUser);
-            }
-
-            catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }*/
+            
             users.add(newUser);
             
             //if do update if false, it wont overwrite the dbfile
             //this is helpful for testing.
             if (doUpdate) {
                 updateDB();
+                updateLogin(newUser.getId());
             }
 
             return true;
@@ -267,29 +264,33 @@ public class UserDB {
         Debug.log("model", "UserDB.login() invoked.");
         
         User temp = get(id);
-        //String filename = "src/main/java/model/administration/login.txt";
-        String filename = "model/administration/login.txt";
-        File file;
-        PrintWriter writer;
+        
         
         //if id exists and password matches, return true        
         if (temp != null && temp.getPassword().equals(password)) {
-            try {
-                file = new File(this.getClass().getClassLoader().getResource(filename).getPath());
-                Debug.log("Writing to file" + file.getAbsolutePath());
-                writer = new PrintWriter(file);
-                writer.println(id);
-                writer.close();
-            }
-            
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            
+            updateLogin(id);
             return temp;
         }
         
         return null;
+    }
+    
+    private void updateLogin(String id) {
+        File file;
+        PrintWriter writer;
+        
+        try {
+            //file = new File(this.getClass().getClassLoader().getResource(filename).getPath());
+            file = new File(LOGIN);
+            Debug.log("Writing to file" + file.getAbsolutePath());
+            writer = new PrintWriter(file);
+            writer.println(id);
+            writer.close();
+        }
+        
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     /**

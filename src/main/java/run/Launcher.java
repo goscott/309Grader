@@ -1,6 +1,7 @@
 package run;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +57,8 @@ public class Launcher extends Application {
      * @param scene The current scene.
      */
     private void setUser(Scene scene) {
-        String filename = "src/main/java/model/administration/login.txt";
+        //String filename = "src/main/java/model/administration/login.txt";
+        String filename = "LoginData/login.txt";
         File file = new File(filename);
         TextField field;
         BufferedReader reader;
@@ -66,7 +68,9 @@ public class Launcher extends Application {
             field = (TextField) scene.lookup("#user_name");
             
             try {
-                reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("model/administration/login.txt")));
+                //reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("model/administration/login.txt")));
+                //System.out.println("**");
+                reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
                 field.setText(reader.readLine());
                 reader.close();
                 ((PasswordField) scene.lookup("#password")).requestFocus();
