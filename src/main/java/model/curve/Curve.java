@@ -122,6 +122,12 @@ public class Curve implements Serializable{
                 return grade;
             }
         }
+        if(percentage <= 0) {
+        	return curve.first();
+        }
+        if(percentage >= 100) {
+        	return curve.last();
+        }
         return null;
     }
 }
