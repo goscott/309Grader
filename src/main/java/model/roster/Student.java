@@ -72,9 +72,7 @@ public class Student implements Comparable<Student>, Serializable {
 	public double getTotalScore() {
 		double total = 0;
 		for (GradedItem item : scores.values()) {
-			if(item.getChildren().isEmpty()) {
-				total += item.score() != null ? item.score() : 0;
-			}
+			total += item.score() != null ? item.score() : 0;
 		}
 		return total;
 	}

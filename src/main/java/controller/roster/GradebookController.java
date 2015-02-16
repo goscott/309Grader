@@ -221,13 +221,7 @@ public class GradebookController {
 					TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
 							item.name());
 					newColumn.setMinWidth(100);
-					// only edit leaves
-					if(item.getChildren().isEmpty()) {
-						newColumn.setEditable(true);
-					}
-					else {
-						newColumn.setEditable(false);
-					}
+					newColumn.setEditable(true);
 
 					newColumn.setCellValueFactory(new Callback() {
 						public SimpleStringProperty call(

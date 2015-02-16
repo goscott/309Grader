@@ -417,7 +417,7 @@ public class Roster implements Serializable {
 	public double getMaxPoints() {
 		double max = 0;
 		for (GradedItem item : assignments) {
-			if (!item.isExtraCredit() && item.getChildren().isEmpty()) {
+			if (!item.isExtraCredit()) {
 				max += item.maxScore();
 			}
 		}
