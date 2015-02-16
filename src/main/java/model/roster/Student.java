@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.administration.User;
 import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
@@ -46,6 +47,11 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return String the name of the student
 	 */
 	public String getName() {
+		User currentUser = Grader.getUser();
+		if(currentUser.getType() == 's' 
+				&& !currentUser.getId().equals(id)) {
+			return "*******";
+		}
 		return name;
 	}
 

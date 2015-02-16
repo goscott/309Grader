@@ -65,6 +65,7 @@ public class UserLoginController {
 	/**
 	 * Handles the login button click. If login is successful, launches the MainPage view.
 	 */
+	@FXML
 	public void login() {
 		Debug.log("Login", "attempting login...");
 
@@ -77,7 +78,7 @@ public class UserLoginController {
 		// check db
 		if (targetUser != null) {
 			Debug.log("Login", "logged in as " + userName + '\n');
-			
+			Grader.setUser(targetUser);
 			// LAUNCH GRADER TOOL HERE
 			launchMainPage();
 
@@ -93,6 +94,7 @@ public class UserLoginController {
 	/**
 	 * Closes the window
 	 */
+	@FXML
 	public void cancel() {
 		((Stage) button_cancel.getScene().getWindow()).close();
 	}
@@ -100,6 +102,7 @@ public class UserLoginController {
 	/**
 	 * Launches the new_user view.
 	 */
+	@FXML
 	public void newUser() {
 	    launchNewUser();
         ((Stage) new_user.getScene().getWindow()).close();
