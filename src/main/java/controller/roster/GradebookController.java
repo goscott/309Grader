@@ -1,7 +1,6 @@
 package controller.roster;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import model.curve.Grade;
 import model.driver.Grader;
@@ -9,7 +8,6 @@ import model.roster.GradedItem;
 import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
@@ -78,29 +76,7 @@ public class GradebookController {
 		MenuItem importAssignment = new MenuItem("Import Assignment");
 		MenuItem addStudent = new MenuItem("Add Student");
 		MenuItem dropStudent = new MenuItem("Drop Student");
-		MenuItem rosterSynch = new MenuItem("Roster Synch");
-		MenuItem refresh = new MenuItem("Refresh");
-		
-		
-		
-		// TODO DELETE
-		MenuItem TEST = new MenuItem("TEST");
-		TEST.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Student student = Grader.getStudentList().get(0);
-				GradedItem asgn = Grader.getAssignmentList().get(0);
-				System.out.println("*******************************");
-				System.out.println(student.getName());
-				System.out.println("Grade on " + asgn.name() + ": " + student.getAssignmentScore(asgn.name()));
-				for(GradedItem child : student.getAssignment(asgn.name()).getChildren()) {
-					System.out.println("   child assignment: " + child.name() + " (score = " + student.getAssignmentScore(child.name()) + ")");
-				}
-				System.out.println("*******************************");
-			}
-		});
-
-		
+		MenuItem rosterSynch = new MenuItem("Roster Synch");		
 		
 		expandCollapse.setOnAction(new DisplayExpandCollapsePopupEventHandler(
 				expandCollapse, this));
@@ -112,13 +88,8 @@ public class GradebookController {
 				addStudent, this));
 		dropStudent.setOnAction(new DisplayDropStudentPopupEventHandler(
 				dropStudent, this));
-		refresh.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				fullRefresh();
-			}
-		});
-		rightClickMenu.getItems().addAll(TEST, expandCollapse, refresh, new SeparatorMenuItem(),
+		
+		rightClickMenu.getItems().addAll(expandCollapse, new SeparatorMenuItem(),
 				addAssignment, dropAssignment, importAssignment, new SeparatorMenuItem(), 
 				addStudent, dropStudent, new SeparatorMenuItem(), rosterSynch);
 		
