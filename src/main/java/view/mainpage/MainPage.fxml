@@ -54,7 +54,7 @@
                   <MenuItem id="Load" fx:id="user_exit" mnemonicParsing="false" onAction="#exit" text="Exit" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Settings">
+            <Menu fx:id="settings" mnemonicParsing="false" text="Settings">
                <items>
                   <MenuItem id="Permissions" mnemonicParsing="false" onAction="#permissions" text="Permissions " />
                </items>

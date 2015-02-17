@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
@@ -67,6 +68,8 @@ public class MainPageController {
 	private MenuItem save;
 	@FXML
 	private MenuItem requestHelp;
+	@FXML
+	private Menu settings;
 
 	public void initialize() {
 		// gives it some initial data
@@ -142,6 +145,7 @@ public class MainPageController {
 		// students can't save changes
 		if (Grader.getUser().getType() == UserTypes.USER_STUDENT) {
 			save.setVisible(false);
+			settings.setVisible(false);
 		} else {
 			requestHelp.setVisible(false);
 		}
