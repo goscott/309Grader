@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import model.curve.Curve;
 import model.driver.Debug;
+import model.server.Server;
 
 /**
  * The class Roster that stores students and assignments
@@ -144,14 +145,12 @@ public class Roster implements Serializable {
 	 *            the new student
 	 */
 	public void addStudent(Student student) {
+		Server.addRosterToUser(student, this);
 		students.add(student);
 		ids.put(student.getId(), student);
 		for(GradedItem item : assignments) {
 			item.addStudent(student);
 		}
-		/*for (GradedItem item : assignments) {
-			student.addAssignment(item);
-		}*/
 	}
 
 	/**
@@ -161,6 +160,7 @@ public class Roster implements Serializable {
 	 *            The GradedItem being added to the roster
 	 */
 	public void dropStudent(Student student) {
+		Server.removeRosterFromUser(student, this);
 		students.remove(student);
 		for(GradedItem item : assignments) {
 			item.removeStudent(student);
