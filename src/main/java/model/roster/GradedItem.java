@@ -23,7 +23,7 @@ public class GradedItem implements Serializable {
 	/** The description of the assignment **/
 	private String descr;
 	/** The assignment's score **/
-	//private Double score;
+	// private Double score;
 	/** The assignment's max score **/
 	private double maxScore;
 	/** The assignment's children **/
@@ -84,7 +84,7 @@ public class GradedItem implements Serializable {
 		children = new ArrayList<GradedItem>();
 		this.name = name;
 		this.descr = descr;
-		//this.score = score;
+		// this.score = score;
 		this.parent = parent;
 		this.maxScore = maxScore;
 		this.extraCredit = extraCredit;
@@ -93,7 +93,7 @@ public class GradedItem implements Serializable {
 		}
 		depth = calcDepth();
 		studentGrades = new HashMap<Student, Double>();
-		for(Student student : Grader.getStudentList()) {
+		for (Student student : Grader.getStudentList()) {
 			studentGrades.put(student, null);
 		}
 	}
@@ -121,16 +121,10 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return double the score of the assignment
 	 */
-	/*public Double score() {
-		if(!children.isEmpty()) {
-			try {
-				calcScore();
-			} catch(Throwable t) {
-				t.printStackTrace();
-			}
-		}
-		return score;
-	}*/
+	/*
+	 * public Double score() { if(!children.isEmpty()) { try { calcScore(); }
+	 * catch(Throwable t) { t.printStackTrace(); } } return score; }
+	 */
 
 	/**
 	 * Gets the assignment's maximum score
@@ -138,28 +132,24 @@ public class GradedItem implements Serializable {
 	 * @return double the max score of the assignment
 	 */
 	public double maxScore() {
-		/*if(!children.isEmpty()) {
-			return 0;
-		}*/
+		/*
+		 * if(!children.isEmpty()) { return 0; }
+		 */
 		return maxScore;
 	}
 
 	/**
-	 * Sets the assignment's score to the given value
-	 * if the new score is a positive number less than
-	 * the max score
+	 * Sets the assignment's score to the given value if the new score is a
+	 * positive number less than the max score
 	 * 
 	 * @param sc
 	 *            The new score
 	 */
-	/*public void setScore(Double sc) {
-		if(children.isEmpty()) {
-			if(sc != null && sc >= 0 && sc <= maxScore)
-				score = sc;
-			else
-				Debug.log("Input error", "Invalid score: " + sc);
-		}
-	}*/
+	/*
+	 * public void setScore(Double sc) { if(children.isEmpty()) { if(sc != null
+	 * && sc >= 0 && sc <= maxScore) score = sc; else Debug.log("Input error",
+	 * "Invalid score: " + sc); } }
+	 */
 
 	/**
 	 * Sets the assignment's maximum score
@@ -167,16 +157,13 @@ public class GradedItem implements Serializable {
 	 * @param sc
 	 *            the new max score
 	 */
-	/*@
-		requires(
-			sc >= 0
-		);
-		ensures(
-			maxScore == sc
-		);
-	@*/
+	/*
+	 * @ requires( sc >= 0 ); ensures( maxScore == sc );
+	 * 
+	 * @
+	 */
 	public void setMaxScore(double sc) {
-		if(sc >= 0) {
+		if (sc >= 0) {
 			maxScore = sc;
 		}
 	}
@@ -206,46 +193,38 @@ public class GradedItem implements Serializable {
 	 *            The child assignment; such as a specific question or a
 	 *            subcategory
 	 */
-	/*@
-	 	requires(
-	 		item != null
-	 			&&
-	 		!children.contains(item)
-	 	);
-	 	ensures(
-	 		item.hasParent() => !item.getParent().getChildren().contains(item)
-	 			&&
-	 		item.getParent().equals(this)
-	 			&&
-	 		// The new child is the only change to the list of children
-	 		(\forall GradedItem other ; 
-	 			children.contains(other) <==>
-	 				other.equals(item) || \old(children).contains(other)
-	 	);
-	@*/
+	/*
+	 * @ requires( item != null && !children.contains(item) ); ensures(
+	 * item.hasParent() => !item.getParent().getChildren().contains(item) &&
+	 * item.getParent().equals(this) && // The new child is the only change to
+	 * the list of children (\forall GradedItem other ; children.contains(other)
+	 * <==> other.equals(item) || \old(children).contains(other) );
+	 * 
+	 * @
+	 */
 	public void addChild(GradedItem item) {
-		//TODO unattach old parent
+		// TODO unattach old parent
 		if (!children.contains(item)) {
-			Debug.log("Child Added", item.name() + " added as a child of " + name);
-			for(Student student : studentGrades.keySet()) {
+			Debug.log("Child Added", item.name() + " added as a child of "
+					+ name);
+			for (Student student : studentGrades.keySet()) {
 				studentGrades.put(student, null);
 			}
 			children.add(item);
-			
-			if(!item.getParent().equals(this)) {
+
+			if (!item.getParent().equals(this)) {
 				item.getParent().removeChild(item);
 				item.setParent(this);
 			}
 		}
 	}
-	
+
 	/**
-	 * Returns the instance of the child with the given
-	 * name
+	 * Returns the instance of the child with the given name
 	 */
 	public GradedItem getChild(String name) {
-		for(GradedItem child : children) {
-			if(child.name().equals(name)) {
+		for (GradedItem child : children) {
+			if (child.name().equals(name)) {
 				return child;
 			}
 		}
@@ -318,31 +297,6 @@ public class GradedItem implements Serializable {
 	}
 
 	/**
-	 * Calculates a score based on the assignment's children.
-	 * 
-	 * @return double the sum of this assignment's score and all of its
-	 *         children's scores
-	 */
-	/*private void calcScore() {
-		System.out.println("calculating score for " + name);
-		boolean scoreExists = false;
-		for (GradedItem child : children) {
-			if(child.score() != null) {
-				scoreExists = true;
-			}
-		}
-		if(scoreExists) {
-			score = 0.0;
-			for(GradedItem child : children) {
-				score += child.score() != null ? child.score() : 0;
-			}
-		}
-		else {
-			score = null;
-		}
-	}*/
-
-	/**
 	 * Compares this assignmnt with another object for logical euquivalence.
 	 * 
 	 * @param other
@@ -352,7 +306,7 @@ public class GradedItem implements Serializable {
 		if ((other != null) && (other instanceof GradedItem)) {
 			GradedItem oth = (GradedItem) other;
 			return oth.name().equals(name) && oth.descr().equals(descr);
-					//&& (oth.score() == score);
+			// && (oth.score() == score);
 		}
 		return false;
 	}
@@ -412,8 +366,33 @@ public class GradedItem implements Serializable {
 	}
 
 	public Double getStudentGrade(Student student) {
-		return studentGrades.get(student);
+		if (children.isEmpty()) {
+			return studentGrades.get(student);
+		}
+		else {
+			Double score = null;
+			for(GradedItem child : children) {
+				Double childGrade = child.getStudentGrade(student);
+				if(childGrade != null) {
+					if(score == null) {
+						score = childGrade;
+					}
+					else {
+						score += childGrade;
+					}
+				}
+			}
+			return score;
+		}
 	}
+
+	/*
+	 * private void calcScore2(Student student) { boolean scoreExists = false;
+	 * for (GradedItem child : children) { if(child.getStudentGrade(student) !=
+	 * null) { scoreExists = true; } } if(scoreExists) { score = 0.0;
+	 * for(GradedItem child : children) { score += child.score() != null ?
+	 * child.score() : 0; } } else { score = null; } }
+	 */
 
 	public void setStudentScore(Student student, Double sc) {
 		studentGrades.put(student, sc);

@@ -476,7 +476,10 @@ public class Roster implements Serializable {
 	public double getTotalScore(Student student) {
 		double total = 0;
 		for(GradedItem item : assignments) {
-			total += item.getStudentGrade(student) != null ? item.getStudentGrade(student) : 0;
+			if(item.getChildren().isEmpty()) {
+				total += item.getStudentGrade(student) != null ? 
+						item.getStudentGrade(student) : 0;
+			}
 		}
 		return total;
 	}
