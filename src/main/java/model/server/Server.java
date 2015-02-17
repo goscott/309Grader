@@ -186,9 +186,8 @@ public class Server {
 	    ArrayList<Student> students = new ArrayList<Student>();
 	    String rName = roster.courseName();
 	    for(Student student : associatedClasses.keySet()) {
-	        if(associatedClasses.get(student).contains(rName)) {
+	        if(associatedClasses.get(student).contains(rName))
 	            students.add(student);
-	        }
 	    }
 	    return students;
 	}
