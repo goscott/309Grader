@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.administration.User;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
