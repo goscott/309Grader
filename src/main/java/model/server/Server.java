@@ -178,6 +178,20 @@ public class Server {
 	public static ArrayList<String> getAssociatedRosters(Student student) {
 		return associatedClasses.get(student);
 	}
+	
+	/**
+	 * Gets a list of every user associated with the current roster
+	 */
+	public static ArrayList<Student> getAssociatedStudents(Roster roster) {
+	    ArrayList<Student> students = new ArrayList<Student>();
+	    String rName = roster.courseName();
+	    for(Student student : associatedClasses.keySet()) {
+	        if(associatedClasses.get(student).contains(rName)) {
+	            students.add(student);
+	        }
+	    }
+	    return students;
+	}
 
 	/**
 	 * Associates a roster with this user
