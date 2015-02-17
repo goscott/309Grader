@@ -119,10 +119,15 @@ public class MainPageController {
 			announcementsTab.setContent(announcemetsPage);
 
 			// add predictions
-			HBox predictionsPage = (HBox) FXMLLoader.load(getClass()
-					.getClassLoader().getResource(
-							"view/predictions/predictions_view.fxml"));
-			predictionsTab.setContent(predictionsPage);
+			// (students do not see)
+			if (Grader.getUser().getType() != UserTypes.USER_STUDENT) {
+    			HBox predictionsPage = (HBox) FXMLLoader.load(getClass()
+    					.getClassLoader().getResource(
+    							"view/predictions/predictions_view.fxml"));
+    			predictionsTab.setContent(predictionsPage);
+			} else {
+			    predictionsTab.setDisable(true);
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
