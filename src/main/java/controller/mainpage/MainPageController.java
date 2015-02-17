@@ -7,13 +7,11 @@ import java.util.logging.Logger;
 import controller.roster.GradebookController;
 import run.Launcher;
 import testing.administration.PermissionsTester;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,21 +60,13 @@ public class MainPageController {
 	@FXML
 	private Tab announcementsTab;
 	@FXML
-	private MenuItem addAssignment;
-	@FXML
-	private MenuItem dropAssignment;
-	@FXML
-	private MenuItem importAssignment;
-	@FXML
-	private MenuItem addStudent;
-	@FXML
-	private MenuItem dropStudent;
-	@FXML
-	private MenuItem rosterSync;
-	@FXML
 	private MenuItem logout;
 	@FXML
 	private MenuItem user_exit;
+	@FXML
+	private MenuItem save;
+	@FXML
+	private MenuItem requestHelp;
 
 	public void initialize() {
 		// gives it some initial data
@@ -97,7 +87,8 @@ public class MainPageController {
 								Boolean oldPropertyValue,
 								Boolean newPropertyValue) {
 							if (newPropertyValue) {
-								GradebookController gbook = GradebookController.getController();
+								GradebookController gbook = GradebookController
+										.getController();
 								gbook.fullRefresh();
 							}
 						}
@@ -109,11 +100,15 @@ public class MainPageController {
 			graphTab.setContent(graphPage);
 
 			// add historytab -Mason
-			StackPane historyPage = (StackPane) FXMLLoader.load(getClass()
-					.getClassLoader().getResource(
-							"view/history/history_screen.fxml"));
-			historyTab.setContent(historyPage);
-
+			// (students do not see)
+			if (Grader.getUser().getType() != UserTypes.USER_STUDENT) {
+				StackPane historyPage = (StackPane) FXMLLoader.load(getClass()
+						.getClassLoader().getResource(
+								"view/history/history_screen.fxml"));
+				historyTab.setContent(historyPage);
+			} else {
+				historyTab.setDisable(true);
+			}
 			// add announcementsTab -Jacob
 			BorderPane announcemetsPage = (BorderPane) FXMLLoader
 					.load(getClass().getClassLoader().getResource(
@@ -139,23 +134,30 @@ public class MainPageController {
 		thisController = this;
 
 		graphTab.setDisable(true);
-		//historyTab.setDisable(true);
+		// historyTab.setDisable(true);
 		predictionsTab.setDisable(true);
-		//announcementsTab.setDisable(true);
+		// announcementsTab.setDisable(true);
 		gradebookTab.setDisable(true);
 
+		// students can't save changes
+		if (Grader.getUser().getType() == UserTypes.USER_STUDENT) {
+			save.setVisible(false);
+		} else {
+			requestHelp.setVisible(false);
+		}
 	}
 
 	private void enable() {
 		gradebookTab.setDisable(false);
 		graphTab.setDisable(false);
-		//historyTab.setDisable(false);
+		// historyTab.setDisable(false);
 		predictionsTab.setDisable(false);
-		//announcementsTab.setDisable(false);
-		
+		// announcementsTab.setDisable(false);
+
 		gradebookTab.setText("GradeBook- " + Grader.getRoster().courseName());
 		graphTab.setText("Graphs- " + Grader.getRoster().courseName());
-		predictionsTab.setText("Predictions- " + Grader.getRoster().courseName());
+		predictionsTab.setText("Predictions- "
+				+ Grader.getRoster().courseName());
 	}
 
 	public static void enableTabs() {
@@ -204,6 +206,7 @@ public class MainPageController {
 		}
 	}
 
+	@FXML
 	public void launchAbout() {
 		try {
 			Stage stage = new Stage();
@@ -255,7 +258,7 @@ public class MainPageController {
 		// close the program
 		((Stage) tabPane.getScene().getWindow()).close();
 	}
-	
+
 	@FXML
 	private void saveHandler(ActionEvent event) {
 		Debug.log("Save", Grader.getRoster().courseName() + " saved");

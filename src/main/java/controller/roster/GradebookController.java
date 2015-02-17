@@ -2,6 +2,7 @@ package controller.roster;
 
 import java.util.ArrayList;
 
+import model.administration.UserTypes;
 import model.curve.Grade;
 import model.driver.Grader;
 import model.roster.GradedItem;
@@ -68,30 +69,35 @@ public class GradebookController {
 		}
 		fullRefresh();
 
-		// create popup menu
+		// create right-click menu
 		rightClickMenu = new ContextMenu();
 		MenuItem expandCollapse = new MenuItem("Expand/Collapse Columns");
-		MenuItem addAssignment = new MenuItem("Add Assignment");
-		MenuItem dropAssignment = new MenuItem("Drop Assignment");
-		MenuItem importAssignment = new MenuItem("Import Assignment");
-		MenuItem addStudent = new MenuItem("Add Student");
-		MenuItem dropStudent = new MenuItem("Drop Student");
-		MenuItem rosterSynch = new MenuItem("Roster Synch");		
-		
 		expandCollapse.setOnAction(new DisplayExpandCollapsePopupEventHandler(
 				expandCollapse, this));
-		addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
-				addAssignment, this));
-		dropAssignment.setOnAction(new DisplayDropAssignmentPopupEventHandler(
-		                dropAssignment, this));
-		addStudent.setOnAction(new DisplayAddStudentPopupEventHandler(
-				addStudent, this));
-		dropStudent.setOnAction(new DisplayDropStudentPopupEventHandler(
-				dropStudent, this));
-		
-		rightClickMenu.getItems().addAll(expandCollapse, new SeparatorMenuItem(),
-				addAssignment, dropAssignment, importAssignment, new SeparatorMenuItem(), 
-				addStudent, dropStudent, new SeparatorMenuItem(), rosterSynch);
+		// students don't get these options
+		if(Grader.getUser().getType() != UserTypes.USER_STUDENT) {
+			MenuItem addAssignment = new MenuItem("Add Assignment");
+			MenuItem dropAssignment = new MenuItem("Drop Assignment");
+			MenuItem importAssignment = new MenuItem("Import Assignment");
+			MenuItem addStudent = new MenuItem("Add Student");
+			MenuItem dropStudent = new MenuItem("Drop Student");
+			MenuItem rosterSynch = new MenuItem("Roster Synch");
+			
+			addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
+					addAssignment, this));
+			dropAssignment.setOnAction(new DisplayDropAssignmentPopupEventHandler(
+			                dropAssignment, this));
+			addStudent.setOnAction(new DisplayAddStudentPopupEventHandler(
+					addStudent, this));
+			dropStudent.setOnAction(new DisplayDropStudentPopupEventHandler(
+					dropStudent, this));
+			
+			rightClickMenu.getItems().addAll(expandCollapse, new SeparatorMenuItem(),
+					addAssignment, dropAssignment, importAssignment, new SeparatorMenuItem(), 
+					addStudent, dropStudent, new SeparatorMenuItem(), rosterSynch);
+		} else {
+			rightClickMenu.getItems().addAll(expandCollapse);
+		}
 		
 		mainTable.addEventFilter(MouseEvent.MOUSE_PRESSED,
 				new EventHandler<MouseEvent>() {

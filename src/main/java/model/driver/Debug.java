@@ -7,13 +7,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Year;
 import java.util.Calendar;
-import java.util.Date;
 
-import controller.roster.AddAssignmentDialogController;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.Student;
@@ -85,28 +81,16 @@ public class Debug {
 	 * Initializes the program with some data
 	 */
 	public static void autoPopulate() {
-		//SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy"); //DEPRICATED
-		Roster roster = null;
 		Calendar start = Calendar.getInstance();
-		Calendar end = Calendar.getInstance();
-		
-		//DEPRICATED
-		/*try {
-			roster = new Roster("CPE 309", "Winter 2015", 1,
-					"Gene Fisher", format.parse("01/01/2015"), format.parse("04/01/2015")); 
-		} catch (ParseException e) {
-			Debug.log("Error", "Error initializing roster");
-			e.printStackTrace();
-		}*/
-		
+		Calendar end = Calendar.getInstance();		
 		start.set(2015, 01, 01);
         end.set(2015, 04, 01);
-        
-        roster = new Roster("CPE 309", "Winter 2015", 1,
-                "Gene Fisher", start, end);
+        Roster roster = new Roster("AUTO-POPULATED", "", 1,
+                "", start, end);
         
 		Grader.addRoster(roster);
 		Grader.setCurrentRoster(roster);
+		
 		Grader.addAssignment(new GradedItem("Test", "sfds", 100, false));
 		GradedItem test2 = new GradedItem("Midterms", "sfds", 150, false);
 		GradedItem test3 = new GradedItem("Midterm 1", "sfds", 150, test2,

@@ -46,7 +46,7 @@
         <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem id="Save" mnemonicParsing="false" text="Save" onAction="#saveHandler" />
+                  <MenuItem fx:id="save" mnemonicParsing="false" text="Save" onAction="#saveHandler" />
                   <MenuItem id="Export" mnemonicParsing="false" text="Export" />
                   <MenuItem id="Load" mnemonicParsing="false" text="Load" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -61,8 +61,8 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
                <items>
-                  <MenuItem id="ViewHelp" mnemonicParsing="false" text="View Help" />
-                  <MenuItem id="RequestHelp" mnemonicParsing="false" text="Request Help" />
+                  <!--<MenuItem id="ViewHelp" mnemonicParsing="false" text="View Help" />-->
+                  <MenuItem fx:id="requestHelp" mnemonicParsing="false" text="Request Help" />
                   <MenuItem mnemonicParsing="false" onAction="#launchAbout" text="About" />
                </items>
             </Menu>
