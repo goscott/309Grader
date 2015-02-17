@@ -48,20 +48,20 @@ public class Roster implements Serializable {
 	/** The last date of the course **/
 	private Calendar endDate = Calendar.getInstance();
 
-	public Roster(String name, String instructor, int section,
-            String quarter, Calendar startDate, Calendar endDate) {
-        courseName = name;
-        this.instructor = instructor;
-        this.section = section;
-        this.quarter = quarter;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        
-        students = new ArrayList<Student>();
-        assignments = new ArrayList<GradedItem>();
-        ids = new HashMap<String, Student>();
-        curve = new Curve();
-    }
+	public Roster(String name, String instructor, int section, String quarter,
+			Calendar startDate, Calendar endDate) {
+		courseName = name;
+		this.instructor = instructor;
+		this.section = section;
+		this.quarter = quarter;
+		this.startDate = startDate;
+		this.endDate = endDate;
+
+		students = new ArrayList<Student>();
+		assignments = new ArrayList<GradedItem>();
+		ids = new HashMap<String, Student>();
+		curve = new Curve();
+	}
 
 	/**
 	 * Gets the course name
@@ -71,7 +71,7 @@ public class Roster implements Serializable {
 	public String courseName() {
 		return courseName;
 	}
-	
+
 	/**
 	 * Gets the course instructor
 	 * 
@@ -80,42 +80,43 @@ public class Roster implements Serializable {
 	public String getInstructor() {
 		return instructor;
 	}
-	
+
 	/**
 	 * Gets the section of the class
+	 * 
 	 * @return int the section
 	 */
 	public int getSection() {
 		return section;
 	}
-	
+
 	/**
-	 * Gets the quarter the class takes
-	 * place in
+	 * Gets the quarter the class takes place in
+	 * 
 	 * @return String the quarter
 	 */
 	public String getQuarter() {
 		return quarter;
 	}
-	
+
 	/**
-	 * Gets the Date representing the first
-	 * day of the class
+	 * Gets the Date representing the first day of the class
+	 * 
 	 * @return Date the starting date
 	 */
 	public Calendar getStartDate() {
 		return startDate;
 	}
-	
+
 	/**
-	 * Gets the Date representing the last
-	 * day of the class
+	 * Gets the Date representing the last day of the class
+	 * 
 	 * @return Date the ending date
 	 */
 	public Calendar getEndDate() {
 		return endDate;
 	}
-	
+
 	/**
 	 * Sets the curve
 	 * 
@@ -134,7 +135,7 @@ public class Roster implements Serializable {
 	public Curve getCurve() {
 		return curve;
 	}
-	
+
 	/**
 	 * Adds a student to the course roster, giving the new student a default
 	 * grade for every existing assignment in the roster
@@ -145,20 +146,25 @@ public class Roster implements Serializable {
 	public void addStudent(Student student) {
 		students.add(student);
 		ids.put(student.getId(), student);
-		for (GradedItem item : assignments) {
-			student.addAssignment(item);
+		for(GradedItem item : assignments) {
+			item.addStudent(student);
 		}
+		/*for (GradedItem item : assignments) {
+			student.addAssignment(item);
+		}*/
 	}
-	
-    /**
-     * Drops a student from the gradebook.
-     * 
-     * @param asgn
-     *            The GradedItem being added to the roster
-     */
-	public void dropStudent(Student student)
-	{
-	    students.remove(student);
+
+	/**
+	 * Drops a student from the gradebook.
+	 * 
+	 * @param asgn
+	 *            The GradedItem being added to the roster
+	 */
+	public void dropStudent(Student student) {
+		students.remove(student);
+		for(GradedItem item : assignments) {
+			item.removeStudent(student);
+		}
 	}
 
 	/**
@@ -168,42 +174,44 @@ public class Roster implements Serializable {
 	 *            The GradedItem being added to the roster
 	 */
 	public void addAssignment(GradedItem asgn) {
-		if(asgn != null) {
+		if (asgn != null) {
 			assignments.add(asgn);
-			for (Student stud : students) {
-				stud.addAssignment(asgn);
+			/*for (Student stud : students) {
+				//stud.addAssignment(asgn);
 				stud.setScore(asgn.name(), asgn.score());
-				/*if(asgn.hasParent()) {
-					stud.setScore(asgn.getParent().name(), 0.0);
-				}*/
-			}
+				/*
+				 * if(asgn.hasParent()) { stud.setScore(asgn.getParent().name(),
+				 * 0.0); }
+				 *
+			}*/
 		}
 	}
 
 	/**
-     * Drop an assignment to the course
-     * 
-     * @param asgn
-     *            The GradedItem being added to the roster
-     */
+	 * Drop an assignment to the course
+	 * 
+	 * @param asgn
+	 *            The GradedItem being added to the roster
+	 */
 	public void dropAssignment(GradedItem asgn) {
-        if(asgn != null) {
-        	for(Student student : students) {
-        		for(GradedItem child : asgn.getChildren()) {
-        			student.removeAssignment(child);
-        		}
-        		student.removeAssignment(asgn);
-        	}
-        	for(GradedItem child : asgn.getChildren()) {
-    			assignments.remove(child);
-    		}
-        	if(asgn.hasParent()) {
-        		assignments.get(assignments.indexOf(asgn.getParent())).removeChild(asgn);
-        	}
-            assignments.remove(asgn);
-        }
+		if (asgn != null && assignments.contains(asgn)) {
+			/*for (Student student : students) {
+				for (GradedItem child : asgn.getChildren()) {
+					student.removeAssignment(child);
+				}
+				student.removeAssignment(asgn);
+			}*/
+			for (GradedItem child : asgn.getChildren()) {
+				assignments.remove(child);
+			}
+			if (asgn.hasParent()) {
+				assignments.get(assignments.indexOf(asgn.getParent()))
+						.removeChild(asgn);
+			}
+			assignments.remove(asgn);
+		}
 	}
-	
+
 	/**
 	 * Gets a reference to the assignment with the given name in the roster, if
 	 * it exists
@@ -249,7 +257,7 @@ public class Roster implements Serializable {
 	public double getScore(Student student, String asgn) {
 		if (students.contains(student) && assignments.contains(asgn)) {
 			Student stud = students.get(students.indexOf(student));
-			return /*Double.parseDouble(*/stud.getAssignmentScore(asgn);//);
+			return /* Double.parseDouble( */stud.getAssignmentScore(asgn);// );
 		}
 		return -1;
 	}
@@ -423,26 +431,53 @@ public class Roster implements Serializable {
 		}
 		return max;
 	}
-	
+
 	/**
 	 * Returns the class average percentage grade.
+	 * 
 	 * @return the average percentage grade
 	 */
 	public double getPercentAverage() {
-	    double sum = 0.0;
-	    int num = 0;
-	    for (Student student : students) {
-	        sum += student.getTotalPercentage();
-	        ++num;
-	    }
-	    return sum / num;
+		double sum = 0.0;
+		int num = 0;
+		for (Student student : students) {
+			sum += student.getTotalPercentage();
+			++num;
+		}
+		return sum / num;
 	}
-	
+
 	/**
 	 * Returns the class average letter grade.
+	 * 
 	 * @return the class average letter grade
 	 */
 	public String getLetterAverage() {
-	    return curve.get(getPercentAverage()).getName();
+		return curve.get(getPercentAverage()).getName();
+	}
+
+	public Double getStudentGrade(Student student, String asgn) {
+		for(GradedItem item : assignments) {
+			if(item.name().equals(asgn)) {
+				return item.getStudentGrade(student);
+			}
+		}
+		return null;
+	}
+
+	public void setStudentGrade(Student student, String asgn, Double sc) {
+		for(GradedItem item : assignments) {
+			if(item.name().equals(asgn)) {
+				item.setStudentScore(student, sc);
+			}
+		}
+	}
+
+	public double getTotalScore(Student student) {
+		double total = 0;
+		for(GradedItem item : assignments) {
+			total += item.getStudentGrade(student) != null ? item.getStudentGrade(student) : 0;
+		}
+		return total;
 	}
 }

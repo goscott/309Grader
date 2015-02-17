@@ -2,6 +2,7 @@ package model.roster;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import model.driver.Debug;
@@ -22,7 +23,7 @@ public class GradedItem implements Serializable {
 	/** The description of the assignment **/
 	private String descr;
 	/** The assignment's score **/
-	private Double score;
+	//private Double score;
 	/** The assignment's max score **/
 	private double maxScore;
 	/** The assignment's children **/
@@ -33,6 +34,8 @@ public class GradedItem implements Serializable {
 	private int depth;
 	/** Determines whether or not an assignment is extra credit **/
 	private boolean extraCredit;
+	/** Each student's grade on this assignment **/
+	private HashMap<Student, Double> studentGrades;
 
 	/**
 	 * Creates a graded item with the given information. The parent will be set
@@ -45,23 +48,7 @@ public class GradedItem implements Serializable {
 	 */
 	public GradedItem(String name, String descr, double maxScore,
 			boolean extraCredit) {
-		this(name, descr, null, null, maxScore, extraCredit);
-	}
-
-	/**
-	 * Creates a graded item with the given information. The parent will be set
-	 * to zero.
-	 * 
-	 * @param name
-	 *            The assignment's name
-	 * @param descr
-	 *            The assignment's description
-	 * @param score
-	 *            The assignment's score
-	 */
-	public GradedItem(String name, String descr, Double score, double maxScore,
-			boolean extraCredit) {
-		this(name, descr, null, score, maxScore, extraCredit);
+		this(name, descr, null, maxScore, extraCredit);
 	}
 
 	/**
@@ -77,7 +64,7 @@ public class GradedItem implements Serializable {
 	 */
 	public GradedItem(String name, String descr, double maxScore,
 			GradedItem parent, boolean extraCredit) {
-		this(name, descr, parent, null, maxScore, extraCredit);
+		this(name, descr, parent, maxScore, extraCredit);
 	}
 
 	/**
@@ -93,11 +80,11 @@ public class GradedItem implements Serializable {
 	 *            The assignment's score
 	 */
 	public GradedItem(String name, String descr, GradedItem parent,
-			Double score, double maxScore, boolean extraCredit) {
+			double maxScore, boolean extraCredit) {
 		children = new ArrayList<GradedItem>();
 		this.name = name;
 		this.descr = descr;
-		this.score = score;
+		//this.score = score;
 		this.parent = parent;
 		this.maxScore = maxScore;
 		this.extraCredit = extraCredit;
@@ -105,6 +92,10 @@ public class GradedItem implements Serializable {
 			parent.addChild(this);
 		}
 		depth = calcDepth();
+		studentGrades = new HashMap<Student, Double>();
+		for(Student student : Grader.getStudentList()) {
+			studentGrades.put(student, null);
+		}
 	}
 
 	/**
@@ -130,7 +121,7 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return double the score of the assignment
 	 */
-	public Double score() {
+	/*public Double score() {
 		if(!children.isEmpty()) {
 			try {
 				calcScore();
@@ -139,7 +130,7 @@ public class GradedItem implements Serializable {
 			}
 		}
 		return score;
-	}
+	}*/
 
 	/**
 	 * Gets the assignment's maximum score
@@ -161,14 +152,14 @@ public class GradedItem implements Serializable {
 	 * @param sc
 	 *            The new score
 	 */
-	public void setScore(Double sc) {
+	/*public void setScore(Double sc) {
 		if(children.isEmpty()) {
 			if(sc != null && sc >= 0 && sc <= maxScore)
 				score = sc;
 			else
 				Debug.log("Input error", "Invalid score: " + sc);
 		}
-	}
+	}*/
 
 	/**
 	 * Sets the assignment's maximum score
@@ -236,7 +227,9 @@ public class GradedItem implements Serializable {
 		//TODO unattach old parent
 		if (!children.contains(item)) {
 			Debug.log("Child Added", item.name() + " added as a child of " + name);
-			score = null;
+			for(Student student : studentGrades.keySet()) {
+				studentGrades.put(student, null);
+			}
 			children.add(item);
 			
 			if(!item.getParent().equals(this)) {
@@ -330,7 +323,7 @@ public class GradedItem implements Serializable {
 	 * @return double the sum of this assignment's score and all of its
 	 *         children's scores
 	 */
-	private void calcScore() {
+	/*private void calcScore() {
 		System.out.println("calculating score for " + name);
 		boolean scoreExists = false;
 		for (GradedItem child : children) {
@@ -347,7 +340,7 @@ public class GradedItem implements Serializable {
 		else {
 			score = null;
 		}
-	}
+	}*/
 
 	/**
 	 * Compares this assignmnt with another object for logical euquivalence.
@@ -358,8 +351,8 @@ public class GradedItem implements Serializable {
 	public boolean equals(Object other) {
 		if ((other != null) && (other instanceof GradedItem)) {
 			GradedItem oth = (GradedItem) other;
-			return oth.name().equals(name) && oth.descr().equals(descr)
-					&& (oth.score() == score);
+			return oth.name().equals(name) && oth.descr().equals(descr);
+					//&& (oth.score() == score);
 		}
 		return false;
 	}
@@ -370,7 +363,7 @@ public class GradedItem implements Serializable {
 	 * @return GradedItem the copy
 	 */
 	public GradedItem copy() {
-		return new GradedItem(name, descr, parent, score, maxScore, extraCredit);
+		return new GradedItem(name, descr, parent, maxScore, extraCredit);
 	}
 
 	/**
@@ -394,8 +387,7 @@ public class GradedItem implements Serializable {
 		char secret = 1;
 		for (GradedItem item : assignments) {
 			toReturn += "A" + secret;
-			toReturn += item.name + secret + item.descr + secret + item.score()
-					+ secret;
+			toReturn += item.name + secret + item.descr + secret;
 			toReturn += "\n";
 		}
 		return toReturn;
@@ -417,5 +409,21 @@ public class GradedItem implements Serializable {
 			ret += " " + child.name();
 		}
 		return ret;
+	}
+
+	public Double getStudentGrade(Student student) {
+		return studentGrades.get(student);
+	}
+
+	public void setStudentScore(Student student, Double sc) {
+		studentGrades.put(student, sc);
+	}
+
+	public void addStudent(Student student) {
+		studentGrades.put(student, null);
+	}
+
+	public void removeStudent(Student student) {
+		studentGrades.remove(student);
 	}
 }
