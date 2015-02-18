@@ -174,45 +174,58 @@ public class Server {
 
 	/**
 	 * Gets a list of the names of every roster that a user is associated with
-	 *//*
+	 */
+	/*
 	public static ArrayList<String> getAssociatedRosters(Student student) {
-		return associatedClasses.get(student);
+	return associatedClasses.get(student);
 	}*/
-	
+
 	/**
 	 * Gets a list of every user associated with the current roster
-	 *//*
+	 */
+	/*
 	public static ArrayList<Student> getAssociatedStudents(Roster roster) {
-	    ArrayList<Student> students = new ArrayList<Student>();
-	    String rName = roster.courseName();
-	    for(Student student : associatedClasses.keySet()) {
-	        if(associatedClasses.get(student).contains(rName))
-	            students.add(student);
-	    }
-	    return students;
+	 ArrayList<Student> students = new ArrayList<Student>();
+	 String rName = roster.courseName();
+	 for(Student student : associatedClasses.keySet()) {
+	     if(associatedClasses.get(student).contains(rName))
+	         students.add(student);
+	 }
+	 return students;
 	}*/
 
 	/**
 	 * Associates a roster with this user
-	 *
+	 */
 	public static void addRosterToUser(Student student, Roster roster) {
-		if (!associatedClasses.get(student).contains(roster.courseName())) {
+
+		if (associatedClasses.get(student) != null
+				&& !associatedClasses.get(student)
+						.contains(roster.courseName())) {
+			Debug.log("Server updated", student.getName() + " associated with " + roster.courseName());
 			associatedClasses.get(student).add(roster.courseName());
+		} else {
+			Debug.log("Error", "Null roster associated with student : removal failed");
 		}
-	}*/
+	}
 
 	/**
 	 * Disassociates a roster with this user
-	 *
+	 */
 	public static void removeRosterFromUser(Student student, Roster roster) {
-		associatedClasses.get(student).remove(roster.courseName());
-	}*/
+		if (associatedClasses.get(student) != null) {
+			Debug.log("Server updated", student.getName() + " no longer associated with " + roster.courseName());
+			associatedClasses.get(student).remove(roster.courseName());
+		} else {
+			Debug.log("Error", "Null roster associated with student : removal failed");
+		}
+	}
 
 	/**
 	 * Populates the server with some default students
 	 */
 	public static void init() {
-		//associatedClasses = new HashMap<Student, ArrayList<String>>();
+		associatedClasses = new HashMap<Student, ArrayList<String>>();
 		students.add(new Student("Jim", "00000"));
 		students.add(new Student("Tim", "11111"));
 		students.add(new Student("Gavin Scott", "12345"));
@@ -221,10 +234,11 @@ public class Server {
 		students.add(new Student("Mason Stevenson", "87123"));
 		students.add(new Student("Michael Lenz", "98012"));
 		students.add(new Student("Jacob Hardi", "01968"));
-		/*
+		
 		for (Student student : students) {
 			associatedClasses.put(student, new ArrayList<String>());
-		}*/
+		}
+		
 		Debug.log("Initializing Server", "Server students populated");
 	}
 }
