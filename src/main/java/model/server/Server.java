@@ -220,6 +220,7 @@ public class Server {
 		students.add(new Student("Mason Stevenson", "87123"));
 		students.add(new Student("Michael Lenz", "98012"));
 		students.add(new Student("Jacob Hardi", "01968"));
+		associatedClasses = new HashMap<Student, ArrayList<String>>();
 		for (Student student : students) {
 			associatedClasses.put(student, new ArrayList<String>());
 		}
