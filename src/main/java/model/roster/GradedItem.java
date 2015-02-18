@@ -14,16 +14,12 @@ import model.driver.Grader;
  * @author Gavin Scott
  */
 public class GradedItem implements Serializable {
-	/**
-	 * generated serial ID
-	 */
+	/** Generated serial ID **/
 	private static final long serialVersionUID = 8994764986930533573L;
 	/** The name of the assignment **/
 	private String name;
 	/** The description of the assignment **/
 	private String descr;
-	/** The assignment's score **/
-	// private Double score;
 	/** The assignment's max score **/
 	private double maxScore;
 	/** The assignment's children **/
@@ -31,7 +27,7 @@ public class GradedItem implements Serializable {
 	/** The assignment's parent **/
 	private GradedItem parent;
 	/** The assignment's depth **/
-	private int depth;
+	// private int depth;
 	/** Determines whether or not an assignment is extra credit **/
 	private boolean extraCredit;
 	/** Each student's grade on this assignment **/
@@ -84,14 +80,13 @@ public class GradedItem implements Serializable {
 		children = new ArrayList<GradedItem>();
 		this.name = name;
 		this.descr = descr;
-		// this.score = score;
 		this.parent = parent;
 		this.maxScore = maxScore;
 		this.extraCredit = extraCredit;
 		if (parent != null) {
 			parent.addChild(this);
 		}
-		depth = calcDepth();
+		// depth = calcDepth();
 		studentGrades = new HashMap<Student, Double>();
 		for (Student student : Grader.getStudentList()) {
 			studentGrades.put(student, null);
@@ -117,39 +112,13 @@ public class GradedItem implements Serializable {
 	}
 
 	/**
-	 * Gets the assignment's score
-	 * 
-	 * @return double the score of the assignment
-	 */
-	/*
-	 * public Double score() { if(!children.isEmpty()) { try { calcScore(); }
-	 * catch(Throwable t) { t.printStackTrace(); } } return score; }
-	 */
-
-	/**
 	 * Gets the assignment's maximum score
 	 * 
 	 * @return double the max score of the assignment
 	 */
 	public double maxScore() {
-		/*
-		 * if(!children.isEmpty()) { return 0; }
-		 */
 		return maxScore;
 	}
-
-	/**
-	 * Sets the assignment's score to the given value if the new score is a
-	 * positive number less than the max score
-	 * 
-	 * @param sc
-	 *            The new score
-	 */
-	/*
-	 * public void setScore(Double sc) { if(children.isEmpty()) { if(sc != null
-	 * && sc >= 0 && sc <= maxScore) score = sc; else Debug.log("Input error",
-	 * "Invalid score: " + sc); } }
-	 */
 
 	/**
 	 * Sets the assignment's maximum score
@@ -157,33 +126,18 @@ public class GradedItem implements Serializable {
 	 * @param sc
 	 *            the new max score
 	 */
-	/*
-	 * @ requires( sc >= 0 ); ensures( maxScore == sc );
-	 * 
-	 * @
-	 */
+	/*@
+	 	requires( 
+	  		sc >= 0 
+	 	); 
+	 	ensures( 
+	 		maxScore == sc
+	 	);
+	 @*/
 	public void setMaxScore(double sc) {
 		if (sc >= 0) {
 			maxScore = sc;
 		}
-	}
-
-	/**
-	 * Calculates the depth of the assignment
-	 * 
-	 * @return int the depth
-	 */
-	private int calcDepth() {
-		return parent == null ? 0 : parent.calcDepth() + 1;
-	}
-
-	/**
-	 * Gets the assignment depth
-	 * 
-	 * @return int the depth
-	 */
-	public int getDepth() {
-		return depth;
 	}
 
 	/**
@@ -193,15 +147,21 @@ public class GradedItem implements Serializable {
 	 *            The child assignment; such as a specific question or a
 	 *            subcategory
 	 */
-	/*
-	 * @ requires( item != null && !children.contains(item) ); ensures(
-	 * item.hasParent() => !item.getParent().getChildren().contains(item) &&
-	 * item.getParent().equals(this) && // The new child is the only change to
-	 * the list of children (\forall GradedItem other ; children.contains(other)
-	 * <==> other.equals(item) || \old(children).contains(other) );
-	 * 
-	 * @
-	 */
+	/*@ 
+	 	requires(
+	 		item != null && !children.contains(item) 
+	 	); 
+	 	ensures(
+	 		item.hasParent() => !item.getParent().getChildren().contains(item)
+	 			&&
+	 		item.getParent().equals(this) && 
+	 		// The new child is the only change to the list of children
+	 		(\forall GradedItem other ;
+	 			children.contains(other) <==> other.equals(item)
+	 				||
+	 			\old(children).contains(other)
+	 	);
+	 @*/
 	public void addChild(GradedItem item) {
 		// TODO unattach old parent
 		if (!children.contains(item)) {
@@ -232,9 +192,7 @@ public class GradedItem implements Serializable {
 	}
 
 	/**
-	 * Returns the numer of children this GradedItem has
-	 * 
-	 * @return int the number of children
+	 * Returns the number of children for this GradedItem
 	 */
 	public int numChildren() {
 		return children.size();
@@ -242,11 +200,16 @@ public class GradedItem implements Serializable {
 
 	/**
 	 * Gets all the children of this graded item
-	 * 
-	 * @return ArrayList<GradedItem> the children
 	 */
 	public ArrayList<GradedItem> getChildren() {
 		return children;
+	}
+
+	/**
+	 * Returns whether or not this assignment has any children
+	 */
+	public boolean hasChildren() {
+		return children.isEmpty();
 	}
 
 	/**
@@ -366,23 +329,21 @@ public class GradedItem implements Serializable {
 	}
 
 	/**
-	 * Gets a student's grade on this assignment, calculated as
-	 * a sum of all of the "leaves" underneath it in the 
-	 * assignment heirarchy
+	 * Gets a student's grade on this assignment, calculated as a sum of all of
+	 * the "leaves" underneath it in the assignment heirarchy
 	 */
+	// TODO WRITE COMPLICATED JML
 	public Double getStudentGrade(Student student) {
 		if (children.isEmpty()) {
 			return studentGrades.get(student);
-		}
-		else {
+		} else {
 			Double score = null;
-			for(GradedItem child : children) {
+			for (GradedItem child : children) {
 				Double childGrade = child.getStudentGrade(student);
-				if(childGrade != null) {
-					if(score == null) {
+				if (childGrade != null) {
+					if (score == null) {
 						score = childGrade;
-					}
-					else {
+					} else {
 						score += childGrade;
 					}
 				}
@@ -394,6 +355,11 @@ public class GradedItem implements Serializable {
 	/**
 	 * Assigns a score on this assignment to a student
 	 */
+	/*@
+	 	ensures(
+	 		studentGrades.get(student).equals(sc)
+	 	);
+	 @*/
 	public void setStudentScore(Student student, Double sc) {
 		studentGrades.put(student, sc);
 	}
@@ -401,7 +367,17 @@ public class GradedItem implements Serializable {
 	/**
 	 * Removes a student from the list of grades
 	 */
+	/*@
+		requires(
+			studentGrades.contains(student)
+		);
+		ensures(
+			!studentGrades.contains(student)
+		);
+	@*/
 	public void removeStudent(Student student) {
-		studentGrades.remove(student);
+		if (!studentGrades.containsKey(student)) {
+			studentGrades.remove(student);
+		}
 	}
 }

@@ -125,8 +125,13 @@ public class Roster implements Serializable {
 	 * @param curve
 	 *            the new curve
 	 */
+	/*
+	 
+	 */
 	public void setCurve(Curve curve) {
-		this.curve = curve;
+		if(curve != null) {
+			this.curve = curve;
+		}
 	}
 
 	/**
@@ -244,7 +249,7 @@ public class Roster implements Serializable {
 	public double getScore(Student student, String asgn) {
 		if (students.contains(student) && assignments.contains(asgn)) {
 			Student stud = students.get(students.indexOf(student));
-			return /* Double.parseDouble( */stud.getAssignmentScore(asgn);// );
+			return stud.getAssignmentScore(asgn);
 		}
 		return -1;
 	}
@@ -412,7 +417,7 @@ public class Roster implements Serializable {
 	public double getMaxPoints() {
 		double max = 0;
 		for (GradedItem item : assignments) {
-			if (!item.isExtraCredit() && item.getChildren().isEmpty()) {
+			if (!item.isExtraCredit() && item.hasChildren()) {
 				max += item.maxScore();
 			}
 		}
@@ -473,7 +478,7 @@ public class Roster implements Serializable {
 	public double getTotalScore(Student student) {
 		double total = 0;
 		for(GradedItem item : assignments) {
-			if(item.getChildren().isEmpty()) {
+			if(item.hasChildren()) {
 				total += item.getStudentGrade(student) != null ? 
 						item.getStudentGrade(student) : 0;
 			}
