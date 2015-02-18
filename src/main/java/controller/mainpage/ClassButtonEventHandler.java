@@ -4,7 +4,6 @@ import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;

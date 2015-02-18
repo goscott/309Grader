@@ -53,6 +53,8 @@ public class AddClassDialogController {
 	/** button to add the class **/
 	@FXML
 	private Button AddClassButton;
+	/** The parent of the dialog **/
+	private static ClassButtonsController parent;
 	/**
 	 * initializes and displays a new 
 	 */
@@ -73,8 +75,8 @@ public class AddClassDialogController {
 		Roster roster = new Roster(className.getText(), "DefaultInstructor", 1, "Winter", Calendar.getInstance(),
 				Calendar.getInstance());
 		roster.Save();
-		
-		Debug.log("roster saved");
+		Debug.log("Roster saved");
+		parent.refreshButtons();
 		((Stage) AddClassButton.getScene().getWindow()).close();
 	}
 	/**
@@ -93,7 +95,7 @@ public class AddClassDialogController {
 	 * @param superClass 
 	 */
 	public void start(Stage stage, ClassButtonsController superClass) {
-	    
+	    parent = superClass;
 		try {
 			Pane page = (Pane) FXMLLoader.load(getClass().getClassLoader()
 					.getResource(("view/roster/addClassDialog.fxml")));
