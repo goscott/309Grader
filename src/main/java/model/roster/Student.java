@@ -3,7 +3,6 @@ package model.roster;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import model.administration.User;
 import model.administration.UserTypes;
@@ -17,16 +16,12 @@ import model.driver.Grader;
  * @author Gavin Scott
  */
 public class Student implements Comparable<Student>, Serializable {
-	/**
-	 * generated serial ID
-	 */
+	/** Generated serial ID **/
 	private static final long serialVersionUID = 6298208303690715171L;
 	/** The student's name **/
 	private final String name;
 	/** The student's id **/
 	private final String id;
-	/** A map of assignment names to the assignments in the class **/
-	//private HashMap<String, GradedItem> scores;
 
 	/**
 	 * Creates a student with the given information
@@ -39,7 +34,6 @@ public class Student implements Comparable<Student>, Serializable {
 	public Student(String name, String id) {
 		this.name = name;
 		this.id = id;
-		//scores = new HashMap<String, GradedItem>();
 	}
 
 	/**
@@ -71,14 +65,6 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return double the total grade
 	 */
 	public double getTotalScore() {
-		/*double total = 0;
-		/*for (GradedItem item : scores.values()) {
-			total += item.score() != null ? item.score() : 0;
-		}*
-		for(GradedItem item : Grader.getAssignmentList()) {
-			total += item.score() != null ? item.score() : 0;
-		}
-		return total;*/
 		return Grader.getRoster().getTotalScore(this);
 	}
 
@@ -104,15 +90,7 @@ public class Student implements Comparable<Student>, Serializable {
 	public Grade getGrade() {
 		double percent = getTotalPercentage();
 		Debug.log("Student Grade", percent + "%");
-		//Grade studentGrade = null;
 		return Grader.getCurve().get(percent);
-		/*for (Grade grade : Grader.getCurve().getGrades()) {
-			if (grade.min() <= percent && grade.max() >= percent) {
-				studentGrade = grade;
-			}
-		}
-
-		return studentGrade;*/
 	}
 
 	/**
@@ -123,13 +101,6 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return Grade the grade
 	 */
 	public Grade getGrade(String asgn) {
-		/*double score = scores.get(asgn).score() / scores.get(asgn).maxScore();
-		for (Grade grade : Grader.getCurve().getGrades()) {
-			if (grade.min() <= score && grade.max() >= score) {
-				return grade;
-			}
-		}
-		return null;*/
 		return Grader.getCurve().get(getAssignmentScore(asgn));
 	}
 	
@@ -141,62 +112,8 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return Double the student's score on the assignment
 	 */
 	public Double getAssignmentScore(String asgn) {
-		/*if (scores.get(asgn) != null && scores.get(asgn).score() != null) {
-			return scores.get(asgn).score();
-		}
-		return null;*/
 		return Grader.getRoster().getStudentGrade(this, asgn);
 	}
-
-	/**
-	 * Adds an assignment for this student, where their score will be recorded.
-	 * The assignment will have a default grade of zero
-	 * 
-	 * @param asgn
-	 *            The name of the new assignment
-	 */
-	/*
-	public void addAssignment(GradedItem asgn) {
-		Debug.log("Adding assignment to student", "New assignment: " + asgn);
-		if(!scores.values().contains(asgn)) {
-			GradedItem item = asgn.copy();
-			scores.put(item.name(), item);
-			if(asgn.hasParent()) {
-				setScore(asgn.getParent().name(), null);
-				GradedItem parent = scores.get(asgn.getParent().name());
-				if(parent != null && !parent.getChildren().contains(asgn)) {
-					try {
-						parent.addChild(asgn);
-					} catch (Throwable t) {
-						t.printStackTrace();
-					}
-				}
-			}
-		}
-	}*/
-	
-	/**
-	 * Removes the student's reference to the assignment
-	 */
-	/*
-	public void removeAssignment(GradedItem item) {
-		if(item.hasParent()) {
-			if(scores.get(item.getParent().name()) != null) {
-				scores.get(item.getParent().name()).removeChild(item);
-			}
-			scores.remove(item.getParent().name());
-		}
-		scores.remove(item);
-	}*/
-	
-	/**
-	 * Gets the student's copy of a graded assignment with the 
-	 * given name
-	 */
-	/*
-	public GradedItem getAssignment(String name) {
-		return scores.get(name);
-	}*/
 
 	/**
 	 * Sets the score for an assignment
@@ -207,15 +124,6 @@ public class Student implements Comparable<Student>, Serializable {
 	 *            the new score
 	 */
 	public void setScore(String asgn, Double sc) {
-		/*GradedItem item = scores.get(asgn);
-		if(item != null) {
-			item.setScore(sc);
-			scores.put(asgn, item);
-			if(item.hasParent()) {
-				GradedItem parent = scores.get(item.getParent().name());
-				parent.getChild(item.name()).setScore(sc);
-			}
-		}*/
 		Grader.getRoster().setStudentGrade(this, asgn, sc);
 	}
 
@@ -231,17 +139,6 @@ public class Student implements Comparable<Student>, Serializable {
 	public void setPercentScore(String asgn, double percent) {
 		setScore(asgn, percent / 100 * Grader.getAssignment(asgn).maxScore());
 	}
-
-	/**
-	 * Removes an assignment
-	 * 
-	 * @param asgn
-	 *            The name of the assignment
-	 */
-	/*
-	public void removeScore(String asgn) {
-		scores.remove(asgn);
-	}*/
 
 	/**
 	 * Compares two students by their names

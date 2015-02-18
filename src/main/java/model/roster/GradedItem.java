@@ -365,6 +365,11 @@ public class GradedItem implements Serializable {
 		return ret;
 	}
 
+	/**
+	 * Gets a student's grade on this assignment, calculated as
+	 * a sum of all of the "leaves" underneath it in the 
+	 * assignment heirarchy
+	 */
 	public Double getStudentGrade(Student student) {
 		if (children.isEmpty()) {
 			return studentGrades.get(student);
@@ -386,22 +391,16 @@ public class GradedItem implements Serializable {
 		}
 	}
 
-	/*
-	 * private void calcScore2(Student student) { boolean scoreExists = false;
-	 * for (GradedItem child : children) { if(child.getStudentGrade(student) !=
-	 * null) { scoreExists = true; } } if(scoreExists) { score = 0.0;
-	 * for(GradedItem child : children) { score += child.score() != null ?
-	 * child.score() : 0; } } else { score = null; } }
+	/**
+	 * Assigns a score on this assignment to a student
 	 */
-
 	public void setStudentScore(Student student, Double sc) {
 		studentGrades.put(student, sc);
 	}
 
-	public void addStudent(Student student) {
-		studentGrades.put(student, null);
-	}
-
+	/**
+	 * Removes a student from the list of grades
+	 */
 	public void removeStudent(Student student) {
 		studentGrades.remove(student);
 	}

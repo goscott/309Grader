@@ -23,9 +23,7 @@ import model.server.Server;
  * @author Shelli Crispen
  */
 public class Roster implements Serializable {
-	/**
-	 * generated serial ID
-	 */
+	/** Generated serial ID **/
 	private static final long serialVersionUID = -8021729176053193523L;
 	/** The students enrolled in the class **/
 	private ArrayList<Student> students;
@@ -49,6 +47,9 @@ public class Roster implements Serializable {
 	/** The last date of the course **/
 	private Calendar endDate = Calendar.getInstance();
 
+	/**
+	 * Contructs a roster from the given information
+	 */
 	public Roster(String name, String instructor, int section, String quarter,
 			Calendar startDate, Calendar endDate) {
 		courseName = name;
@@ -149,7 +150,7 @@ public class Roster implements Serializable {
 		students.add(student);
 		ids.put(student.getId(), student);
 		for(GradedItem item : assignments) {
-			item.addStudent(student);
+			item.setStudentScore(student, null);
 		}
 	}
 
@@ -174,16 +175,8 @@ public class Roster implements Serializable {
 	 *            The GradedItem being added to the roster
 	 */
 	public void addAssignment(GradedItem asgn) {
-		if (asgn != null) {
+		if (asgn != null && !assignments.contains(asgn)) {
 			assignments.add(asgn);
-			/*for (Student stud : students) {
-				//stud.addAssignment(asgn);
-				stud.setScore(asgn.name(), asgn.score());
-				/*
-				 * if(asgn.hasParent()) { stud.setScore(asgn.getParent().name(),
-				 * 0.0); }
-				 *
-			}*/
 		}
 	}
 
@@ -195,12 +188,6 @@ public class Roster implements Serializable {
 	 */
 	public void dropAssignment(GradedItem asgn) {
 		if (asgn != null && assignments.contains(asgn)) {
-			/*for (Student student : students) {
-				for (GradedItem child : asgn.getChildren()) {
-					student.removeAssignment(child);
-				}
-				student.removeAssignment(asgn);
-			}*/
 			for (GradedItem child : asgn.getChildren()) {
 				assignments.remove(child);
 			}
@@ -456,6 +443,9 @@ public class Roster implements Serializable {
 		return curve.get(getPercentAverage()).getName();
 	}
 
+	/**
+	 * Returns a student's grade on a particular assignment
+	 */
 	public Double getStudentGrade(Student student, String asgn) {
 		for(GradedItem item : assignments) {
 			if(item.name().equals(asgn)) {
@@ -465,6 +455,9 @@ public class Roster implements Serializable {
 		return null;
 	}
 
+	/**
+	 * Sets a student's grade on a particular assignment to the given score
+	 */
 	public void setStudentGrade(Student student, String asgn, Double sc) {
 		for(GradedItem item : assignments) {
 			if(item.name().equals(asgn)) {
@@ -473,6 +466,10 @@ public class Roster implements Serializable {
 		}
 	}
 
+	/**
+	 * Gets a student's total score, as a sum of their scores
+	 * on every assignment kept in the roster
+	 */
 	public double getTotalScore(Student student) {
 		double total = 0;
 		for(GradedItem item : assignments) {
