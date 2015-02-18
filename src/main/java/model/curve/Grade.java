@@ -23,7 +23,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param max the maximum percentage required
      * @param min the minimum percentage required
      */
-    public Grade(String name, float max, float min) {
+    public Grade(String name, double max, double min) {
         this.name = new SimpleStringProperty(name);
         this.set(max, min);
     }
