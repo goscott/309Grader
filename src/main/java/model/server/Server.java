@@ -211,6 +211,18 @@ public class Server {
 	}*/
 
 	/**
+	 * Gets a student from the server by their name
+	 */
+	public static Student getStudentByName(String name) {
+		for(Student student : students) {
+			if(student.getName().equals(name)) {
+				return student;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Associates a roster with this user
 	 */
 	public static void addRosterToUser(Student student, Roster roster) {

@@ -8,10 +8,7 @@ import java.util.ResourceBundle;
 import controller.mainpage.ClassButtonsController;
 import model.driver.Debug;
 import model.roster.Roster;
-import model.roster.Student;
 import model.server.Server;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -58,23 +55,11 @@ public class AddClassDialogController {
 	 */
 	@FXML
 	void initialize() {
-		ObservableList<String> items = FXCollections
-				.observableArrayList("There will be students here someday");
+		/*ObservableList<String> items = FXCollections
+				.observableArrayList("There will be students here someday");*/
 		students.setItems(Server.getStudentListName());
 		students.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		// students.setItems(items);
-	}
-	
-	/**
-	 * Gets a student from the server by their name
-	 */
-	private Student getStudentByName(String name) {
-		for(Student student : Server.getStudents()) {
-			if(student.getName().equals(name)) {
-				return student;
-			}
-		}
-		return null;
 	}
 	
 	/**
@@ -86,7 +71,7 @@ public class AddClassDialogController {
 		Roster roster = new Roster(className.getText(), "DefaultInstructor", 1, "Winter", Calendar.getInstance(),
 				Calendar.getInstance());
 		for(String name : students.getSelectionModel().getSelectedItems()) {
-			roster.addStudent(getStudentByName(name));
+			roster.addStudent(Server.getStudentByName(name));
 		}
 		roster.Save();
 		Debug.log("Roster created and saved");
