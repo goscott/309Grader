@@ -41,17 +41,17 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="first_name" GridPane.columnIndex="1">
+            <TextField fx:id="first_name" GridPane.columnIndex="1" promptText="John">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="last_name" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="last_name" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Doe">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="user_name" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="user_name" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="12345">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
