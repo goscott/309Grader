@@ -36,6 +36,20 @@ public class Server {
 	}
 
 	/**
+	 * Searches the server for a student with the given ID. Returns
+	 * the student if they exist in the server, or null if they do
+	 * not.
+	 */
+	public static Student findStudent(String id) {
+		for(Student student : students) {
+			if(student.getId().equals(id)) {
+				return student;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Gets the list of all students stored in the server and turns the
 	 * ArrayList to an ObservableList.
 	 * 

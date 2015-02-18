@@ -2,9 +2,8 @@ package controller.announcements;
 
 import javax.swing.JOptionPane;
 
+import controller.roster.AddAssignmentDialogController;
 import model.announcements.Announcement;
-import model.curve.Grade;
-import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,8 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class AnnouncementsController {
@@ -102,6 +101,11 @@ public class AnnouncementsController {
     
     //This should launch a new announcement dialog, and then add the announcement to the list
     public void addAnnouncement() {
+    	Stage newStage = new Stage();
+    	AddAnnouncementController popup = new AddAnnouncementController();
+		popup.setParent(this);
+		popup.start(newStage);
+    	/*
     	String content, subject;
     	subject = JOptionPane.showInputDialog(null, "Enter announcement subject:", "Add Announcement: Subject", JOptionPane.OK_CANCEL_OPTION);
     	if (subject != null)
@@ -116,6 +120,11 @@ public class AnnouncementsController {
     	{
     		data.add(new Announcement(subject, "You", content));
     		table.setItems(data);
-    	}
+    	}*/
+    }
+    
+    void addAnnouncementToList(Announcement announcement) {
+    	data.add(announcement);
+		table.setItems(data);
     }
 }
