@@ -1,6 +1,5 @@
 package controller.mainpage;
 
-import controller.roster.AddAssignmentDialogController;
 import controller.roster.AddClassDialogController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

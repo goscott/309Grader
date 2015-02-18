@@ -129,7 +129,7 @@ public class Roster implements Serializable {
 	 
 	 */
 	public void setCurve(Curve curve) {
-		if(curve != null) {
+		if (curve != null) {
 			this.curve = curve;
 		}
 	}
@@ -151,11 +151,13 @@ public class Roster implements Serializable {
 	 *            the new student
 	 */
 	public void addStudent(Student student) {
-		Server.addRosterToUser(student, this);
-		students.add(student);
-		ids.put(student.getId(), student);
-		for(GradedItem item : assignments) {
-			item.setStudentScore(student, null);
+		if (student != null) {
+			Server.addRosterToUser(student, this);
+			students.add(student);
+			ids.put(student.getId(), student);
+			for (GradedItem item : assignments) {
+				item.setStudentScore(student, null);
+			}
 		}
 	}
 
@@ -168,7 +170,7 @@ public class Roster implements Serializable {
 	public void dropStudent(Student student) {
 		Server.removeRosterFromUser(student, this);
 		students.remove(student);
-		for(GradedItem item : assignments) {
+		for (GradedItem item : assignments) {
 			item.removeStudent(student);
 		}
 	}
@@ -452,8 +454,8 @@ public class Roster implements Serializable {
 	 * Returns a student's grade on a particular assignment
 	 */
 	public Double getStudentGrade(Student student, String asgn) {
-		for(GradedItem item : assignments) {
-			if(item.name().equals(asgn)) {
+		for (GradedItem item : assignments) {
+			if (item.name().equals(asgn)) {
 				return item.getStudentGrade(student);
 			}
 		}
@@ -464,23 +466,23 @@ public class Roster implements Serializable {
 	 * Sets a student's grade on a particular assignment to the given score
 	 */
 	public void setStudentGrade(Student student, String asgn, Double sc) {
-		for(GradedItem item : assignments) {
-			if(item.name().equals(asgn)) {
+		for (GradedItem item : assignments) {
+			if (item.name().equals(asgn)) {
 				item.setStudentScore(student, sc);
 			}
 		}
 	}
 
 	/**
-	 * Gets a student's total score, as a sum of their scores
-	 * on every assignment kept in the roster
+	 * Gets a student's total score, as a sum of their scores on every
+	 * assignment kept in the roster
 	 */
 	public double getTotalScore(Student student) {
 		double total = 0;
-		for(GradedItem item : assignments) {
-			if(item.hasChildren()) {
-				total += item.getStudentGrade(student) != null ? 
-						item.getStudentGrade(student) : 0;
+		for (GradedItem item : assignments) {
+			if (item.hasChildren()) {
+				total += item.getStudentGrade(student) != null ? item
+						.getStudentGrade(student) : 0;
 			}
 		}
 		return total;

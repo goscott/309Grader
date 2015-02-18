@@ -3,12 +3,12 @@ package controller.roster;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import controller.mainpage.ClassButtonsController;
 import model.driver.Debug;
 import model.roster.Roster;
+import model.roster.Student;
 import model.server.Server;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,10 +19,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -66,6 +64,19 @@ public class AddClassDialogController {
 		students.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		// students.setItems(items);
 	}
+	
+	/**
+	 * Gets a student from the server by their name
+	 */
+	private Student getStudentByName(String name) {
+		for(Student student : Server.getStudents()) {
+			if(student.getName().equals(name)) {
+				return student;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Handels the event of when the addClass button is pressed
 	 * @param event event to be handeled
@@ -74,8 +85,11 @@ public class AddClassDialogController {
 	private void AddClass(ActionEvent event) {
 		Roster roster = new Roster(className.getText(), "DefaultInstructor", 1, "Winter", Calendar.getInstance(),
 				Calendar.getInstance());
+		for(String name : students.getSelectionModel().getSelectedItems()) {
+			roster.addStudent(getStudentByName(name));
+		}
 		roster.Save();
-		Debug.log("Roster saved");
+		Debug.log("Roster created and saved");
 		parent.refreshButtons();
 		((Stage) AddClassButton.getScene().getWindow()).close();
 	}
