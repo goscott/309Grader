@@ -5,6 +5,7 @@ import model.administration.User;
 import model.administration.UserDB;
 import model.driver.Debug;
 import model.driver.Grader;
+import model.server.Server;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -120,7 +121,11 @@ public class UserLoginController {
 
 			stage.setScene(scene);
 			stage.setTitle("GraderTool");
-
+			stage.setOnHiding(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent event) {
+					Server.backup();
+				}
+			});
 			stage.show();
 		}
 

@@ -305,7 +305,32 @@ public class Server {
 	 * Populates the server with some default students
 	 */
 	public static void init() {
+		Debug.log("Server initialization", "starting init...");
 		initializeStudents();
 		initializeAnnouncements();
+	}
+	
+	/**
+	 * Saves the announcements stored in the server
+	 */
+	private static void backupAnnouncements() {
+		Debug.log("Server Backup", "Announcements backed up");
+	}
+	
+	/**
+	 * Saves the associated classes stored in the server
+	 */
+	private static void backupAssociatedClasses() {
+		Debug.log("Server Backup", "Class associations backed up");
+	}
+	
+	/**
+	 * Commits the new server data to files so they will be preserved
+	 * between runs of the program
+	 */
+	public static void backup() {
+		Debug.log("Server Backup", "Starting backup...");
+		backupAnnouncements();
+		backupAssociatedClasses();
 	}
 }

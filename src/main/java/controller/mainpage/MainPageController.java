@@ -37,6 +37,7 @@ import model.administration.UserTypes;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
+import model.server.Server;
 
 /**
  * Controller for the main GraderTool view
@@ -171,7 +172,7 @@ public class MainPageController {
 			requestHelp.setVisible(false);
 		}
 	}
-
+	
 	/**
 	 * Enables class-specific tabs
 	 */
