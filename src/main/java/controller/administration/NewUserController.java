@@ -113,6 +113,7 @@ public class NewUserController {
     /**
      * Switches between masked and plaintext views of the password.
      */
+    @FXML
     public void togglePassword() {
         if (checkbox_show.isSelected()) {
             password_masked.setVisible(false);
@@ -130,6 +131,7 @@ public class NewUserController {
     /**
      * Attempts to add a user to the user database based on the info entered by the user.
      */
+    @FXML
     public void createUser() {
         
         UserDB users = Grader.getUserDB();
@@ -169,6 +171,7 @@ public class NewUserController {
     /**
      * Closes the window.
      */
+    @FXML
     public void cancel() {
         ((Stage) button_cancel.getScene().getWindow()).close();
     }
@@ -176,6 +179,7 @@ public class NewUserController {
     /**
      * Handles a selected element in the permissions chooser.
      */
+    @FXML
     public void studentSelected() {
         button_select_permissions.setText("Student");
         userType = UserTypes.USER_STUDENT;
@@ -184,6 +188,7 @@ public class NewUserController {
     /**
      * Handles a selected element in the permissions chooser.
      */
+    @FXML
     public void taSelected() {
         button_select_permissions.setText("Teacher's Aid");
         userType = UserTypes.USER_TA;
@@ -192,6 +197,7 @@ public class NewUserController {
     /**
      * Handles a selected element in the permissions chooser.
      */
+    @FXML
     public void instructorSelected() {
         button_select_permissions.setText("Instructor");
         userType = UserTypes.USER_INSTRUCTOR;
@@ -200,6 +206,7 @@ public class NewUserController {
     /**
      * Handles a selected element in the permissions chooser.
      */
+    @FXML
     public void adminSelected() {
         button_select_permissions.setText("Admin");
         userType = UserTypes.USER_ADMIN;
