@@ -45,32 +45,48 @@ import model.roster.Roster;
  *
  */
 public class MainPageController {
+	/** Singleton controller **/
 	private static MainPageController thisController;
+	/** The main tab pane **/
 	@FXML
 	private TabPane tabPane;
+	/** The class tab **/
 	@FXML
 	private Tab classTab;
+	/** The gradebook tab **/
 	@FXML
 	private Tab gradebookTab;
+	/** The graph tab **/
 	@FXML
 	private Tab graphTab;
+	/** The history tab **/
 	@FXML
 	private Tab historyTab;
+	/** The prediction tab **/
 	@FXML
 	private Tab predictionsTab;
+	/** The announcements tab **/
 	@FXML
 	private Tab announcementsTab;
+	/** The logout menu item **/
 	@FXML
 	private MenuItem logout;
+	/** The Quit menu item **/
 	@FXML
 	private MenuItem user_exit;
+	/** The save menu item **/
 	@FXML
 	private MenuItem save;
+	/** The request help menu item **/
 	@FXML
 	private MenuItem requestHelp;
+	/** The settings menu **/
 	@FXML
 	private Menu settings;
 
+	/**
+	 * Initializes the main page
+	 */
 	public void initialize() {
 		// gives it some initial data
 		Debug.autoPopulate();
@@ -156,6 +172,9 @@ public class MainPageController {
 		}
 	}
 
+	/**
+	 * Enables class-specific tabs
+	 */
 	private void enable() {
 		gradebookTab.setDisable(false);
 		graphTab.setDisable(false);
@@ -171,11 +190,13 @@ public class MainPageController {
 				+ Grader.getRoster().courseName());
 	}
 
+	/**
+	 * Allows for static access to the tab-enabler
+	 */
 	public static void enableTabs() {
 		thisController.enable();
 	}
 
-	// launches the permissions editor
 	@FXML
 	/**
 	 * Launches the permissions editor.
@@ -217,6 +238,9 @@ public class MainPageController {
 		}
 	}
 
+	/**
+	 * Launches the "About" page
+	 */
 	@FXML
 	public void launchAbout() {
 		try {
@@ -270,6 +294,10 @@ public class MainPageController {
 		((Stage) tabPane.getScene().getWindow()).close();
 	}
 
+	/**
+	 * Saves the current roster
+	 * @param event
+	 */
 	@FXML
 	private void saveHandler(ActionEvent event) {
 		Debug.log("Save", Grader.getRoster().courseName() + " saved");
