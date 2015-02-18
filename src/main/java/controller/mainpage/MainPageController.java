@@ -144,7 +144,7 @@ public class MainPageController {
 		graphTab.setDisable(true);
 		// historyTab.setDisable(true);
 		predictionsTab.setDisable(true);
-		// announcementsTab.setDisable(true);
+		announcementsTab.setDisable(true);
 		gradebookTab.setDisable(true);
 
 		// students can't save changes
@@ -161,11 +161,13 @@ public class MainPageController {
 		graphTab.setDisable(false);
 		// historyTab.setDisable(false);
 		predictionsTab.setDisable(false);
-		// announcementsTab.setDisable(false);
+		announcementsTab.setDisable(false);
 
-		gradebookTab.setText("GradeBook- " + Grader.getRoster().courseName());
-		graphTab.setText("Graphs- " + Grader.getRoster().courseName());
-		predictionsTab.setText("Predictions- "
+		gradebookTab.setText("GradeBook - " + Grader.getRoster().courseName());
+		graphTab.setText("Graphs - " + Grader.getRoster().courseName());
+		predictionsTab.setText("Predictions - "
+				+ Grader.getRoster().courseName());
+		announcementsTab.setText("Announcements - "
 				+ Grader.getRoster().courseName());
 	}
 

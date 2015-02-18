@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.announcements.Announcement;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
@@ -24,6 +25,7 @@ public class Server {
 	private static ObservableList<Student> studentNames;
 	/** A map of which classes a user is enrolled in or teaching **/
 	private static HashMap<Student, ArrayList<String>> associatedClasses;
+	private static HashMap<String, ArrayList<Announcement>> rosterAnnouncements;
 
 	/**
 	 * Gets the list of all students stored in the server
@@ -236,10 +238,32 @@ public class Server {
 	}
 
 	/**
-	 * Populates the server with some default students
+	 * Adds an announcement to the server for the current roster
 	 */
-	public static void init() {
-		associatedClasses = new HashMap<Student, ArrayList<String>>();
+	public static void addAnnouncement(Announcement announcement) {
+		Debug.log("Server", "Announcement stored in server");
+		Roster roster = Grader.getRoster();
+		ArrayList<Announcement> anns;
+		if(rosterAnnouncements.get(roster.courseName()) != null) {
+			anns = rosterAnnouncements.get(roster.courseName());
+		} else {
+			anns = new ArrayList<Announcement>();
+		}
+		anns.add(announcement);
+		rosterAnnouncements.put(roster.courseName(), anns);
+	}
+	
+	/**
+	 * Gets all announcements associated with a roster
+	 */
+	public static ArrayList<Announcement> getAssociatedAnnouncements(Roster roster) {
+		return rosterAnnouncements.get(roster.courseName());
+	}
+	
+	/**
+	 * Populates the server's list of students
+	 */
+	private static void initializeStudents() {
 		students.add(new Student("Jim", "00000"));
 		students.add(new Student("Tim", "11111"));
 		students.add(new Student("Gavin Scott", "12345"));
@@ -249,10 +273,27 @@ public class Server {
 		students.add(new Student("Michael Lenz", "98012"));
 		students.add(new Student("Jacob Hardi", "01968"));
 		
+		associatedClasses = new HashMap<Student, ArrayList<String>>();
 		for (Student student : students) {
 			associatedClasses.put(student, new ArrayList<String>());
 		}
 		
-		Debug.log("Initializing Server", "Server students populated");
+		Debug.log("Initializing Server", "Students Loaded");
+	}
+	
+	/**
+	 * Populates the servers list of announcements
+	 */
+	private static void initializeAnnouncements() {
+		rosterAnnouncements = new HashMap<String, ArrayList<Announcement>>();
+		Debug.log("Initializing Server", "Announcements Loaded");
+	}
+	
+	/**
+	 * Populates the server with some default students
+	 */
+	public static void init() {
+		initializeStudents();
+		initializeAnnouncements();
 	}
 }

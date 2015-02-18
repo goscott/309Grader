@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import model.announcements.Announcement;
 import model.driver.Debug;
+import model.server.Server;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,6 +55,7 @@ public class AddAnnouncementController {
 			Announcement ann = new Announcement(subjectField.getText(), "You",
 					bodyField.getText());
 			parent.addAnnouncementToList(ann);
+			Server.addAnnouncement(ann);
 			bodyField.setText("");
 			subjectField.setText("");
 		}
