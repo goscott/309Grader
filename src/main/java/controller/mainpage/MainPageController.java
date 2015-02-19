@@ -37,7 +37,6 @@ import model.administration.UserTypes;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
-import model.server.Server;
 
 /**
  * Controller for the main GraderTool view
@@ -84,6 +83,9 @@ public class MainPageController {
 	/** The settings menu **/
 	@FXML
 	private Menu settings;
+	/** The server menu **/
+	@FXML
+	private Menu serverMenu;
 
 	/**
 	 * Initializes the main page
@@ -144,6 +146,7 @@ public class MainPageController {
     			predictionsTab.setContent(predictionsPage);
 			} else {
 			    predictionsTab.setDisable(true);
+			    serverMenu.setDisable(true);
 			}
 
 		} catch (IOException e) {
@@ -155,6 +158,7 @@ public class MainPageController {
 		AnchorPane classPane = (AnchorPane) classTab.getContent();
 		FlowPane buttonSetUp = new FlowPane();
 		classPane.getChildren().add(buttonSetUp);
+		@SuppressWarnings("unused")
 		ClassButtonsController con = new ClassButtonsController(buttonSetUp);
 		thisController = this;
 
@@ -303,5 +307,22 @@ public class MainPageController {
 	private void saveHandler(ActionEvent event) {
 		Debug.log("Save", Grader.getRoster().courseName() + " saved");
 		Roster.save(Grader.getRoster());
+	}
+	
+	/**
+	 * Archives the current roster
+	 */
+	@FXML
+	private void pushRoster(ActionEvent event) {
+		Debug.log("Roster status change", "Roster pushed to history");
+		Grader.getRoster().archive();
+	}
+	
+	/**
+	 * Synchs the current roster
+	 */
+	@FXML
+	private void synchRoster(ActionEvent event) {
+		Debug.log("Roster synch", "Roster synched with server");
 	}
 }

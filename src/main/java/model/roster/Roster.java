@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import model.curve.Curve;
 import model.driver.Debug;
+import model.driver.Grader;
 import model.server.Server;
 
 /**
@@ -33,6 +34,8 @@ public class Roster implements Serializable {
 	private HashMap<String, Student> ids;
 	/** The class curve **/
 	private transient Curve curve;
+	/** Determines if a roster is archived **/
+	private boolean current = true;
 
 	/** The course's name **/
 	private String courseName;
@@ -486,5 +489,21 @@ public class Roster implements Serializable {
 			}
 		}
 		return total;
+	}
+
+	/**
+	 * Checks if the roster is current or stored in history
+	 */
+	public boolean current() {
+		return current;
+	}
+
+	/**
+	 * Sets the roster as no longer being current
+	 */
+	public void archive() {
+		current = false;
+		Grader.getHistoryDB().addRoster(this);
+		Save();
 	}
 }

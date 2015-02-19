@@ -59,6 +59,10 @@
                   <MenuItem id="Permissions" mnemonicParsing="false" onAction="#permissions" text="Permissions " />
                </items>
             </Menu>
+            <Menu fx:id="serverMenu" mnemonicParsing="false" text="Server">
+            	<MenuItem mnemonicParsing="false" onAction="#pushRoster" text="Push Current Roster to History" />
+                <MenuItem mnemonicParsing="false" onAction="#synchRoster" text="Synch Current Roster" />
+            </Menu>
             <Menu mnemonicParsing="false" text="Help">
                <items>
                   <!--<MenuItem id="ViewHelp" mnemonicParsing="false" text="View Help" />-->

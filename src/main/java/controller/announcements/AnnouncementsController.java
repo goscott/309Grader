@@ -43,11 +43,11 @@ public class AnnouncementsController {
         //Eventually, it should come from our "server" (A text file or something)
         data =
                 FXCollections.observableArrayList(
-                    new Announcement("Subject 1", "AnnouncementsController.java", "content1"),
-                    new Announcement("Subject 2", "AnnouncementsController.java", "content2"),
-                    new Announcement("Subject 3", "AnnouncementsController.java", "content3"),
-                    new Announcement("Subject 4", "AnnouncementsController.java", "content4"),
-                    new Announcement("Subject 5", "AnnouncementsController.java", "content5")
+                    new Announcement("Subject 1", "Gene Fisher", "content1"),
+                    new Announcement("Subject 2", "Gavin Scott", "content2"),
+                    new Announcement("Subject 3", "Barack Obama", "content3"),
+                    new Announcement("Subject 4", "Snoopy", "content4"),
+                    new Announcement("Subject 5", "Blornog, King of the Martians", "content5")
                 );
         
         //These dictate how the columns get the info from the announcement object
@@ -86,12 +86,17 @@ public class AnnouncementsController {
         //This makes something happen when you double click on a row in the table
         //It should launch an announcement viewer of some kind
         table.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override 
+            @SuppressWarnings("static-access")
+			@Override 
             public void handle(MouseEvent event) {
                 if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                	Stage newStage = new Stage();
+                	ViewAnnouncementController popup = new ViewAnnouncementController();
+            		popup.setAnnouncement(table.getSelectionModel().getSelectedItem());
+            		popup.start(newStage);
                     //this is how you get a reference to the selected announcement
-                    JOptionPane.showMessageDialog(null, table.getSelectionModel().getSelectedItem().getContent(),
-                    	"" + table.getSelectionModel().getSelectedItem().getSubject(), JOptionPane.PLAIN_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, table.getSelectionModel().getSelectedItem().getContent(),
+                    //	"" + table.getSelectionModel().getSelectedItem().getSubject(), JOptionPane.PLAIN_MESSAGE);
                 }
             }
         });

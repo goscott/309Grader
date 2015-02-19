@@ -77,12 +77,11 @@ public class Server {
 	 * 
 	 * @return ObservableList<Student> the list of students
 	 */
-	/*
-	 * @ requires (\forall student != null && roster.contains(student.id) ==
-	 * null);
-	 * 
-	 * @
-	 */
+	/*@ 
+	 	requires (
+	 		\forall student != null && roster.contains(student.id) == null
+	 	);
+	 @*/
 	public static ObservableList<Student> getStudentListNotRoster() {
 		studentNames = FXCollections.observableArrayList();
 		for (Student student : students) {

@@ -81,7 +81,7 @@ public class GradebookController {
 			MenuItem importAssignment = new MenuItem("Import Assignment");
 			MenuItem addStudent = new MenuItem("Add Student");
 			MenuItem dropStudent = new MenuItem("Drop Student");
-			MenuItem rosterSynch = new MenuItem("Roster Synch");
+			//MenuItem rosterSynch = new MenuItem("Roster Synch");
 			
 			addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
 					addAssignment, this));
@@ -94,7 +94,7 @@ public class GradebookController {
 			
 			rightClickMenu.getItems().addAll(expandCollapse, new SeparatorMenuItem(),
 					addAssignment, dropAssignment, importAssignment, new SeparatorMenuItem(), 
-					addStudent, dropStudent, new SeparatorMenuItem(), rosterSynch);
+					addStudent, dropStudent, new SeparatorMenuItem());//, rosterSynch);
 		} else {
 			rightClickMenu.getItems().addAll(expandCollapse);
 		}
