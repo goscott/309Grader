@@ -63,8 +63,8 @@ public class MainPageController {
 	@FXML
 	private Tab historyTab;
 	/** The prediction tab **/
-	@FXML
-	private Tab predictionsTab;
+	/*@FXML
+	private Tab predictionsTab;*/
 	/** The announcements tab **/
 	@FXML
 	private Tab announcementsTab;
@@ -139,6 +139,7 @@ public class MainPageController {
 
 			// add predictions
 			// (students do not see)
+			/*
 			if (Grader.getUser().getType() != UserTypes.USER_STUDENT) {
     			HBox predictionsPage = (HBox) FXMLLoader.load(getClass()
     					.getClassLoader().getResource(
@@ -147,6 +148,12 @@ public class MainPageController {
 			} else {
 			    predictionsTab.setDisable(true);
 			    serverMenu.setDisable(true);
+			}
+			*/
+			// turn off server menu for students and TAs
+			if (Grader.getUser().getType() != UserTypes.USER_ADMIN 
+					&& Grader.getUser().getType() != UserTypes.USER_INSTRUCTOR) {
+				serverMenu.setDisable(true);
 			}
 
 		} catch (IOException e) {
@@ -164,7 +171,7 @@ public class MainPageController {
 
 		graphTab.setDisable(true);
 		// historyTab.setDisable(true);
-		predictionsTab.setDisable(true);
+		//predictionsTab.setDisable(true);
 		announcementsTab.setDisable(true);
 		gradebookTab.setDisable(true);
 
@@ -184,13 +191,13 @@ public class MainPageController {
 		gradebookTab.setDisable(false);
 		graphTab.setDisable(false);
 		// historyTab.setDisable(false);
-		predictionsTab.setDisable(false);
+		//predictionsTab.setDisable(false);
 		announcementsTab.setDisable(false);
 
 		gradebookTab.setText("GradeBook - " + Grader.getRoster().courseName());
 		graphTab.setText("Graphs - " + Grader.getRoster().courseName());
-		predictionsTab.setText("Predictions - "
-				+ Grader.getRoster().courseName());
+		/*predictionsTab.setText("Predictions - "
+				+ Grader.getRoster().courseName());*/
 		announcementsTab.setText("Announcements - "
 				+ Grader.getRoster().courseName());
 	}
