@@ -13,17 +13,22 @@ import model.roster.Roster;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.chart.Axis;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
@@ -91,13 +96,20 @@ public class HistoryController {
     @FXML
     private Button switch_graph;
     
+    @FXML
+    private CheckBox hide_course;
+    
     private int num = 1;
     
     private ToggleButton selectedSection = null;
     
     private HistoryDB history;
     
+    private boolean firstTime = true;
+    
     public void initialize() {
+        line_chart.setAnimated(false);
+        
         //load classes from history db
         class_selector.expandedPaneProperty().addListener(new 
                 ChangeListener<TitledPane>() {
@@ -108,14 +120,24 @@ public class HistoryController {
                             switchToCourse();
                             course_label.setText(class_selector.getExpandedPane().getText() + ": View Under Construction");
                             
-                            switch_graph.setVisible(true);
+                            switch_graph.setDisable(false);
+                            hide_course.setDisable(false);
                             
                             XYChart.Series<String, Double> series = new XYChart.Series<String, Double>();
+                            series.setName("Average Grade Per Quarter");
                             int count = 0;
                             
                             for (double val : history.getCourseHistory(class_selector.getExpandedPane().getText()).getAveragesDumb()) {
                                 count++;
-                                series.getData().add(new XYChart.Data<String, Double>(count + "", val));
+                                series.getData().add(new XYChart.Data<String, Double>("Quarter " + count, val));
+                            }
+                            
+                            if (firstTime) {
+                                firstTime = false;
+                            }
+                            
+                            else {
+                                line_chart.setAnimated(true);
                             }
                             
                             line_chart.getData().clear();
@@ -125,6 +147,9 @@ public class HistoryController {
                         //collapsed
                         else {
                             switchToIntro();
+                            
+                            switch_graph.setDisable(true);
+                            hide_course.setDisable(true);
                             
                             if (selectedSection != null) {
                                 selectedSection.setSelected(false);
@@ -345,14 +370,14 @@ public class HistoryController {
                         
                         section_label.setText(selectedSection.getText() + ": View Under Construction.");
                         
-                        switch_graph.setVisible(false);
+                        switch_graph.setDisable(true);
                     }
                     
                     // off
                     else {
                         switchToCourse();
                         selectedSection = null;
-                        switch_graph.setVisible(true);
+                        switch_graph.setDisable(false);
                     }
                 }
             });

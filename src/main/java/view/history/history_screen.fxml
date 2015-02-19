@@ -83,13 +83,18 @@
                         </BorderPane>
                         <HBox alignment="CENTER">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#addClass" text="TEST: Add Class" visible="false" />
-                              <Button fx:id="switch_graph" mnemonicParsing="false" onAction="#switchGraph" text="TEST: SWITCH GRAPH" visible="false">
+                              <CheckBox fx:id="hide_course" disable="true" mnemonicParsing="false" text="Hide this course">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" top="5.0" />
+                                 </padding>
+                              </CheckBox>
+                              <Button fx:id="switch_graph" disable="true" mnemonicParsing="false" onAction="#switchGraph" text="Switch Graph">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" text="TEST: See Gradebook" />
+                              <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" text="See Gradebook" />
+                              <Button mnemonicParsing="false" onAction="#addClass" text="TEST: Add Class" visible="false" />
                            </children>
                            <VBox.margin>
                               <Insets />

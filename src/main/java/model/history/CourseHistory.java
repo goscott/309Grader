@@ -288,11 +288,11 @@ public class CourseHistory implements Serializable {
 	
 	public ArrayList<Double> getAveragesDumb() {
 	    ArrayList<Double> list = new ArrayList<Double>();
-	    list.add(60 + (Math.random()*100));
-	    list.add(60 + (Math.random()*100));
-	    list.add(60 + (Math.random()*100));
-	    list.add(60 + (Math.random()*100));
-	    list.add(60 + (Math.random()*100));
+	    list.add(60 + (Math.random()* (100 - 60 + 1)));
+	    list.add(60 + (Math.random()* (100 - 60 + 1)));
+	    list.add(60 + (Math.random()* (100 - 60 + 1)));
+	    list.add(60 + (Math.random()* (100 - 60 + 1)));
+	    list.add(60 + (Math.random()* (100 - 60 + 1)));
 	    
 	    return list;
 	}
