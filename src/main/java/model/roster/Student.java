@@ -22,18 +22,32 @@ public class Student implements Comparable<Student>, Serializable {
 	private final String name;
 	/** The student's id **/
 	private final String id;
+	/** The roster for this student **/
+	private Roster roster;
+
+	/**
+	 * Makes a student without a roster
+	 */
+	public Student(String name, String id) {
+		this(name, id, null);
+	}
 
 	/**
 	 * Creates a student with the given information
-	 * 
-	 * @param name
-	 *            The student's name
-	 * @param id
-	 *            The student's ID
 	 */
-	public Student(String name, String id) {
+	public Student(String name, String id, Roster roster) {
+		this.roster = roster;
 		this.name = name;
 		this.id = id;
+	}
+
+	/**
+	 * Enrolls a student in a course
+	 */
+	public void setRoster(Roster roster) {
+		if (this.roster == null && roster != null) {
+			this.roster = roster;
+		}
 	}
 
 	/**
@@ -43,7 +57,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 */
 	public String getName() {
 		User currentUser = Grader.getUser();
-		if(currentUser.getType() == UserTypes.USER_STUDENT 
+		if (currentUser.getType() == UserTypes.USER_STUDENT
 				&& !currentUser.getId().equals(id)) {
 			return "*******";
 		}
@@ -65,7 +79,10 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return double the total grade
 	 */
 	public double getTotalScore() {
-		return Grader.getRoster().getTotalScore(this);
+		if (roster != null) {
+			return roster.getTotalScore(this);
+		}
+		return 0;
 	}
 
 	/**
@@ -75,10 +92,13 @@ public class Student implements Comparable<Student>, Serializable {
 	 *         possible
 	 */
 	public double getTotalPercentage() {
-		double maxTotal = Grader.getMaxPoints();
-		DecimalFormat twoDForm = new DecimalFormat("#.##");
-		return maxTotal > 0 ? Double.valueOf(twoDForm.format(getTotalScore()
-				/ maxTotal * 100)) : 0;
+		if (roster != null) {
+			double maxTotal = roster.getMaxPoints();
+			DecimalFormat twoDForm = new DecimalFormat("#.##");
+			return maxTotal > 0 ? Double.valueOf(twoDForm
+					.format(getTotalScore() / maxTotal * 100)) : 0;
+		}
+		return 0;
 	}
 
 	/**
@@ -90,7 +110,10 @@ public class Student implements Comparable<Student>, Serializable {
 	public Grade getGrade() {
 		double percent = getTotalPercentage();
 		Debug.log("Student Grade", percent + "%");
-		return Grader.getCurve().get(percent);
+		if (roster != null) {
+			return roster.getCurve().get(percent);
+		}
+		return null;
 	}
 
 	/**
@@ -101,9 +124,12 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return Grade the grade
 	 */
 	public Grade getGrade(String asgn) {
-		return Grader.getCurve().get(getAssignmentScore(asgn));
+		if (roster != null) {
+			return roster.getCurve().get(getAssignmentScore(asgn));
+		}
+		return null;
 	}
-	
+
 	/**
 	 * Gets the student's score on an individual assignment
 	 * 
@@ -112,7 +138,10 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return Double the student's score on the assignment
 	 */
 	public Double getAssignmentScore(String asgn) {
-		return Grader.getRoster().getStudentGrade(this, asgn);
+		if (roster != null) {
+			return roster.getStudentGrade(this, asgn);
+		}
+		return null;
 	}
 
 	/**
@@ -124,7 +153,9 @@ public class Student implements Comparable<Student>, Serializable {
 	 *            the new score
 	 */
 	public void setScore(String asgn, Double sc) {
-		Grader.getRoster().setStudentGrade(this, asgn, sc);
+		if (roster != null) {
+			roster.setStudentGrade(this, asgn, sc);
+		}
 	}
 
 	/**
@@ -137,7 +168,10 @@ public class Student implements Comparable<Student>, Serializable {
 	 *            the percent (90.0, etc)
 	 */
 	public void setPercentScore(String asgn, double percent) {
-		setScore(asgn, percent / 100 * Grader.getAssignment(asgn).maxScore());
+		if (roster != null) {
+			setScore(asgn, percent / 100
+					* roster.getAssignment(asgn).maxScore());
+		}
 	}
 
 	/**

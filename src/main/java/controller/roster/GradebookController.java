@@ -49,13 +49,13 @@ public class GradebookController {
 	private ContextMenu rightClickMenu;
 	/** An ArrayList holding the names of the columns that are expanded **/
 	private ArrayList<String> expanded;
-	
+
 	private static GradebookController singleton;
-	
+
 	public static GradebookController getController() {
 		return singleton;
 	}
-	
+
 	@FXML
 	/**
 	 * Initializes the gradebook view
@@ -75,30 +75,33 @@ public class GradebookController {
 		expandCollapse.setOnAction(new DisplayExpandCollapsePopupEventHandler(
 				expandCollapse, this));
 		// students don't get these options
-		if(Grader.getUser().getType() != UserTypes.USER_STUDENT) {
+		if (Grader.getUser().getType() != UserTypes.USER_STUDENT) {
 			MenuItem addAssignment = new MenuItem("Add Assignment");
 			MenuItem dropAssignment = new MenuItem("Drop Assignment");
 			MenuItem importAssignment = new MenuItem("Import Assignment");
 			MenuItem addStudent = new MenuItem("Add Student");
 			MenuItem dropStudent = new MenuItem("Drop Student");
-			//MenuItem rosterSynch = new MenuItem("Roster Synch");
-			
-			addAssignment.setOnAction(new DisplayAddAssignmentPopupEventHandler(
-					addAssignment, this));
-			dropAssignment.setOnAction(new DisplayDropAssignmentPopupEventHandler(
-			                dropAssignment, this));
+			// MenuItem rosterSynch = new MenuItem("Roster Synch");
+
+			addAssignment
+					.setOnAction(new DisplayAddAssignmentPopupEventHandler(
+							addAssignment, this));
+			dropAssignment
+					.setOnAction(new DisplayDropAssignmentPopupEventHandler(
+							dropAssignment, this));
 			addStudent.setOnAction(new DisplayAddStudentPopupEventHandler(
 					addStudent, this));
 			dropStudent.setOnAction(new DisplayDropStudentPopupEventHandler(
 					dropStudent, this));
-			
-			rightClickMenu.getItems().addAll(expandCollapse, new SeparatorMenuItem(),
-					addAssignment, dropAssignment, importAssignment, new SeparatorMenuItem(), 
-					addStudent, dropStudent, new SeparatorMenuItem());//, rosterSynch);
+
+			rightClickMenu.getItems().addAll(expandCollapse,
+					new SeparatorMenuItem(), addAssignment, dropAssignment,
+					importAssignment, new SeparatorMenuItem(), addStudent,
+					dropStudent, new SeparatorMenuItem());// , rosterSynch);
 		} else {
 			rightClickMenu.getItems().addAll(expandCollapse);
 		}
-		
+
 		mainTable.addEventFilter(MouseEvent.MOUSE_PRESSED,
 				new EventHandler<MouseEvent>() {
 					@Override
@@ -137,8 +140,11 @@ public class GradebookController {
 		gradeCol.setCellValueFactory(new Callback() {
 			public SimpleStringProperty call(
 					CellDataFeatures<Student, Grade> param) {
-				return new SimpleStringProperty(param.getValue().getGrade()
-						.getName());
+				if (param.getValue().getGrade() != null) {
+					return new SimpleStringProperty(param.getValue().getGrade()
+							.getName());
+				}
+				return new SimpleStringProperty("");
 			}
 
 			public Object call(Object param) {
@@ -148,11 +154,11 @@ public class GradebookController {
 		mainTable.getColumns().add(gradeCol);
 	}
 
-	/** 
+	/**
 	 * Adds the far-left student columns to the gradebook
 	 */
 	@SuppressWarnings("unchecked")
-	private void studentColumns() {		
+	private void studentColumns() {
 		nameCol.setMinWidth(100);
 		nameCol.setEditable(false);
 		nameCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
@@ -186,19 +192,19 @@ public class GradebookController {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Sets which columns are visible
-	 * @param asgnNames the names of the assignments
-	 * that will now be visible
+	 * 
+	 * @param asgnNames
+	 *            the names of the assignments that will now be visible
 	 */
 	void setExpanded(ArrayList<String> asgnNames) {
 		expanded = asgnNames;
 	}
-	
+
 	/**
-	 * Gets which assignments are currently visible in the
-	 * gradebook
+	 * Gets which assignments are currently visible in the gradebook
 	 */
 	ArrayList<String> getExpanded() {
 		return expanded;
@@ -232,12 +238,13 @@ public class GradebookController {
 					newColumn.setCellValueFactory(new Callback() {
 						public SimpleStringProperty call(
 								CellDataFeatures<Student, String> param) {
-							if(param.getValue().getAssignmentScore(newColumn.getText()) == null) {
+							if (param.getValue().getAssignmentScore(
+									newColumn.getText()) == null) {
 								return new SimpleStringProperty("");
 							}
 							return new SimpleStringProperty(param.getValue()
 									.getAssignmentScore(newColumn.getText())
-									+"");
+									+ "");
 						}
 
 						public Object call(Object param) {
@@ -266,28 +273,32 @@ public class GradebookController {
 		}
 	}
 
-	 ObservableList<TableColumn<Student, ?>> getTopLevelColumns() {
+	ObservableList<TableColumn<Student, ?>> getTopLevelColumns() {
 		return mainTable.getColumns();
 	}
-	
+
 	/**
 	 * Expands or collapses a column
-	 * @param asgnName The name of the column
-	 * @param expand Whether to expand or collapse (true expands)
+	 * 
+	 * @param asgnName
+	 *            The name of the column
+	 * @param expand
+	 *            Whether to expand or collapse (true expands)
 	 */
 	void setAssignmentExpansion(String asgnName, boolean expand) {
 		if (expand) {
 			open(asgnName);
-			//fullRefresh();
+			// fullRefresh();
 		}
 		if (!expand) {
 			close(asgnName);
-			//fullRefresh();
+			// fullRefresh();
 		}
 	}
 
 	/**
 	 * Recursively expands a column and its children
+	 * 
 	 * @param asgnName
 	 */
 	private void open(String asgnName) {
@@ -302,7 +313,9 @@ public class GradebookController {
 
 	/**
 	 * Recursively collapses a column an its children
-	 * @param asgnName The name of the column
+	 * 
+	 * @param asgnName
+	 *            The name of the column
 	 */
 	private void close(String asgnName) {
 		if (expanded.contains(asgnName)) {
