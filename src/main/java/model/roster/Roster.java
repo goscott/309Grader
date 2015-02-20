@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import model.curve.Curve;
+import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.server.Server;
@@ -300,6 +301,19 @@ public class Roster implements Serializable {
 	public ArrayList<Student> getStudents() {
 		Collections.sort(students);
 		return students;
+	}
+	
+	/**
+	 * Gets all the students in the class with a given grade
+	 */
+	public ArrayList<Student> getStudentsByGrade(Grade grade) {
+		ArrayList<Student> ret = new ArrayList<Student>();
+		for(Student student : students) {
+			if(student.getGrade().equals(grade)) {
+				ret.add(student);
+			}
+		}
+		return ret;
 	}
 
 	/**
