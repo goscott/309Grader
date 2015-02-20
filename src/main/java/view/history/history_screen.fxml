@@ -51,15 +51,19 @@
                            <center>
                               <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                    <VBox alignment="CENTER">
                                        <children>
                                           <Label fx:id="course_label" text="Class View Under Construction">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
+                                          <Label fx:id="label_students" text="Total Number of Students Taught: " />
+                                          <Label fx:id="label_sections" text="Total Number of Sections Taught: " />
+                                          <Label fx:id="label_class" text="Average Class Size: " />
+                                          <Label fx:id="label_grade" text="Average Grade: " />
                                        </children>
-                                    </HBox>
+                                    </VBox>
                                     <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <children>
                                           <StackPane>

@@ -26,6 +26,11 @@ public class CourseHistory implements Serializable {
 	private ArrayList<Roster> hidden = new ArrayList<Roster>();
 	
 	/**
+	 * Keeps track of how many different quarters there are.
+	 */
+	private ArrayList<String> quarters = new ArrayList<String>();
+	
+	/**
 	 * The sum of all students who have ever taken this course.
 	 */
 	private int totalStudents;
@@ -66,6 +71,9 @@ public class CourseHistory implements Serializable {
 	 */
 	public CourseHistory(String newCourseName) {
 	    courseName = newCourseName;
+	    startYear = -1;
+	    endYear = -1;
+	    numSectionsTaught = 0;
 	}
 	
 	/**
@@ -90,14 +98,13 @@ public class CourseHistory implements Serializable {
 	    
 	    //add students to total students
 	    totalStudents += newRoster.getStudents().size();
-	    
-	    //recalculate average
-	    for (Student student : newRoster.getStudents()) {
-	        totalGradeValue += student.getTotalScore();
-	    }
-	    averageGrade = totalGradeValue / (double) totalStudents;
-	    
 	    history.add(newRoster);
+	    
+	    numSectionsTaught++;
+	    
+	    if (!quarters.contains(newRoster.getQuarter())) {
+	        quarters.add(newRoster.getQuarter());
+	    }
 	}
 	
 	/**
@@ -254,7 +261,25 @@ public class CourseHistory implements Serializable {
             (\result == averageGrade);
     @*/ 
 	public double getAverageGrade() {
-		return averageGrade;
+	    double sum = 0;
+        
+        for (Roster roster : history) {
+            sum += roster.getPercentAverage();
+        }
+        
+        for (Roster roster : hidden) {
+            sum += roster.getPercentAverage();
+        }
+        
+        if (numSectionsTaught > 0) {
+            return sum / numSectionsTaught;
+        }
+        
+        else {
+            return 0;
+        }
+		
+		
 	}
 	
 	/**
@@ -268,29 +293,32 @@ public class CourseHistory implements Serializable {
 	 * Returns a list of all averages.
 	 */
 	public ArrayList<Double> getAverages() {
-	    double average;
+	    double sum;
 	    double count;
 	    
 	    ArrayList<Double> list = new ArrayList<Double>();
 	    
-	    for (Roster roster : history) {
-	        
-	        /*
-	        average = 0;
+	    for (String quarter : quarters) {
+	        sum = 0;
 	        count = 0;
-    	    
-	        for (Student student : roster.getStudents()) {
-                average += student.getTotalScore();
-            }
 	        
-	        list.add(average / count);
-	        */
-	        for (Student student : roster.getStudents()) {
-                Debug.log("History", student.getName() + " score: " + student.getTotalPercentage());
-            }
+	        for (Roster roster : history) {
+	            if (roster.getQuarter().equals(quarter)) {
+	                count++;
+	                sum += roster.getPercentAverage();
+	            }
+	        }
+	        
+	        if (count > 0) {
+	            list.add(sum / count);
+	        }
+	    }
+	    
+	    /*
+	    for (Roster roster : history) {
 	        list.add(roster.getPercentAverage());
 	        Debug.log("HISTORY", "Added value " + roster.getPercentAverage() + " to graph");
-	    }
+	    }*/
 	    
 	    return list;
 	}
@@ -353,5 +381,25 @@ public class CourseHistory implements Serializable {
     @*/
 	public String getCourseName() {
 	    return courseName;
+	}
+	
+	public double getAverageClassSize() {
+	    double sum = 0;
+	    
+	    for (Roster roster : history) {
+	        sum += roster.getStudents().size();
+	    }
+	    
+	    for (Roster roster : hidden) {
+	        sum += roster.getStudents().size();
+	    }
+	    
+	    if (numSectionsTaught > 0) {
+	        return sum / numSectionsTaught;
+	    }
+	    
+	    else {
+	        return 0;
+	    }
 	}
 }

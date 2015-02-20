@@ -100,6 +100,18 @@ public class HistoryController {
     @FXML
     private CheckBox hide_course;
     
+    @FXML
+    private Label label_students;
+    
+    @FXML
+    private Label label_sections;
+    
+    @FXML
+    private Label label_class;
+    
+    @FXML
+    private Label label_grade;
+    
     private int num = 1;
     
     private ToggleButton selectedSection = null;
@@ -111,6 +123,7 @@ public class HistoryController {
     public void initialize() {
         Grader.setHistoryController(this);
         line_chart.setAnimated(false);
+        line_chart.setTitle("Average Grade Per Quarter");
         
         //load classes from history db
         class_selector.expandedPaneProperty().addListener(new 
@@ -119,8 +132,10 @@ public class HistoryController {
                         
                         //expanded 
                         if (class_selector.getExpandedPane() != null) {
+                            CourseHistory selectedCourse = history.getCourseHistory(class_selector.getExpandedPane().getText());
+                            
                             switchToCourse();
-                            course_label.setText(class_selector.getExpandedPane().getText() + ": View Under Construction");
+                            course_label.setText(class_selector.getExpandedPane().getText());
                             
                             switch_graph.setDisable(false);
                             hide_course.setDisable(false);
@@ -129,7 +144,7 @@ public class HistoryController {
                             series.setName("Average Grade Per Quarter");
                             int count = 0;
                             
-                            for (double val : history.getCourseHistory(class_selector.getExpandedPane().getText()).getAverages()) {
+                            for (double val : selectedCourse.getAverages()) {
                                 count++;
                                 series.getData().add(new XYChart.Data<String, Double>("Quarter " + count, val));
                             }
@@ -144,6 +159,11 @@ public class HistoryController {
                             
                             line_chart.getData().clear();
                             line_chart.getData().add(series);
+                            
+                            label_students.setText("Total Number of Students Taught: " + selectedCourse.getTotalStudents());
+                            label_sections.setText("Total Number of Sections: " + selectedCourse.getNumSectionsTaught());
+                            label_class.setText("Average Class Size: " + selectedCourse.getAverageClassSize());
+                            label_grade.setText("Average Grade: " + selectedCourse.getAverageGrade());
                         }
                         
                         //collapsed
@@ -162,10 +182,13 @@ public class HistoryController {
         
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
-                new PieChart.Data("Stuff", 13),
-                new PieChart.Data("Things", 25),
-                new PieChart.Data("Items", 10));
+                new PieChart.Data("A", 23),
+                new PieChart.Data("B", 45),
+                new PieChart.Data("C", 15),
+                new PieChart.Data("D", 4),
+                new PieChart.Data("F", 10));
         pie_chart.setData(pieChartData);
+        pie_chart.setTitle("Grade Breakdown Across All Quarters");
         
         loadClasses();
     }
