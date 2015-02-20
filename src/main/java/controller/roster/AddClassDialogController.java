@@ -45,6 +45,9 @@ public class AddClassDialogController {
 	/** Text field to enter the class name  **/
 	@FXML
 	private TextField className;
+	/** Text field to enter the Section Number  **/
+    @FXML
+    private TextField sectionNumber;
 	/** button to add the class **/
 	@FXML
 	private Button AddClassButton;
@@ -68,7 +71,7 @@ public class AddClassDialogController {
 	 */
 	@FXML
 	private void AddClass(ActionEvent event) {
-		Roster roster = new Roster(className.getText(), "DefaultInstructor", 1, "Winter", Calendar.getInstance(),
+		Roster roster = new Roster(className.getText(), "DefaultInstructor", Integer.parseInt(sectionNumber.getText()), "Winter", Calendar.getInstance(),
 				Calendar.getInstance());
 		for(String name : students.getSelectionModel().getSelectedItems()) {
 			roster.addStudent(Server.getStudentByName(name));
