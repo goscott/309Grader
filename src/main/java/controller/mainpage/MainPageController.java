@@ -192,6 +192,10 @@ public class MainPageController {
 		announcementsTab.setDisable(true);
 		gradebookTab.setDisable(true);
 		buttonController.refreshButtons();
+		
+		gradebookTab.setText("GradeBook");
+		graphTab.setText("Graphs");
+		announcementsTab.setText("Announcements");
 	}
 	
 	/**

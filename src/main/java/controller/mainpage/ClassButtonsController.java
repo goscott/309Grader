@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 import model.driver.Debug;
+import model.roster.Roster;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 
@@ -31,7 +32,13 @@ public class ClassButtonsController
             @Override
             public boolean accept(File dir, String name)
             {
-                return name.endsWith(".rost");
+            	Roster temp = null;
+            	try {
+            		temp = Roster.load("Rosters/" + name);
+            	} catch (Exception ex) {
+            		Debug.log("ERROR", "Roster could not load");
+            	}
+                return temp != null && temp.current() && name.endsWith(".rost");
             }
             
         });
