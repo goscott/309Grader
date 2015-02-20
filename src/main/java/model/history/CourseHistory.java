@@ -2,6 +2,7 @@ package model.history;
 import java.io.Serializable;
 import java.util.*;
 
+import model.driver.Debug;
 import model.roster.Roster;
 import model.roster.Student;
 
@@ -273,6 +274,8 @@ public class CourseHistory implements Serializable {
 	    ArrayList<Double> list = new ArrayList<Double>();
 	    
 	    for (Roster roster : history) {
+	        
+	        /*
 	        average = 0;
 	        count = 0;
     	    
@@ -281,6 +284,12 @@ public class CourseHistory implements Serializable {
             }
 	        
 	        list.add(average / count);
+	        */
+	        for (Student student : roster.getStudents()) {
+                Debug.log("History", student.getName() + " score: " + student.getTotalPercentage());
+            }
+	        list.add(roster.getPercentAverage());
+	        Debug.log("HISTORY", "Added value " + roster.getPercentAverage() + " to graph");
 	    }
 	    
 	    return list;

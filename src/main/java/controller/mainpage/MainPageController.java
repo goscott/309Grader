@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import controller.history.HistoryController;
 import controller.roster.GradebookController;
 import run.Launcher;
 import testing.administration.PermissionsTester;
@@ -28,6 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -323,6 +325,25 @@ public class MainPageController {
 	private void pushRoster(ActionEvent event) {
 		Debug.log("Roster status change", "Roster pushed to history");
 		Grader.getRoster().archive();
+		
+		/*
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../view/history/history_screen.fxml"));
+        try 
+        {
+            //you have to call this or it doesn't work for some reason
+            Pane pane = (Pane) loader.load(); 
+        } 
+        
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        HistoryController controller = loader.<HistoryController>getController();
+        //controller.loadClasses();
+        controller.call();
+        */
+		 HistoryController controller = Grader.getHistoryController();
+		 controller.loadClasses();
 	}
 	
 	/**

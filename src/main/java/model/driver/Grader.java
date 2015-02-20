@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+import controller.history.HistoryController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.administration.User;
@@ -34,6 +35,8 @@ public class Grader {
 	private static HistoryDB history = loadHistory();
 	/** A database of all users **/
 	private static UserDB userDB = new UserDB();
+	
+	private static HistoryController historyTab;
 
 	/**
 	 * Initiates a Grader
@@ -76,6 +79,20 @@ public class Grader {
 	 */
 	public static UserDB getUserDB() {
 	    return userDB;
+	}
+	
+	/**
+	 * Sets a reference to the current history tab controller.
+	 */
+	public static void setHistoryController(HistoryController newHC) {
+	    historyTab = newHC;
+	}
+	
+	/**
+     * Gets a reference to the current history tab controller.
+     */
+	public static HistoryController getHistoryController() {
+	    return historyTab;
 	}
 	
 	/**

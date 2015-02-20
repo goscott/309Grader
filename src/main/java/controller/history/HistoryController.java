@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import model.driver.Debug;
 import model.driver.Grader;
 import model.history.CourseHistory;
 import model.history.HistoryDB;
@@ -108,6 +109,7 @@ public class HistoryController {
     private boolean firstTime = true;
     
     public void initialize() {
+        Grader.setHistoryController(this);
         line_chart.setAnimated(false);
         
         //load classes from history db
@@ -127,7 +129,7 @@ public class HistoryController {
                             series.setName("Average Grade Per Quarter");
                             int count = 0;
                             
-                            for (double val : history.getCourseHistory(class_selector.getExpandedPane().getText()).getAveragesDumb()) {
+                            for (double val : history.getCourseHistory(class_selector.getExpandedPane().getText()).getAverages()) {
                                 count++;
                                 series.getData().add(new XYChart.Data<String, Double>("Quarter " + count, val));
                             }
@@ -165,45 +167,35 @@ public class HistoryController {
                 new PieChart.Data("Items", 10));
         pie_chart.setData(pieChartData);
         
+        loadClasses();
+    }
+    
+    public void loadClasses() {
+        Debug.log("HISTORY", "loading classes");
+        class_selector.getPanes().clear();
+        
         //this is where we would pull info from course history
         // to build the list of courses
         history = Grader.getHistoryDB();
         
         //populates history db with fake classes
         if (history.getHistory().isEmpty()) {
-            fillHistoryDB();
+            //fillHistoryDB();
         }
         
         for (CourseHistory course : history.getHistory()) {
             addClass(course);
         }
         
-        /*
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();
-        addClass();*/
-        
         //fixes an issue with expanding titled panes getting cut off
         TitledPane padding = new TitledPane();
         padding.setVisible(false);
         class_selector.getPanes().add(padding);
+    }
+    
+    public void call() {
+        //JOptionPane.showMessageDialog(null, "history was called");
+        class_selector.getPanes().clear();
     }
     
     public void addClass() {

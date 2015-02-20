@@ -60,7 +60,7 @@ public class HistoryDB implements Serializable {
     public CourseHistory getCourseHistory(String courseName) {
         
         for (CourseHistory target : history) {
-            System.out.println("Checking " + target.getCourseName() + " against" + courseName);
+            //System.out.println("Checking " + target.getCourseName() + " against" + courseName);
             if (target.getCourseName().equals(courseName)) {
                 return target;
             }
