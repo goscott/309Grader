@@ -49,22 +49,25 @@
                      <children>
                         <BorderPane fx:id="course_view" prefHeight="200.0" prefWidth="200.0" visible="false" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                            <center>
-                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <VBox alignment="CENTER">
+                                    <Label fx:id="course_label" text="Class View Under Construction">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox fx:id="course_info_box" alignment="CENTER">
                                        <children>
-                                          <Label fx:id="course_label" text="Class View Under Construction">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                          </Label>
                                           <Label fx:id="label_students" text="Total Number of Students Taught: " />
                                           <Label fx:id="label_sections" text="Total Number of Sections Taught: " />
                                           <Label fx:id="label_class" text="Average Class Size: " />
                                           <Label fx:id="label_grade" text="Average Grade: " />
                                        </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                                       </VBox.margin>
                                     </VBox>
-                                    <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                    <FlowPane fx:id="graph_box" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <children>
                                           <StackPane>
                                              <children>
@@ -80,6 +83,9 @@
                                              </children>
                                           </StackPane>
                                        </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                                       </VBox.margin>
                                     </FlowPane>
                                  </children>
                               </VBox>

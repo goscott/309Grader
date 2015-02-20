@@ -31,10 +31,12 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -112,6 +114,12 @@ public class HistoryController {
     @FXML
     private Label label_grade;
     
+    @FXML
+    private VBox course_info_box;
+    
+    @FXML
+    private FlowPane graph_box;
+    
     private int num = 1;
     
     private ToggleButton selectedSection = null;
@@ -124,6 +132,8 @@ public class HistoryController {
         Grader.setHistoryController(this);
         line_chart.setAnimated(false);
         line_chart.setTitle("Average Grade Per Quarter");
+        
+        initStyle();
         
         //load classes from history db
         class_selector.expandedPaneProperty().addListener(new 
@@ -191,6 +201,31 @@ public class HistoryController {
         pie_chart.setTitle("Grade Breakdown Across All Quarters");
         
         loadClasses();
+    }
+    
+    private void initStyle() {
+        
+        course_view.setStyle("-fx-background-color: grey;");
+        
+        course_label.setStyle(
+                "-fx-text-fill: white;");
+                //"-fx-border-style: solid;" +
+                //"-fx-border-width: 2;" + 
+                //"-fx-border-color: black;" +
+                //"-fx-background-color: white;");
+        
+        course_info_box.setStyle(
+                "-fx-border-style: solid;" +
+                "-fx-border-width: 2;" + 
+                "-fx-border-color: black;" +
+                "-fx-background-color: white;");
+        
+        graph_box.setStyle(
+                "-fx-border-style: solid;" +
+                "-fx-border-width: 2;" + 
+                "-fx-border-color: black;" +
+                "-fx-background-color: white;");
+        
     }
     
     public void loadClasses() {
