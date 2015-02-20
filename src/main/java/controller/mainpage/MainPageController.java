@@ -28,8 +28,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -49,6 +47,8 @@ import model.roster.Roster;
 public class MainPageController {
 	/** Singleton controller **/
 	private static MainPageController thisController;
+	/** The controller for the buttons **/
+	private static ClassButtonsController buttonController;
 	/** The main tab pane **/
 	@FXML
 	private TabPane tabPane;
@@ -167,15 +167,11 @@ public class MainPageController {
 		AnchorPane classPane = (AnchorPane) classTab.getContent();
 		FlowPane buttonSetUp = new FlowPane();
 		classPane.getChildren().add(buttonSetUp);
-		@SuppressWarnings("unused")
 		ClassButtonsController con = new ClassButtonsController(buttonSetUp);
+		buttonController = con;
 		thisController = this;
 
-		graphTab.setDisable(true);
-		// historyTab.setDisable(true);
-		//predictionsTab.setDisable(true);
-		announcementsTab.setDisable(true);
-		gradebookTab.setDisable(true);
+		disable();
 
 		// students can't save changes
 		if (Grader.getUser().getType() == UserTypes.USER_STUDENT) {
@@ -184,6 +180,18 @@ public class MainPageController {
 		} else {
 			requestHelp.setVisible(false);
 		}
+	}
+	
+	/**
+	 * Disables tabs when no roster is selected and refreshes buttons
+	 */
+	private void disable() {
+		graphTab.setDisable(true);
+		// historyTab.setDisable(true);
+		//predictionsTab.setDisable(true);
+		announcementsTab.setDisable(true);
+		gradebookTab.setDisable(true);
+		buttonController.refreshButtons();
 	}
 	
 	/**
@@ -325,6 +333,8 @@ public class MainPageController {
 	private void pushRoster(ActionEvent event) {
 		Debug.log("Roster status change", "Roster pushed to history");
 		Grader.getRoster().archive();
+		thisController.tabPane.getSelectionModel().select(thisController.classTab);
+		disable();
 		
 		/*
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../view/history/history_screen.fxml"));
