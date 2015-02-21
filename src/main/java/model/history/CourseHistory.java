@@ -94,6 +94,20 @@ public class CourseHistory implements Serializable {
                     course_other.equals(newRoster) || \old(history).contains(roster_other));
     @*/
 	public void addRoster(Roster newRoster) {
+	    
+	    for (Roster rost : history) {
+	        if (newRoster.getSection() == rost.getSection() && newRoster.getQuarter() == newRoster.getQuarter()) {
+	            Debug.log("History- Error", "Tried to add a course that is already in the history");
+	            return;
+	        }
+	    }
+	    
+	    for (Roster rost : hidden) {
+	        if (newRoster.getSection() == rost.getSection() && newRoster.getQuarter() == newRoster.getQuarter()) {
+	            Debug.log("History- Error", "Tried to add a course that is already in the history");
+                return;
+            }
+	    }
 	    //check newRoster's year to see if we need to update start year/end year
 	    
 	    //add students to total students
