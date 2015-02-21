@@ -11,7 +11,8 @@ public class Grade implements Comparable<Grade>, Serializable {
     /** auto Generated serial ID */
     private static final long serialVersionUID = -8509411443331361582L;
     /** Grade Name */
-    private final SimpleStringProperty name;
+    //private final SimpleStringProperty name;
+    private final String name;
     /** Maximum percentage required */
     private double max;
     /** Minimum percentage required */
@@ -24,7 +25,8 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param min the minimum percentage required
      */
     public Grade(String name, double max, double min) {
-        this.name = new SimpleStringProperty(name);
+        //this.name = new SimpleStringProperty(name);
+        this.name = name;
         this.set(max, min);
     }
 
@@ -80,7 +82,8 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @return the grade name designation
      */
     public String getName() {
-        return name.get();
+        //return name.get();
+        return name;
     }
     
     /**

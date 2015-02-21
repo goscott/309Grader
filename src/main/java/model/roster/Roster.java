@@ -34,7 +34,7 @@ public class Roster implements Serializable {
 	/** A map of student ids to the students in the class **/
 	private HashMap<String, Student> ids;
 	/** The class curve **/
-	private transient Curve curve;
+	private Curve curve;
 	/** Determines if a roster is archived **/
 	private boolean current = true;
 

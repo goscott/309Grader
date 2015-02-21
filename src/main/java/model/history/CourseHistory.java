@@ -2,6 +2,8 @@ package model.history;
 import java.io.Serializable;
 import java.util.*;
 
+import model.curve.Curve;
+import model.curve.Grade;
 import model.driver.Debug;
 import model.roster.Roster;
 import model.roster.Student;
@@ -415,5 +417,58 @@ public class CourseHistory implements Serializable {
 	    else {
 	        return 0;
 	    }
+	}
+	
+    public int getStudentsByGrade(String gradeLetter) {
+	    int numStudents = 0;
+	    Iterator<Grade> it;
+	    Grade temp;
+	    
+	    for (Roster roster : history) {
+	        if (roster.getCurve() != null) {
+	            it = roster.getCurve().getGrades().iterator(); //BROKEN FIX THIS
+	            temp = it.next();
+	            
+	            try {
+	                while (!gradeLetter.equals(temp.getName())) {
+	                    temp = it.next();
+	                }
+	            
+	                if (temp != null) {
+	                    numStudents += roster.getStudentsByGrade(temp).size();
+	                }
+	            }
+	            
+	            catch(NoSuchElementException e) 
+	            {
+	                Debug.log("CourseHistory.java ERROR", "Could not find grade " + gradeLetter + " in " + roster.courseName());
+	            } 
+	        }
+	    }
+        
+        for (Roster roster : hidden) {
+            if (roster.getCurve() != null) {
+                it = roster.getCurve().getGrades().iterator(); //BROKEN FIX THIS
+                temp = it.next();
+                
+                try {
+                    while (!gradeLetter.equals(temp.getName())) {
+                        temp = it.next();
+                    }
+                
+                    if (temp != null) {
+                        numStudents += roster.getStudentsByGrade(temp).size();
+                    }
+                }
+                
+                catch(NoSuchElementException e) 
+                {
+                    Debug.log("CourseHistory.java ERROR", "Could not find grade " + gradeLetter + " in " + roster.courseName());
+                } 
+            }
+        }
+	    
+        //Debug.log("Returning" + numStudents);
+	    return numStudents;
 	}
 }
