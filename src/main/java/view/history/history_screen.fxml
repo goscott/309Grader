@@ -27,7 +27,7 @@
          <center>
             <StackPane BorderPane.alignment="CENTER">
                <children>
-                  <BorderPane fx:id="intro_view" prefHeight="200.0" prefWidth="200.0" visible="false">
+                  <BorderPane fx:id="intro_view" prefHeight="200.0" prefWidth="200.0">
                      <center>
                         <Label text="Select a class to view its history" BorderPane.alignment="CENTER">
                            <font>
@@ -36,7 +36,7 @@
                         </Label>
                      </center>
                   </BorderPane>
-                  <BorderPane fx:id="section_view" prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane fx:id="section_view" prefHeight="200.0" prefWidth="200.0" visible="false">
                      <top>
                         <VBox alignment="CENTER">
                            <children>
@@ -53,12 +53,12 @@
                               </Label>
                               <VBox fx:id="section_info_box" alignment="CENTER">
                                  <children>
-                                    <Label text="Instructor: " />
-                                    <Label text="Number of Students (x passed, y failed): " />
-                                    <Label text="Number of assignments: " />
-                                    <Label text="Curve: " />
-                                    <Label text="Start Date:" />
-                                    <Label text="End Date:" />
+                                    <Label fx:id="section_instructor" text="Instructor: " />
+                                    <Label fx:id="section_students" text="Number of Students (x passed, y failed): " />
+                                    <Label fx:id="section_assignments" text="Number of assignments: " />
+                                    <Label fx:id="section_curve" text="Curve: " />
+                                    <Label fx:id="section_start_date" text="Start Date:" />
+                                    <Label fx:id="section_end_date" text="End Date:" />
                                  </children>
                                  <VBox.margin>
                                     <Insets left="10.0" right="10.0" top="30.0" />
@@ -67,6 +67,13 @@
                            </children>
                         </VBox>
                      </top>
+                     <center>
+                        <PieChart fx:id="section_pie" title="Grade Breakdown" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="40.0" top="20.0" />
+                           </BorderPane.margin>
+                        </PieChart>
+                     </center>
                   </BorderPane>
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
@@ -102,7 +109,10 @@
                                                     <NumberAxis side="LEFT" />
                                                   </yAxis>
                                                 </LineChart>
-                                                <PieChart fx:id="pie_chart" />
+                                                <PieChart fx:id="pie_chart">
+                                                   <StackPane.margin>
+                                                      <Insets />
+                                                   </StackPane.margin></PieChart>
                                              </children>
                                           </StackPane>
                                        </children>
@@ -121,13 +131,12 @@
                                     <Insets bottom="5.0" left="5.0" top="5.0" />
                                  </padding>
                               </CheckBox>
-                              <Button fx:id="switch_graph" disable="true" mnemonicParsing="false" onAction="#switchGraph" text="Switch Graph">
+                              <Button fx:id="switch_graph" disable="true" mnemonicParsing="false" onAction="#switchGraph" text="View Piechart">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Button>
                               <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" text="See Gradebook" />
-                              <Button mnemonicParsing="false" onAction="#addClass" text="TEST: Add Class" visible="false" />
                            </children>
                            <VBox.margin>
                               <Insets />

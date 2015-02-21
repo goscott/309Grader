@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.history.CourseHistory;
@@ -35,11 +36,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 /**
  * Controlls the history view.
@@ -89,6 +92,9 @@ public class HistoryController {
     
     @FXML
     private PieChart pie_chart;
+    
+    @FXML
+    private PieChart section_pie;
     
     @FXML
     private Label section_label;
@@ -183,6 +189,7 @@ public class HistoryController {
                             
                             if (selectedSection != null) {
                                 selectedSection.setSelected(false);
+                                selectedSection = null;
                             }
                         }
                   }
@@ -261,11 +268,6 @@ public class HistoryController {
         // to build the list of courses
         history = Grader.getHistoryDB();
         
-        //populates history db with fake classes
-        if (history.getHistory().isEmpty()) {
-            //fillHistoryDB();
-        }
-        
         for (CourseHistory course : history.getHistory()) {
             addClass(course);
         }
@@ -281,34 +283,12 @@ public class HistoryController {
         class_selector.getPanes().clear();
     }
     
-    public void addClass() {
-        VBox content = new VBox();
-        TitledPane toAdd;
-        SectionButton placeHolder = new SectionButton("Section1");
-        SectionButton placeHolder2 = new SectionButton("Section2");
-        
-        
-        content.getChildren().add(placeHolder);
-        VBox.setMargin(placeHolder, new Insets(0, 0, 10, 0));
-        
-        content.getChildren().add(placeHolder2);
-        VBox.setMargin(placeHolder2, new Insets(0, 0, 10, 0));
-        
-        if (num < 10)
-            toAdd = new TitledPane("CSC/CPE 30" + num++, content);
-        else
-            toAdd = new TitledPane("CSC/CPE 3" + num++, content);
-        toAdd.setAnimated(true);
-        toAdd.setPadding(new Insets(10, 20, 0, 5));
-        class_selector.getPanes().add(toAdd);
-    }
-    
     public void addClass(CourseHistory course) {
         VBox content = new VBox();
         TitledPane toAdd;
         
         for (Roster section : course.getHistory()) {
-            SectionButton temp = new SectionButton(section.getQuarter() + " " + section.getStartDate().get(Calendar.YEAR) + " Section0" + section.getSection());
+            SectionButton temp = new SectionButton(section);
             content.getChildren().add(temp);
             VBox.setMargin(temp, new Insets(0, 0, 10, 0));
         }
@@ -320,39 +300,15 @@ public class HistoryController {
         class_selector.getPanes().add(toAdd);
     }
     
-    private void fillHistoryDB() {
-        //history.addRoster(new Roster(name, String instructor, int section, String quarter, Date startDate, Date endDate));
-        Calendar start;
-        
-        start = Calendar.getInstance();
-        start.set(2012, 4, 1);
-        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 1, "Spring", start, null));
-        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Spring", start, null));
-        
-        start = Calendar.getInstance();
-        start.set(2013, 1, 1);
-        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 1, "Winter", start, null));
-        history.addRoster(new Roster("CSC/CPE 308", "Gene Fisher", 3, "Winter", start, null));
-        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Winter", start, null));
-        
-        start = Calendar.getInstance();
-        start.set(2013, 8, 1);
-        history.addRoster(new Roster("CSC/CPE 309", "Gene Fisher", 1, "Fall", start, null));
-        history.addRoster(new Roster("CSC/CPE 305", "John Dalbey", 1, "Fall", start, null));
-        
-        start = Calendar.getInstance();
-        start.set(2014, 1, 1);
-        history.addRoster(new Roster("CSC/CPE 349", "Timothy Kearns", 1, "Winter", start, null));
-        
-    }
-    
     public void switchGraph() {
         if (line_chart.isVisible()) {
             switchToPieChart();
+            switch_graph.setText("View Linechart");
         }
         
         else {
             switchToLineChart();
+            switch_graph.setText("View Piechart");
         }
     }
     
@@ -417,12 +373,11 @@ public class HistoryController {
     
     private class SectionButton extends ToggleButton {
         
-        public SectionButton() {
-            initialize();
-        }
+        private Roster section;
         
-        public SectionButton(String name) {
-            super(name);
+        public SectionButton(Roster newSection) {
+            super(newSection.getQuarter() + " " + newSection.getStartDate().get(Calendar.YEAR) + " Section0" + newSection.getSection());
+            section = newSection;
             initialize();
         }
         
@@ -446,6 +401,15 @@ public class HistoryController {
                         section_label.setText(selectedSection.getText());
                         
                         switch_graph.setDisable(true);
+                        
+                        section_instructor.setText("Instructor: " + section.getInstructor());
+                        section_students.setText("Number of Students (x passed, y failed): " + section.getStudents().size() + "(" + section.getPassingNum() + "," + section.getFailingNum() + ")");
+                        section_assignments.setText("Number of assignments: " + section.getAssignments().size());
+                        section_curve.setText("Curve: " + section.getCurve().toString());
+                        section_start_date.setText("Start Date: " + section.getStartDateString());
+                        section_end_date.setText("End Date: " + section.getEndDateString());
+                        
+                        fillSectionPie(section);
                     }
                     
                     // off
@@ -457,6 +421,23 @@ public class HistoryController {
                 }
             });
         }
+    }
+    
+    private void fillSectionPie(Roster section) {
+        int temp;
         
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        
+        for (Grade grade : section.getCurve().getGrades()) {
+            temp = section.getStudentsByGrade(grade).size();
+            
+            if (temp > 0) {
+                pieChartData.add(new PieChart.Data(grade.getName(), temp));
+            }
+        }
+        
+        if (section_pie != null) {
+            section_pie.setData(pieChartData);
+        }
     }
 }

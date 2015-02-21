@@ -130,4 +130,22 @@ public class Curve implements Serializable{
         }
         return null;
     }
+    
+    public String toString() {
+        String result = "";
+        boolean first = true;
+        
+        for (Grade grade : curve) {
+            
+            if (!first) {
+                result += " ";
+            }
+            
+            result += (grade.getName() + "(" + grade.min() + "-" + grade.max() + ")");
+            
+            first = false;
+        }
+        
+        return result;
+    }
 }

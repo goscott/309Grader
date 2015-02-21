@@ -113,6 +113,19 @@ public class Roster implements Serializable {
 	public Calendar getStartDate() {
 		return startDate;
 	}
+	
+	/**
+	 * returns a String representation of the start date. 
+	 */
+	public String getStartDateString() {
+	    String result = "";
+	    
+	    result += startDate.get(Calendar.MONTH) + "/";
+	    result += startDate.get(Calendar.DAY_OF_MONTH) + "/";
+	    result += startDate.get(Calendar.YEAR);
+	    
+	    return result;
+	}
 
 	/**
 	 * Gets the Date representing the last day of the class
@@ -121,6 +134,19 @@ public class Roster implements Serializable {
 	 */
 	public Calendar getEndDate() {
 		return endDate;
+	}
+	
+	/**
+     * returns a String representation of the start date. 
+     */
+	public String getEndDateString() {
+String result = "";
+        
+        result += endDate.get(Calendar.MONTH) + "/";
+        result += endDate.get(Calendar.DAY_OF_MONTH) + "/";
+        result += endDate.get(Calendar.YEAR);
+        
+        return result;
 	}
 
 	/**
@@ -314,6 +340,36 @@ public class Roster implements Serializable {
 			}
 		}
 		return ret;
+	}
+	
+	/**
+	 * Returns the number of students who are passing the course.
+	 */
+	public int getPassingNum() {
+	    int result = 0;
+	            
+	    for (Grade grade : getCurve().getGrades()) {
+	        if (grade.getName().equals("D") || grade.getName().equals("F")) {
+	            result += getStudentsByGrade(grade).size();
+	        }
+	    }
+	    
+	    return result;
+	}
+	
+	/**
+     * Returns the number of students who are failing the course.
+     */
+	public int getFailingNum() {
+	    int result = 0;
+        
+        for (Grade grade : getCurve().getGrades()) {
+            if (grade.getName().equals("A") || grade.getName().equals("B") || grade.getName().equals("C")) {
+                result += getStudentsByGrade(grade).size();
+            }
+        }
+        
+        return result;
 	}
 
 	/**

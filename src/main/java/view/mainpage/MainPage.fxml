@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.mainpage.MainPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.mainpage.MainPageController">
    <center>
       <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -46,7 +46,7 @@
         <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem fx:id="save" mnemonicParsing="false" text="Save" onAction="#saveHandler" />
+                  <MenuItem fx:id="save" mnemonicParsing="false" onAction="#saveHandler" text="Save" />
                   <MenuItem id="Export" mnemonicParsing="false" text="Export" />
                   <MenuItem id="Load" mnemonicParsing="false" text="Load" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -60,8 +60,10 @@
                </items>
             </Menu>
             <Menu fx:id="serverMenu" mnemonicParsing="false" text="Server">
-            	<MenuItem mnemonicParsing="false" onAction="#pushRoster" text="Push Current Roster to History" />
-                <MenuItem mnemonicParsing="false" onAction="#synchRoster" text="Synch Current Roster" />
+               <items>
+               	<MenuItem mnemonicParsing="false" onAction="#pushRoster" text="Push Current Roster to History" />
+                   <MenuItem mnemonicParsing="false" onAction="#synchRoster" text="Synch Current Roster" />
+               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
                <items>
