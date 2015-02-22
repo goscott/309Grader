@@ -349,8 +349,8 @@ String result = "";
 	    int result = 0;
 	            
 	    for (Grade grade : getCurve().getGrades()) {
-	        if (grade.getName().equals("D") || grade.getName().equals("F")) {
-	            result += getStudentsByGrade(grade).size();
+	        if (grade.getName().equals("A") || grade.getName().equals("B") || grade.getName().equals("C")) {
+                result += getStudentsByGrade(grade).size();
 	        }
 	    }
 	    
@@ -364,7 +364,7 @@ String result = "";
 	    int result = 0;
         
         for (Grade grade : getCurve().getGrades()) {
-            if (grade.getName().equals("A") || grade.getName().equals("B") || grade.getName().equals("C")) {
+            if (grade.getName().equals("D") || grade.getName().equals("F")) {
                 result += getStudentsByGrade(grade).size();
             }
         }
