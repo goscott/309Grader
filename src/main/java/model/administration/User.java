@@ -156,9 +156,6 @@ public class User {
     public ArrayList<PermissionKeys> getPermissions() {
         
         if (permissions == null) {
-            for (PermissionKeys key : PermissionKeys.getKeys(type)) {
-                Debug.log("USER KEY: " + key.name());
-            }
             return PermissionKeys.getKeys(type);
         }
         
