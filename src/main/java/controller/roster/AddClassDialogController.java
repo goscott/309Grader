@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
@@ -53,6 +54,14 @@ public class AddClassDialogController {
 	private Button AddClassButton;
 	/** The parent of the dialog **/
 	private static ClassButtonsController parent;
+	
+	
+    @FXML
+    private DatePicker StartDate;
+    
+
+    @FXML
+    private TextField quarter;
 	/**
 	 * initializes and displays a new 
 	 */
@@ -71,8 +80,11 @@ public class AddClassDialogController {
 	 */
 	@FXML
 	private void AddClass(ActionEvent event) {
-		Roster roster = new Roster(className.getText(), "DefaultInstructor", Integer.parseInt(sectionNumber.getText()), "Winter", Calendar.getInstance(),
-				Calendar.getInstance());
+	    
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(java.sql.Date.valueOf(StartDate.getValue()));
+		Roster roster = new Roster(className.getText(), "DefaultInstructor", Integer.parseInt(sectionNumber.getText()),
+		    quarter.getText(), cal, Calendar.getInstance());
 		for(String name : students.getSelectionModel().getSelectedItems()) {
 			roster.addStudent(Server.getStudentByName(name));
 		}
