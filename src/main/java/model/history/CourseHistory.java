@@ -98,14 +98,14 @@ public class CourseHistory implements Serializable {
 	public void addRoster(Roster newRoster) {
 	    
 	    for (Roster rost : history) {
-	        if (newRoster.getSection() == rost.getSection() && newRoster.getQuarter() == newRoster.getQuarter()) {
+	        if (newRoster.getSection() == rost.getSection() && newRoster.getQuarter() == rost.getQuarter() && newRoster.getStartDate().get(Calendar.YEAR) == rost.getStartDate().get(Calendar.YEAR)) {
 	            Debug.log("History- Error", "Tried to add a course that is already in the history");
 	            return;
 	        }
 	    }
 	    
 	    for (Roster rost : hidden) {
-	        if (newRoster.getSection() == rost.getSection() && newRoster.getQuarter() == newRoster.getQuarter()) {
+	        if (newRoster.getSection() == rost.getSection() && newRoster.getQuarter() == rost.getQuarter() && newRoster.getStartDate().get(Calendar.YEAR) == rost.getStartDate().get(Calendar.YEAR)) {
 	            Debug.log("History- Error", "Tried to add a course that is already in the history");
                 return;
             }
@@ -118,8 +118,8 @@ public class CourseHistory implements Serializable {
 	    
 	    numSectionsTaught++;
 	    
-	    if (!quarters.contains(newRoster.getQuarter())) {
-	        quarters.add(newRoster.getQuarter());
+	    if (!quarters.contains(newRoster.getQuarter() + " " + newRoster.getStartDate().get(Calendar.YEAR))) {
+	        quarters.add(newRoster.getQuarter() + " " + newRoster.getStartDate().get(Calendar.YEAR));
 	    }
 	}
 	
@@ -308,45 +308,29 @@ public class CourseHistory implements Serializable {
 	/**
 	 * Returns a list of all averages.
 	 */
-	public ArrayList<Double> getAverages() {
+	public ArrayList<QuarterAverage> getAverages() {
 	    double sum;
 	    double count;
 	    
-	    ArrayList<Double> list = new ArrayList<Double>();
+	    ArrayList<QuarterAverage> list = new ArrayList<QuarterAverage>();
 	    
 	    for (String quarter : quarters) {
 	        sum = 0;
 	        count = 0;
 	        
 	        for (Roster roster : history) {
-	            if (roster.getQuarter().equals(quarter)) {
+	            if ((roster.getQuarter() + " " + roster.getStartDate().get(Calendar.YEAR)).equals(quarter)) {
 	                count++;
 	                sum += roster.getPercentAverage();
 	            }
 	        }
 	        
 	        if (count > 0) {
-	            list.add(sum / count);
+	            list.add(new QuarterAverage(quarter.split(" ")[0], Integer.parseInt(quarter.split(" ")[1]),sum / count));
 	        }
 	    }
 	    
-	    /*
-	    for (Roster roster : history) {
-	        list.add(roster.getPercentAverage());
-	        Debug.log("HISTORY", "Added value " + roster.getPercentAverage() + " to graph");
-	    }*/
-	    
-	    return list;
-	}
-	
-	public ArrayList<Double> getAveragesDumb() {
-	    ArrayList<Double> list = new ArrayList<Double>();
-	    list.add(60 + (Math.random()* (100 - 60 + 1)));
-	    list.add(60 + (Math.random()* (100 - 60 + 1)));
-	    list.add(60 + (Math.random()* (100 - 60 + 1)));
-	    list.add(60 + (Math.random()* (100 - 60 + 1)));
-	    list.add(60 + (Math.random()* (100 - 60 + 1)));
-	    
+	    Collections.sort(list);
 	    return list;
 	}
 	

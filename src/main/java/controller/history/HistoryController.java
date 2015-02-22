@@ -11,6 +11,7 @@ import model.driver.Debug;
 import model.driver.Grader;
 import model.history.CourseHistory;
 import model.history.HistoryDB;
+import model.history.QuarterAverage;
 import model.roster.Roster;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -176,7 +177,6 @@ public class HistoryController {
                             
                             switch_graph.setDisable(false);
                             hide_course.setDisable(false);
-                            
                             fillCharts(selectedCourse);
                         }
                         
@@ -231,13 +231,12 @@ public class HistoryController {
     private void fillCharts(CourseHistory selectedCourse) {
         XYChart.Series<String, Double> series = new XYChart.Series<String, Double>();
         series.setName("Average Grade Per Quarter");
-        int count = 0;
         String[] grades = {"A", "B", "C", "D", "F"};
         int temp;
         
-        for (double val : selectedCourse.getAverages()) {
-            count++;
-            series.getData().add(new XYChart.Data<String, Double>("Quarter " + count, val));
+        for (QuarterAverage ave : selectedCourse.getAverages()) {
+            Debug.log(ave.getQuarter());
+            series.getData().add(new XYChart.Data<String, Double>(ave.getQuarter() + " " + ave.getYear(), ave.getValue()));
         }
         
         line_chart.getData().clear();
