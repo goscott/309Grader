@@ -2,6 +2,7 @@ package controller.roster;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
@@ -13,13 +14,19 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -71,6 +78,7 @@ public class AddClassDialogController {
 				.observableArrayList("There will be students here someday");*/
 		students.setItems(Server.getStudentListName());
 		students.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		this.StartDate.setValue(LocalDate.now());
 		// students.setItems(items);
 	}
 	
@@ -83,8 +91,18 @@ public class AddClassDialogController {
 	    
 	    Calendar cal = Calendar.getInstance();
 	    cal.setTime(java.sql.Date.valueOf(StartDate.getValue()));
-		Roster roster = new Roster(className.getText(), "DefaultInstructor", Integer.parseInt(sectionNumber.getText()),
+	    Roster roster = null;
+	    try
+	    {
+		roster = new Roster(className.getText(), "DefaultInstructor", Integer.parseInt(sectionNumber.getText()),
 		    quarter.getText(), cal, Calendar.getInstance());
+	    }
+	    catch(NumberFormatException ex)
+	    {
+	        sectionNumber.setBackground(new Background(new BackgroundFill(
+                Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+	        return;
+	    }
 		for(String name : students.getSelectionModel().getSelectedItems()) {
 			roster.addStudent(Server.getStudentByName(name));
 		}
