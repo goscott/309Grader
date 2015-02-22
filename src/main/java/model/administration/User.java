@@ -1,5 +1,7 @@
 package model.administration;
 
+import java.util.ArrayList;
+
 import model.driver.Debug;
 
 /**
@@ -32,6 +34,8 @@ public class User {
      * User type. See model/administration/UserTypes.java
      */
     private char type;
+    
+    private ArrayList<PermissionKeys> permissions;
 
     /**
      * Constructor
@@ -48,6 +52,7 @@ public class User {
         id = newId;
         password = newPw;
         type = newType;
+        permissions = null;
     }
 
     /**
@@ -146,5 +151,32 @@ public class User {
         }
 
         return false;
+    }
+    
+    public ArrayList<PermissionKeys> getPermissions() {
+        
+        if (permissions == null) {
+            for (PermissionKeys key : PermissionKeys.getKeys(type)) {
+                Debug.log("USER KEY: " + key.name());
+            }
+            return PermissionKeys.getKeys(type);
+        }
+        
+        else {
+            return permissions;
+        }
+    }
+    
+    public void addPermission(PermissionKeys key) {
+        
+        if (permissions == null) {
+            permissions = new ArrayList<PermissionKeys>();
+        }
+        
+        permissions.add(key);
+    }
+    
+    public void removePermission(PermissionKeys key) {
+        
     }
 }

@@ -31,6 +31,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.administration.PermissionKeys;
 import model.administration.User;
 import model.administration.UserDB;
 import model.administration.UserTypes;
@@ -125,7 +126,7 @@ public class MainPageController {
 
 			// add historytab -Mason
 			// (students do not see)
-			if (Grader.getUser().getType() != UserTypes.USER_STUDENT) {
+			if (Grader.getUser().getPermissions().contains(PermissionKeys.VIEW_HISTORY)) {
 				StackPane historyPage = (StackPane) FXMLLoader.load(getClass()
 						.getClassLoader().getResource(
 								"view/history/history_screen.fxml"));
@@ -153,8 +154,7 @@ public class MainPageController {
 			}
 			*/
 			// turn off server menu for students and TAs
-			if (Grader.getUser().getType() != UserTypes.USER_ADMIN 
-					&& Grader.getUser().getType() != UserTypes.USER_INSTRUCTOR) {
+			if (!Grader.getUser().getPermissions().contains(PermissionKeys.SERVER_MENU)) {
 				serverMenu.setDisable(true);
 			}
 
@@ -174,7 +174,7 @@ public class MainPageController {
 		disable();
 
 		// students can't save changes
-		if (Grader.getUser().getType() == UserTypes.USER_STUDENT) {
+		if (!Grader.getUser().getPermissions().contains(PermissionKeys.SAVE)) {
 			save.setVisible(false);
 			settings.setVisible(false);
 		} else {
