@@ -113,18 +113,18 @@ public class Roster implements Serializable {
 	public Calendar getStartDate() {
 		return startDate;
 	}
-	
+
 	/**
-	 * returns a String representation of the start date. 
+	 * returns a String representation of the start date.
 	 */
 	public String getStartDateString() {
-	    String result = "";
-	    
-	    result += startDate.get(Calendar.MONTH) + "/";
-	    result += startDate.get(Calendar.DAY_OF_MONTH) + "/";
-	    result += startDate.get(Calendar.YEAR);
-	    
-	    return result;
+		String result = "";
+
+		result += startDate.get(Calendar.MONTH) + "/";
+		result += startDate.get(Calendar.DAY_OF_MONTH) + "/";
+		result += startDate.get(Calendar.YEAR);
+
+		return result;
 	}
 
 	/**
@@ -135,18 +135,18 @@ public class Roster implements Serializable {
 	public Calendar getEndDate() {
 		return endDate;
 	}
-	
+
 	/**
-     * returns a String representation of the start date. 
-     */
+	 * returns a String representation of the start date.
+	 */
 	public String getEndDateString() {
-String result = "";
-        
-        result += endDate.get(Calendar.MONTH) + "/";
-        result += endDate.get(Calendar.DAY_OF_MONTH) + "/";
-        result += endDate.get(Calendar.YEAR);
-        
-        return result;
+		String result = "";
+
+		result += endDate.get(Calendar.MONTH) + "/";
+		result += endDate.get(Calendar.DAY_OF_MONTH) + "/";
+		result += endDate.get(Calendar.YEAR);
+
+		return result;
 	}
 
 	/**
@@ -328,48 +328,49 @@ String result = "";
 		Collections.sort(students);
 		return students;
 	}
-	
+
 	/**
 	 * Gets all the students in the class with a given grade
 	 */
 	public ArrayList<Student> getStudentsByGrade(Grade grade) {
 		ArrayList<Student> ret = new ArrayList<Student>();
-		for(Student student : students) {
-			if(student.getGrade().equals(grade)) {
+		for (Student student : students) {
+			if (student.getGrade().equals(grade)) {
 				ret.add(student);
 			}
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Returns the number of students who are passing the course.
 	 */
 	public int getPassingNum() {
-	    int result = 0;
-	            
-	    for (Grade grade : getCurve().getGrades()) {
-	        if (grade.getName().equals("A") || grade.getName().equals("B") || grade.getName().equals("C")) {
-                result += getStudentsByGrade(grade).size();
-	        }
-	    }
-	    
-	    return result;
+		int result = 0;
+
+		for (Grade grade : getCurve().getGrades()) {
+			if (grade.getName().equals("A") || grade.getName().equals("B")
+					|| grade.getName().equals("C")) {
+				result += getStudentsByGrade(grade).size();
+			}
+		}
+
+		return result;
 	}
-	
+
 	/**
-     * Returns the number of students who are failing the course.
-     */
+	 * Returns the number of students who are failing the course.
+	 */
 	public int getFailingNum() {
-	    int result = 0;
-        
-        for (Grade grade : getCurve().getGrades()) {
-            if (grade.getName().equals("D") || grade.getName().equals("F")) {
-                result += getStudentsByGrade(grade).size();
-            }
-        }
-        
-        return result;
+		int result = 0;
+
+		for (Grade grade : getCurve().getGrades()) {
+			if (grade.getName().equals("D") || grade.getName().equals("F")) {
+				result += getStudentsByGrade(grade).size();
+			}
+		}
+
+		return result;
 	}
 
 	/**
@@ -438,7 +439,8 @@ String result = "";
 	public static void save(Roster rost) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(
-					new FileOutputStream("Rosters/" + rost.courseName + "-" + String.format("%02d", rost.section) +  ".rost"));
+					new FileOutputStream("Rosters/" + rost.courseName + "-"
+							+ String.format("%02d", rost.section) + ".rost"));
 			out.writeObject(rost);
 			out.close();
 		} catch (IOException ex) {
@@ -576,5 +578,34 @@ String result = "";
 		current = false;
 		Grader.getHistoryDB().addRoster(this);
 		Save();
+	}
+
+	/**
+	 * Returns a list of students that are not both in the roster and 
+	 * assoiated with the roster on the server side.
+	 * 
+	 * @param extraLocal if extraLocal is true, the function returns a
+	 * list of students that are in the local roster and not in the
+	 * server. If it is false, it returns a list of students that are
+	 * in the server and not the local roster.
+	 */
+	public ArrayList<Student> rosterSynch(boolean extraLocal) {
+		ArrayList<Student> list = new ArrayList<Student>();
+		ArrayList<Student> serverList = Server
+				.getStudentsAssociatedWithRoster(this);
+		if (extraLocal) {
+			for (Student student : students) {
+				if (!serverList.contains(student)) {
+					list.add(student);
+				}
+			}
+		} else {
+			for (Student student : serverList) {
+				if (!students.contains(student)) {
+					list.add(student);
+				}
+			}
+		}
+		return list;
 	}
 }

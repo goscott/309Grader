@@ -95,8 +95,7 @@ public class Server {
 
 	/**
 	 * Gets the list of all students stored in the roster and turns the
-	 * ArrayList to an ObservableList. This only gets a list of the students not
-	 * in the Roster.
+	 * ArrayList to an ObservableList.
 	 * 
 	 * @return ObservableList<Student> the list of students
 	 */
@@ -236,6 +235,19 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Gets a list of all students associated with a roster (in the server)
+	 */
+	public static ArrayList<Student> getStudentsAssociatedWithRoster(Roster roster) {
+		ArrayList<Student> list = new ArrayList<Student>();
+		for(Student student : associatedClasses.keySet()) {
+			if(associatedClasses.get(student).contains(roster.courseName())) {
+				list.add(student);
+			}
+		}
+		return list;
+	}
+	
 	/**
 	 * Disassociates a roster with this user
 	 */
