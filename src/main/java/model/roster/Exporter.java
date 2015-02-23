@@ -23,16 +23,34 @@ import model.driver.Grader;
  * @author Gavin Scott
  */
 public class Exporter {
-
+	/** folder containing exported files **/
+	private static String exportFolderName = "Exports";
+	/** export filetype **/
+	private static String fileType = ".xls";
+	/** name of the column containing student names **/
+	private static String nameLabel = "Student Name";
+	/** name of the column containing student ids **/
+	private static String idLabel = "Student ID";
+	
 	/**
 	 * Exports a roster to an excel document. All assignments are
 	 * printed, including sub-assignments
 	 */
 	public static void exportRoster(Roster roster) {
-		String fileName = roster.courseName() + "-"
+		// don't save null rosters
+		if(roster == null) {
+			return;
+		}
+		// check export directory exists
+		File dir = new File(exportFolderName);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+		String fileName = roster.courseName() + '-'
 				+ String.format("%02d", roster.getSection());
-		File file = new File(fileName + ".xls");
+		File file = new File(exportFolderName + '/' + fileName + fileType);
 
+		// populate document
 		WorkbookSettings settings = new WorkbookSettings();
 		WritableWorkbook workbook = null;
 		try {
@@ -59,8 +77,6 @@ public class Exporter {
 		WritableFont times10pt = new WritableFont(WritableFont.TIMES, 10);
 		WritableCellFormat times = new WritableCellFormat(times10pt);
 		int minColWidth = 10;
-		String nameLabel = "Student Name";
-		String idLabel = "Student ID";
 		List<Student> students = Grader.getStudentList();
 
 		// format name cells

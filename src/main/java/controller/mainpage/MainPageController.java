@@ -74,6 +74,9 @@ public class MainPageController {
 	/** The logout menu item **/
 	@FXML
 	private MenuItem logout;
+	/** the export menu item **/
+	@FXML
+	private MenuItem export;
 	/** The Quit menu item **/
 	@FXML
 	private MenuItem user_exit;
@@ -191,6 +194,7 @@ public class MainPageController {
 		//predictionsTab.setDisable(true);
 		announcementsTab.setDisable(true);
 		gradebookTab.setDisable(true);
+		export.setDisable(true);
 		buttonController.refreshButtons();
 		
 		gradebookTab.setText("GradeBook");
@@ -202,6 +206,7 @@ public class MainPageController {
 	 * Enables class-specific tabs
 	 */
 	private void enable() {
+		export.setDisable(false);
 		gradebookTab.setDisable(false);
 		graphTab.setDisable(false);
 		// historyTab.setDisable(false);

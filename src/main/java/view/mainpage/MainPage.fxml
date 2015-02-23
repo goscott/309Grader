@@ -47,7 +47,7 @@
             <Menu mnemonicParsing="false" text="File">
                <items>
                   <MenuItem fx:id="save" mnemonicParsing="false" onAction="#saveHandler" text="Save" />
-                  <MenuItem id="Export" mnemonicParsing="false" text="Export" onAction="#handleExport"/>
+                  <MenuItem fx:id="export" mnemonicParsing="false" text="Export" onAction="#handleExport"/>
                   <MenuItem id="Load" mnemonicParsing="false" text="Load" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem id="Load" fx:id="logout" mnemonicParsing="false" onAction="#logout" text="Logout" />
