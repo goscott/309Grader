@@ -48,17 +48,5 @@ public class Alert {
 		    children(new Text(message)).
 		    alignment(Pos.CENTER).padding(new Insets(5)).build()));
 		dialogStage.show();
-		/*
-		Stage stage = new Stage();
-		stage.setHeight(200);
-		stage.setWidth(400);
-		stage.setTitle(title);
-		
-        VBox pane = new VBox();
-        pane.getChildren().add(new Text(message));
-        Scene dialogScene = new Scene(pane, 300, 150);
-        stage.setScene(dialogScene);
-        stage.show();
-        */
 	}
 }
