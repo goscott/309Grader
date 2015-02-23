@@ -14,7 +14,7 @@ public class GradedItemTestJUnit
 {
 
     @Test
-    public void test()
+    public void testMaxScore()
     {
         GradedItem temp = new GradedItem("temp", "", 100, false);
         if(temp.maxScore() != 100)

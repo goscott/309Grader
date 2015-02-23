@@ -264,9 +264,13 @@ public class Roster implements Serializable {
 	 *            particular student and assignment.
 	 */
 	public void addScore(Student student, GradedItem asgn, double score) {
-		if (students.contains(student) && assignments.contains(asgn)) {
+		if (students.contains(student)
+				&& assignments.contains(asgn)
+				&& score >= 0
+				&& score <= asgn.maxScore()) {
 			Student stud = students.get(students.indexOf(student));
 			stud.setScore(asgn.name(), score);
+			asgn.setStudentScore(student, score);
 		}
 	}
 

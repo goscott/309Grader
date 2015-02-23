@@ -58,7 +58,8 @@ public class Student implements Comparable<Student>, Serializable {
 	 */
 	public String getName() {
 		User currentUser = Grader.getUser();
-		if (Grader.getUser().getPermissions().contains(PermissionKeys.VIEW_STUDENTS)
+		if (currentUser != null
+				&& currentUser.getPermissions().contains(PermissionKeys.VIEW_STUDENTS)
 				&& !currentUser.getId().equals(id)) {
 			return "*******";
 		}

@@ -225,7 +225,8 @@ public class Server {
 	 */
 	public static void addRosterToUser(Student student, Roster roster) {
 
-		if (associatedClasses.get(student) != null
+		if (associatedClasses != null 
+				&& associatedClasses.get(student) != null
 				&& !associatedClasses.get(student)
 						.contains(roster.courseName())) {
 			Debug.log("Server updated", student.getName() + " associated with " + roster.courseName());
