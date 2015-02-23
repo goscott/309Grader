@@ -411,4 +411,12 @@ public class Grader {
 		}
 		return data;
 	}
+
+	/**
+	 * Loads a roster file from a file if it was not already
+	 * loaded
+	 */
+	public static void importRoster(File file) {
+		Debug.log("Import", "Attempting to load " + file.getName());
+	}
 }

@@ -43,6 +43,7 @@ public class Alert {
 		dialogStage.setTitle(title);
 		dialogStage.setHeight(150);
 		dialogStage.setWidth(350);
+		dialogStage.setResizable(false);
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.setScene(new Scene(VBoxBuilder.create().
 		    children(new Text(message)).

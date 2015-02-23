@@ -1,5 +1,6 @@
 package controller.mainpage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -29,6 +32,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBoxBuilder;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.administration.PermissionKeys;
@@ -373,8 +380,27 @@ public class MainPageController {
 		Debug.log("Roster synch", "Roster synched with server");
 	}
 	
+	/**
+	 * Handles the export file menu item
+	 */
 	@FXML
 	private void handleExport(ActionEvent event) {
 		Grader.getRoster().export();
+	}
+	
+	/**
+	 * Handles the loading of a roster
+	 */
+	@FXML
+	private void handleLoad(ActionEvent event) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Import Roster File");
+		fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Roster Files", "*.rost")
+            );
+		File file = fileChooser.showOpenDialog(new Stage());
+		if (file != null) {
+            Grader.importRoster(file);
+        }
 	}
 }
