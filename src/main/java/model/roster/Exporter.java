@@ -15,8 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import controller.mainpage.Alert;
 import model.driver.Debug;
 
