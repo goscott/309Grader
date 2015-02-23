@@ -15,11 +15,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import model.driver.Grader;
+import javax.swing.JOptionPane;
+
+import controller.mainpage.Alert;
+import model.driver.Debug;
 
 /**
- * Allows for easy exportation of gradebooks
- * to excel documents
+ * Allows for easy exportation of gradebooks to excel documents
+ * 
  * @author Gavin Scott
  */
 public class Exporter {
@@ -31,25 +34,25 @@ public class Exporter {
 	private static String nameLabel = "Student Name";
 	/** name of the column containing student ids **/
 	private static String idLabel = "Student ID";
-	
+
 	/**
-	 * Exports a roster to an excel document. All assignments are
-	 * printed, including sub-assignments
+	 * Exports a roster to an excel document. All assignments are printed,
+	 * including sub-assignments
 	 */
 	public static void exportRoster(Roster roster) {
 		// don't save null rosters
-		if(roster == null) {
+		if (roster == null) {
 			return;
 		}
 		// check export directory exists
 		File dir = new File(exportFolderName);
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
 		String fileName = roster.courseName() + '-'
 				+ String.format("%02d", roster.getSection());
 		File file = new File(exportFolderName + '/' + fileName + fileType);
-
+		Debug.log("Exporting to excel", "Exporting " + fileName);
 		// populate document
 		WorkbookSettings settings = new WorkbookSettings();
 		WritableWorkbook workbook = null;
@@ -67,6 +70,7 @@ public class Exporter {
 		} catch (WriteException ex) {
 			ex.printStackTrace();
 		}
+		Alert.show(fileName + " exported to " + exportFolderName + '/' + fileName + fileType);
 	}
 
 	/**
@@ -77,7 +81,7 @@ public class Exporter {
 		WritableFont times10pt = new WritableFont(WritableFont.TIMES, 10);
 		WritableCellFormat times = new WritableCellFormat(times10pt);
 		int minColWidth = 10;
-		List<Student> students = Grader.getStudentList();
+		List<Student> students = roster.getStudents();
 
 		// format name cells
 		int maxLength = nameLabel.length();
@@ -99,15 +103,17 @@ public class Exporter {
 
 		// print grades for each assignment
 		int column = 2;
-		for (GradedItem item : Grader.getAssignmentList()) {
+		for (GradedItem item : roster.getAssignments()) {
 			sheet.addCell(new Label(column, 0, item.name(), times));
 			sheet.setColumnView(column,
 					item.name().length() > minColWidth ? item.name().length()
 							: minColWidth);
 			row = 1;
 			for (Student student : students) {
-				sheet.addCell(new Number(column, row++, item
-						.getStudentGrade(student), times));
+				if (item.getStudentGrade(student) != null) {
+					sheet.addCell(new Number(column, row++, item
+							.getStudentGrade(student), times));
+				}
 			}
 			column++;
 		}
