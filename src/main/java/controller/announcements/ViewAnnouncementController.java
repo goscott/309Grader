@@ -2,18 +2,14 @@ package controller.announcements;
 
 import java.io.IOException;
 
-import model.announcements.Announcement;
-import model.driver.Debug;
-import model.server.Server;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.announcements.Announcement;
+import model.driver.Debug;
 
 public class ViewAnnouncementController {
 	@FXML
