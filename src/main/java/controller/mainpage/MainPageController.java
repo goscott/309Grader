@@ -136,7 +136,8 @@ public class MainPageController {
 
 			// add historytab -Mason
 			// (students do not see)
-			if (Grader.getUser().getPermissions().contains(PermissionKeys.VIEW_HISTORY)) {
+			if (Grader.getUser().getPermissions()
+					.contains(PermissionKeys.VIEW_HISTORY)) {
 				StackPane historyPage = (StackPane) FXMLLoader.load(getClass()
 						.getClassLoader().getResource(
 								"view/history/history_screen.fxml"));
@@ -154,17 +155,18 @@ public class MainPageController {
 			// (students do not see)
 			/*
 			if (Grader.getUser().getType() != UserTypes.USER_STUDENT) {
-    			HBox predictionsPage = (HBox) FXMLLoader.load(getClass()
-    					.getClassLoader().getResource(
-    							"view/predictions/predictions_view.fxml"));
-    			predictionsTab.setContent(predictionsPage);
+				HBox predictionsPage = (HBox) FXMLLoader.load(getClass()
+						.getClassLoader().getResource(
+								"view/predictions/predictions_view.fxml"));
+				predictionsTab.setContent(predictionsPage);
 			} else {
 			    predictionsTab.setDisable(true);
 			    serverMenu.setDisable(true);
 			}
 			*/
 			// turn off server menu for students and TAs
-			if (!Grader.getUser().getPermissions().contains(PermissionKeys.SERVER_MENU)) {
+			if (!Grader.getUser().getPermissions()
+					.contains(PermissionKeys.SERVER_MENU)) {
 				serverMenu.setDisable(true);
 			}
 
@@ -191,24 +193,25 @@ public class MainPageController {
 			requestHelp.setVisible(false);
 		}
 	}
-	
+
 	/**
 	 * Disables tabs when no roster is selected and refreshes buttons
 	 */
 	private void disable() {
 		graphTab.setDisable(true);
 		// historyTab.setDisable(true);
-		//predictionsTab.setDisable(true);
+		// predictionsTab.setDisable(true);
 		announcementsTab.setDisable(true);
 		gradebookTab.setDisable(true);
 		export.setDisable(true);
 		buttonController.refreshButtons();
+		save.setDisable(true);
 		
 		gradebookTab.setText("GradeBook");
 		graphTab.setText("Graphs");
 		announcementsTab.setText("Announcements");
 	}
-	
+
 	/**
 	 * Enables class-specific tabs
 	 */
@@ -217,8 +220,9 @@ public class MainPageController {
 		gradebookTab.setDisable(false);
 		graphTab.setDisable(false);
 		// historyTab.setDisable(false);
-		//predictionsTab.setDisable(false);
+		// predictionsTab.setDisable(false);
 		announcementsTab.setDisable(false);
+		save.setDisable(false);
 
 		gradebookTab.setText("GradeBook - " + Grader.getRoster().courseName());
 		graphTab.setText("Graphs - " + Grader.getRoster().courseName());
@@ -334,14 +338,18 @@ public class MainPageController {
 
 	/**
 	 * Saves the current roster
+	 * 
 	 * @param event
 	 */
 	@FXML
 	private void saveHandler(ActionEvent event) {
-		Debug.log("Save", Grader.getRoster().courseName() + " saved");
-		Roster.save(Grader.getRoster());
+		if (Grader.getRoster() != null) {
+			Debug.log("Save", Grader.getRoster().courseName() + " saved");
+			Roster.save(Grader.getRoster());
+			Alert.show("Confirmation", Grader.getRoster().courseName() + " has been saved");
+		}
 	}
-	
+
 	/**
 	 * Archives the current roster
 	 */
@@ -349,29 +357,30 @@ public class MainPageController {
 	private void pushRoster(ActionEvent event) {
 		Debug.log("Roster status change", "Roster pushed to history");
 		Grader.getRoster().archive();
-		thisController.tabPane.getSelectionModel().select(thisController.classTab);
+		thisController.tabPane.getSelectionModel().select(
+				thisController.classTab);
 		disable();
-		
+
 		/*
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../view/history/history_screen.fxml"));
-        try 
-        {
-            //you have to call this or it doesn't work for some reason
-            Pane pane = (Pane) loader.load(); 
-        } 
-        
-        catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        HistoryController controller = loader.<HistoryController>getController();
-        //controller.loadClasses();
-        controller.call();
-        */
-		 HistoryController controller = Grader.getHistoryController();
-		 controller.loadClasses();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../../view/history/history_screen.fxml"));
+		try 
+		{
+		    //you have to call this or it doesn't work for some reason
+		    Pane pane = (Pane) loader.load(); 
+		} 
+		
+		catch (IOException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
+		HistoryController controller = loader.<HistoryController>getController();
+		//controller.loadClasses();
+		controller.call();
+		*/
+		HistoryController controller = Grader.getHistoryController();
+		controller.loadClasses();
 	}
-	
+
 	/**
 	 * Synchs the current roster
 	 */
@@ -379,15 +388,16 @@ public class MainPageController {
 	private void synchRoster(ActionEvent event) {
 		Debug.log("Roster synch", "Roster synched with server");
 	}
-	
+
 	/**
 	 * Handles the export file menu item
 	 */
 	@FXML
 	private void handleExport(ActionEvent event) {
 		Grader.getRoster().export();
+		Alert.show("Export Confirmation", Grader.getRoster().courseName() + " has been exported");
 	}
-	
+
 	/**
 	 * Handles the loading of a roster
 	 */
@@ -396,11 +406,10 @@ public class MainPageController {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Import Roster File");
 		fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Roster Files", "*.rost")
-            );
+				new FileChooser.ExtensionFilter("Roster Files", "*.rost"));
 		File file = fileChooser.showOpenDialog(new Stage());
 		if (file != null) {
-            Grader.importRoster(file);
-        }
+			Grader.importRoster(file);
+		}
 	}
 }
