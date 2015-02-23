@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <SplitPane dividerPositions="0.5" layoutY="45.0" prefHeight="316.0" prefWidth="600.0">
+         <items>
+            <ListView prefHeight="200.0" prefWidth="200.0" />
+            <ListView prefHeight="314.0" prefWidth="278.0" />
+         </items>
+      </SplitPane>
+      <Label layoutX="128.0" layoutY="14.0" text="Local" />
+      <Label layoutX="444.0" layoutY="14.0" text="Server" />
+      <Button layoutX="250.0" layoutY="367.0" mnemonicParsing="false" text="Sync Rosters " />
+   </children>
+</AnchorPane>
