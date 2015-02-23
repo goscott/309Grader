@@ -2,6 +2,7 @@ package controller.roster;
 
 import java.util.ArrayList;
 
+import model.administration.PermissionKeys;
 import model.administration.UserTypes;
 import model.curve.Grade;
 import model.driver.Grader;
@@ -75,13 +76,13 @@ public class GradebookController {
 		expandCollapse.setOnAction(new DisplayExpandCollapsePopupEventHandler(
 				expandCollapse, this));
 		// students don't get these options
-		if (Grader.getUser().getType() != UserTypes.USER_STUDENT) {
+		if (Grader.getUser().getPermissions().contains(PermissionKeys.EDIT_GRADEBOOK)) {
 			MenuItem addAssignment = new MenuItem("Add Assignment");
 			MenuItem dropAssignment = new MenuItem("Drop Assignment");
 			MenuItem importAssignment = new MenuItem("Import Assignment");
 			MenuItem addStudent = new MenuItem("Add Student");
 			MenuItem dropStudent = new MenuItem("Drop Student");
-			// MenuItem rosterSynch = new MenuItem("Roster Synch");
+			MenuItem rosterSynch = new MenuItem("Roster Synch");
 
 			addAssignment
 					.setOnAction(new DisplayAddAssignmentPopupEventHandler(
@@ -97,7 +98,7 @@ public class GradebookController {
 			rightClickMenu.getItems().addAll(expandCollapse,
 					new SeparatorMenuItem(), addAssignment, dropAssignment,
 					importAssignment, new SeparatorMenuItem(), addStudent,
-					dropStudent, new SeparatorMenuItem());// , rosterSynch);
+					dropStudent, new SeparatorMenuItem() , rosterSynch);
 		} else {
 			rightClickMenu.getItems().addAll(expandCollapse);
 		}

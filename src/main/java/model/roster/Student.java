@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import model.administration.PermissionKeys;
 import model.administration.User;
 import model.administration.UserTypes;
 import model.curve.Grade;
@@ -57,7 +58,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 */
 	public String getName() {
 		User currentUser = Grader.getUser();
-		if (currentUser.getType() == UserTypes.USER_STUDENT
+		if (Grader.getUser().getPermissions().contains(PermissionKeys.VIEW_STUDENTS)
 				&& !currentUser.getId().equals(id)) {
 			return "*******";
 		}
