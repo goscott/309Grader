@@ -608,4 +608,8 @@ public class Roster implements Serializable {
 		}
 		return list;
 	}
+	
+	public void export() {
+		Exporter.exportRoster(this);
+	}
 }

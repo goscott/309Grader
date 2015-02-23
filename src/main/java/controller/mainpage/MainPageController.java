@@ -367,4 +367,9 @@ public class MainPageController {
 	private void synchRoster(ActionEvent event) {
 		Debug.log("Roster synch", "Roster synched with server");
 	}
+	
+	@FXML
+	private void handleExport(ActionEvent event) {
+		Grader.getRoster().export();
+	}
 }
