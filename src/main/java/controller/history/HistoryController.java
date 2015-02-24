@@ -2,10 +2,29 @@ package controller.history;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 
-import javax.swing.JOptionPane;
-
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
@@ -13,40 +32,9 @@ import model.history.CourseHistory;
 import model.history.HistoryDB;
 import model.history.QuarterAverage;
 import model.roster.Roster;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.chart.Axis;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 /**
- * Controlls the history view.
+ * Controls the history view.
  * @author Mason Stevenson
  *
  */
@@ -76,86 +64,163 @@ public class HistoryController {
     @FXML
     private Button button_history;
     
+    /**
+     * Allows users to select a course, entering course view.
+     */
     @FXML
     private Accordion class_selector;
     
+    /**
+     * This shows some introduction text when the user first opens up the history.
+     */
     @FXML
     private BorderPane intro_view;
     
+    /**
+     * This pane shows aggregate info about a course. 
+     */
     @FXML
     private BorderPane course_view;
     
+    /**
+     * This pane shows info about a specific section.
+     */
     @FXML
     private BorderPane section_view;
     
+    /**
+     * Class averages line chart for the course view.
+     */
     @FXML
-    private LineChart line_chart;
+    private LineChart<String, Double> line_chart;
     
+    /**
+     * Grade breakdown pie chart for the course view.
+     */
     @FXML
     private PieChart pie_chart;
     
+    /**
+     * Grade breakdown pie chart for the section view.
+     */
     @FXML
     private PieChart section_pie;
     
+    /**
+     * Displays the currently selected section in the section view.
+     */
     @FXML
     private Label section_label;
     
+    /**
+     * Displays the currently selected course in the course view.
+     */
     @FXML
     private Label course_label;
     
+    /**
+     * Allows for switching between the line and pie charts in the course view.
+     */
     @FXML
     private Button switch_graph;
     
+    /**
+     * Allows for courses to be hidden (does nothing at the moment).
+     */
     @FXML
     private CheckBox hide_course;
     
+    /**
+     * Number of students in a course.
+     */
     @FXML
     private Label label_students;
     
+    /**
+     * Number of sections in a course.
+     */
     @FXML
     private Label label_sections;
     
+    /**
+     * Average class size for a course (avg of all sections).
+     */
     @FXML
     private Label label_class;
     
+    /**
+     * Average grade for a course (avg of all sections).
+     */
     @FXML
     private Label label_grade;
     
+    /**
+     * Holds course info.
+     */
     @FXML
     private VBox course_info_box;
     
+    /**
+     * Holds section pie chart.
+     */
     @FXML
     private FlowPane graph_box;
     
+    /**
+     * Holds section info.
+     */
     @FXML
     private VBox section_info_box;
     
+    /**
+     * A section's instructor.
+     */
     @FXML
     private Label section_instructor;
     
+    /**
+     * A section's number of students.
+     */
     @FXML
     private Label section_students;
     
+    /**
+     * A section's number of assignments.
+     */
     @FXML
     private Label section_assignments;
     
+    /**
+     * A section's curve.
+     */
     @FXML
     private Label section_curve;
     
+    /**
+     * A section's start date.
+     */
     @FXML
     private Label section_start_date;
     
+    /**
+     * A section's end date.
+     */
     @FXML
     private Label section_end_date;
     
-    private int num = 1;
-    
+    /**
+     * A reference to the currently selected togglebutton. (null if none is selected)
+     */
     private ToggleButton selectedSection = null;
     
+    /**
+     * A reference to the active history database.
+     */
     private HistoryDB history;
     
-    private boolean firstTime = true;
-    
+    /**
+     * Builds the history view.
+     */
     public void initialize() {
         Grader.setHistoryController(this);
         line_chart.setAnimated(false);
@@ -198,6 +263,9 @@ public class HistoryController {
         loadClasses();
     }
     
+    /**
+     * Initializes this style changes for history.
+     */
     private void initStyle() {
         
         course_view.setStyle("-fx-background-color: grey;");
@@ -228,6 +296,9 @@ public class HistoryController {
                 "-fx-background-color: white;");
     }
     
+    /**
+     * Builds the line and piecharts for the course history view.
+     */
     private void fillCharts(CourseHistory selectedCourse) {
         XYChart.Series<String, Double> series = new XYChart.Series<String, Double>();
         series.setName("Average Grade Per Quarter");
@@ -259,6 +330,9 @@ public class HistoryController {
         pie_chart.setTitle("Grade Breakdown Across All Quarters");
     }
     
+    /**
+     * Loads a list of courses into the course selector.
+     */
     public void loadClasses() {
         Debug.log("HISTORY", "loading classes");
         class_selector.getPanes().clear();
@@ -277,12 +351,10 @@ public class HistoryController {
         class_selector.getPanes().add(padding);
     }
     
-    public void call() {
-        //JOptionPane.showMessageDialog(null, "history was called");
-        class_selector.getPanes().clear();
-    }
-    
-    public void addClass(CourseHistory course) {
+    /**
+     * Adds a course the the course selector.
+     */
+    private void addClass(CourseHistory course) {
         VBox content = new VBox();
         TitledPane toAdd;
         
@@ -299,6 +371,9 @@ public class HistoryController {
         class_selector.getPanes().add(toAdd);
     }
     
+    /**
+     * Switches from linechart to piechart in the course view.
+     */
     public void switchGraph() {
         if (line_chart.isVisible()) {
             switchToPieChart();
@@ -311,24 +386,30 @@ public class HistoryController {
         }
     }
     
-    public void switchToLineChart() {
+    private void switchToLineChart() {
         line_chart.setVisible(true);
         pie_chart.setVisible(false);
     }
     
-    public void switchToPieChart() {
+    private void switchToPieChart() {
         line_chart.setVisible(false);
         pie_chart.setVisible(true);
         
         
     }
     
+    /**
+     * Switches the main view to the Intro view.
+     */
     public void switchToIntro() {
         course_view.setVisible(false);
         intro_view.setVisible(true);
         section_view.setVisible(false);
     }
     
+    /**
+     * Switches the main view to the Course view.
+     */
     public void switchToCourse() {
         course_view.setVisible(true);
         intro_view.setVisible(false);
@@ -337,6 +418,9 @@ public class HistoryController {
         switchToLineChart();
     }
     
+    /**
+     * Switches the main view to the Section view.
+     */
     public void switchToSection() {
         course_view.setVisible(false);
         intro_view.setVisible(false);
@@ -356,7 +440,9 @@ public class HistoryController {
                     .load(getClass().getClassLoader().getResource(
                             "view/roster/gradebook_screen.fxml"));
             gradebook_view.setCenter(gradebookPage);
-        } catch (IOException e) {
+        } 
+        
+        catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -370,6 +456,10 @@ public class HistoryController {
         gradebook_view.setVisible(false);
     }
     
+    /**
+     * A button containing a reference to the specific Roster (section) that it references.
+     *
+     */
     private class SectionButton extends ToggleButton {
         
         private Roster section;
@@ -422,6 +512,9 @@ public class HistoryController {
         }
     }
     
+    /**
+     * Builds the piechart located in the section view.
+     */
     private void fillSectionPie(Roster section) {
         int temp;
         

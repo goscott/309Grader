@@ -76,6 +76,9 @@ public class HistoryDB implements Serializable {
         return history;
     }
     
+    /**
+     * Serializes the HistoryDB to History/data.hdb.
+     */
     public boolean save() {
         File direc = new File("History");
         

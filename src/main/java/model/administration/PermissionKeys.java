@@ -3,6 +3,21 @@ package model.administration;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Contains a list of specific components of the GraderTool that have restricted access for some users.
+ * 
+ * If you want to restrict access to one of your views: 
+ *      1) Add a new PermissionKey value.
+ *      2) Look at the PermissionKeys.getKeys() method and add your key to whichever Users you want to have access to it.
+ *      3) Now you can check if the current user has access to your key by calling: 
+ *      
+ *          if(Grader.getUser().getPermissions().contains(PermissionKeys.MY_KEY)) {
+ *              //show item
+ *          }
+ * 
+ * @author Mason S
+ *
+ */
 public enum PermissionKeys {
     
     /**
@@ -38,6 +53,14 @@ public enum PermissionKeys {
     //END
     ;
     
+    /**
+     * Given a user type character (See UserTypes.java) this returns a default configuration of 
+     * permission keys in an ArrayList.
+     */
+    /*@
+          requires
+              UserTypes.isValidType(userType);
+     @*/
     public static ArrayList<PermissionKeys> getKeys(char userType) {
         ArrayList<PermissionKeys> result = new ArrayList<PermissionKeys>();
         PermissionKeys[] list = {};

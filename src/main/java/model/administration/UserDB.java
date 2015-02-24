@@ -33,8 +33,14 @@ public class UserDB {
     //private static final String DATABASE = "model/administration/users.udb";
     private static final String DATABASE = "LoginData/users.udb";
     
+    /**
+     * The path to the file containing the username of the last user who logged in.
+     */
     private static final String LOGIN = "LoginData/login.txt";
     
+    /**
+     * Directory for login.txt.
+     */
     private static final String DIR = "LoginData";
     
     /**
@@ -78,8 +84,6 @@ public class UserDB {
                 targetFile.createNewFile();
             }
 
-            //reader = new BufferedReader(new FileReader(targetFile));
-            //reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(DATABASE)));
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(targetFile)));
             
             while ((line = reader.readLine()) != null) {
@@ -103,14 +107,10 @@ public class UserDB {
      * Overwrites the db file with the current list of users
      */
     private void updateDB() {
-        //BufferedWriter writer = null;
-        //File userData = new File(DATABASE);
         PrintWriter writer;
-        //userData.delete();
 
         try {
             writer = new PrintWriter(new File(DATABASE));
-            //writer = new PrintWriter(new File(this.getClass().getClassLoader().getResource(DATABASE).getPath()));
             
             for (User newUser : users) {
                 // add the user to the db file
@@ -275,6 +275,11 @@ public class UserDB {
         return null;
     }
     
+    /**
+     * Writes the current user's id to login.txt. 
+     * This will cause the login screen to remember the id
+     * of the user who logged in last.
+     */
     private void updateLogin(String id) {
         File file;
         PrintWriter writer;

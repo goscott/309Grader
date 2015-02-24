@@ -35,6 +35,9 @@ public class User {
      */
     private char type;
     
+    /**
+     * Custom configuration of permission keys.
+     */
     private ArrayList<PermissionKeys> permissions;
 
     /**
@@ -153,6 +156,10 @@ public class User {
         return false;
     }
     
+    /**
+     * Returns this user's custom permission key configuration, 
+     * or the default configuration if this user does not have one set.
+     */
     public ArrayList<PermissionKeys> getPermissions() {
         
         if (permissions == null) {
@@ -164,6 +171,9 @@ public class User {
         }
     }
     
+    /**
+     * Adds a new permission key to this user's list of permissions.
+     */
     public void addPermission(PermissionKeys key) {
         
         if (permissions == null) {
@@ -173,6 +183,9 @@ public class User {
         permissions.add(key);
     }
     
+    /**
+     * Removes key from this user's list of permissions.
+     */
     public void removePermission(PermissionKeys key) {
         
     }
