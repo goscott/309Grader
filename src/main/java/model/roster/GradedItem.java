@@ -182,6 +182,15 @@ public class GradedItem implements Serializable {
 	/**
 	 * Returns the instance of the child with the given name
 	 */
+	/*@
+	 	(\exists GradedItem child ; child.name().equals(name) 
+	 		&& children.contains(child))
+	 			==> child.equals(\result))
+	 		||
+	 	!(\exists GradedItem child ; child.name().equals(name) 
+	 		&& children.contains(child))
+	 			==> (\result == null)
+	@*/
 	public GradedItem getChild(String name) {
 		for (GradedItem child : children) {
 			if (child.name().equals(name)) {
