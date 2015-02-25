@@ -131,6 +131,7 @@ public class Curve implements Serializable {
         return null;
     }
     
+    @Override
     public String toString() {
         String result = "";
         boolean first = true;

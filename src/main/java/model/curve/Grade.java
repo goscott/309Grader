@@ -11,7 +11,6 @@ public class Grade implements Comparable<Grade>, Serializable {
     /** auto Generated serial ID */
     private static final long serialVersionUID = -8509411443331361582L;
     /** Grade Name */
-    //private final SimpleStringProperty name;
     private final String name;
     /** Maximum percentage required */
     private double max;
@@ -47,7 +46,7 @@ public class Grade implements Comparable<Grade>, Serializable {
     
     @Override
     public boolean equals(Object obj) {
-        return this.overlap((Grade) obj);
+        return this.name.equals(((Grade) obj).name);
     }
     
     /**
