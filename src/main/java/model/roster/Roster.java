@@ -429,7 +429,7 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public boolean containsStudent(String id) {
-		return students.contains(id);
+		return students.contains(new Student("noname", id));
 	}
 
 	/**
@@ -507,7 +507,7 @@ public class Roster implements Serializable {
 	 * @return boolean true if they are logically equal
 	 */
 	public boolean equals(Object other) {
-		if ((other == null) || !(other instanceof GradedItem)) {
+		if ((other == null) || (other instanceof GradedItem)) {
 			return false;
 		}
 		Roster rost = (Roster) other;
@@ -516,7 +516,8 @@ public class Roster implements Serializable {
 				|| rost.getSection() != section
 				|| !rost.getQuarter().equals(quarter)
 				|| !rost.getStartDate().equals(startDate)
-				|| !rost.getEndDate().equals(endDate)
+				|| (rost.getEndDate() == null && endDate == null)
+				|| (rost.getEndDate() != null && !rost.getEndDate().equals(endDate))
 				|| rost.getAssignments().size() != assignments.size()
 				|| rost.numStudents() != students.size()) {
 			return false;

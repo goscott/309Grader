@@ -1,7 +1,12 @@
 package testing.history;
 
 import static org.junit.Assert.*;
+
+import java.util.Calendar;
+
 import model.history.CourseHistory;
+import model.roster.Roster;
+import model.roster.Student;
 
 import org.junit.Test;
 
@@ -57,6 +62,7 @@ public class CourseHistoryTestJUnit {
         assertEquals("startYear should be initialized to -1", -1, history.getStartYear());
         assertEquals("endYear should be initialized to -1", -1, history.getEndYear());
         assertEquals("numSectionsTaught should be initialized to 0", 0, history.getNumSectionsTaught());
+        assertEquals("totalStudents should be initialized to 0", 0, history.getTotalStudents());
     }
     
     /**
@@ -64,7 +70,21 @@ public class CourseHistoryTestJUnit {
      */
     @Test
     public void testAddRoster() {
-        fail("Not yet implemented");
+        CourseHistory history = new CourseHistory("CSC 01");
+        Roster roster = new Roster("CSC 01", "Bob", 1, "Spring", 
+                Calendar.getInstance(), Calendar.getInstance());
+        roster.addStudent(new Student("Student1", "1"));
+        
+        history.addRoster(roster);
+        assertEquals("Roster was added more than once.", 1, history.getHistory().size());
+        assertEquals("Added roster does not equal retrieved roster.", true, roster.equals(history.getHistory().get(0)));
+        assertEquals("numSectionsTaught was not incremented", 1, history.getNumSectionsTaught());
+        assertEquals("totalStudents was not incremented", 1, history.getTotalStudents());
+        
+        history.addRoster(roster);
+        assertEquals("Roster was added more than once.", 1, history.getHistory().size());
+        assertEquals("numSectionsTaught is incorrect", 1, history.getNumSectionsTaught());
+        assertEquals("totalStudents is incorrect", 1, history.getTotalStudents());
     }
     
     /**
@@ -72,7 +92,14 @@ public class CourseHistoryTestJUnit {
      */
     @Test
     public void testRemoveCourse() {
-        fail("Not yet implemented");
+        CourseHistory history = new CourseHistory("CSC 01");
+        Roster roster = new Roster("CSC 01", "Bob", 1, "Spring", 
+                Calendar.getInstance(), null);
+        
+        history.addRoster(roster);
+        history.removeCourse(roster);
+
+        assertEquals("Roster was not removed.", 0, history.getHistory().size());
     }
     
     /**

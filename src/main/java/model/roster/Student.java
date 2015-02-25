@@ -192,7 +192,12 @@ public class Student implements Comparable<Student>, Serializable {
 	public boolean equals(Object other) {
 		if ((other != null) && (other instanceof Student)) {
 			Student oth = (Student) other;
-			return oth.getName().equals(name) && oth.getId().equals(id);
+			//return oth.getName().equals(name) && oth.getId().equals(id);
+			return oth.getId().equals(id);
+		}
+		else if((other != null) && (other instanceof String)) {
+		    String oth = (String) other;
+		    return oth.equals(id);
 		}
 		return false;
 	}

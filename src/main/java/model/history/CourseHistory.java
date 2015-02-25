@@ -69,6 +69,7 @@ public class CourseHistory implements Serializable {
 	    startYear = -1;
 	    endYear = -1;
 	    numSectionsTaught = 0;
+	    totalStudents = 0;
 	}
 	
 	/**
@@ -124,7 +125,7 @@ public class CourseHistory implements Serializable {
             (\result == history)
         );
     @*/
-	public Collection<Roster> getHistory () {
+	public ArrayList<Roster> getHistory () {
 		return history;
 	}
 	
