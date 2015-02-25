@@ -130,6 +130,13 @@ public class CourseHistory implements Serializable {
 	}
 	
 	/**
+	 * Returns the hidden course history.
+	 */
+	public ArrayList<Roster> getHidden() {
+	    return hidden;
+	}
+	
+	/**
 	 * Adds a course to the history.
 	 * @param newCourse the course to add.
 	 */

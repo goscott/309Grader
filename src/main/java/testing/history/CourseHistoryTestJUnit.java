@@ -107,7 +107,16 @@ public class CourseHistoryTestJUnit {
      */
     @Test
     public void testHideCourse() {
-        fail("Not yet implemented");
+        CourseHistory history = new CourseHistory("CSC 01");
+        Roster roster = new Roster("CSC 01", "Bob", 1, "Spring", 
+                Calendar.getInstance(), null);
+        
+        history.addRoster(roster);
+        history.hideCourse(roster);
+        
+        assertEquals("Roster was not moved from history to hidden", 0, history.getHistory().size());
+        assertEquals("Roster did not appear in hidden", 1, history.getHidden().size());
+        assertEquals("Roster does not equal the roster in history", true, history.getHidden().get(0).equals(roster));
     }
     
     /**
@@ -115,7 +124,16 @@ public class CourseHistoryTestJUnit {
      */
     @Test
     public void testUnHideCourse() {
-        fail("Not yet implemented");
+        CourseHistory history = new CourseHistory("CSC 01");
+        Roster roster = new Roster("CSC 01", "Bob", 1, "Spring", 
+                Calendar.getInstance(), null);
+        
+        history.addRoster(roster);
+        history.unHideCourse(roster);
+        
+        assertEquals("Roster did not appear in history", 1, history.getHistory().size());
+        assertEquals("Roster was not moved from hidden to history", 0, history.getHidden().size());
+        assertEquals("Roster does not equal the roster in history", true, history.getHistory().get(0).equals(roster));
     }
     
     /**
@@ -123,7 +141,11 @@ public class CourseHistoryTestJUnit {
      */
     @Test
     public void testRepeat() {
-        fail("Not yet implemented");
+        testConstructor();
+        testAddRoster();
+        testRemoveCourse();
+        testHideCourse();
+        testUnHideCourse();
     }
     
     /**
@@ -131,7 +153,22 @@ public class CourseHistoryTestJUnit {
      */
     @Test
     public void testAddRemove1000() {
-        fail("Not yet implemented");
+        CourseHistory history = new CourseHistory("CSC 01");
+        int addAmount = 1000;
+        
+        
+        for (int count = 0; count < addAmount; count++) {
+            history.addRoster(new Roster("CSC 01", "Bob", count, "Spring", Calendar.getInstance(), null));
+        }
+        
+        assertEquals("Not all 1000 rosters were added to history.", 1000, history.getHistory().size());
+        
+        for (int count = 0; count < addAmount; count++) {
+            assertEquals("Not all 1000 rosters match", true, 
+                    history.getHistory().get(count).equals(
+                            new Roster(
+                                    "CSC 01", "Bob", count, "Spring", Calendar.getInstance(), null)));
+        }
     }
 
 }
