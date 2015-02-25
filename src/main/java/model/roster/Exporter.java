@@ -108,9 +108,9 @@ public class Exporter {
 							: minColWidth);
 			row = 1;
 			for (Student student : students) {
-				if (item.getStudentGrade(student) != null) {
+				if (item.getStudentScore(student) != null) {
 					sheet.addCell(new Number(column, row++, item
-							.getStudentGrade(student), times));
+							.getStudentScore(student), times));
 				}
 			}
 			column++;

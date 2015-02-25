@@ -536,7 +536,7 @@ public class Roster implements Serializable {
 	public Double getStudentGrade(Student student, String asgn) {
 		for (GradedItem item : assignments) {
 			if (item.name().equals(asgn)) {
-				return item.getStudentGrade(student);
+				return item.getStudentScore(student);
 			}
 		}
 		return null;
@@ -561,8 +561,8 @@ public class Roster implements Serializable {
 		double total = 0;
 		for (GradedItem item : assignments) {
 			if (item.hasChildren()) {
-				total += item.getStudentGrade(student) != null ? item
-						.getStudentGrade(student) : 0;
+				total += item.getStudentScore(student) != null ? item
+						.getStudentScore(student) : 0;
 			}
 		}
 		return total;

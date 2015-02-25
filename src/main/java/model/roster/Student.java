@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import model.administration.PermissionKeys;
 import model.administration.User;
-import model.administration.UserTypes;
 import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;

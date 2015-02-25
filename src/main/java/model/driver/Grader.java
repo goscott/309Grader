@@ -17,8 +17,7 @@ import model.roster.Roster;
 import model.roster.Student;
 
 /**
- * Main class for the program. Holds references 
- * to each roster.
+ * Main class for the program. Holds references to each roster.
  * 
  * @author Gavin Scott
  */
@@ -35,7 +34,7 @@ public class Grader {
 	private static HistoryDB history = loadHistory();
 	/** A database of all users **/
 	private static UserDB userDB = new UserDB();
-	
+
 	private static HistoryController historyTab;
 
 	/**
@@ -57,95 +56,102 @@ public class Grader {
 
 	/**
 	 * Sets the current user of the Grader tool
-	 * @param newUser the new user
+	 * 
+	 * @param newUser
+	 *            the new user
 	 */
 	public static void setUser(User newUser) {
-		Debug.log("New User", newUser.getfName() + " " + newUser.getlName() + " logged in");
+		Debug.log("New User", newUser.getfName() + " " + newUser.getlName()
+				+ " logged in");
 		user = newUser;
 	}
-	
+
 	/**
 	 * Gets the current user of the Grader tool
+	 * 
 	 * @return User the current user
 	 */
 	public static User getUser() {
 		Debug.log("Grader Accessed", "Current User checked");
 		return user;
 	}
-	
+
 	/**
 	 * Gets the user database.
+	 * 
 	 * @return Returns the static UserDB object held by this class.
 	 */
 	public static UserDB getUserDB() {
-	    return userDB;
+		return userDB;
 	}
-	
+
 	/**
 	 * Sets a reference to the current history tab controller.
 	 */
 	public static void setHistoryController(HistoryController newHC) {
-	    historyTab = newHC;
+		historyTab = newHC;
 	}
-	
+
 	/**
-     * Gets a reference to the current history tab controller.
-     */
+	 * Gets a reference to the current history tab controller.
+	 */
 	public static HistoryController getHistoryController() {
-	    return historyTab;
+		return historyTab;
 	}
-	
+
 	/**
 	 * Gets the history database.
 	 */
 	public static HistoryDB getHistoryDB() {
-	    //history = new HistoryDB();
-	    return history;
+		// history = new HistoryDB();
+		return history;
 	}
-	
+
 	private static HistoryDB loadHistory() {
-        File database = new File("History/data.hdb");
-        HistoryDB toReturn = null;
-        
-        if (database.exists())
-        {
-    	    try 
-            {
-                ObjectInputStream obj = new ObjectInputStream(new FileInputStream(database));
-                toReturn = (HistoryDB) obj.readObject();
-                obj.close();
-    
-            } 
-            
-            catch (Exception e) {
-                Debug.log("IO Error", e.toString());
-                toReturn = new HistoryDB();
-            }
-        }
-        
-        else {
-            toReturn = new HistoryDB();
-        }
-        
-        return toReturn;
+		File database = new File("History/data.hdb");
+		HistoryDB toReturn = null;
+
+		if (database.exists()) {
+			try {
+				ObjectInputStream obj = new ObjectInputStream(
+						new FileInputStream(database));
+				toReturn = (HistoryDB) obj.readObject();
+				obj.close();
+
+			}
+
+			catch (Exception e) {
+				Debug.log("IO Error", e.toString());
+				toReturn = new HistoryDB();
+			}
+		}
+
+		else {
+			toReturn = new HistoryDB();
+		}
+
+		return toReturn;
 	}
-	
+
 	/**
 	 * Sets the curve of the current roster
-	 * @param curve the new curve
+	 * 
+	 * @param curve
+	 *            the new curve
 	 */
 	public static void setCurve(Curve curve) {
 		currentRoster.setCurve(curve);
 	}
-	
+
 	/**
 	 * Gets the curve of the current roster
+	 * 
 	 * @return the current roster's curve
 	 */
 	public static Curve getCurve() {
 		return currentRoster.getCurve();
 	}
-	
+
 	/**
 	 * Gets the currently seleected roster
 	 * 
@@ -156,14 +162,15 @@ public class Grader {
 	}
 
 	/**
-	 * Gets the maximum points possible for all
-	 * assignments in the current roster
+	 * Gets the maximum points possible for all assignments in the current
+	 * roster
+	 * 
 	 * @return double the max points
 	 */
 	public static double getMaxPoints() {
 		return currentRoster.getMaxPoints();
 	}
-	
+
 	/**
 	 * Adds a new class to the class list, but does not change the currently
 	 * selected roster
@@ -187,10 +194,10 @@ public class Grader {
 		);
 	@*/
 	public static void addRoster(Roster newRoster) {
-		//if(!classList.contains(newRoster)) {
-			classList.add(newRoster);
-			Debug.log("Grader model updated", "New roster registered");
-		//}
+		// if(!classList.contains(newRoster)) {
+		classList.add(newRoster);
+		Debug.log("Grader model updated", "New roster registered");
+		// }
 	}
 
 	/**
@@ -234,11 +241,12 @@ public class Grader {
 		currentRoster.addStudent(student);
 		Debug.log("Grader model updated", "Student added to current roster");
 	}
-	
+
 	/**
-	 * Checks if a student is enrolled in the currently
-	 * seleted roster
-	 * @param student the student in question
+	 * Checks if a student is enrolled in the currently seleted roster
+	 * 
+	 * @param student
+	 *            the student in question
 	 * @return boolean true if the student is enrolled
 	 */
 	public static boolean studentEnrolled(Student student) {
@@ -271,7 +279,7 @@ public class Grader {
 		currentRoster.addAssignment(item);
 		Debug.log("Grader model updated", "Assignment added to current roster");
 	}
-	
+
 	/**
 	 * Adds an assigment to the current roster
 	 * 
@@ -279,7 +287,8 @@ public class Grader {
 	 *            the GradedItem that will be added to the roster
 	 */
 	public static GradedItem getAssignment(String asgn) {
-		Debug.log("Grader model accessed", "Assignment pulled from current roster");
+		Debug.log("Grader model accessed",
+				"Assignment pulled from current roster");
 		return currentRoster.getAssignment(asgn);
 	}
 
@@ -311,12 +320,12 @@ public class Grader {
 	 	);
 	 @*/
 	public static void addScore(Student student, String asgn, double score) {
-		//currentRoster.getStudentByID(student.getId()).setScore(asgn, score);
+		// currentRoster.getStudentByID(student.getId()).setScore(asgn, score);
 		currentRoster.addScore(student, getAssignment(asgn), score);
 		Debug.log("Grader model updated", "Score added -> " + student.getName()
 				+ " has score " + score + " on " + asgn + '.');
 	}
-	
+
 	/**
 	 * Changes a student's score on an assignment in the currently selected
 	 * roster as a percentage
@@ -344,8 +353,10 @@ public class Grader {
 	 		getAssignment(asgn).score() == percent/100*getAssignment(asgn).maxScore()
 	 	);
 	 @*/
-	public static void addPercentageScore(Student student, String asgn, double percent) {
-		currentRoster.getStudentByID(student.getId()).setPercentScore(asgn, percent);
+	public static void addPercentageScore(Student student, String asgn,
+			double percent) {
+		currentRoster.getStudentByID(student.getId()).setPercentScore(asgn,
+				percent);
 		Debug.log("Grader model updated", "Score added");
 	}
 
@@ -361,8 +372,9 @@ public class Grader {
 	 */
 	public static Double getScore(Student student, String asgn) {
 		Debug.log("Grader model accessed", "Student score retrieved");
-		return currentRoster.getStudentByID(student.getId()).getAssignmentScore(asgn);
-		//return currentRoster.getScore(student, asgn);
+		return currentRoster.getStudentByID(student.getId())
+				.getAssignmentScore(asgn);
+		// return currentRoster.getScore(student, asgn);
 	}
 
 	/**
@@ -374,8 +386,10 @@ public class Grader {
 	public static ObservableList<Student> getStudentList() {
 		Debug.log("Grader model accessed", "Student list retrieved");
 		ObservableList<Student> data = FXCollections.observableArrayList();
-		for (Student s : currentRoster.getStudents()) {
-			data.add(s);
+		if (currentRoster != null) {
+			for (Student s : currentRoster.getStudents()) {
+				data.add(s);
+			}
 		}
 		return data;
 	}
@@ -413,8 +427,7 @@ public class Grader {
 	}
 
 	/**
-	 * Loads a roster file from a file if it was not already
-	 * loaded
+	 * Loads a roster file from a file if it was not already loaded
 	 */
 	public static void importRoster(File file) {
 		Debug.log("Import", "Attempting to load " + file.getName());

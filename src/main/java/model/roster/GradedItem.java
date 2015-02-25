@@ -247,16 +247,24 @@ public class GradedItem implements Serializable {
 	 * Sets another assignment as the parent of this GradedItem, and marks this
 	 * assignment as a child of the new parent. It also removes itself from its
 	 * old parent's list of children.
-	 * 
-	 * @param newParent
-	 *            The new parent assignment
 	 */
+	/*@
+		ensures(
+			newParent.getChildren().contains(this)
+				&&
+			parent.equals(newParent)
+				&&
+			!(\old(parent).getChildren().contains(this))
+		);
+	 @*/
 	public void setParent(GradedItem newParent) {
 		if (parent != null) {
 			parent.removeChild(this);
 		}
 		parent = newParent;
-		newParent.addChild(this);
+		if(newParent != null) {
+			newParent.addChild(this);
+		}
 	}
 
 	/**
@@ -333,13 +341,13 @@ public class GradedItem implements Serializable {
 	 * the "leaves" underneath it in the assignment heirarchy
 	 */
 	// TODO WRITE COMPLICATED JML
-	public Double getStudentGrade(Student student) {
+	public Double getStudentScore(Student student) {
 		if (children.isEmpty()) {
 			return studentGrades.get(student);
 		} else {
 			Double score = null;
 			for (GradedItem child : children) {
-				Double childGrade = child.getStudentGrade(student);
+				Double childGrade = child.getStudentScore(student);
 				if (childGrade != null) {
 					if (score == null) {
 						score = childGrade;
@@ -356,12 +364,19 @@ public class GradedItem implements Serializable {
 	 * Assigns a score on this assignment to a student
 	 */
 	/*@
+	 	requires(
+	 		children.isEmpty()
+	 			&&
+	 		sc >= 0 && sc <= maxScore
+	 	);
 	 	ensures(
 	 		studentGrades.get(student).equals(sc)
 	 	);
 	 @*/
 	public void setStudentScore(Student student, Double sc) {
-		studentGrades.put(student, sc);
+		if(children.isEmpty() && sc <= maxScore && sc >= 0) {
+			studentGrades.put(student, sc);
+		}
 	}
 
 	/**

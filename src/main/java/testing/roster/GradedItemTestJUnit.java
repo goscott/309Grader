@@ -2,6 +2,7 @@ package testing.roster;
 
 import static org.junit.Assert.*;
 import model.roster.GradedItem;
+import model.roster.Student;
 
 import org.junit.Test;
 /**
@@ -13,6 +14,9 @@ import org.junit.Test;
 public class GradedItemTestJUnit
 {
 
+	/**
+	 * @author Gavin Scott
+	 */
     @Test
     public void testMaxScore()
     {
@@ -37,6 +41,9 @@ public class GradedItemTestJUnit
 
     }
     
+    /**
+	 * @author Gavin Scott
+	 */
     @Test
     public void testAddChild() {
         GradedItem parent1 = new GradedItem("parent1", "", 100, false);
@@ -72,4 +79,94 @@ public class GradedItemTestJUnit
             fail("Children not being removed from parents correctly");
     }
 
+    /**
+	 * @author Gavin Scott
+	 */
+    @Test
+    public void testSetParent() {
+    	GradedItem parent1 = new GradedItem("parent1", "", 100, false);
+        GradedItem parent2 = new GradedItem("parent2", "", 100, false);
+        GradedItem child = new GradedItem("child", "", 100, parent1, false);
+        
+        assertEquals(child.getParent(), parent1);
+        assertTrue(parent1.getChildren().contains(child));
+        assertFalse(parent2.getChildren().contains(child));
+        
+        child.setParent(parent2);
+        
+        assertEquals(child.getParent(), parent2);
+        assertTrue(parent2.getChildren().contains(child));
+        assertFalse(parent1.getChildren().contains(child));
+        
+        child.setParent(null);
+        
+        assertEquals(child.getParent(), null);
+        assertFalse(parent1.getChildren().contains(child));
+        assertFalse(parent2.getChildren().contains(child));
+        
+        child.setParent(parent1);
+        
+        assertEquals(child.getParent(), parent1);
+        assertTrue(parent1.getChildren().contains(child));
+        assertFalse(parent2.getChildren().contains(child));
+    }
+    
+    /**
+     * @author Gavin Scott
+     */
+    @Test
+    public void testGetStudentGrade() {
+    	GradedItem grandparent = new GradedItem("parent1", "", 100, false);
+        GradedItem parent1 = new GradedItem("child", "", 100, grandparent, false);
+        GradedItem parent2 = new GradedItem("child", "", 100, grandparent, false);
+        GradedItem parent3 = new GradedItem("child", "", 100, grandparent, false);
+        GradedItem child1 = new GradedItem("child", "", 100, parent1, false);
+        GradedItem child2 = new GradedItem("child", "", 100, parent1, false);
+        GradedItem child3 = new GradedItem("child", "", 100, parent1, false);
+        Student student = new Student("student", "12345");
+        
+        assertEquals(grandparent.getStudentScore(student), null);
+        assertEquals(parent1.getStudentScore(student), null);
+        assertEquals(parent2.getStudentScore(student), null);
+        assertEquals(parent3.getStudentScore(student), null);
+        assertEquals(child1.getStudentScore(student), null);
+        assertEquals(child2.getStudentScore(student), null);
+        assertEquals(child3.getStudentScore(student), null);
+        
+        child1.setStudentScore(student, 100.0);
+        
+        assertEquals(grandparent.getStudentScore(student), new Double(100));
+        assertEquals(parent1.getStudentScore(student), new Double(100));
+        assertEquals(parent2.getStudentScore(student), null);
+        assertEquals(parent3.getStudentScore(student), null);
+        assertEquals(child1.getStudentScore(student), new Double(100));
+        assertEquals(child2.getStudentScore(student), null);
+        assertEquals(child3.getStudentScore(student), null);
+    }
+    
+    /**
+     * @author Gavin Scott
+     */
+    @Test
+    public void testSetStudentScore() {
+    	GradedItem item = new GradedItem("child", "", 100, null, false);
+        Student student = new Student("student", "12345");
+        
+        assertEquals(item.getStudentScore(student), null);
+        
+        item.setStudentScore(student, new Double(300));
+        assertEquals(item.getStudentScore(student), null);
+        
+        item.setStudentScore(student, new Double(-300));
+        assertEquals(item.getStudentScore(student), null);
+        
+        item.setStudentScore(student, new Double(100));
+        assertEquals(item.getStudentScore(student), new Double(100));
+        
+        item.setStudentScore(student, new Double(0));
+        assertEquals(item.getStudentScore(student), new Double(0));
+        
+        item.setStudentScore(student, new Double(45.87));
+        assertEquals(item.getStudentScore(student), new Double(45.87));
+    }
 }
