@@ -51,7 +51,8 @@ public class Roster implements Serializable {
 	private Calendar endDate = Calendar.getInstance();
 
 	/**
-	 * Contructs a roster from the given information
+	 * Contructs a roster from the given information. If startDate or 
+	 * endDate are null, they are set to the current day.
 	 */
 	public Roster(String name, String instructor, int section, String quarter,
 			Calendar startDate, Calendar endDate) {
