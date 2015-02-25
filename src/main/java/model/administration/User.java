@@ -63,6 +63,14 @@ public class User {
      * @param newType A new user type. (See UserTypes.java)
      * @return Returns true if the edit was successful.
      */
+    /*@
+          ensures
+              UserTypes.isValidType(newType) ==> (type == newType && \result = true)
+              
+              &&
+              
+              !UserTypes.isValidType(newType) ==> \result == false;
+     @*/
     public boolean editType(char newType) {
         Debug.log("model", "User.editType() invoked.");
         if (UserTypes.isValidType(newType)) {
@@ -147,6 +155,17 @@ public class User {
      * @param other Some other user.
      * @return Returns true if this user and other have matching ids.
      */
+    /*@
+            requires
+                other != null;
+            
+            ensures
+                (other.getId().equals(id)) ==> (\result == true)
+                
+                &&
+                
+                (!other.getId().equals(id)) ==> (\result == false);
+     */
     public boolean equals(User other) {
 
         if (other.getId().equals(id)) {
@@ -174,6 +193,14 @@ public class User {
     /**
      * Adds a new permission key to this user's list of permissions.
      */
+    /*@
+              ensures
+                  (\old(permissions) == null) ==> (permissions != null)
+                  
+                  &&
+                  
+                  (\old(permissions) != null) ==> (permissions.contains(key));
+     @*/
     public void addPermission(PermissionKeys key) {
         
         if (permissions == null) {
@@ -186,6 +213,10 @@ public class User {
     /**
      * Removes key from this user's list of permissions.
      */
+    /*@
+          ensures
+              (\old(permissions).contains(key)) ==> (!permissions.contains(key));
+     @*/
     public void removePermission(PermissionKeys key) {
         
     }

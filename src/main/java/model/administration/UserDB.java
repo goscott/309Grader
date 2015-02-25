@@ -60,6 +60,10 @@ public class UserDB {
     /**
      * Loads a list of users into the db.
      */
+    /*@
+          ensures
+              users != null;
+     @*/
     private void loadUserDB() {
         File directory;
         File targetFile;
@@ -106,6 +110,10 @@ public class UserDB {
     /**
      * Overwrites the db file with the current list of users
      */
+    /*@
+          ensures
+              (new UserDB()).getUsers().equals(users);
+     @*/
     private void updateDB() {
         PrintWriter writer;
 
@@ -132,6 +140,13 @@ public class UserDB {
      * @param newUser A user to add.
      * @return Returns true if the add was successful.
      */
+    /*@
+          requires
+              newUser != null;
+              
+          ensures
+              (!\old(users.contains(newUser)) ==> (users.contains(newUser));
+     @*/
     public boolean addUser(User newUser, boolean doUpdate) {
         Debug.log("model", "UserDB.addUser() invoked.");
         
@@ -160,6 +175,10 @@ public class UserDB {
      * @param target A user to remove.
      * @return Returns true if the remove was successful. 
      */
+    /*@
+          ensures
+              (\old(users).contains(target)) ==> (!users.contains(target));
+     @*/
     public boolean removeUser(User target) {
         Debug.log("model", "UserDB.removeUser() invoked.");
         
@@ -280,6 +299,14 @@ public class UserDB {
      * This will cause the login screen to remember the id
      * of the user who logged in last.
      */
+    /*@
+          requires 
+              id != null
+              
+              &&
+              
+              !id.equals("");
+     @*/
     private void updateLogin(String id) {
         File file;
         PrintWriter writer;
@@ -302,6 +329,10 @@ public class UserDB {
      * Logs the current user out.
      * @return Returns true if the logout was successful.
      */
+    /*@
+          ensures
+              \result == true;
+     @*/
     public boolean logout() {
         Debug.log("model", "UserDB.logout() invoked");
         
