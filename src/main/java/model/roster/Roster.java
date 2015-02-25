@@ -74,6 +74,11 @@ public class Roster implements Serializable {
 	 * 
 	 * @return String the course name
 	 */
+	/*@
+	 	ensures(
+			\result.equals(courseName)
+		);
+	@*/
 	public String courseName() {
 		return courseName;
 	}
@@ -83,6 +88,11 @@ public class Roster implements Serializable {
 	 * 
 	 * @return String the instructor
 	 */
+	/*@
+	 	ensures(
+			\result.equals(instructor)
+		);
+	@*/
 	public String getInstructor() {
 		return instructor;
 	}
@@ -92,6 +102,11 @@ public class Roster implements Serializable {
 	 * 
 	 * @return int the section
 	 */
+	/*@
+	 	ensures(
+			\result == section
+		);
+	@*/
 	public int getSection() {
 		return section;
 	}
@@ -101,6 +116,11 @@ public class Roster implements Serializable {
 	 * 
 	 * @return String the quarter
 	 */
+	/*@
+	 	ensures(
+			\result.equals(quarter)
+		);
+	@*/
 	public String getQuarter() {
 		return quarter;
 	}
@@ -110,6 +130,11 @@ public class Roster implements Serializable {
 	 * 
 	 * @return Date the starting date
 	 */
+	/*@
+	 	ensures(
+			\result.equals(startDate)
+		);
+	@*/
 	public Calendar getStartDate() {
 		return startDate;
 	}
@@ -117,6 +142,13 @@ public class Roster implements Serializable {
 	/**
 	 * returns a String representation of the start date.
 	 */
+	/*@
+	 	ensures(
+			\result.equals(startDate.get(Calendar.MONTH) + "/" +
+				startDate.get(Calendar.DAY_OF_MONTH) + "/" + 
+				startDate.get(Calendar.YEAR))
+		);
+	@*/
 	public String getStartDateString() {
 		String result = "";
 
@@ -132,6 +164,11 @@ public class Roster implements Serializable {
 	 * 
 	 * @return Date the ending date
 	 */
+	/*@
+	 	ensures(
+			\result.equals(startDate)
+		);
+	@*/
 	public Calendar getEndDate() {
 		return endDate;
 	}
@@ -139,6 +176,13 @@ public class Roster implements Serializable {
 	/**
 	 * returns a String representation of the start date.
 	 */
+	/*@
+	 	ensures(
+			\result.equals(endDate.get(Calendar.MONTH) + "/" +
+				endDate.get(Calendar.DAY_OF_MONTH) + "/" + 
+				endDate.get(Calendar.YEAR))
+		);
+	@*/
 	public String getEndDateString() {
 		String result = "";
 

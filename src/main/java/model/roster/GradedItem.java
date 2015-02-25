@@ -227,6 +227,13 @@ public class GradedItem implements Serializable {
 	 * @param item
 	 *            the child assignment to be removed
 	 */
+	/*@
+		ensures(
+			!children.contains(item)
+				&&
+			item.parent == null
+		);
+	@*/
 	public void removeChild(GradedItem item) {
 		if (children.contains(item)) {
 			item.parent = null;
@@ -239,6 +246,11 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return boolean true if the assignment has a parent
 	 */
+	/*@
+	 	ensures(
+	 		\result == (parent != null)
+	 	);
+	@*/
 	public boolean hasParent() {
 		return parent != null;
 	}
@@ -248,6 +260,11 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return GradedItem the parent
 	 */
+	/*@
+	 	ensures(
+	 		\result.equals(parent)
+	 	);
+	@*/
 	public GradedItem getParent() {
 		return parent;
 	}
@@ -282,6 +299,12 @@ public class GradedItem implements Serializable {
 	 * @param other
 	 *            The other Object
 	 */
+	/*@
+		ensures(
+			((other != null) && (other instanceof GradedItem))
+				==> (\result == other.name().equals(name))
+		);
+	@*/
 	public boolean equals(Object other) {
 		if ((other != null) && (other instanceof GradedItem)) {
 			GradedItem oth = (GradedItem) other;
@@ -295,6 +318,11 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return GradedItem the copy
 	 */
+	/*@
+		ensures(
+			\result.equals(this)
+		);
+	@*/
 	public GradedItem copy() {
 		return new GradedItem(name, descr, parent, maxScore, extraCredit);
 	}
@@ -304,6 +332,11 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return boolean true if it is extra credit
 	 */
+	/*@
+	 	ensures(
+			\result == extraCredit
+		);
+	@*/
 	public boolean isExtraCredit() {
 		return extraCredit;
 	}
@@ -331,6 +364,9 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return String the assignment as a String
 	 */
+	/*@
+		\result.equals(name)
+	@*/
 	public String toString() {
 		String ret = "Name: ";
 		if (parent != null)
@@ -341,7 +377,7 @@ public class GradedItem implements Serializable {
 		for (GradedItem child : children) {
 			ret += " " + child.name();
 		}
-		return ret;
+		return name;
 	}
 
 	/**
