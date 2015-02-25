@@ -1,7 +1,12 @@
 package testing.history;
 
+import static org.junit.Assert.*;
+import model.history.CourseHistory;
+
+import org.junit.Test;
+
 /**
- * Class CourseHistoryTest is the companion testing class for class CourseHistory.
+ * Class CourseHistoryTestJUnit is the companion testing class for class CourseHistory.
  * 
  * The CourseHistory class keeps track all Roster objects (different sections) for a single course that are no longer current. It has several important methods:
  *      -addRoster()
@@ -9,7 +14,7 @@ package testing.history;
  *      -hideCourse()
  *      -unhideCourse()
  *      
- * CourseHistoryTest implements the following module test plan:
+ * CourseHistoryTestJUnit implements the following module test plan:
  * 
  *      Phase 1: Unit Test the constructor. 
  *      
@@ -36,25 +41,70 @@ package testing.history;
  *      
  * @author Mason Stevenson
  */
-public class CourseHistoryTest {
+public class CourseHistoryTestJUnit {
+
+    /**
+     * Phase 1.
+     */
+    @Test
+    public void testConstructor() {
+        String name = "Course 1";
+        
+        CourseHistory history = new CourseHistory(name);
+        
+        assertEquals("Course History is not empty following construction", true, history.getHistory().isEmpty());
+        assertEquals("Course history name does not match: " + name, name, history.getCourseName());
+        assertEquals("startYear should be initialized to -1", -1, history.getStartYear());
+        assertEquals("endYear should be initialized to -1", -1, history.getEndYear());
+        assertEquals("numSectionsTaught should be initialized to 0", 0, history.getNumSectionsTaught());
+    }
     
+    /**
+     * Phase 2.
+     */
+    @Test
     public void testAddRoster() {
-        
+        fail("Not yet implemented");
     }
     
-    public void testGetHistory() {
-        
-    }
-    
+    /**
+     * Phase 3.
+     */
+    @Test
     public void testRemoveCourse() {
-        
+        fail("Not yet implemented");
     }
     
+    /**
+     * Phase 4.
+     */
+    @Test
     public void testHideCourse() {
-        
+        fail("Not yet implemented");
     }
     
+    /**
+     * Phase 5.
+     */
+    @Test
     public void testUnHideCourse() {
-        
+        fail("Not yet implemented");
     }
+    
+    /**
+     * Phase 6.
+     */
+    @Test
+    public void testRepeat() {
+        fail("Not yet implemented");
+    }
+    
+    /**
+     * Phase 7.
+     */
+    @Test
+    public void testAddRemove1000() {
+        fail("Not yet implemented");
+    }
+
 }

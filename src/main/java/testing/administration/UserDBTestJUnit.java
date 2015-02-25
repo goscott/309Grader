@@ -1,11 +1,11 @@
 package testing.administration;
 
-import model.administration.User;
-import model.administration.UserDB;
-import model.administration.UserTypes;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
- * Class UserDBTest is the companion testing class for class UserDb.
+ * Class UserDBTestJUnit is the companion testing class for class UserDb.
  * 
  * The UserDB class keeps track of all currently users currently registered for GraderTool. It has several important methods:
  *      -loadUserDB()
@@ -19,7 +19,7 @@ import model.administration.UserTypes;
  *  The goal for testing UserDB is to make sure that any time the state of the UserDB changes, 
  *  this file gets updated, reflects the changes, and has no other data added or removed.
  *  
- *  UserDBTest implements the following module test plan:
+ *  UserDBTestJUnit implements the following module test plan:
  *  
  *      Phase 1: Unit Test the constructor.
  *          
@@ -63,29 +63,84 @@ import model.administration.UserTypes;
  *          1) A user object is only returned if the username + password combination is correct. 2) The correct User 
  *          object is returned. 3) Otherwise null is returned.
  *  
- *      Phase 6: Repeat phases 1 through 5
+ *      Phase 8: Repeat phases 1 through 5
  *      
- *      Phase 7: Stress test by adding and removing 10000 Users
+ *      Phase 9: Stress test by adding and removing 10000 Users
  * 
  * @author Mason Stevenson
  */
-public class UserDBTest {
-    UserDB users = new UserDB();
-    User me = new User("Mason", "Stevenson", "msteve07", "password", UserTypes.USER_STUDENT);
+public class UserDBTestJUnit {
+
+    /**
+     * Phase 1.
+     */
+    @Test
+    public void testConstructor() {
+        fail("Not yet implemented");
+    }
     
+    /**
+     * Phase 2.
+     */
+    @Test
+    public void testLoadUserDB() {
+        fail("Not yet implemented");
+    }
+    
+    /**
+     * Phase 3.
+     */
+    @Test
+    public void testUpdateDB() {
+        fail("Not yet implemented");
+    }
+    
+    /**
+     * Phase 4.
+     */
+    @Test
     public void testAddUser() {
-        
+        fail("Not yet implemented");
     }
     
+    /**
+     * Phase 5.
+     */
+    @Test
+    public void testRemoveUser() {
+        fail("Not yet implemented");
+    }
+    
+    /**
+     * Phase 6.
+     */
+    @Test
     public void testEditUserType() {
-        
+        fail("Not yet implemented");
     }
     
-    public void testGet() {
-        
-    }
-    
+    /**
+     * Phase 7.
+     */
+    @Test
     public void testLogin() {
-        
+        fail("Not yet implemented");
     }
+    
+    /**
+     * Phase 8.
+     */
+    @Test
+    public void testRepeat() {
+        fail("Not yet implemented");
+    }
+    
+    /**
+     * Phase 9.
+     */
+    @Test
+    public void testAddRemove10000() {
+        fail("Not yet implemented");
+    }
+
 }
