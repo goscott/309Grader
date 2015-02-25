@@ -1,6 +1,5 @@
 package model.roster;
 
-import java.awt.event.ItemEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,7 +9,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
 
 import model.curve.Curve;
@@ -61,8 +59,13 @@ public class Roster implements Serializable {
 		this.instructor = instructor;
 		this.section = section;
 		this.quarter = quarter;
-		this.startDate = startDate;
-		this.endDate = endDate;
+		
+		if (startDate != null) {
+			this.startDate = startDate;
+		}
+		if (endDate != null) {
+			this.endDate = endDate;
+		}
 
 		students = new ArrayList<Student>();
 		assignments = new ArrayList<GradedItem>();
@@ -282,7 +285,7 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public void dropStudent(Student student) {
-		if(student != null) {
+		if (student != null) {
 			Server.removeRosterFromUser(student, this);
 			students.remove(student);
 			for (GradedItem item : assignments) {
@@ -345,9 +348,8 @@ public class Roster implements Serializable {
 	}
 
 	/**
-	 * Gets a reference to the assignment with the given
-	 * name in the roster. If the assignment doesn't exist
-	 * the returned value is null
+	 * Gets a reference to the assignment with the given name in the roster. If
+	 * the assignment doesn't exist the returned value is null
 	 */
 	/*@
 		ensures(
@@ -377,10 +379,8 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public void addScore(Student student, GradedItem asgn, double score) {
-		if (students.contains(student)
-				&& assignments.contains(asgn)
-				&& score >= 0
-				&& score <= asgn.maxScore()) {
+		if (students.contains(student) && assignments.contains(asgn)
+				&& score >= 0 && score <= asgn.maxScore()) {
 			Student stud = students.get(students.indexOf(student));
 			stud.setScore(asgn.name(), score);
 			asgn.setStudentScore(student, score);
@@ -429,7 +429,7 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public boolean containsStudent(String id) {
-		return students.contains(new Student("noname", id));
+		return students.contains(new Student("temp", id));
 	}
 
 	/**
@@ -503,35 +503,15 @@ public class Roster implements Serializable {
 
 	/**
 	 * Checks this roster with an object for equality
-	 * 
-	 * @return boolean true if they are logically equal
 	 */
 	public boolean equals(Object other) {
-		if ((other == null) || (other instanceof GradedItem)) {
+		if ((other == null) || !(other instanceof Roster)) {
 			return false;
 		}
 		Roster rost = (Roster) other;
-		if (!rost.courseName().equals(courseName)
-				|| !rost.getInstructor().equals(instructor)
-				|| rost.getSection() != section
-				|| !rost.getQuarter().equals(quarter)
-				|| !rost.getStartDate().equals(startDate)
-				|| (rost.getEndDate() == null && endDate == null)
-				|| (rost.getEndDate() != null && !rost.getEndDate().equals(endDate))
-				|| rost.getAssignments().size() != assignments.size()
-				|| rost.numStudents() != students.size()) {
-			return false;
-		}
-		ArrayList<GradedItem> rostAsgn = rost.getAssignments();
-		for (GradedItem item : assignments) {
-			if (!rostAsgn.contains(item))
-				return false;
-		}
-		for (String id : ids.keySet()) {
-			if (!rost.containsStudent(id))
-				return false;
-		}
-		return true;
+		return rost.courseName().equals(courseName)
+				&& rost.getSection() == section
+				&& rost.getQuarter().equals(quarter);
 	}
 
 	/**
@@ -710,13 +690,14 @@ public class Roster implements Serializable {
 	}
 
 	/**
-	 * Returns a list of students that are not both in the roster and 
-	 * assoiated with the roster on the server side.
+	 * Returns a list of students that are not both in the roster and assoiated
+	 * with the roster on the server side.
 	 * 
-	 * @param extraLocal if extraLocal is true, the function returns a
-	 * list of students that are in the local roster and not in the
-	 * server. If it is false, it returns a list of students that are
-	 * in the server and not the local roster.
+	 * @param extraLocal
+	 *            if extraLocal is true, the function returns a list of students
+	 *            that are in the local roster and not in the server. If it is
+	 *            false, it returns a list of students that are in the server
+	 *            and not the local roster.
 	 */
 	public ArrayList<Student> rosterSynch(boolean extraLocal) {
 		ArrayList<Student> list = new ArrayList<Student>();
@@ -737,7 +718,7 @@ public class Roster implements Serializable {
 		}
 		return list;
 	}
-	
+
 	public void export() {
 		Exporter.exportRoster(this);
 	}
