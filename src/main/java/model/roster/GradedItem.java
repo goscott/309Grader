@@ -276,8 +276,7 @@ public class GradedItem implements Serializable {
 	public boolean equals(Object other) {
 		if ((other != null) && (other instanceof GradedItem)) {
 			GradedItem oth = (GradedItem) other;
-			return oth.name().equals(name) && oth.descr().equals(descr);
-			// && (oth.score() == score);
+			return oth.name().equals(name);
 		}
 		return false;
 	}

@@ -255,4 +255,29 @@ public class GradedItemTestJUnit
         assertEquals(null, item.getStudentScore(student));
         assertEquals(null, item.getStudentScore(student2));
     }
+    
+    /**
+     * @author Gavin Scott
+     */
+    @Test
+    public void testEquals() {
+    	GradedItem item = new GradedItem("test", "descr", 50, false);
+    	GradedItem item2 = new GradedItem("test", "descr", 100, false);
+    	GradedItem item3 = new GradedItem("test", "descr", 50, true);
+    	GradedItem item4 = new GradedItem("test", "", 50, false);
+    	GradedItem item5 = new GradedItem("test", "", 100, true);
+    	
+    	GradedItem item6 = new GradedItem("Test", "descr", 50, false);
+    	Student student = new Student("name", "12345");
+    	
+    	assertEquals(item, item);
+    	assertEquals(item, item2);
+    	assertEquals(item, item3);
+    	assertEquals(item, item4);
+    	assertEquals(item, item5);
+    	
+    	assertFalse(item.equals(item6));
+    	assertFalse(item.equals(student));
+    	assertFalse(item.equals(null));
+    }
 }
