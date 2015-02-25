@@ -115,7 +115,7 @@ public class GradedItemTestJUnit
      * @author Gavin Scott
      */
     @Test
-    public void testGetStudentGrade() {
+    public void testGetStudentScore() {
     	GradedItem grandparent = new GradedItem("parent1", "", 100, false);
         GradedItem parent1 = new GradedItem("child", "", 100, grandparent, false);
         GradedItem parent2 = new GradedItem("child", "", 100, grandparent, false);
@@ -168,5 +168,91 @@ public class GradedItemTestJUnit
         
         item.setStudentScore(student, new Double(45.87));
         assertEquals(item.getStudentScore(student), new Double(45.87));
+    }
+    
+    /**
+     * @author Gavin Scott
+     */
+    @Test
+    public void testAddStudent() {
+    	GradedItem item = new GradedItem("child", "", 100, null, false);
+        Student student = new Student("student", "12345");
+        Student student2 = new Student("student", "123456");
+ 
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
+        
+        item.addStudent(null);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
+        
+        item.addStudent(student);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
+        
+        item.addStudent(student);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
+        
+        item.addStudent(student2);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
+        
+        item.addStudent(student);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
+        
+        item.addStudent(null);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
+    }
+    
+    /**
+     * @author Gavin Scott
+     */
+    @Test
+    public void testRemoveStudent() {
+    	GradedItem item = new GradedItem("child", "", 100, null, false);
+        Student student = new Student("student", "12345");
+        Student student2 = new Student("student", "123456");
+        
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
+        
+        item.removeStudent(student);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
+        
+        item.addStudent(student);
+        item.addStudent(student2);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
+        
+        item.setStudentScore(null, 10.0);
+        item.setStudentScore(student, 20.0);
+        item.setStudentScore(student2, 30.0);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(new Double(20), item.getStudentScore(student));
+        assertEquals(new Double(30), item.getStudentScore(student2));
+        
+        item.removeStudent(student);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(new Double(30), item.getStudentScore(student2));
+        
+        item.removeStudent(student2);
+        assertEquals(null, item.getStudentScore(null));
+        assertEquals(null, item.getStudentScore(student));
+        assertEquals(null, item.getStudentScore(student2));
     }
 }

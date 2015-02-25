@@ -262,7 +262,7 @@ public class GradedItem implements Serializable {
 			parent.removeChild(this);
 		}
 		parent = newParent;
-		if(newParent != null) {
+		if (newParent != null) {
 			newParent.addChild(this);
 		}
 	}
@@ -342,21 +342,25 @@ public class GradedItem implements Serializable {
 	 */
 	// TODO WRITE COMPLICATED JML
 	public Double getStudentScore(Student student) {
-		if (children.isEmpty()) {
-			return studentGrades.get(student);
-		} else {
-			Double score = null;
-			for (GradedItem child : children) {
-				Double childGrade = child.getStudentScore(student);
-				if (childGrade != null) {
-					if (score == null) {
-						score = childGrade;
-					} else {
-						score += childGrade;
+		if (student != null) {
+			if (children.isEmpty()) {
+				return studentGrades.get(student);
+			} else {
+				Double score = null;
+				for (GradedItem child : children) {
+					Double childGrade = child.getStudentScore(student);
+					if (childGrade != null) {
+						if (score == null) {
+							score = childGrade;
+						} else {
+							score += childGrade;
+						}
 					}
 				}
+				return score;
 			}
-			return score;
+		} else {
+			return null;
 		}
 	}
 
@@ -374,7 +378,7 @@ public class GradedItem implements Serializable {
 	 	);
 	 @*/
 	public void setStudentScore(Student student, Double sc) {
-		if(children.isEmpty() && sc <= maxScore && sc >= 0) {
+		if (children.isEmpty() && sc <= maxScore && sc >= 0) {
 			studentGrades.put(student, sc);
 		}
 	}
@@ -391,7 +395,26 @@ public class GradedItem implements Serializable {
 		);
 	@*/
 	public void removeStudent(Student student) {
-		if (!studentGrades.containsKey(student)) {
+		if (studentGrades.containsKey(student)) {
+			studentGrades.remove(student);
+		}
+	}
+
+	/**
+	 * Adds a student to the list of grades. Grade is initialized to null
+	 */
+	/*@
+		requires(
+			studentGrades.contains(student)
+				&&
+			student != null
+		);
+		ensures(
+			!studentGrades.contains(student)
+		);
+	@*/
+	public void addStudent(Student student) {
+		if (student != null && !studentGrades.containsKey(student)) {
 			studentGrades.remove(student);
 		}
 	}

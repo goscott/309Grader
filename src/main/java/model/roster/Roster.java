@@ -187,7 +187,7 @@ public class Roster implements Serializable {
 			student.setRoster(this);
 			ids.put(student.getId(), student);
 			for (GradedItem item : assignments) {
-				item.setStudentScore(student, null);
+				item.addStudent(student);
 			}
 		}
 	}
