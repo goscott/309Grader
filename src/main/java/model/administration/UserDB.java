@@ -25,13 +25,11 @@ public class UserDB {
      * A list of all registered users.
      */
     private ArrayList<User> users;
-    //private static final String DATABASE = "src/main/java/model/administration/users.udb";
     
     /**
      * Relative (from project root) path to the file containing user info.
      */
-    //private static final String DATABASE = "model/administration/users.udb";
-    private static final String DATABASE = "LoginData/users.udb";
+    private static String DATABASE = "users.udb";
     
     /**
      * The path to the file containing the username of the last user who logged in.
@@ -54,7 +52,15 @@ public class UserDB {
     public UserDB() {
         Debug.log("model", "UserDB Created");
         loadUserDB();
-        //print();
+    }
+    
+    /**
+     * Constructor for UserDB. Sets a custom database filename.
+     */
+    public UserDB(String fileName) {
+        Debug.log("model", "UserDB Created");
+        DATABASE = fileName;
+        loadUserDB();
     }
 
     /**
@@ -75,7 +81,7 @@ public class UserDB {
         users = new ArrayList<User>();
 
         directory = new File(DIR);
-        targetFile = new File(DATABASE);
+        targetFile = new File(DIR + "/" + DATABASE);
 
         try {
             
@@ -118,7 +124,7 @@ public class UserDB {
         PrintWriter writer;
 
         try {
-            writer = new PrintWriter(new File(DATABASE));
+            writer = new PrintWriter(new File(DIR + "/" + DATABASE));
             
             for (User newUser : users) {
                 // add the user to the db file
