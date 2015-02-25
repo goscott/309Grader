@@ -3,7 +3,6 @@ package testing.curve;
 /**
  * 
  * @author Frank Poole
- *
  */
 public class GradeTest {
     
