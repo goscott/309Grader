@@ -24,6 +24,15 @@ public class HistoryDB implements Serializable {
      * Adds a roster to the history db.
      * @param newRoster A roster to add.
      */
+    /*@
+         ensures
+             (!\old(this).hasCourse(newRoster.courseName()) ==> hasCourse(newRoster.courseName))
+             
+              &&
+              
+              (getCourseHistory(newRoster.courseName()).getHistory().contains(newRoster));
+     
+     @*/
     public void addRoster(Roster newRoster) {
         
         //check to see if the CourseHistory exists in the db
@@ -41,6 +50,16 @@ public class HistoryDB implements Serializable {
      * @param courseName The target course.
      * @return Returns true if the course is in the HistoryDB
      */
+    /*@
+            ensures
+                  ((\exists CourseHistory target; history.contains(target); target.getCourseName().equals(courseName)) 
+                       ==> (\result == true))
+                   &&
+                   
+                   ((\exists CourseHistory target; history.contains(target); !target.getCourseName().equals(courseName)) 
+                       ==> (\result == false))
+                   ;
+     @*/
     public boolean hasCourse(String courseName) {
         
         for (CourseHistory target : history) {
@@ -79,6 +98,14 @@ public class HistoryDB implements Serializable {
     /**
      * Serializes the HistoryDB to History/data.hdb.
      */
+    /*@
+         ensures
+             Grader.loadHistory().equals(this) ==> \result == true
+             
+             &&
+             
+             !Grader.loadHistory().equals(this) ==> \result == false
+     @*/
     public boolean save() {
         File direc = new File("History");
         

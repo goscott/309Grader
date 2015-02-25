@@ -107,7 +107,7 @@ public class Grader {
 		return history;
 	}
 
-	private static HistoryDB loadHistory() {
+	public static HistoryDB loadHistory() {
 		File database = new File("History/data.hdb");
 		HistoryDB toReturn = null;
 

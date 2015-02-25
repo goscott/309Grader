@@ -49,6 +49,19 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
      * Compares the QuarterAverages chronologically. 
      * Eg: Spring 2012 < Spring 2013 and Summer 2015 < Winter 2015
      */
+    /*@
+           requires
+                 otherAverage != null;
+             
+            ensures
+                otherAverage.getYear() != year ==> \result == year - otherAverage.getYear()
+                
+                &&
+                
+                otherAverage.getYear() == year ==> 
+                    \result == (new ArrayList<String>(Arrays.asList(new String[]{"Spring", "Summer", "Fall", "Winter"}))).indexOf(quarter) 
+                        - (new ArrayList<String>(Arrays.asList(new String[]{"Spring", "Summer", "Fall", "Winter"}))).indexOf(otherAverage.getQuarter())
+     @*/
     public int compareTo(QuarterAverage otherAverage) {
         ArrayList<String> quarters = new ArrayList<String>(Arrays.asList(new String[]{"Spring", "Summer", "Fall", "Winter"}));
         
