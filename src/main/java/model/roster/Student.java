@@ -28,6 +28,15 @@ public class Student implements Comparable<Student>, Serializable {
 	/**
 	 * Makes a student without a roster
 	 */
+	/*@
+	     ensures(
+	         this.name.equals(name)
+	             &&
+	         this.id.equals(id)
+	             &&
+	         this.roster == null
+	     );
+	@*/
 	public Student(String name, String id) {
 		this(name, id, null);
 	}
@@ -35,6 +44,15 @@ public class Student implements Comparable<Student>, Serializable {
 	/**
 	 * Creates a student with the given information
 	 */
+	/*@
+        ensures(
+            this.name.equals(name)
+                &&
+            this.id.equals(id)
+                &&
+            this.roster == roster
+        );
+    @*/
 	public Student(String name, String id, Roster roster) {
 		this.roster = roster;
 		this.name = name;
