@@ -42,6 +42,19 @@ public class GradedItem implements Serializable {
 	 * @param descr
 	 *            the assignment's description
 	 */
+	/*@
+	 	ensures(
+	 		this.name.equals(name)
+	 			&&
+	 		this.descr.equals(descr)
+	 			&&
+	 		this.maxScore == maxScore
+	 			&&
+	 		this.extraCredit == extraCredit
+	 			&&
+	 		this.parent == null
+	 	);
+	@*/
 	public GradedItem(String name, String descr, double maxScore,
 			boolean extraCredit) {
 		this(name, descr, null, maxScore, extraCredit);
@@ -58,6 +71,19 @@ public class GradedItem implements Serializable {
 	 * @param parent
 	 *            The assignment's parent assignment or category
 	 */
+	/*@
+	 	ensures(
+	 		this.name.equals(name)
+	 			&&
+	 		this.descr.equals(descr)
+	 			&&
+	 		this.maxScore == maxScore
+	 			&&
+	 		this.extraCredit == extraCredit
+	 			&&
+	 		this.parent.equals(parent)
+	 	);
+	@*/
 	public GradedItem(String name, String descr, double maxScore,
 			GradedItem parent, boolean extraCredit) {
 		this(name, descr, parent, maxScore, extraCredit);
@@ -75,6 +101,19 @@ public class GradedItem implements Serializable {
 	 * @param score
 	 *            The assignment's score
 	 */
+	/*@
+	 	ensures(
+	 		this.name.equals(name)
+	 			&&
+	 		this.descr.equals(descr)
+	 			&&
+	 		this.maxScore == maxScore
+	 			&&
+	 		this.extraCredit == extraCredit
+	 			&&
+	 		this.parent.equals(parent)
+	 	);
+	@*/
 	public GradedItem(String name, String descr, GradedItem parent,
 			double maxScore, boolean extraCredit) {
 		children = new ArrayList<GradedItem>();
@@ -98,6 +137,11 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return String the name of the assignment
 	 */
+	/*@
+		ensures(
+			\result.equals(name)
+		);
+	@*/
 	public String name() {
 		return name;
 	}
@@ -107,6 +151,11 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return String the description of the assignment
 	 */
+	/*@
+		ensures(
+			\result.equals(descr)
+		);
+	@*/
 	public String descr() {
 		return descr;
 	}
@@ -116,6 +165,11 @@ public class GradedItem implements Serializable {
 	 * 
 	 * @return double the max score of the assignment
 	 */
+	/*@
+		ensures(
+			\result == maxScore
+		);
+	@*/
 	public double maxScore() {
 		return maxScore;
 	}
@@ -203,6 +257,11 @@ public class GradedItem implements Serializable {
 	/**
 	 * Returns the number of children for this GradedItem
 	 */
+	/*@
+		ensures(
+			\result == children.size()
+		);
+	@*/
 	public int numChildren() {
 		return children.size();
 	}
@@ -210,6 +269,11 @@ public class GradedItem implements Serializable {
 	/**
 	 * Gets all the children of this graded item
 	 */
+	/*@
+		ensures(
+			\result.equals(children)
+		);
+	@*/
 	public ArrayList<GradedItem> getChildren() {
 		return children;
 	}
@@ -217,6 +281,11 @@ public class GradedItem implements Serializable {
 	/**
 	 * Returns whether or not this assignment has any children
 	 */
+	/*@
+		ensures(
+			\result == children.isEmpty()
+		);
+	@*/
 	public boolean hasChildren() {
 		return children.isEmpty();
 	}
@@ -348,6 +417,11 @@ public class GradedItem implements Serializable {
 	 *            The lit of assignments
 	 * @return A String representing the assignment, which can be saved
 	 */
+	/*@
+	 	requires(
+	 		assignments != null
+	 	);
+	@*/
 	public static String Save(List<GradedItem> assignments) {
 		String toReturn = "";
 		char secret = 1;
@@ -384,7 +458,14 @@ public class GradedItem implements Serializable {
 	 * Gets a student's grade on this assignment, calculated as a sum of all of
 	 * the "leaves" underneath it in the assignment heirarchy
 	 */
-	// TODO WRITE COMPLICATED JML
+	/*@
+		requires(
+			student != null
+		);
+		ensures(
+			\result.equals(getStudentScore(student))
+		);
+	@*/
 	public Double getStudentScore(Student student) {
 		if (student != null) {
 			if (children.isEmpty()) {

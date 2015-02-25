@@ -38,19 +38,18 @@ public class Server {
 	}
 
 	/**
-	 * Searches the server for a student with the given ID. Returns
-	 * the student if they exist in the server, or null if they do
-	 * not.
+	 * Searches the server for a student with the given ID. Returns the student
+	 * if they exist in the server, or null if they do not.
 	 */
 	public static Student findStudent(String id) {
-		for(Student student : students) {
-			if(student.getId().equals(id)) {
+		for (Student student : students) {
+			if (student.getId().equals(id)) {
 				return student;
 			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets the list of all students stored in the server and turns the
 	 * ArrayList to an ObservableList.
@@ -212,52 +211,57 @@ public class Server {
 	 * Gets a student from the server by their name
 	 */
 	public static Student getStudentByName(String name) {
-		for(Student student : students) {
-			if(student.getName().equals(name)) {
+		for (Student student : students) {
+			if (student.getName().equals(name)) {
 				return student;
 			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Associates a roster with this user
 	 */
 	public static void addRosterToUser(Student student, Roster roster) {
 
-		if (associatedClasses != null 
+		if (associatedClasses != null
 				&& associatedClasses.get(student) != null
 				&& !associatedClasses.get(student)
 						.contains(roster.courseName())) {
-			Debug.log("Server updated", student.getName() + " associated with " + roster.courseName());
+			Debug.log("Server updated", student.getName() + " associated with "
+					+ roster.courseName());
 			associatedClasses.get(student).add(roster.courseName());
 		} else {
-			Debug.log("Error", "Null roster associated with student : removal failed");
+			Debug.log("Error",
+					"Null roster associated with student : removal failed");
 		}
 	}
 
 	/**
 	 * Gets a list of all students associated with a roster (in the server)
 	 */
-	public static ArrayList<Student> getStudentsAssociatedWithRoster(Roster roster) {
+	public static ArrayList<Student> getStudentsAssociatedWithRoster(
+			Roster roster) {
 		ArrayList<Student> list = new ArrayList<Student>();
-		for(Student student : associatedClasses.keySet()) {
-			if(associatedClasses.get(student).contains(roster.courseName())) {
+		for (Student student : associatedClasses.keySet()) {
+			if (associatedClasses.get(student).contains(roster.courseName())) {
 				list.add(student);
 			}
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Disassociates a roster with this user
 	 */
 	public static void removeRosterFromUser(Student student, Roster roster) {
 		if (associatedClasses.get(student) != null) {
-			Debug.log("Server updated", student.getName() + " no longer associated with " + roster.courseName());
+			Debug.log("Server updated", student.getName()
+					+ " no longer associated with " + roster.courseName());
 			associatedClasses.get(student).remove(roster.courseName());
 		} else {
-			Debug.log("Error", "Null roster associated with student : removal failed");
+			Debug.log("Error",
+					"Null roster associated with student : removal failed");
 		}
 	}
 
@@ -268,7 +272,7 @@ public class Server {
 		Debug.log("Server", "Announcement stored in server");
 		Roster roster = Grader.getRoster();
 		ArrayList<Announcement> anns;
-		if(rosterAnnouncements.get(roster.courseName()) != null) {
+		if (rosterAnnouncements.get(roster.courseName()) != null) {
 			anns = rosterAnnouncements.get(roster.courseName());
 		} else {
 			anns = new ArrayList<Announcement>();
@@ -276,14 +280,18 @@ public class Server {
 		anns.add(announcement);
 		rosterAnnouncements.put(roster.courseName(), anns);
 	}
-	
+
 	/**
 	 * Gets all announcements associated with a roster
 	 */
-	public static ArrayList<Announcement> getAssociatedAnnouncements(Roster roster) {
-		return rosterAnnouncements.get(roster.courseName());
+	public static ArrayList<Announcement> getAssociatedAnnouncements(
+			Roster roster) {
+		if (rosterAnnouncements != null && roster != null) {
+			return rosterAnnouncements.get(roster.courseName());
+		}
+		return new ArrayList<Announcement>();
 	}
-	
+
 	/**
 	 * Populates the server's list of students
 	 */
@@ -296,15 +304,15 @@ public class Server {
 		students.add(new Student("Mason Stevenson", "87123"));
 		students.add(new Student("Michael Lenz", "98012"));
 		students.add(new Student("Jacob Hardi", "01968"));
-		
+
 		associatedClasses = new HashMap<Student, ArrayList<String>>();
 		for (Student student : students) {
 			associatedClasses.put(student, new ArrayList<String>());
 		}
-		
+
 		Debug.log("Initializing Server", "Students Loaded");
 	}
-	
+
 	/**
 	 * Populates the servers list of announcements
 	 */
@@ -312,7 +320,7 @@ public class Server {
 		rosterAnnouncements = new HashMap<String, ArrayList<Announcement>>();
 		Debug.log("Initializing Server", "Announcements Loaded");
 	}
-	
+
 	/**
 	 * Populates the server with some default students
 	 */
@@ -321,24 +329,24 @@ public class Server {
 		initializeStudents();
 		initializeAnnouncements();
 	}
-	
+
 	/**
 	 * Saves the announcements stored in the server
 	 */
 	private static void backupAnnouncements() {
 		Debug.log("Server Backup", "Announcements backed up");
 	}
-	
+
 	/**
 	 * Saves the associated classes stored in the server
 	 */
 	private static void backupAssociatedClasses() {
 		Debug.log("Server Backup", "Class associations backed up");
 	}
-	
+
 	/**
-	 * Commits the new server data to files so they will be preserved
-	 * between runs of the program
+	 * Commits the new server data to files so they will be preserved between
+	 * runs of the program
 	 */
 	public static void backup() {
 		Debug.log("Server Backup", "Starting backup...");
