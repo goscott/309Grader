@@ -25,7 +25,6 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param min the minimum percentage required
      */
     public Grade(String name, double max, double min) {
-        //this.name = new SimpleStringProperty(name);
         this.name = name;
         this.set(max, min);
     }
@@ -44,6 +43,11 @@ public class Grade implements Comparable<Grade>, Serializable {
         else {
             return Double.compare(this.max, other.max);
         }
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return this.overlap((Grade) obj);
     }
     
     /**
