@@ -1,5 +1,6 @@
 package model.roster;
 
+import java.awt.event.ItemEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -199,9 +200,14 @@ public class Roster implements Serializable {
 	 * @param curve
 	 *            the new curve
 	 */
-	/*
-	 
-	 */
+	/*@
+		requires(
+			curve != null
+		);
+		ensures(
+			this.curve.equals(curve)
+		);
+	@*/
 	public void setCurve(Curve curve) {
 		if (curve != null) {
 			this.curve = curve;
@@ -213,6 +219,11 @@ public class Roster implements Serializable {
 	 * 
 	 * @return the curve
 	 */
+	/*@
+		ensures(
+			\result.equals(curve)
+		);
+	@*/
 	public Curve getCurve() {
 		return curve;
 	}
@@ -224,8 +235,23 @@ public class Roster implements Serializable {
 	 * @param student
 	 *            the new student
 	 */
+	/*@
+		requires(
+			student != null
+				&&
+			!students.contains(student)
+		);
+		ensures(
+			students.contains(student)
+				&&
+			(\forall GradedItem item ; assignments.contains(item) ;
+				item.getStudentScore(student) == null)
+				&&
+			Server.getStudentsAssociatedWithRoster(this).contains(student)
+		);
+	@*/
 	public void addStudent(Student student) {
-		if (student != null) {
+		if (student != null && !students.contains(student)) {
 			Server.addRosterToUser(student, this);
 			students.add(student);
 			student.setRoster(this);
@@ -242,11 +268,26 @@ public class Roster implements Serializable {
 	 * @param asgn
 	 *            The GradedItem being added to the roster
 	 */
+	/*@
+		requires(
+			student != null
+		);
+		ensures(
+			!students.contains(student)
+				&&
+			(\forall GradedItem item ; assignments.contains(item) ;
+				item.getStudentScore(student) == null)
+				&&
+			!Server.getStudentsAssociatedWithRoster(this).contains(student)
+		);
+	@*/
 	public void dropStudent(Student student) {
-		Server.removeRosterFromUser(student, this);
-		students.remove(student);
-		for (GradedItem item : assignments) {
-			item.removeStudent(student);
+		if(student != null) {
+			Server.removeRosterFromUser(student, this);
+			students.remove(student);
+			for (GradedItem item : assignments) {
+				item.removeStudent(student);
+			}
 		}
 	}
 
@@ -256,6 +297,16 @@ public class Roster implements Serializable {
 	 * @param asgn
 	 *            The GradedItem being added to the roster
 	 */
+	/*@
+		requires(
+			asgn != null
+				&&
+			!assignments.contains(asgn)
+		);
+		ensures(
+			assignments.contains(asgn)
+		);
+	@*/
 	public void addAssignment(GradedItem asgn) {
 		if (asgn != null && !assignments.contains(asgn)) {
 			assignments.add(asgn);
@@ -263,11 +314,23 @@ public class Roster implements Serializable {
 	}
 
 	/**
-	 * Drop an assignment to the course
-	 * 
-	 * @param asgn
-	 *            The GradedItem being added to the roster
+	 * Drop an assignment from the course
 	 */
+	/*@
+		requires(
+			asgn != null
+				&&
+			assignments.contains(asgn)
+		);
+		ensures(
+			(\forall GradedItem item ; \old(asgn).getChildren().contains(item) ;
+				!asgn.getChildren().contains(item))
+				&&
+			!assignments.contains(asgn)
+				&&
+			!assignments.get(assignments.indexOf(\old(asgn).getParent())).getChildren().contains(asgn)
+		);
+	@*/
 	public void dropAssignment(GradedItem asgn) {
 		if (asgn != null && assignments.contains(asgn)) {
 			for (GradedItem child : asgn.getChildren()) {
@@ -282,31 +345,37 @@ public class Roster implements Serializable {
 	}
 
 	/**
-	 * Gets a reference to the assignment with the given name in the roster, if
-	 * it exists
-	 * 
-	 * @param name
-	 *            the assignment name that will be searched for.
-	 * @return GradedItem the GradedItem in the roster with that name
+	 * Gets a reference to the assignment with the given
+	 * name in the roster. If the assignment doesn't exist
+	 * the returned value is null
 	 */
+	/*@
+		ensures(
+			\result.name().equals(name)
+		);
+	@*/
 	public GradedItem getAssignment(String name) {
-		for (GradedItem item : assignments)
-			if (item.name().equals(name))
-				return item;
-		return null;
+		GradedItem temp = new GradedItem(name, "", 100, false);
+		return assignments.get(assignments.indexOf(temp));
 	}
 
 	/**
 	 * Scores a student for a particular assignment.
-	 * 
-	 * @param student
-	 *            The student being scored
-	 * @param asgn
-	 *            The assignment being scored
-	 * @param score
-	 *            The score that will be recorded in the roster for this
-	 *            particular student and assignment.
 	 */
+	/*@
+		requires(
+			students.contains(student)
+				&&
+			assignments.contains(asgn)
+				&&
+			score >= 0 && score <= asgn.maxScore()
+		);
+		ensures(
+			asgn.getStudentScore(student) == score
+				&&
+			student.getAssignmentScore(asgn.name()) == score
+		);
+	@*/
 	public void addScore(Student student, GradedItem asgn, double score) {
 		if (students.contains(student)
 				&& assignments.contains(asgn)
@@ -320,13 +389,17 @@ public class Roster implements Serializable {
 
 	/**
 	 * Gets the score of a student on an assignment with the given name
-	 * 
-	 * @param student
-	 *            The student in question
-	 * @param asgn
-	 *            The name of the assignment
-	 * @return double the student's score on the assignment
 	 */
+	/*@
+		requires(
+			students.contains(student)
+				&&
+			assignments.contains(asgn)
+		);
+		ensures(
+			\result == student.getAssignmentScore(asgn)
+		);
+	@*/
 	public double getScore(Student student, String asgn) {
 		if (students.contains(student) && assignments.contains(asgn)) {
 			Student stud = students.get(students.indexOf(student));
@@ -337,43 +410,50 @@ public class Roster implements Serializable {
 
 	/**
 	 * Searches for a student by their ID
-	 * 
-	 * @param id
-	 *            the ID of the student
-	 * @return the student, or null if no student with that id exists in the
-	 *         roster
 	 */
+	/*@
+		ensures(
+			\result.equals(ids.get(id))
+		);
+	@*/
 	public Student getStudentByID(String id) {
 		return ids.get(id);
 	}
 
 	/**
 	 * Checks if a student with the given ID exist in the roster
-	 * 
-	 * @param id
-	 *            The ID of the student
-	 * @return boolean true if there is a student with that ID in the roster
 	 */
+	/*@
+		ensures(
+			\result == students.contains(id)
+		);
+	@*/
 	public boolean containsStudent(String id) {
 		return students.contains(id);
 	}
 
 	/**
 	 * Gets the number of students in the roster
-	 * 
-	 * @return int the number of students
 	 */
+	/*@
+		ensures(
+			\result == students.size()
+		);
+	@*/
 	public int numStudents() {
 		return students.size();
 	}
 
 	/**
-	 * Gets all the students in the roster, sorted by name.
-	 * 
-	 * @return A sorted list of all of the students in the roster
+	 * Gets all the students in the roster
 	 */
+	/*@
+		ensures(
+			(\forall Student student ; students.contains(student) ;
+				\result.contains(student))
+		);
+	@*/
 	public ArrayList<Student> getStudents() {
-		Collections.sort(students);
 		return students;
 	}
 
