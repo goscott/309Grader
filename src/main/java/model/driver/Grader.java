@@ -40,6 +40,12 @@ public class Grader {
 	/**
 	 * Initiates a Grader
 	 */
+	/*@
+    ensures(
+        this.currentRoster == null;
+        classList.equals(new ArrayList<Roster>());
+    );
+    @*/
 	private Grader() {
 		currentRoster = null;
 		classList = new ArrayList<Roster>();
@@ -50,6 +56,11 @@ public class Grader {
 	 * 
 	 * @return Grader the Grader (singleton)
 	 */
+	/*@
+    ensures(
+        \result.equals(grader)
+    );
+    @*/
 	public static Grader get() {
 		return grader;
 	}
@@ -60,6 +71,11 @@ public class Grader {
 	 * @param newUser
 	 *            the new user
 	 */
+	/*@
+    ensures(
+        \this.user.equals(newUser)
+    );
+    @*/
 	public static void setUser(User newUser) {
 		Debug.log("New User", newUser.getfName() + " " + newUser.getlName()
 				+ " logged in");
@@ -71,6 +87,11 @@ public class Grader {
 	 * 
 	 * @return User the current user
 	 */
+	/*@
+    ensures(
+        \result.equals(user)
+    );
+    @*/
 	public static User getUser() {
 		Debug.log("Grader Accessed", "Current User checked");
 		return user;
@@ -81,6 +102,11 @@ public class Grader {
 	 * 
 	 * @return Returns the static UserDB object held by this class.
 	 */
+	/*@
+    ensures(
+        \result.equals(userDB)
+    );
+    @*/
 	public static UserDB getUserDB() {
 		return userDB;
 	}
@@ -88,6 +114,11 @@ public class Grader {
 	/**
 	 * Sets a reference to the current history tab controller.
 	 */
+	/*@
+    ensures(
+        \this.historyTab.equals(newHC)
+    );
+    @*/
 	public static void setHistoryController(HistoryController newHC) {
 		historyTab = newHC;
 	}
@@ -95,6 +126,11 @@ public class Grader {
 	/**
 	 * Gets a reference to the current history tab controller.
 	 */
+	/*@
+    ensures(
+        \result.equals(historyTab)
+    );
+    @*/
 	public static HistoryController getHistoryController() {
 		return historyTab;
 	}
@@ -102,11 +138,20 @@ public class Grader {
 	/**
 	 * Gets the history database.
 	 */
+	/*@
+    ensures(
+        \result.equals(history)
+    );
+    @*/
 	public static HistoryDB getHistoryDB() {
 		// history = new HistoryDB();
 		return history;
 	}
-
+	/*@
+    ensures(
+        \result.equals(History/data.hdb)
+    );
+    @*/
 	public static HistoryDB loadHistory() {
 		File database = new File("History/data.hdb");
 		HistoryDB toReturn = null;
@@ -139,6 +184,11 @@ public class Grader {
 	 * @param curve
 	 *            the new curve
 	 */
+	/*@
+    ensures(
+        \this.currentRoster.curve.equals(curve)
+    );
+    @*/
 	public static void setCurve(Curve curve) {
 		currentRoster.setCurve(curve);
 	}
@@ -148,6 +198,11 @@ public class Grader {
 	 * 
 	 * @return the current roster's curve
 	 */
+	/*@
+    ensures(
+        \result.equals(this.currentRoster.curve)
+    );
+    @*/
 	public static Curve getCurve() {
 		return currentRoster.getCurve();
 	}
@@ -157,6 +212,11 @@ public class Grader {
 	 * 
 	 * @return Roster the current roster
 	 */
+	/*@
+    ensures(
+        \result.equals(currentRoster)
+    );
+    @*/
 	public static Roster getRoster() {
 		return currentRoster;
 	}
@@ -167,6 +227,11 @@ public class Grader {
 	 * 
 	 * @return double the max points
 	 */
+	/*@
+    ensures(
+        \result.equals(currentRoster.maxPoints)
+    );
+    @*/
 	public static double getMaxPoints() {
 		return currentRoster.getMaxPoints();
 	}
@@ -207,6 +272,11 @@ public class Grader {
 	 * @param newRoster
 	 *            the new roster
 	 */
+	/*@
+    ensures(
+        \currentRoster.equals(newRoster)
+    );
+    @*/
 	public static void setCurrentRoster(Roster newRoster) {
 		currentRoster = newRoster;
 		Debug.log("Grader model updated", "Current roster changed");
