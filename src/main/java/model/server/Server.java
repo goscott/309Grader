@@ -32,6 +32,11 @@ public class Server {
      * 
      * @return ArrayList<Student> the list of students
      */
+    /*@
+        ensures(
+            \result.equals(students)
+        );
+    @*/
     public static ArrayList<Student> getStudents() {
         Debug.log("Accessing Server", "Students pulled from server");
         return students;
@@ -42,6 +47,11 @@ public class Server {
      * the student if they exist in the server, or null if they do
      * not.
      */
+    /*@ 
+        ensures(
+            (\forall Student student; students.contains(student); student.getId().equals(id))
+        );
+    @*/
     public static Student findStudent(String id) {
         for(Student student : students) {
             if(student.getId().equals(id)) {
@@ -57,11 +67,11 @@ public class Server {
      * 
      * @return ObservableList<Student> the list of students
      */
-    /*
-     * @ requires (\forall student != null);
-     * 
-     * @
-     */
+    /*@ 
+        ensures(
+            (\forall Student student; students.contains(student); studentNames.contains(student.getName()))
+        );
+    @*/
     public static ObservableList<Student> getObservableStudentList() {
         studentNames = FXCollections.observableArrayList();
         for (Student student : students) {
@@ -78,10 +88,10 @@ public class Server {
      * @return ObservableList<Student> the list of students
      */
     /*@ 
-        requires (
-            \forall student != null && roster.contains(student.id) == null
+        ensures(
+            (\forall Student student; students.contains(student); studentNames.contains(student))
         );
-     @*/
+    @*/
     public static ObservableList<Student> getStudentListNotRoster() {
         studentNames = FXCollections.observableArrayList();
         for (Student student : students) {
@@ -99,12 +109,11 @@ public class Server {
      * 
      * @return ObservableList<Student> the list of students
      */
-    /*
-     * @ requires (\forall student != null && roster.contains(student.id) ==
-     * null);
-     * 
-     * @
-     */
+    /*@ 
+        ensures(
+            (\forall Student student; students.contains(student); studentNames.contains(student))
+        );
+    @*/
     public static ObservableList<Student> getStudentListInRoster() {
         studentNames = FXCollections.observableArrayList();
         for (Student student : students) {
@@ -122,11 +131,11 @@ public class Server {
      * 
      * @return ObservableList<Student> the list of student's names.
      */
-    /*
-     * @ requires (\forall student != null);
-     * 
-     * @
-     */
+    /*@ 
+        ensures(
+            (\forall Student student; students.contains(student); studentNames.contains(student.getName()))
+        );
+    @*/
     public static ObservableList<String> getStudentListName() {
         ObservableList<String> studentNames = FXCollections
                 .observableArrayList();
@@ -143,12 +152,11 @@ public class Server {
      * 
      * @return ObservableList<Student> the list of student's names.
      */
-    /*
-     * @ requires (\forall student != null && roster.contains(student.id) ==
-     * null);
-     * 
-     * @
-     */
+    /*@ 
+        ensures(
+            (\forall Student student; students.contains(student); studentNames.contains(student.getName()))
+        );
+    @*/
     public static ObservableList<String> getStudentListNameNotRoster() {
         ObservableList<String> studentNames = FXCollections
                 .observableArrayList();
@@ -168,12 +176,11 @@ public class Server {
      * 
      * @return ObservableList<Student> the list of student's names.
      */
-    /*
-     * @ requires (\forall student != null && roster.contains(student.id) ==
-     * null);
-     * 
-     * @
-     */
+    /*@ 
+         ensures(
+             (\forall Student student; students.contains(student); studentNames.contains(student.getName()))
+         );
+    @*/
     public static ObservableList<String> getStudentListNameInRoster() {
         ObservableList<String> studentNames = FXCollections
                 .observableArrayList();
@@ -211,6 +218,11 @@ public class Server {
     /**
      * Gets a student from the server by their name
      */
+    /*@
+         ensures(
+             (\forall Student student; students.contains(student); student.getName().equals(name))  
+         );
+    @*/
     public static Student getStudentByName(String name) {
         for(Student student : students) {
             if(student.getName().equals(name)) {
@@ -223,6 +235,15 @@ public class Server {
     /**
      * Associates a roster with this user
      */
+    /*@
+         ensures(
+             associatedClasses != null
+                 &&
+             associatedClasses.get(student) != null
+                 &&
+             !associatedClasses.get(student).contains(roster.courseName()))
+         );
+    @*/
     public static void addRosterToUser(Student student, Roster roster) {
 
         if (associatedClasses != null 
@@ -239,6 +260,11 @@ public class Server {
     /**
      * Gets a list of all students associated with a roster (in the server)
      */
+    /*@
+         ensures(
+             (\forall Student student; associatedClasses.keySet().contains(student); list.contains(student)  
+         );
+    @*/
     public static ArrayList<Student> getStudentsAssociatedWithRoster(Roster roster) {
         ArrayList<Student> list = new ArrayList<Student>();
         for(Student student : associatedClasses.keySet()) {
