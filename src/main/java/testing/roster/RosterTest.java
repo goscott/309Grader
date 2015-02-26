@@ -60,7 +60,7 @@ public class RosterTest {
 	 * @author Gavin Scott
 	 */
 	@Test
-	public void testAddStudent() {
+	public void testAddDropStudent() {
 		Roster roster = new Roster("name", "instructor", 1, "quarter", null, null);
 		Student student = new Student("name", "12345");
 		Student student2 = new Student("name", "123456");
@@ -81,6 +81,18 @@ public class RosterTest {
 		// TODO
 		//assertTrue(Server.getStudentsAssociatedWithRoster(roster).contains(student));
 		//assertTrue(Server.getStudentsAssociatedWithRoster(roster).contains(student2));
+		
+		roster.dropStudent(student2);
+		assertEquals(1, roster.getStudents().size());
+		roster.dropStudent(student2);
+		assertEquals(1, roster.getStudents().size());
+		roster.dropStudent(null);
+		assertEquals(1, roster.getStudents().size());
+		roster.dropStudent(student);
+		assertEquals(0, roster.getStudents().size());
+		
+		assertFalse(Server.getStudentsAssociatedWithRoster(roster).contains(student));
+		assertFalse(Server.getStudentsAssociatedWithRoster(roster).contains(student2));
 	}
 	
 	/**
