@@ -26,11 +26,13 @@ public class HistoryDB implements Serializable {
      */
     /*@
          ensures
-             (!\old(this).hasCourse(newRoster.courseName()) ==> hasCourse(newRoster.courseName))
-             
+         (
+             !\old(this).hasCourse(newRoster.courseName()) ==> hasCourse(newRoster.courseName))
+         
               &&
-              
-              (getCourseHistory(newRoster.courseName()).getHistory().contains(newRoster));
+          
+              (getCourseHistory(newRoster.courseName()).getHistory().contains(newRoster)
+          );
      
      @*/
     public void addRoster(Roster newRoster) {
@@ -52,13 +54,14 @@ public class HistoryDB implements Serializable {
      */
     /*@
             ensures
-                  ((\exists CourseHistory target; history.contains(target); target.getCourseName().equals(courseName)) 
-                       ==> (\result == true))
-                   &&
-                   
-                   ((\exists CourseHistory target; history.contains(target); !target.getCourseName().equals(courseName)) 
-                       ==> (\result == false))
-                   ;
+            (
+                ((\exists CourseHistory target; history.contains(target); target.getCourseName().equals(courseName)) 
+                     ==> (\result == true))
+                 &&
+               
+                 ((\exists CourseHistory target; history.contains(target); !target.getCourseName().equals(courseName)) 
+                     ==> (\result == false))
+             );
      @*/
     public boolean hasCourse(String courseName) {
         
@@ -76,10 +79,21 @@ public class HistoryDB implements Serializable {
      * @param courseName The target course.
      * @return Returns a CourseHistory object if it exists in the HistoryDB. Otherwise, returns null.
      */
+    /*@
+           requires
+              (courseName != null);
+           
+           ensures
+           (
+               (\exists CourseHistory target;
+                   history.contains(target);
+                        target.getCourseName().equals(courseName) ==>
+                            (\result == target))
+           );
+     @*/
     public CourseHistory getCourseHistory(String courseName) {
         
         for (CourseHistory target : history) {
-            //System.out.println("Checking " + target.getCourseName() + " against" + courseName);
             if (target.getCourseName().equals(courseName)) {
                 return target;
             }
@@ -91,6 +105,10 @@ public class HistoryDB implements Serializable {
     /**
      * Returns all course history objects.
      */
+    /*@
+          ensures
+              (\result == history);
+     @*/
     public ArrayList<CourseHistory> getHistory() {
         return history;
     }
@@ -100,11 +118,13 @@ public class HistoryDB implements Serializable {
      */
     /*@
          ensures
+         (
              Grader.loadHistory().equals(this) ==> \result == true
-             
+         
              &&
-             
+         
              !Grader.loadHistory().equals(this) ==> \result == false
+         );
      @*/
     public boolean save() {
         File direc = new File("History");
@@ -130,6 +150,10 @@ public class HistoryDB implements Serializable {
     /**
      * Returns a string representation of this historyDB
      */
+    /*@
+         ensures
+             (\result != null);
+     @*/
     public String toString() {
         String message = "\n--------------------------History--------------------------\n\n";
         for (CourseHistory targetHistory : history) {

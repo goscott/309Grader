@@ -1,12 +1,14 @@
 package model.history;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-import model.curve.Curve;
 import model.curve.Grade;
 import model.driver.Debug;
 import model.roster.Roster;
-import model.roster.Student;
 
 /**
  * Class that holds a record of a sections taught of a Single course.
@@ -64,6 +66,16 @@ public class CourseHistory implements Serializable {
 	 * Constructor for history.
 	 * @param newCourseName The name of a course.
 	 */
+	/*@
+	      ensures
+          (
+              courseName == newCourseName &&
+              startYear == -1 &&
+              endYear == -1 &&
+              numSectionsTaught == 0 &&
+              totalStudents == 0
+          );
+	 @*/
 	public CourseHistory(String newCourseName) {
 	    courseName = newCourseName;
 	    startYear = -1;
@@ -85,9 +97,11 @@ public class CourseHistory implements Serializable {
     
         //only the course was added to history
         ensures
-            (\forall Roster roster_other ;
+        (
+            \forall Roster roster_other ;
                 history.contains(roster_other) <==>
-                    course_other.equals(newRoster) || \old(history).contains(roster_other));
+                    course_other.equals(newRoster) || \old(history).contains(roster_other)
+        );
     @*/
 	public void addRoster(Roster newRoster) {
 	    
@@ -104,6 +118,7 @@ public class CourseHistory implements Serializable {
                 return;
             }
 	    }
+	    
 	    //check newRoster's year to see if we need to update start year/end year
 	    
 	    //add students to total students
@@ -121,7 +136,8 @@ public class CourseHistory implements Serializable {
 	 * @return returns the course history.
 	 */
 	/*@
-        ensures (
+        ensures 
+        (
             (\result == history)
         );
     @*/
@@ -149,16 +165,18 @@ public class CourseHistory implements Serializable {
         ensures
         
         //history contains only courses that were in the old version and are not the target
-            (\forall Roster roster_other ;
+        (
+            \forall Roster roster_other ;
                 history.contains(roster_other) <==> 
                     !course_other.equals(targetCourse) && \old(history).contains(roster_other)
-    
+
             && 
-            
-        //nothing else was deleted
+        
+            //nothing else was deleted
             \forall Roster roster_other2 ;
                 \old(history).contains(roster_other2) ==>
-                    history.contains(roster_other2) || course_other2.equals(targetCourse));
+                    history.contains(roster_other2) || course_other2.equals(targetCourse)
+        );
     @*/
 	public void removeCourse(Roster targetCourse) {
 		if (history.contains(targetCourse)) {
@@ -179,32 +197,34 @@ public class CourseHistory implements Serializable {
         ensures
         
         //the course has been added to hidden
-            (hidden.contains(targetCourse)
+        (
+            hidden.contains(targetCourse)
     
             &&
     
-        //the course has been removed from history
+            //the course has been removed from history
             !history.contains(targetCourse)
     
             &&
     
-        //hidden contains only the same courses as before or target coruse
+            //hidden contains only the same courses as before or target coruse
             \forall Roster course_other1;
                 hidden.contains(course_other1) <==> 
                     course_other1.equals(targetCourse) || \old(hidden).contains(course_other1)
             &&
             
-        //history only contains the same courses as before - targetCourse
+            //history only contains the same courses as before - targetCourse
             \forall Roster course_other2 ;
                 history.contains(course_other2) <==>
                     !course_other2.equals(targetCourse) && \old(history).contains(course_other2)
     
             &&
     
-        //nothing else has changed in history
+            //nothing else has changed in history
             \forall Roster course_other3 ; 
                 \old(history).contains(course_other3) ==>
-                    history.contains(course_other3));
+                    history.contains(course_other3)
+        );
 
     @*/
 	public void hideCourse(Roster targetCourse) {
@@ -219,7 +239,8 @@ public class CourseHistory implements Serializable {
  	 * @param targetCourse the course to unHide
  	 */
 	/*@
-        ensures (
+        ensures 
+        (
         
             //the course is back in history, and not in hidden, and nothing else
             //has changed in either collection
@@ -248,7 +269,7 @@ public class CourseHistory implements Serializable {
             \forall Roster course_other3 ;
                 \old(hidden).contains(course_other3) ==>
                     hidden.contains(course_other3) || course_other3.equals(targetCourse)
-            );
+        );
     @*/
 	public void unHideCourse(Roster targetCourse) {
 	    if (hidden.contains(targetCourse)) {
@@ -300,17 +321,12 @@ public class CourseHistory implements Serializable {
 	}
 	
 	/**
-	 * Gets the average grade for a single quarter.
-	 */
-	public double getAverageGrade(int year, String quarter) {
-	    return 0;
-	}
-	
-	/**
 	 * Returns a list of all averages.
 	 */
-	@SuppressWarnings("unchecked")
-    public ArrayList<QuarterAverage> getAverages() {
+	/*@
+	      ensures (\result != null);
+	 @*/
+	public ArrayList<QuarterAverage> getAverages() {
 	    double sum;
 	    double count;
 	    
@@ -388,6 +404,9 @@ public class CourseHistory implements Serializable {
 	/**
 	 * Loops through the rosters and averages the sum of their class sizes.
 	 */
+	/*@
+	      ensures (\result >= 0);
+	 @*/
 	public double getAverageClassSize() {
 	    double sum = 0;
 	    
@@ -411,6 +430,9 @@ public class CourseHistory implements Serializable {
 	/**
 	 * Returns the number of students in the history with a grade of gradeLetter.
 	 */
+	/*@
+	      ensures (\result >= 0);
+	 @*/
     public int getStudentsByGrade(String gradeLetter) {
 	    int numStudents = 0;
 	    Iterator<Grade> it;
