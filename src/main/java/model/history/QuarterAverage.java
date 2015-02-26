@@ -31,7 +31,7 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
           ensures
               (
                   val == newVal &&
-                  quarter == newQuarter &&
+                  quarter.equals(newQuarter) &&
                   year == newYear
               );
      @*/
@@ -51,7 +51,7 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
     
     /*@
         ensures
-            (\result == quarter);
+            (\result.equals(quarter));
     @*/
     public String getQuarter() {
         return quarter;

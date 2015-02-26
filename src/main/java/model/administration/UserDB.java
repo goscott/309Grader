@@ -63,7 +63,7 @@ public class UserDB {
     /*@
           ensures
           (
-              DATABASE == fileName &&
+              DATABASE.equals(fileName) &&
               users != null;
           );
      @*/
@@ -220,7 +220,7 @@ public class UserDB {
               (UserTypes.isValidType(newType));
           
           ensures
-              ((\result = true) => users.contains(target));
+              ((\result == true) => users.contains(target));
                   
      @*/
     public boolean editUserType(User target, char newType) {

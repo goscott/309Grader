@@ -69,7 +69,7 @@ public class CourseHistory implements Serializable {
 	/*@
 	      ensures
           (
-              courseName == newCourseName &&
+              courseName.equals(newCourseName) &&
               startYear == -1 &&
               endYear == -1 &&
               numSectionsTaught == 0 &&
@@ -138,7 +138,7 @@ public class CourseHistory implements Serializable {
 	/*@
         ensures 
         (
-            (\result == history)
+            (\result.equals(history))
         );
     @*/
 	public ArrayList<Roster> getHistory () {
@@ -148,6 +148,9 @@ public class CourseHistory implements Serializable {
 	/**
 	 * Returns the hidden course history.
 	 */
+	/*@
+	      ensures(\result.equals(hidden));
+	 @*/
 	public ArrayList<Roster> getHidden() {
 	    return hidden;
 	}
@@ -395,7 +398,7 @@ public class CourseHistory implements Serializable {
 	/*@
         //gets the correct result
         ensures
-            (\result == courseName);
+            (\result.equals(courseName));
     @*/
 	public String getCourseName() {
 	    return courseName;

@@ -51,11 +51,11 @@ public class User {
     /*@
           ensures
           (
-              fName == newF
-              lName == newL
-              id == newId
-              password == newPw
-              type == newType
+              fName.equals(newF) &&
+              lName.equals(newL) &&
+              id.equals(newId) &&
+              password.equals(newPw) &&
+              type == newType &&
               permissions == null
           );
      @*/
@@ -76,7 +76,7 @@ public class User {
      */
     /*@
           ensures
-              UserTypes.isValidType(newType) ==> (type == newType && \result = true)
+              UserTypes.isValidType(newType) ==> (type == newType && \result == true)
               
               &&
               
@@ -95,7 +95,7 @@ public class User {
      * Accessor for first name.
      */
     /*@
-        ensures (\result == fName);
+        ensures (\result.equals(fName));
      @*/
     public String getfName() {
         return fName;
@@ -107,7 +107,7 @@ public class User {
     /*@
           requires (fName != null);
           
-          ensures (this.fName == fName);
+          ensures (this.fName.equals(fName));
      @*/
     public void setfName(String fName) {
         this.fName = fName;
@@ -117,7 +117,7 @@ public class User {
      * Accessor for last name.
      */
     /*@
-        ensures (\result == lName);
+        ensures (\result.equals(lName));
     @*/
     public String getlName() {
         return lName;
@@ -128,7 +128,7 @@ public class User {
      */
     /*@
           requires (lName != null);
-          ensures (this.lName == lName);
+          ensures (this.lName.equals(lName));
      @*/
     public void setlName(String lName) {
         this.lName = lName;
@@ -138,7 +138,7 @@ public class User {
      * Accessor for id.
      */
     /*@
-          ensures (\result == id);
+          ensures (\result.equals(id));
      @*/
     public String getId() {
         return id;
@@ -150,7 +150,7 @@ public class User {
     /*@
           requires (id != null);
           
-          ensures (this.id == id);
+          ensures (this.id.equals(id));
      @*/
     public void setId(String id) {
         this.id = id;
@@ -160,7 +160,7 @@ public class User {
      * Accessor for password.
      */
     /*@
-          ensures (\result == password);
+          ensures (\result.equals(password));
      @*/
     public String getPassword() {
         return password;
@@ -170,9 +170,9 @@ public class User {
      * Mutator for password.
      */
     /*@
-          requires (password != null && password != "");
+          requires (password != null && !password.equals(""));
           
-          ensures (this.password == password);
+          ensures (this.password.equals(password));
      @*/
     public void setPassword(String password) {
         this.password = password;

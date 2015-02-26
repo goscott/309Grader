@@ -107,7 +107,7 @@ public class HistoryDB implements Serializable {
      */
     /*@
           ensures
-              (\result == history);
+              (\result.equals(history));
      @*/
     public ArrayList<CourseHistory> getHistory() {
         return history;
