@@ -51,16 +51,35 @@ public class Roster implements Serializable {
 	private Calendar endDate = Calendar.getInstance();
 
 	/**
-	 * Contructs a roster from the given information. If startDate or 
-	 * endDate are null, they are set to the current day.
+	 * Contructs a roster from the given information. If startDate or endDate
+	 * are null, they are set to the current day.
 	 */
+	/*@
+		ensures(
+			this.name.equals(name)
+				&&
+			this.instructor.equals(instructor)
+				&&
+			this.section == section
+				&&
+			this.quarter.equals(quarter)
+				&&
+			this.startDate.equals(startDate)
+				&&
+			this.endDate.equals(endDate)
+				&&
+			this.endDate != null
+				&&
+			this.startDate != null
+		);
+	@*/
 	public Roster(String name, String instructor, int section, String quarter,
 			Calendar startDate, Calendar endDate) {
 		courseName = name;
 		this.instructor = instructor;
 		this.section = section;
 		this.quarter = quarter;
-		
+
 		if (startDate != null) {
 			this.startDate = startDate;
 		}
@@ -461,6 +480,12 @@ public class Roster implements Serializable {
 	/**
 	 * Gets all the students in the class with a given grade
 	 */
+	/*@
+		ensures(
+			(\forall Student student ; students.contains(student) && student.getGrade().equals(grade) ;
+				\result.contains(student))
+		);
+	@*/
 	public ArrayList<Student> getStudentsByGrade(Grade grade) {
 		ArrayList<Student> ret = new ArrayList<Student>();
 		for (Student student : students) {
@@ -474,6 +499,13 @@ public class Roster implements Serializable {
 	/**
 	 * Returns the number of students who are passing the course.
 	 */
+	/*@
+		ensures(
+			\result == getStudentsByGrade(new Grade("A", 90, 100)).size() +
+				getStudentsByGrade(new Grade("B", 80, 90)).size() +
+				getStudentsByGrade(new Grade("C", 70, 80)).size()
+		);
+	@*/
 	public int getPassingNum() {
 		int result = 0;
 
@@ -490,6 +522,13 @@ public class Roster implements Serializable {
 	/**
 	 * Returns the number of students who are failing the course.
 	 */
+	/*@
+		ensures(
+			\result == getStudentsByGrade(new Grade("A", 90, 100)).size() +
+				getStudentsByGrade(new Grade("B", 80, 90)).size() +
+				getStudentsByGrade(new Grade("C", 70, 80)).size()
+		);
+	@*/
 	public int getFailingNum() {
 		int result = 0;
 
@@ -505,6 +544,15 @@ public class Roster implements Serializable {
 	/**
 	 * Checks this roster with an object for equality
 	 */
+	/*@
+		ensures(
+			\result == ((Roster)other).courseName().equals(courseName)
+					&&
+				((Roster)other).getSection() == section
+					&&
+				((Roster)other).getQuarter().equals(quarter)
+		);
+	@*/
 	public boolean equals(Object other) {
 		if ((other == null) || !(other instanceof Roster)) {
 			return false;
@@ -520,6 +568,11 @@ public class Roster implements Serializable {
 	 * 
 	 * @return The list of GradedItems
 	 */
+	/*@
+		ensures(
+			\result.equals(assignments)
+		);
+	@*/
 	public ArrayList<GradedItem> getAssignments() {
 		return assignments;
 	}
@@ -529,6 +582,11 @@ public class Roster implements Serializable {
 	 * 
 	 * @return String the representation
 	 */
+	/*@
+		ensures(
+			\result.equals(courseName + " " + section + " : " + instructor)
+		);
+	@*/
 	public String toString() {
 		return courseName + " " + section + " : " + instructor;
 	}
@@ -536,6 +594,11 @@ public class Roster implements Serializable {
 	/**
 	 * Saves the roster to the computer
 	 */
+	/*@
+		ensures(
+			// saves the file
+		);
+	@*/
 	public void Save() {
 		save(this);
 	}
@@ -546,6 +609,11 @@ public class Roster implements Serializable {
 	 * @param rost
 	 *            The roster to be saved
 	 */
+	/*@
+		ensures(
+			// saves the file
+		);
+	@*/
 	public static void save(Roster rost) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(
@@ -566,6 +634,11 @@ public class Roster implements Serializable {
 	 *            the path to the roster
 	 * @return Roster the loaded roster
 	 */
+	/*@
+		ensures(
+			// saves the file
+		);
+	@*/
 	public static Roster load(String url) {
 		Roster toReturn = null;
 		try {
@@ -602,10 +675,15 @@ public class Roster implements Serializable {
 	 * 
 	 * @return double the max points
 	 */
+	/*@
+		ensures(
+			\result >= 0
+		);
+	@*/
 	public double getMaxPoints() {
 		double max = 0;
 		for (GradedItem item : assignments) {
-			if (!item.isExtraCredit() && item.hasChildren()) {
+			if (!item.isExtraCredit() && !item.hasChildren()) {
 				max += item.maxScore();
 			}
 		}
@@ -617,6 +695,13 @@ public class Roster implements Serializable {
 	 * 
 	 * @return the average percentage grade
 	 */
+	/*@
+		ensures(
+			\result >= 0
+				&&
+			\result <= 100
+		);
+	@*/
 	public double getPercentAverage() {
 		double sum = 0.0;
 		int num = 0;
@@ -632,6 +717,11 @@ public class Roster implements Serializable {
 	 * 
 	 * @return the class average letter grade
 	 */
+	/*@
+		ensures(
+			\result.equals(curve.get(getPercentAverage()).getName());
+		);
+	@*/
 	public String getLetterAverage() {
 		return curve.get(getPercentAverage()).getName();
 	}
@@ -639,10 +729,20 @@ public class Roster implements Serializable {
 	/**
 	 * Returns a student's grade on a particular assignment
 	 */
+	/*@
+		requires(
+			student != null
+		);
+		ensures(
+			\result >= 0
+		);
+	@*/
 	public Double getStudentGrade(Student student, String asgn) {
-		for (GradedItem item : assignments) {
-			if (item.name().equals(asgn)) {
-				return item.getStudentScore(student);
+		if (student != null) {
+			for (GradedItem item : assignments) {
+				if (item.name().equals(asgn)) {
+					return item.getStudentScore(student);
+				}
 			}
 		}
 		return null;
@@ -651,10 +751,23 @@ public class Roster implements Serializable {
 	/**
 	 * Sets a student's grade on a particular assignment to the given score
 	 */
+	/*@
+		requires(
+			student != null
+				&&
+			sc != null
+		);
+		ensures(
+			(\forall GradedItem item ; assignments.contains(item) && item.name().equals(asgn) ;
+				item.getStudentScore(student).equals(sc))
+		);
+	@*/
 	public void setStudentGrade(Student student, String asgn, Double sc) {
-		for (GradedItem item : assignments) {
-			if (item.name().equals(asgn)) {
-				item.setStudentScore(student, sc);
+		if (student != null && sc != null) {
+			for (GradedItem item : assignments) {
+				if (item.name().equals(asgn)) {
+					item.setStudentScore(student, sc);
+				}
 			}
 		}
 	}
@@ -663,12 +776,22 @@ public class Roster implements Serializable {
 	 * Gets a student's total score, as a sum of their scores on every
 	 * assignment kept in the roster
 	 */
+	/*@
+		requires(
+			student != null
+		);
+		ensures(
+			\result >= 0
+		);
+	@*/
 	public double getTotalScore(Student student) {
 		double total = 0;
-		for (GradedItem item : assignments) {
-			if (item.hasChildren()) {
-				total += item.getStudentScore(student) != null ? item
-						.getStudentScore(student) : 0;
+		if (student != null) {
+			for (GradedItem item : assignments) {
+				if (item.hasChildren()) {
+					total += item.getStudentScore(student) != null ? item
+							.getStudentScore(student) : 0;
+				}
 			}
 		}
 		return total;
@@ -677,6 +800,11 @@ public class Roster implements Serializable {
 	/**
 	 * Checks if the roster is current or stored in history
 	 */
+	/*@
+		ensures(
+			\result == current
+		);
+	@*/
 	public boolean current() {
 		return current;
 	}
@@ -684,6 +812,11 @@ public class Roster implements Serializable {
 	/**
 	 * Sets the roster as no longer being current
 	 */
+	/*@
+		ensures(
+			current == false
+		);
+	@*/
 	public void archive() {
 		current = false;
 		Grader.getHistoryDB().addRoster(this);
@@ -700,6 +833,19 @@ public class Roster implements Serializable {
 	 *            false, it returns a list of students that are in the server
 	 *            and not the local roster.
 	 */
+	/*@
+		ensures(
+			(extraLocal ==> 
+				(\forall Student stud ; students.contains(stud)
+					&& !Server.getStudentsAssociatedWithRoster(this).contains(stud) ;
+						\result.contains(stud)))
+				&&
+			(!extraLocal ==> 
+				(\forall Student student ; !students.contains(student)
+					&& Server.getStudentsAssociatedWithRoster(this).contains(student) ;
+						\result.contains(student)))
+		);
+	@*/
 	public ArrayList<Student> rosterSynch(boolean extraLocal) {
 		ArrayList<Student> list = new ArrayList<Student>();
 		ArrayList<Student> serverList = Server
@@ -720,6 +866,11 @@ public class Roster implements Serializable {
 		return list;
 	}
 
+	/*@
+	 	ensures(
+	 		// the roster is exported
+	 	);
+	@*/
 	public void export() {
 		Exporter.exportRoster(this);
 	}
