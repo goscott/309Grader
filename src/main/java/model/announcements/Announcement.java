@@ -34,6 +34,11 @@ public class Announcement {
 	 * Returns the subject of this Announcement.
 	 * @return the subject of this Announcement.
 	 */
+	/*@
+    ensures(
+        \result.equals(subject)
+    );
+	@*/
 	public String getSubject() {
 		return subject;
 	}
@@ -42,10 +47,24 @@ public class Announcement {
 	 * Returns the name of the user that posted this Announcement.
 	 * @return the name of the user that posted this Announcement.
 	 */
+	/*@
+    ensures(
+        \result.equals(postedBy)
+    );
+	@*/
 	public String getPostedBy() {
 		return postedBy;
 	}
-
+	
+	/**
+	 * Returns the string formatted to represent the date and time that this Announcement was posted.
+	 * @return the string formatted to represent the date and time that this Announcement was posted.
+	 */
+	/*@
+    ensures(
+        \result.equals(dateTime)
+    );
+	@*/
 	public String getDateTime() {
 		return dateTime;
 	}
@@ -54,6 +73,11 @@ public class Announcement {
 	 * Returns the body content of this Announcement.
 	 * @return the body content of this Announcement.
 	 */
+	/*@
+    ensures(
+        \result.equals(content)
+    );
+	@*/
 	public String getContent() {
 		return content;
 	}
