@@ -49,6 +49,9 @@ public class UserDB {
     /**
      * Constructor for UserDB. Calls loadUserDB(), which loads users from users.udb.
      */
+    /*@
+          ensures(users != null);
+     @*/
     public UserDB() {
         Debug.log("model", "UserDB Created");
         loadUserDB();
@@ -57,6 +60,13 @@ public class UserDB {
     /**
      * Constructor for UserDB. Sets a custom database filename.
      */
+    /*@
+          ensures
+          (
+              DATABASE == fileName &&
+              users != null;
+          );
+     @*/
     public UserDB(String fileName) {
         Debug.log("model", "UserDB Created");
         DATABASE = fileName;
@@ -155,8 +165,6 @@ public class UserDB {
      @*/
     public boolean addUser(User newUser, boolean doUpdate) {
         Debug.log("model", "UserDB.addUser() invoked.");
-        
-        BufferedWriter writer = null;
 
         // check the db
         if (!users.contains(newUser)) {
@@ -232,6 +240,9 @@ public class UserDB {
     /** 
      * @return Returns the db.
      */
+    /*@
+          ensures(\result == users);
+     @*/
     public Collection<User> getUsers() {
         Debug.log("model", "UserDB.getUsers() invoked.");
         return users;
