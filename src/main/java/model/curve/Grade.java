@@ -1,7 +1,6 @@
 package model.curve;
 
 import java.io.Serializable;
-import javafx.beans.property.SimpleStringProperty;
 
 /**
  * A representation of a percentage based grade.
@@ -16,6 +15,8 @@ public class Grade implements Comparable<Grade>, Serializable {
     private double max;
     /** Minimum percentage required */
     private double min;
+    /** Maximum percentage possible */
+    private static double MAX_PERCENT = 100.0;
 
     /**
      * Create a new Grade object with
@@ -46,7 +47,12 @@ public class Grade implements Comparable<Grade>, Serializable {
     
     @Override
     public boolean equals(Object obj) {
-        return this.name.equals(((Grade) obj).name);
+        if (obj != null)
+        {
+            return this.name.equals(((Grade) obj).name);
+        }
+        
+        return false;
     }
     
     /**
@@ -77,15 +83,24 @@ public class Grade implements Comparable<Grade>, Serializable {
         ensures \result == false;
     @*/
     public boolean contains(double percentage) {
-        return percentage >= this.min && percentage < this.max;
+        if (percentage == MAX_PERCENT)
+        {
+            return percentage >= this.min && percentage <= this.max;
+        }
+        else
+        {
+            return percentage >= this.min && percentage < this.max;
+        }
     }
     
     /**
      * Returns the grade name designation.
      * @return the grade name designation
      */
+    /*@
+        ensures \result.equals(name);
+    @*/
     public String getName() {
-        //return name.get();
         return name;
     }
     
@@ -93,6 +108,9 @@ public class Grade implements Comparable<Grade>, Serializable {
      * Returns the maximum percentage required.
      * @return the maximum percentage required
      */
+    /*@
+        ensures \result.equals(max);
+    @*/
     public double max() {
         return max;
     }
@@ -101,6 +119,9 @@ public class Grade implements Comparable<Grade>, Serializable {
      * Returns the minimum percentage required.
      * @return the minimum percentage required
      */
+    /*@
+        ensures \result.equals(min);
+    @*/
     public double min() {
         return min;
     }
@@ -109,6 +130,9 @@ public class Grade implements Comparable<Grade>, Serializable {
      * Returns the range of the percentage required.
      * @return the range of the percentage
      */
+    /*@
+        ensures \result.equals(max - min);
+    @*/
     public double range() {
         return max - min;
     }

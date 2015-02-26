@@ -2,7 +2,6 @@ package model.curve;
 
 import java.io.Serializable;
 import java.util.TreeSet;
-
 import model.driver.Debug;
 
 /**
@@ -48,13 +47,19 @@ public class Curve implements Serializable {
        requires !curve.contains(grade);
     @*/
     public void add(Grade grade) {
-        curve.add(grade);
+        if (grade != null)
+        {
+            curve.add(grade);
+        }
     }
 
     /**
      * Returns the curve name designation.
      * @return the curve name designation
      */
+    /*@
+        ensures \result.equals(name);
+    @*/
     public String name() {
         return name;
     }
@@ -75,7 +80,12 @@ public class Curve implements Serializable {
            ensures \result == false;
     @*/
     public boolean remove(Grade grade) {
-        return curve.remove(grade);
+        if (grade != null)
+        {
+            return curve.remove(grade);
+        }
+        
+        return false;
     }
 
     /**
@@ -91,7 +101,7 @@ public class Curve implements Serializable {
     public normal_behavior
         requires !(max <= 100.0 && min >= 0.0 && max > min);
     @*/
-    public void adjust(Grade grade, float max, float min) {
+    public void adjust(Grade grade, double max, double min) {
         try {
             grade.set(max, min);
         }
@@ -104,6 +114,9 @@ public class Curve implements Serializable {
      * Returns the set of grades that defines this curve.
      * @return the set of grades that defines this curve
      */
+    /*@
+        ensures \result.equals(curve);
+    @*/
     public TreeSet<Grade> getGrades() {
         return curve;
     }
@@ -152,6 +165,12 @@ public class Curve implements Serializable {
     
     @Override
     public boolean equals(Object obj) {
+        
+        if (obj == null)
+        {
+            return false;
+        }
+        
         Curve other = (Curve) obj;
         
         for (Grade grade : curve) {
