@@ -100,7 +100,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 	 	ensures(
-			\result.equals(courseName)
+			((String)\result).equals(courseName)
 		);
 	@*/
 	public String courseName() {
@@ -114,7 +114,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 	 	ensures(
-			\result.equals(instructor)
+			((String)\result).equals(instructor)
 		);
 	@*/
 	public String getInstructor() {
@@ -128,7 +128,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 	 	ensures(
-			\result == section
+			((int)\result) == section
 		);
 	@*/
 	public int getSection() {
@@ -142,7 +142,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 	 	ensures(
-			\result.equals(quarter)
+			((String)\result).equals(quarter)
 		);
 	@*/
 	public String getQuarter() {
@@ -156,7 +156,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 	 	ensures(
-			\result.equals(startDate)
+			((Calendar)\result).equals(startDate)
 		);
 	@*/
 	public Calendar getStartDate() {
@@ -168,7 +168,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 	 	ensures(
-			\result.equals(startDate.get(Calendar.MONTH) + "/" +
+			((String)\result).equals(startDate.get(Calendar.MONTH) + "/" +
 				startDate.get(Calendar.DAY_OF_MONTH) + "/" + 
 				startDate.get(Calendar.YEAR))
 		);
@@ -190,7 +190,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 	 	ensures(
-			\result.equals(startDate)
+			((Calendar)\result).equals(startDate)
 		);
 	@*/
 	public Calendar getEndDate() {
@@ -202,7 +202,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 	 	ensures(
-			\result.equals(endDate.get(Calendar.MONTH) + "/" +
+			((String)\result).equals(endDate.get(Calendar.MONTH) + "/" +
 				endDate.get(Calendar.DAY_OF_MONTH) + "/" + 
 				endDate.get(Calendar.YEAR))
 		);
@@ -244,7 +244,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result.equals(curve)
+			((Curve)\result).equals(curve)
 		);
 	@*/
 	public Curve getCurve() {
@@ -373,7 +373,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result.name().equals(name)
+			((GradedItem)\result).name().equals(name)
 		);
 	@*/
 	public GradedItem getAssignment(String name) {
@@ -417,7 +417,7 @@ public class Roster implements Serializable {
 			assignments.contains(asgn)
 		);
 		ensures(
-			\result == student.getAssignmentScore(asgn)
+			((double)\result) == student.getAssignmentScore(asgn)
 		);
 	@*/
 	public double getScore(Student student, String asgn) {
@@ -433,7 +433,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result.equals(ids.get(id))
+			((Student)\result).equals(ids.get(id))
 		);
 	@*/
 	public Student getStudentByID(String id) {
@@ -445,7 +445,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result == students.contains(id)
+			((boolean)\result) == students.contains(id)
 		);
 	@*/
 	public boolean containsStudent(String id) {
@@ -457,7 +457,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result == students.size()
+			((int)\result) == students.size()
 		);
 	@*/
 	public int numStudents() {
@@ -470,7 +470,7 @@ public class Roster implements Serializable {
 	/*@
 		ensures(
 			(\forall Student student ; students.contains(student) ;
-				\result.contains(student))
+				((ArrayList<Student>)\result).contains(student))
 		);
 	@*/
 	public ArrayList<Student> getStudents() {
@@ -483,7 +483,7 @@ public class Roster implements Serializable {
 	/*@
 		ensures(
 			(\forall Student student ; students.contains(student) && student.getGrade().equals(grade) ;
-				\result.contains(student))
+				((ArrayList<Student>)\result).contains(student))
 		);
 	@*/
 	public ArrayList<Student> getStudentsByGrade(Grade grade) {
@@ -501,7 +501,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result == getStudentsByGrade(new Grade("A", 90, 100)).size() +
+			((int)\result) == getStudentsByGrade(new Grade("A", 90, 100)).size() +
 				getStudentsByGrade(new Grade("B", 80, 90)).size() +
 				getStudentsByGrade(new Grade("C", 70, 80)).size()
 		);
@@ -524,7 +524,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result == getStudentsByGrade(new Grade("A", 90, 100)).size() +
+			((int)\result) == getStudentsByGrade(new Grade("A", 90, 100)).size() +
 				getStudentsByGrade(new Grade("B", 80, 90)).size() +
 				getStudentsByGrade(new Grade("C", 70, 80)).size()
 		);
@@ -546,7 +546,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result == ((Roster)other).courseName().equals(courseName)
+			((boolean)\result) == ((Roster)other).courseName().equals(courseName)
 					&&
 				((Roster)other).getSection() == section
 					&&
@@ -570,7 +570,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result.equals(assignments)
+			((ArrayList<GradedItem>)\result).equals(assignments)
 		);
 	@*/
 	public ArrayList<GradedItem> getAssignments() {
@@ -584,7 +584,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result.equals(courseName + " " + section + " : " + instructor)
+			((String)\result).equals(courseName + " " + section + " : " + instructor)
 		);
 	@*/
 	public String toString() {
@@ -677,7 +677,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result >= 0
+			((double)\result) >= 0
 		);
 	@*/
 	public double getMaxPoints() {
@@ -697,9 +697,9 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result >= 0
+			((double)\result) >= 0
 				&&
-			\result <= 100
+			((double)\result) <= 100
 		);
 	@*/
 	public double getPercentAverage() {
@@ -719,7 +719,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result.equals(curve.get(getPercentAverage()).getName());
+			((String)\result).equals(curve.get(getPercentAverage()).getName());
 		);
 	@*/
 	public String getLetterAverage() {
@@ -734,7 +734,7 @@ public class Roster implements Serializable {
 			student != null
 		);
 		ensures(
-			\result >= 0
+			((Double)\result) >= 0
 		);
 	@*/
 	public Double getStudentGrade(Student student, String asgn) {
@@ -781,7 +781,7 @@ public class Roster implements Serializable {
 			student != null
 		);
 		ensures(
-			\result >= 0
+			((double)\result) >= 0
 		);
 	@*/
 	public double getTotalScore(Student student) {
@@ -802,7 +802,7 @@ public class Roster implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result == current
+			((boolean)\result) == current
 		);
 	@*/
 	public boolean current() {
@@ -838,12 +838,12 @@ public class Roster implements Serializable {
 			(extraLocal ==> 
 				(\forall Student stud ; students.contains(stud)
 					&& !Server.getStudentsAssociatedWithRoster(this).contains(stud) ;
-						\result.contains(stud)))
+						((Arraylist<Student>)\result).contains(stud)))
 				&&
 			(!extraLocal ==> 
 				(\forall Student student ; !students.contains(student)
 					&& Server.getStudentsAssociatedWithRoster(this).contains(student) ;
-						\result.contains(student)))
+						((ArrayList<Student>)\result).contains(student)))
 		);
 	@*/
 	public ArrayList<Student> rosterSynch(boolean extraLocal) {

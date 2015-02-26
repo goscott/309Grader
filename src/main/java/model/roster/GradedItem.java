@@ -139,7 +139,7 @@ public class GradedItem implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result.equals(name)
+			((String)\result).equals(name)
 		);
 	@*/
 	public String name() {
@@ -153,7 +153,7 @@ public class GradedItem implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result.equals(descr)
+			((String)\result).equals(descr)
 		);
 	@*/
 	public String descr() {
@@ -167,7 +167,7 @@ public class GradedItem implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result == maxScore
+			((double)\result) == maxScore
 		);
 	@*/
 	public double maxScore() {
@@ -239,11 +239,11 @@ public class GradedItem implements Serializable {
 	/*@
 	 	(\exists GradedItem child ; child.name().equals(name) 
 	 		&& children.contains(child))
-	 			==> child.equals(\result))
+	 			==> child.equals( (GradedItem)\result) )
 	 		||
 	 	!(\exists GradedItem child ; child.name().equals(name) 
 	 		&& children.contains(child))
-	 			==> (\result == null)
+	 			==> (((GradedItem)\result) == null)
 	@*/
 	public GradedItem getChild(String name) {
 		for (GradedItem child : children) {
@@ -259,7 +259,7 @@ public class GradedItem implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result == children.size()
+			((int)\result) == children.size()
 		);
 	@*/
 	public int numChildren() {
@@ -271,7 +271,7 @@ public class GradedItem implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result.equals(children)
+			((ArrayList<GradedItem>)\result).equals(children)
 		);
 	@*/
 	public ArrayList<GradedItem> getChildren() {
@@ -283,7 +283,7 @@ public class GradedItem implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result == children.isEmpty()
+			((boolean)\result) == children.isEmpty()
 		);
 	@*/
 	public boolean hasChildren() {
@@ -317,7 +317,7 @@ public class GradedItem implements Serializable {
 	 */
 	/*@
 	 	ensures(
-	 		\result == (parent != null)
+	 		((boolean)\result) == (parent != null)
 	 	);
 	@*/
 	public boolean hasParent() {
@@ -331,7 +331,7 @@ public class GradedItem implements Serializable {
 	 */
 	/*@
 	 	ensures(
-	 		\result.equals(parent)
+	 		((GradedItem)\result).equals(parent)
 	 	);
 	@*/
 	public GradedItem getParent() {
@@ -371,7 +371,7 @@ public class GradedItem implements Serializable {
 	/*@
 		ensures(
 			((other != null) && (other instanceof GradedItem))
-				==> (\result == other.name().equals(name))
+				==> (((boolean)\result) == other.name().equals(name))
 		);
 	@*/
 	public boolean equals(Object other) {
@@ -389,7 +389,7 @@ public class GradedItem implements Serializable {
 	 */
 	/*@
 		ensures(
-			\result.equals(this)
+			((GradedItem)\result).equals(this)
 		);
 	@*/
 	public GradedItem copy() {
@@ -403,7 +403,7 @@ public class GradedItem implements Serializable {
 	 */
 	/*@
 	 	ensures(
-			\result == extraCredit
+			((boolean)\result) == extraCredit
 		);
 	@*/
 	public boolean isExtraCredit() {
@@ -439,7 +439,7 @@ public class GradedItem implements Serializable {
 	 * @return String the assignment as a String
 	 */
 	/*@
-		\result.equals(name)
+		((String)\result).equals(name)
 	@*/
 	public String toString() {
 		String ret = "Name: ";
@@ -463,7 +463,7 @@ public class GradedItem implements Serializable {
 			student != null
 		);
 		ensures(
-			\result.equals(getStudentScore(student))
+			((Double)\result).equals(getStudentScore(student))
 		);
 	@*/
 	public Double getStudentScore(Student student) {
