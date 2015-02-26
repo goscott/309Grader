@@ -48,6 +48,17 @@ public class User {
      * @param newPw The user's password.
      * @param newType The user's permission level.
      */
+    /*@
+          ensures
+          (
+              fName == newF
+              lName == newL
+              id == newId
+              password == newPw
+              type == newType
+              permissions == null
+          );
+     @*/
     public User(String newF, String newL, String newId, String newPw,
             char newType) {
         fName = newF;
@@ -83,6 +94,9 @@ public class User {
     /**
      * Accessor for first name.
      */
+    /*@
+        ensures (\result == fName);
+     @*/
     public String getfName() {
         return fName;
     }
@@ -90,6 +104,11 @@ public class User {
     /**
      * Mutator for first name.
      */
+    /*@
+          requires (fName != null);
+          
+          ensures (this.fName == fName);
+     @*/
     public void setfName(String fName) {
         this.fName = fName;
     }
@@ -97,6 +116,9 @@ public class User {
     /**
      * Accessor for last name.
      */
+    /*@
+        ensures (\result == lName);
+    @*/
     public String getlName() {
         return lName;
     }
@@ -104,6 +126,10 @@ public class User {
     /**
      * Mutator for last name.
      */
+    /*@
+          requires (lName != null);
+          ensures (this.lName == lName);
+     @*/
     public void setlName(String lName) {
         this.lName = lName;
     }
@@ -111,6 +137,9 @@ public class User {
     /**
      * Accessor for id.
      */
+    /*@
+          ensures (\result == id);
+     @*/
     public String getId() {
         return id;
     }
@@ -118,6 +147,11 @@ public class User {
     /**
      * Mutator for id.
      */
+    /*@
+          requires (id != null);
+          
+          ensures (this.id == id);
+     @*/
     public void setId(String id) {
         this.id = id;
     }
@@ -125,6 +159,9 @@ public class User {
     /**
      * Accessor for password.
      */
+    /*@
+          ensures (\result == password);
+     @*/
     public String getPassword() {
         return password;
     }
@@ -132,6 +169,11 @@ public class User {
     /**
      * Mutator for password.
      */
+    /*@
+          requires (password != null && password != "");
+          
+          ensures (this.password == password);
+     @*/
     public void setPassword(String password) {
         this.password = password;
     }
@@ -139,6 +181,9 @@ public class User {
     /**
      * Accessor for type.
      */
+    /*@
+          ensures (\result == type);
+     @*/
     public char getType() {
         return type;
     }
@@ -146,6 +191,11 @@ public class User {
     /**
      * Mutator for type.
      */
+    /*@
+          requires (UserTypes.isValidType(type));
+          
+          ensures (this.type == type);
+     @*/
     public void setType(char type) {
         this.type = type;
     }
@@ -156,15 +206,16 @@ public class User {
      * @return Returns true if this user and other have matching ids.
      */
     /*@
-            requires
-                other != null;
+            requires (other != null);
             
             ensures
+            (
                 (other.getId().equals(id)) ==> (\result == true)
                 
                 &&
                 
-                (!other.getId().equals(id)) ==> (\result == false);
+                (!other.getId().equals(id)) ==> (\result == false)
+            );
      */
     public boolean equals(User other) {
 
@@ -179,6 +230,16 @@ public class User {
      * Returns this user's custom permission key configuration, 
      * or the default configuration if this user does not have one set.
      */
+    /*@
+          ensures
+          (
+              (permissions == null) ==> (((ArrayList<PermissionKeys>)\result).equals(PermissionKeys.getKeys(type)))
+              
+              &&
+              
+              (permissions != null) ==> (((ArrayList<PermissionKeys>)\result).equals(permissions))
+          );
+     @*/
     public ArrayList<PermissionKeys> getPermissions() {
         
         if (permissions == null) {
@@ -195,11 +256,13 @@ public class User {
      */
     /*@
               ensures
+              (
                   (\old(permissions) == null) ==> (permissions != null)
                   
                   &&
                   
-                  (\old(permissions) != null) ==> (permissions.contains(key));
+                  (\old(permissions) != null) ==> (permissions.contains(key))
+              );
      @*/
     public void addPermission(PermissionKeys key) {
         

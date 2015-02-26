@@ -27,20 +27,40 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
     /**
      * Constructor for quarter average.
      */
+    /*@
+          ensures
+              (
+                  val == newVal &&
+                  quarter == newQuarter &&
+                  year == newYear
+              );
+     @*/
     public QuarterAverage(String newQuarter, int newYear, double newVal) {
         val = newVal;
         quarter = newQuarter;
         year = newYear;
     }
     
+    /*@
+          ensures
+              (\result == val);
+     @*/
     public double getValue() {
         return val;
     }
     
+    /*@
+        ensures
+            (\result == quarter);
+    @*/
     public String getQuarter() {
         return quarter;
     }
     
+    /*@
+        ensures
+            (\result == year);
+    @*/
     public int getYear() {
         return year;
     }
@@ -54,13 +74,15 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
                  otherAverage != null;
              
             ensures
-                otherAverage.getYear() != year ==> \result == year - otherAverage.getYear()
+                (
+                    otherAverage.getYear() != year ==> \result == year - otherAverage.getYear()
                 
-                &&
+                    &&
                 
-                otherAverage.getYear() == year ==> 
-                    \result == (new ArrayList<String>(Arrays.asList(new String[]{"Spring", "Summer", "Fall", "Winter"}))).indexOf(quarter) 
-                        - (new ArrayList<String>(Arrays.asList(new String[]{"Spring", "Summer", "Fall", "Winter"}))).indexOf(otherAverage.getQuarter())
+                    otherAverage.getYear() == year ==> 
+                        \result == (new ArrayList<String>(Arrays.asList(new String[]{"Spring", "Summer", "Fall", "Winter"}))).indexOf(quarter) 
+                            - (new ArrayList<String>(Arrays.asList(new String[]{"Spring", "Summer", "Fall", "Winter"}))).indexOf(otherAverage.getQuarter())
+                 );
      @*/
     public int compareTo(QuarterAverage otherAverage) {
         ArrayList<String> quarters = new ArrayList<String>(Arrays.asList(new String[]{"Spring", "Summer", "Fall", "Winter"}));

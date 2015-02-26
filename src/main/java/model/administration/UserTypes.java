@@ -32,6 +32,15 @@ public class UserTypes {
      * @param target A char to check.
      * @return Returns true if the char is a UserType char.
      */
+    /*@
+          ensures 
+          (
+              \result == (target == USER_STUDENT 
+                || target == USER_INSTRUCTOR
+                || target == USER_TA
+                || target == USER_ADMIN)
+          );
+     @*/
     public static boolean isValidType(char target) {
 
         return 
@@ -46,6 +55,16 @@ public class UserTypes {
      * @param target A char to check.
      * @return Returns the full name of the char, or INVALID USER if the char is not a UserType char.
      */
+    /*@
+          ensures
+          (
+              isValidType(target) ==> (!target.equals("INVALID USER"))
+              
+              &&
+              
+              !isValidType(target) ==> (target.equals("INVALID USER"))
+          );
+     @*/
     public static String fullName(char target) {
         switch (target) {
             case USER_STUDENT:
