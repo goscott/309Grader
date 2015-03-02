@@ -2,6 +2,7 @@ package controller.roster;
 
 import java.io.IOException;
 
+import controller.GraderPopup;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
@@ -76,6 +77,7 @@ public class ExpandCollapseController {
 			stage.setTitle("Expand/Collapse Columns");
 			stage.setScene(popup);
 			stage.setResizable(false);
+			GraderPopup.setIcon(stage);
 			stage.show();
 		} catch (IOException ex) {
 			Debug.log("IO ERROR", "Could not load file to start popup");

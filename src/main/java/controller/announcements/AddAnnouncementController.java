@@ -2,6 +2,7 @@ package controller.announcements;
 
 import java.io.IOException;
 
+import controller.GraderPopup;
 import model.announcements.Announcement;
 import model.driver.Debug;
 import model.server.Server;
@@ -35,6 +36,7 @@ public class AddAnnouncementController {
 			stage.setTitle("Add Announement");
 			stage.setScene(popup);
 			stage.setResizable(false);
+			GraderPopup.setIcon(stage);
 			stage.show();
 		} catch (IOException e1) {
 			Debug.log("IO ERROR", "Could not load file to start popup");

@@ -2,6 +2,7 @@ package controller.roster;
 
 import java.io.IOException;
 
+import controller.GraderPopup;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -77,6 +78,7 @@ public class DropStudentDialogController
             stage.setTitle("Drop Student");
             stage.setScene(popup);
             stage.setResizable(false);
+            GraderPopup.setIcon(stage);
             stage.show();
         } catch (IOException ex) {
             Debug.log("IO ERROR", "Could not load file to start popup");

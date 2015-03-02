@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import controller.GraderPopup;
 import testing.administration.LoginTest;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -39,14 +40,8 @@ public class Launcher extends Application {
             
             primaryStage.setTitle("GraderTool: Login");
             primaryStage.setScene(scene);
-            try {
-            	primaryStage.getIcons().add(new Image(Launcher.class.getResourceAsStream( "GraderIcon.png" )));
-            }
-            catch(Exception ex) {
-            	Debug.log("Error", "Could not load icon");
-            }
             setUser(scene);
-            
+            GraderPopup.setIcon(primaryStage);
             primaryStage.show();
             primaryStage.setResizable(false);
             

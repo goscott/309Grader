@@ -1,5 +1,6 @@
 package controller.mainpage;
 
+import controller.GraderPopup;
 import model.driver.Debug;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -48,6 +49,7 @@ public class Alert {
 		dialogStage.setScene(new Scene(VBoxBuilder.create().
 		    children(new Text(message)).
 		    alignment(Pos.CENTER).padding(new Insets(5)).build()));
+		GraderPopup.setIcon(dialogStage);
 		dialogStage.show();
 	}
 }

@@ -2,6 +2,7 @@ package controller.roster;
 
 import java.io.IOException;
 
+import controller.GraderPopup;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
@@ -86,6 +87,7 @@ public class DropAssignmentDialogController
             stage.setTitle("Drop Assignment");
             stage.setScene(popup);
             stage.setResizable(false);
+            GraderPopup.setIcon(stage);
             stage.show();
         } catch (IOException e1) {
             Debug.log("IO ERROR", "Could not load file to start popup");

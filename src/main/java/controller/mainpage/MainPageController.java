@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import controller.GraderPopup;
 import controller.administration.UserLoginController;
 import controller.graph.GraphController;
 import controller.history.HistoryController;
@@ -269,9 +270,8 @@ public class MainPageController {
 
 			stage.setScene(scene);
 			stage.setTitle("Edit User Permissions");
-			stage.getIcons().add(((Stage) tabPane.getScene().getWindow()).getIcons().get(0));
 			stage.setResizable(false);
-
+			GraderPopup.setIcon(stage);
 			stage.show();
 
 		} catch (Exception ex) {
@@ -293,8 +293,8 @@ public class MainPageController {
 
 			stage.setScene(scene);
 			stage.setTitle("About Team");
-			stage.getIcons().add(((Stage) tabPane.getScene().getWindow()).getIcons().get(0));
 			stage.setResizable(false);
+			GraderPopup.setIcon(stage);
 			stage.show();
 
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

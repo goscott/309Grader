@@ -1,5 +1,6 @@
 package controller.administration;
 
+import controller.GraderPopup;
 import run.Launcher;
 import model.administration.User;
 import model.administration.UserDB;
@@ -155,7 +156,7 @@ public class UserLoginController {
 
 			stage.setScene(scene);
 			stage.setTitle("GraderTool");
-			stage.getIcons().add(((Stage) button_login.getScene().getWindow()).getIcons().get(0));
+			GraderPopup.setIcon(stage);
 			stage.setOnHiding(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent event) {
 					Server.backup();
@@ -180,7 +181,7 @@ public class UserLoginController {
 
             stage.setScene(scene);
             stage.setTitle("Create New User");
-            stage.getIcons().add(((Stage) button_login.getScene().getWindow()).getIcons().get(0));
+            GraderPopup.setIcon(stage);
             stage.show();
             
             stage.setResizable(false);
