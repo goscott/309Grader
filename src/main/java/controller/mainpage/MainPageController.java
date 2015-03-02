@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import controller.administration.UserLoginController;
 import controller.graph.GraphController;
 import controller.history.HistoryController;
 import controller.roster.GradebookController;
@@ -12,17 +13,12 @@ import run.Launcher;
 import testing.administration.PermissionsTester;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
@@ -33,16 +29,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBoxBuilder;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.administration.PermissionKeys;
-import model.administration.User;
 import model.administration.UserDB;
-import model.administration.UserTypes;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
@@ -195,6 +186,8 @@ public class MainPageController {
 		}
 		
 		initTabPane();
+		
+		UserLoginController.closeLoadScreen();
 	}
 	
 	/**

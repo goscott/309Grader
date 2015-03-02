@@ -6,6 +6,8 @@ import model.administration.UserDB;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.server.Server;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +17,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 /**
@@ -63,6 +70,9 @@ public class UserLoginController {
 	@FXML
 	private Label login_invalid;
 
+	/** The stage for the loading window **/
+	private static Stage loadStage;
+	
 	/**
 	 * Handles the login button click. If login is successful, launches the MainPage view.
 	 */
@@ -81,10 +91,10 @@ public class UserLoginController {
 			Debug.log("Login", "logged in as " + userName + '\n');
 			Grader.setUser(targetUser);
 			// LAUNCH GRADER TOOL HERE
-			launchMainPage();
+			loadMainPage();
 
 			// close out the login window
-			((Stage) button_login.getScene().getWindow()).close();
+			//((Stage) button_login.getScene().getWindow()).close();
 		}
 
 		else {
@@ -109,11 +119,35 @@ public class UserLoginController {
         ((Stage) new_user.getScene().getWindow()).close();
 	}
 
+	private void loadMainPage() {
+		loadStage = new Stage(StageStyle.UNDECORATED); //((Stage) button_cancel.getScene().getWindow());//
+		((Stage) button_cancel.getScene().getWindow()).close();
+		loadStage.show();
+		
+		StackPane sp = new StackPane();
+		Image img = new Image(this.getClass().getResourceAsStream( "GraderLoadScreen.jpg" ));
+		ImageView imgView = new ImageView(img);
+		sp.getChildren().add(imgView);
+		
+		Scene scene = new Scene(sp);
+		loadStage.setScene(scene);
+		loadStage.setAlwaysOnTop(true);
+		loadStage.centerOnScreen();
+		
+		launchMainPage();
+	}
+	
+	/**
+	 * Closes the loading screen
+	 */
+	public static void closeLoadScreen() {
+		loadStage.hide();
+	}
+	
 	/**
 	 * Launches the main page.
 	 */
 	private void launchMainPage() {
-
 		try {
 			Stage stage = new Stage();
 			Scene scene = new Scene((BorderPane) FXMLLoader.load(getClass()
@@ -131,7 +165,7 @@ public class UserLoginController {
 		}
 
 		catch (Exception e) {
-
+			e.printStackTrace();
 		}
 	}
 	
