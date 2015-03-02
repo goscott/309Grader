@@ -12,7 +12,7 @@ public class GraderPopup {
 	 */
 	public static void setIcon(Stage stage) {
 		try {
-        	stage.getIcons().add(new Image(ResourceLoader.class.getResourceAsStream( "GraderIcon.png" )));
+        	stage.getIcons().add(ResourceLoader.ICON);
         }
         catch(Exception ex) {
         	Debug.log("Error", "Could not load icon");

@@ -2,6 +2,8 @@ package resources;
 
 import java.awt.Color;
 
+import javafx.scene.image.Image;
+
 /**
  * Standardizes coloring and resource loading
  * 
@@ -16,4 +18,7 @@ public class ResourceLoader {
 	
 	public final static javafx.scene.paint.Color ERROR_RED = javafx.scene.paint.Color.RED;
 	public final static javafx.scene.paint.Color NOERROR_WHITE = javafx.scene.paint.Color.WHITE;
+	
+	public final static Image ICON = new Image(ResourceLoader.class.getResourceAsStream( "GraderIcon.png" ));
+	public final static Image LOAD_SCREEN = new Image(ResourceLoader.class.getResourceAsStream( "GraderLoadScreen.jpg" ));
 }

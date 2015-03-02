@@ -124,8 +124,7 @@ public class UserLoginController {
 		loadStage.show();
 		
 		StackPane sp = new StackPane();
-		Image img = new Image(ResourceLoader.class.getResourceAsStream( "GraderLoadScreen.jpg" ));
-		ImageView imgView = new ImageView(img);
+		ImageView imgView = new ImageView(ResourceLoader.LOAD_SCREEN);
 		sp.getChildren().add(imgView);
 		
 		Scene scene = new Scene(sp);
