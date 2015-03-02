@@ -56,7 +56,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj != null && (obj instanceof Grade))
+        if (name != null && obj != null && (obj instanceof Grade))
         {
             return name.equals(((Grade) obj).getName());
         }

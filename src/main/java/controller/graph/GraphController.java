@@ -170,6 +170,7 @@ public class GraphController {
 		updateCombobox();
 
 		gradeSelectDropdown.getSelectionModel().clearSelection();
+		slider.setVisible(false);
 		updateCurveTable();
 		updateGradeTable();
 	}
@@ -343,17 +344,19 @@ public class GraphController {
 	@FXML
 	private void selectNewGrade(ActionEvent event) {
 		Grade grade = Grader.getCurve().getGrade(gradeSelectDropdown.getValue());
-		slider.setValue(grade.value());
-		slider.setMax(100);
-		if (Grader.getCurve().getGradeAbove(grade) != null) {
-			slider.setMax(Grader.getCurve().getGradeAbove(grade).value());
+		if(grade != null) {
+			slider.setValue(grade.value());
+			slider.setMax(100);
+			if (Grader.getCurve().getGradeAbove(grade) != null) {
+				slider.setMax(Grader.getCurve().getGradeAbove(grade).value());
+			}
+			slider.setMin(0);
+			if (Grader.getCurve().getGradeBelow(grade) != null) {
+				slider.setMin(Grader.getCurve().getGradeBelow(grade).value());
+			}
+			slider.setValue(grade.value());
+			slider.setVisible(true);
 		}
-		slider.setMin(0);
-		if (Grader.getCurve().getGradeBelow(grade) != null) {
-			slider.setMin(Grader.getCurve().getGradeBelow(grade).value());
-		}
-		slider.setValue(grade.value());
-		slider.setVisible(true);
 	}
 	
 	private class StudentsPerGradeObject {

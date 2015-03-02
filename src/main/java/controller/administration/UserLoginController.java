@@ -119,7 +119,7 @@ public class UserLoginController {
 	}
 
 	private void loadMainPage() {
-		loadStage = new Stage(StageStyle.UNDECORATED); //((Stage) button_cancel.getScene().getWindow());//
+		loadStage = new Stage(StageStyle.UNDECORATED);
 		((Stage) button_cancel.getScene().getWindow()).close();
 		loadStage.show();
 		

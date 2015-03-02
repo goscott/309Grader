@@ -829,7 +829,7 @@ public class Roster implements Serializable {
 		current = false;
 		Grader.getHistoryDB().addRoster(this);
 		thisFile.delete();
-		//Save();
+		Save();
 	}
 
 	/**
