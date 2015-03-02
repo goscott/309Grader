@@ -12,11 +12,11 @@
   <items>
       <VBox>
          <children>
-            <TitledPane alignment="CENTER" collapsible="false" minWidth="0.0" prefHeight="5000.0" prefWidth="133.3333" text="Statistics" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+            <TitledPane alignment="CENTER" collapsible="false" minWidth="0.0" prefHeight="5000.0" prefWidth="133.3333" style="-fx-background-color: #ffffff;" text="Statistics" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
                <content>
                   <ScrollPane fitToHeight="true" fitToWidth="true">
                      <content>
-                        <VBox alignment="CENTER">
+                        <VBox alignment="CENTER" style="-fx-background-color: #ffffff;">
                            <children>
                               <HBox alignment="CENTER">
                                  <children>
@@ -47,7 +47,7 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <TableView fx:id="studentTable" VBox.vgrow="ALWAYS">
+                              <TableView fx:id="studentTable" style="-fx-background-color: #ffffff;" VBox.vgrow="ALWAYS">
                                 <columns>
                                   <TableColumn fx:id="spg_grade" prefWidth="-1.0" text="Grade" />
                                     <TableColumn fx:id="spg_students" prefWidth="-1.0" text="Students" />
@@ -62,7 +62,7 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <TableView fx:id="curveTable" VBox.vgrow="ALWAYS">
+                              <TableView fx:id="curveTable" style="-fx-background-color: #ffffff;" VBox.vgrow="ALWAYS">
                                 <columns>
                                   <TableColumn fx:id="gradeCol" prefWidth="75.0" text="Grade" />
                                     <TableColumn fx:id="minCol" prefWidth="75.0" text="Min" />
@@ -81,9 +81,9 @@
       </VBox>
       <VBox>
          <children>
-            <TitledPane alignment="CENTER" collapsible="false" minWidth="0.0" prefHeight="5000.0" prefWidth="133.3333" text="Curve" VBox.vgrow="ALWAYS">
+            <TitledPane alignment="CENTER" collapsible="false" minWidth="0.0" prefHeight="5000.0" prefWidth="133.3333" style="-fx-background-color: #ffffff;" text="Curve" VBox.vgrow="ALWAYS">
                <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
                      <center>
                         <Slider fx:id="slider" orientation="VERTICAL" prefHeight="357.0" prefWidth="103.0" showTickLabels="true" showTickMarks="true" BorderPane.alignment="CENTER" />
                      </center>
@@ -100,20 +100,20 @@
       </VBox>
       <VBox>
          <children>
-            <TitledPane alignment="CENTER" collapsible="false" minWidth="0.0" prefHeight="5000.0" text="Breakdown" VBox.vgrow="ALWAYS">
+            <TitledPane alignment="CENTER" collapsible="false" minWidth="0.0" prefHeight="5000.0" style="-fx-background-color: #ffffff;" text="Breakdown" VBox.vgrow="ALWAYS">
                <content>
-                  <VBox alignment="CENTER">
+                  <VBox alignment="CENTER" style="-fx-background-color: #ffffff;">
                      <children>
                         <StackPane VBox.vgrow="ALWAYS">
                            <children>
                               <ScrollPane fx:id="bar_pane" prefViewportHeight="2000.0" prefViewportWidth="242.0">
                                  <content>
-                                    <BarChart fx:id="barChart" alternativeRowFillVisible="false" animated="false" barGap="0.0" categoryGap="0.0" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" minHeight="750.0" verticalGridLinesVisible="false" verticalZeroLineVisible="false" VBox.vgrow="ALWAYS">
+                                    <BarChart fx:id="barChart" alternativeRowFillVisible="false" animated="false" barGap="0.0" categoryGap="0.0" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" minHeight="750.0" style="-fx-background-color: #ffffff;" verticalGridLinesVisible="false" verticalZeroLineVisible="false" VBox.vgrow="ALWAYS">
                                       <yAxis>
-                                        <CategoryAxis fx:id="yAxis" animated="false" label="Percentage Score" side="LEFT" tickLabelGap="0.0" tickLength="10.0" />
+                                        <CategoryAxis fx:id="yAxis" animated="false" label="Percentage Score" side="LEFT" style="-fx-background-color: #ffffff;" tickLabelGap="0.0" tickLength="10.0" />
                                       </yAxis>
                                       <xAxis>
-                                        <NumberAxis animated="false" autoRanging="false" forceZeroInRange="false" label="Number of Students" minorTickCount="0" side="BOTTOM" tickLabelGap="0.0" tickUnit="1.0" upperBound="15.0" fx:id="xAxis" />
+                                        <NumberAxis animated="false" autoRanging="false" forceZeroInRange="false" label="Number of Students" minorTickCount="0" side="BOTTOM" style="-fx-background-color: #ffffff;" tickLabelGap="0.0" tickUnit="1.0" upperBound="15.0" fx:id="xAxis" />
                                       </xAxis>
                                     </BarChart>
                                  </content>
