@@ -137,7 +137,7 @@ public class GraphController {
         slider.setMinorTickCount(0);
         slider.setSnapToTicks(true);
         slider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
+        	public void changed(ObservableValue<? extends Number> ov,
                     Number old_val, Number new_val) {
                 if (slider.isVisible()) {
                     System.out.println("adjusting "
@@ -154,8 +154,20 @@ public class GraphController {
                 createGradeSeries();
             }
         });
-        
-		//this.update();
+        // only do this when change is finished
+        slider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> obs, Boolean wasChanging, Boolean isNowChanging) {
+                if (!isNowChanging) {
+                	Grade grade = Grader.getCurve().getGrade(gradeSelectDropdown.getValue());
+                    if(slider.getValue() == Grader.getCurve().getGradeAbove(grade).value()
+                    		|| slider.getValue() == Grader.getCurve().getGradeBelow(grade).value()) {
+                    	Grader.getCurve().remove(grade);
+                    	update();
+                    }
+                }
+            }
+        });
 	}
 
 	/**
@@ -167,10 +179,11 @@ public class GraphController {
 		createGradeSeries();
 		
 		// populate combobox
-		updateCombobox();
-
 		gradeSelectDropdown.getSelectionModel().clearSelection();
+		updateCombobox();
+		
 		slider.setVisible(false);
+		
 		updateCurveTable();
 		updateGradeTable();
 	}
