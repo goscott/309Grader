@@ -369,13 +369,7 @@ public class Grader {
 	 */
 	public static ObservableList<Student> getStudentList() {
 		Debug.log("Grader model accessed", "Student list retrieved");
-		ObservableList<Student> data = FXCollections.observableArrayList();
-		if (currentRoster != null) {
-			for (Student s : currentRoster.getStudents()) {
-				data.add(s);
-			}
-		}
-		return data;
+		return currentRoster.getStudentList();
 	}
 
 	/**
@@ -387,11 +381,7 @@ public class Grader {
 	 */
 	public static ObservableList<String> getAssignmentNameList() {
 		Debug.log("Grader model accessed", "Assignment names retrieved");
-		ObservableList<String> data = FXCollections.observableArrayList();
-		for (GradedItem item : currentRoster.getAssignments()) {
-			data.add(item.name());
-		}
-		return data;
+		return currentRoster.getAssignmentNameList();
 	}
 
 	/**

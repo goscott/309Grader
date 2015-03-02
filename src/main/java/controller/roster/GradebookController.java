@@ -7,6 +7,7 @@ import model.administration.PermissionKeys;
 import model.curve.Grade;
 import model.driver.Grader;
 import model.roster.GradedItem;
+import model.roster.Roster;
 import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -52,8 +53,12 @@ public class GradebookController {
 	private ContextMenu rightClickMenu;
 	/** An ArrayList holding the names of the columns that are expanded **/
 	private ArrayList<String> expanded;
-
+	/** The instance of the controller **/
 	private static GradebookController singleton;
+	/** checks if accessing the current roster **/
+	private boolean current = true;
+	/** The roster, if not current **/
+	private Roster roster = null;
 
 	public static GradebookController getController() {
 		return singleton;
@@ -67,7 +72,7 @@ public class GradebookController {
 		singleton = this;
 		mainTable.setEditable(true);
 		expanded = new ArrayList<String>();
-		for (String item : Grader.getAssignmentNameList()) {
+		for (String item : getRoster().getAssignmentNameList()) {
 			setAssignmentExpansion(item, true);
 		}
 		fullRefresh();
@@ -78,7 +83,7 @@ public class GradebookController {
 		expandCollapse.setOnAction(new DisplayExpandCollapsePopupEventHandler(
 				expandCollapse, this));
 		// students don't get these options
-		if (Grader.getUser().getPermissions().contains(PermissionKeys.EDIT_GRADEBOOK)) {
+		if (current && Grader.getUser().getPermissions().contains(PermissionKeys.EDIT_GRADEBOOK)) {
 			MenuItem addAssignment = new MenuItem("Add Assignment");
 			MenuItem dropAssignment = new MenuItem("Drop Assignment");
 			MenuItem importAssignment = new MenuItem("Import Assignment");
@@ -150,7 +155,7 @@ public class GradebookController {
                     public void updateItem(Object item, boolean empty) {
                         if (item != null) {
                             setText(item.toString());
-                            Grade grade = Grader.getCurve().getGrade(item.toString());
+                            Grade grade = getRoster().getCurve().getGrade(item.toString());
                             Color col = grade.getColor();
                             setStyle("-fx-background-color: rgb(" + 
                             		col.getRed() + ", " + col.getGreen() + ", " + col.getBlue() + ")");
@@ -248,13 +253,13 @@ public class GradebookController {
 	 * visible at all times.
 	 */
 	void refresh() {
-		if (Grader.getRoster() != null) {
+		if (getRoster() != null) {
 			int endNdx = mainTable.getColumns().size() - 2;
 			mainTable.getColumns().remove(endNdx, endNdx + 2);
 			totalGradeCol
 					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 							"totalScore"));
-			for (GradedItem item : Grader.getRoster().getAssignments()) {
+			for (GradedItem item : getRoster().getAssignments()) {
 				if (!columnExists(item.name())
 						&& (item.getParent() == null || expanded.contains(item
 								.getParent().name()))) {
@@ -294,7 +299,7 @@ public class GradebookController {
 
 			endColumns();
 
-			mainTable.setItems(Grader.getStudentList());
+			mainTable.setItems(getRoster().getStudentList());
 			// force hard refresh
 			mainTable.getColumns().add(0, new TableColumn<Student, String>());
 			mainTable.getColumns().remove(0);
@@ -332,7 +337,7 @@ public class GradebookController {
 	private void open(String asgnName) {
 		if (!expanded.contains(asgnName)) {
 			expanded.add(asgnName);
-			GradedItem item = Grader.getAssignment(asgnName);
+			GradedItem item = getRoster().getAssignment(asgnName);
 			for (GradedItem child : item.getChildren()) {
 				open(child.name());
 			}
@@ -348,7 +353,7 @@ public class GradebookController {
 	private void close(String asgnName) {
 		if (expanded.contains(asgnName)) {
 			expanded.remove(asgnName);
-			GradedItem item = Grader.getAssignment(asgnName);
+			GradedItem item = getRoster().getAssignment(asgnName);
 			for (GradedItem child : item.getChildren()) {
 				close(child.name());
 			}
@@ -441,5 +446,20 @@ public class GradebookController {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Gets the roster being shown
+	 */
+	private Roster getRoster() {
+		if(current) {
+			return Grader.getRoster();
+		}
+		return roster;
+	}
+	
+	public void showRoster(Roster roster) {
+		current = false;
+		this.roster = roster;
 	}
 }

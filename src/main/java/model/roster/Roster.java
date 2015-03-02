@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.curve.Curve;
 import model.curve.Grade;
 import model.driver.Debug;
@@ -883,5 +885,27 @@ public class Roster implements Serializable {
 	@*/
 	public void export() {
 		Exporter.exportRoster(this);
+	}
+
+	/**
+	 * Gets an observable list of students
+	 */
+	public ObservableList<Student> getStudentList() {
+		ObservableList<Student> data = FXCollections.observableArrayList();
+		for (Student s : getStudents()) {
+			data.add(s);
+		}
+		return data;
+	}
+
+	/**
+	 * Gets an observable list of assignment names
+	 */
+	public ObservableList<String> getAssignmentNameList() {
+		ObservableList<String> data = FXCollections.observableArrayList();
+		for (GradedItem item : getAssignments()) {
+			data.add(item.name());
+		}
+		return data;
 	}
 }
