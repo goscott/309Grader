@@ -1,16 +1,12 @@
 package model.administration;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import model.driver.Debug;
 
@@ -86,6 +82,7 @@ public class UserDB {
         BufferedReader reader;
         String line = "";
         String[] tokens;
+        User toAdd;
         int index;
 
         users = new ArrayList<User>();
@@ -109,9 +106,18 @@ public class UserDB {
             while ((line = reader.readLine()) != null) {
                 tokens = line.split(DELIM);
                 index = 0;
-                users.add(new User(tokens[index++], tokens[index++],
-                        tokens[index++], tokens[index++], tokens[index++]
-                                .charAt(0)));
+                
+                toAdd = new User(tokens[index++], tokens[index++], tokens[index++], tokens[index++], tokens[index++].charAt(0));
+                users.add(toAdd);
+                
+                
+                if (toAdd.getType() == UserTypes.USER_CUSTOM) {
+                    
+                    //check for keys
+                    for (; index < tokens.length; index++) {
+                        toAdd.addPermission(PermissionKeys.valueOf(tokens[index]));
+                    }
+                }
             }
 
             reader.close();
@@ -140,7 +146,19 @@ public class UserDB {
                 // add the user to the db file
                 writer.append(newUser.getfName() + DELIM + newUser.getlName()
                         + DELIM + newUser.getId() + DELIM + newUser.getPassword()
-                        + DELIM + newUser.getType() + "\n");
+                        + DELIM + newUser.getType());
+                
+                if (newUser.getType() == UserTypes.USER_CUSTOM) {
+                    
+                    Debug.log("UserDB", "Writing permission keys to file");
+                    
+                    //add keys
+                    for (PermissionKeys key : newUser.getPermissions()) {
+                        writer.append(DELIM + key.toString());
+                    }
+                }
+                
+                writer.append("\n");
             }
             
             writer.close();
@@ -243,7 +261,7 @@ public class UserDB {
     /*@
           ensures(\result == users);
      @*/
-    public Collection<User> getUsers() {
+    public ArrayList<User> getUsers() {
         Debug.log("model", "UserDB.getUsers() invoked.");
         return users;
     }

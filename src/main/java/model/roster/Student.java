@@ -68,9 +68,6 @@ public class Student implements Comparable<Student>, Serializable {
 	            &&
             roster != null
         );
-        ensures(
-            \result.equals(roster)
-        );
     @*/
 	public void setRoster(Roster roster) {
 		if (this.roster == null && roster != null) {
@@ -96,7 +93,7 @@ public class Student implements Comparable<Student>, Serializable {
                 &&
             currentUser.getPermissions().contains(PermissionKeys.VIEW_STUDENTS)
                 &&
-            \result.equals(name)
+            ((String)\result).equals(name)
         );
     @*/
 	public String getName() {
@@ -116,7 +113,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 */
 	/*@
         ensures(
-            \result.equals(id)
+            ((String)\result).equals(id)
         );
     @*/
 	public String getId() {
@@ -133,7 +130,7 @@ public class Student implements Comparable<Student>, Serializable {
             roster != null
         );
         ensures(
-            \result.equals(roster.getTotalScore(this))
+            ((double)\result).equals(roster.getTotalScore(this))
         );
     @*/
 	public double getTotalScore() {
@@ -154,7 +151,7 @@ public class Student implements Comparable<Student>, Serializable {
             roster != null
         );
         ensures(
-            \result.equals(maxTotal > 0 ? Double.valueOf(twoDForm
+            ((double)\result).equals(maxTotal > 0 ? Double.valueOf(twoDForm
                     .format(getTotalScore() / maxTotal * 100)) : 0)
         );
     @*/
@@ -179,13 +176,15 @@ public class Student implements Comparable<Student>, Serializable {
             roster != null
         );
         ensures(
-            \result.equals(roster.getCurve().get(percent))
+            ((Grade)\result).equals(roster.getCurve().get(percent))
         );
     @*/
 	public Grade getGrade() {
 		double percent = getTotalPercentage();
 		Debug.log("Student Grade", percent + "%");
 		if (roster != null) {
+			System.out.println("getting grade for " + name + " : " + roster.getCurve().get(percent));
+			System.out.println("(percent = " + percent + ")");
 			return roster.getCurve().get(percent);
 		}
 		return null;
@@ -203,7 +202,7 @@ public class Student implements Comparable<Student>, Serializable {
             roster != null
         );
         ensures(
-            \result.equals(roster.getCurve().get(getAssignmentScore(asgn)))
+            ((Grade)\result).equals(roster.getCurve().get(getAssignmentScore(asgn)))
         );
     @*/
 	public Grade getGrade(String asgn) {
@@ -225,7 +224,7 @@ public class Student implements Comparable<Student>, Serializable {
             roster != null
         );
         ensures(
-            \result.equals(roster.getStudentGrade(this, asgn))
+            ((Double)\result).equals(roster.getStudentGrade(this, asgn))
         );
     @*/
 	public Double getAssignmentScore(String asgn) {
@@ -276,7 +275,7 @@ public class Student implements Comparable<Student>, Serializable {
     @*/
 	public void setPercentScore(String asgn, double percent) {
 		if (roster != null) {
-			setScore(asgn, percent / 100
+			roster.addScore(this, roster.getAssignment(asgn), percent / 100
 					* roster.getAssignment(asgn).maxScore());
 		}
 	}
@@ -286,7 +285,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 */
 	/*@
         ensures(
-            \result.equals(name.toString().compareTo(other.name.toString()))
+            ((int)\result).equals(name.toString().compareTo(other.name.toString()))
         );
     @*/
 	public int compareTo(Student other) {
@@ -309,11 +308,11 @@ public class Student implements Comparable<Student>, Serializable {
            (other != null) && (other instanceof String)
         );
         ensures(
-            \result.equals(oth.getId().equals(id))
+            ((boolean)\result).equals(oth.getId().equals(id))
             
             &&
             
-            \result.equals(oth.equals(id))
+            ((boolean)\result).equals(oth.equals(id))
         );
     @*/
 	public boolean equals(Object other) {

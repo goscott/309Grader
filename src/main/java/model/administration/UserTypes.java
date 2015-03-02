@@ -26,6 +26,12 @@ public class UserTypes {
      * Identifying character for a Administrator user.
      */
     public static final char USER_ADMIN = 'a';
+    
+    /**
+     * Identifying character for a user with a custom key configuration.
+     * (See PermissionKeys.java, PermissionEditorController.java)
+     */
+    public static final char USER_CUSTOM = 'c';
 
     /**
      * Checks a target char to see if it a UserType.
@@ -38,7 +44,8 @@ public class UserTypes {
               \result == (target == USER_STUDENT 
                 || target == USER_INSTRUCTOR
                 || target == USER_TA
-                || target == USER_ADMIN)
+                || target == USER_ADMIN
+                || target == USER_CUSTOM)
           );
      @*/
     public static boolean isValidType(char target) {
@@ -47,7 +54,8 @@ public class UserTypes {
                 target == USER_STUDENT 
                 || target == USER_INSTRUCTOR
                 || target == USER_TA
-                || target == USER_ADMIN;
+                || target == USER_ADMIN
+                || target == USER_CUSTOM;
     }
     
     /**
@@ -75,6 +83,8 @@ public class UserTypes {
                 return "Teachers Aid";
             case USER_ADMIN:
                 return "Admin";
+            case USER_CUSTOM:
+                return "Custom";
             default:
                 return "INVALID USER";
         }

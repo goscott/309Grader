@@ -14,6 +14,11 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.announcements.Announcement;
 
+/**
+ * 
+ * @author Jacob
+ *
+ */
 public class AnnouncementsController {
     
     @FXML
@@ -91,9 +96,6 @@ public class AnnouncementsController {
                 	ViewAnnouncementController popup = new ViewAnnouncementController();
             		popup.setAnnouncement(table.getSelectionModel().getSelectedItem());
             		popup.start(newStage);
-                    //this is how you get a reference to the selected announcement
-                    //JOptionPane.showMessageDialog(null, table.getSelectionModel().getSelectedItem().getContent(),
-                    //	"" + table.getSelectionModel().getSelectedItem().getSubject(), JOptionPane.PLAIN_MESSAGE);
                 }
             }
         });
@@ -101,30 +103,20 @@ public class AnnouncementsController {
         table.setItems(data);
     }
     
-    //This should launch a new announcement dialog, and then add the announcement to the list
+    /**
+     * Launches a new announcement dialog, and then adds the announcement to the list.
+     */
     public void addAnnouncement() {
     	Stage newStage = new Stage();
     	AddAnnouncementController popup = new AddAnnouncementController();
 		popup.setParent(this);
 		popup.start(newStage);
-    	/*
-    	String content, subject;
-    	subject = JOptionPane.showInputDialog(null, "Enter announcement subject:", "Add Announcement: Subject", JOptionPane.OK_CANCEL_OPTION);
-    	if (subject != null)
-    	{	content = JOptionPane.showInputDialog(null, "Enter announcement content:", "Add Announcement: Content", JOptionPane.OK_CANCEL_OPTION);
-    	
-    	}
-    	else
-    	{
-    		content = null;
-    	}
-    	if (content != null)
-    	{
-    		data.add(new Announcement(subject, "You", content));
-    		table.setItems(data);
-    	}*/
     }
     
+    /**
+     * Adds an announcement to the table.
+     * @param announcement the Announcement to be added to the table.
+     */
     void addAnnouncementToList(Announcement announcement) {
     	data.add(announcement);
 		table.setItems(data);

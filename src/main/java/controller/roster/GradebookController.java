@@ -1,9 +1,9 @@
 package controller.roster;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import model.administration.PermissionKeys;
-import model.administration.UserTypes;
 import model.curve.Grade;
 import model.driver.Grader;
 import model.roster.GradedItem;
@@ -12,10 +12,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -138,6 +140,30 @@ public class GradebookController {
 				"Grade");
 		gradeCol.setMinWidth(100);
 		gradeCol.setEditable(false);
+		
+		
+		gradeCol.setCellFactory(new Callback<TableColumn<Student,Grade>, TableCell<Student,Grade>>() {
+			@Override
+			public TableCell<Student, Grade> call(TableColumn<Student, Grade> param) {
+				TableCell cell = new TableCell() {
+                    @Override
+                    public void updateItem(Object item, boolean empty) {
+                        if (item != null) {
+                            setText(item.toString());
+                            Grade grade = Grader.getCurve().getGrade(item.toString());
+                            Color col = grade.getColor();
+                            setStyle("-fx-background-color: rgb(" + 
+                            		col.getRed() + ", " + col.getGreen() + ", " + col.getBlue() + ")");
+                        }
+                    }
+                };
+                cell.setAlignment(Pos.CENTER);
+                
+				return cell;
+			}
+		});
+		
+		
 		gradeCol.setCellValueFactory(new Callback() {
 			public SimpleStringProperty call(
 					CellDataFeatures<Student, Grade> param) {
@@ -152,6 +178,7 @@ public class GradebookController {
 				return call((CellDataFeatures<Student, Grade>) (param));
 			}
 		});
+		
 		mainTable.getColumns().add(gradeCol);
 	}
 

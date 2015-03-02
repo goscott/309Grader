@@ -121,6 +121,7 @@ public class UserLoginController {
 
 			stage.setScene(scene);
 			stage.setTitle("GraderTool");
+			stage.getIcons().add(((Stage) button_login.getScene().getWindow()).getIcons().get(0));
 			stage.setOnHiding(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent event) {
 					Server.backup();
@@ -145,7 +146,7 @@ public class UserLoginController {
 
             stage.setScene(scene);
             stage.setTitle("Create New User");
-
+            stage.getIcons().add(((Stage) button_login.getScene().getWindow()).getIcons().get(0));
             stage.show();
             
             stage.setResizable(false);

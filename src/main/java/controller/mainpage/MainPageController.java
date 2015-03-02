@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import controller.graph.GraphController;
 import controller.history.HistoryController;
 import controller.roster.GradebookController;
 import run.Launcher;
@@ -99,8 +100,6 @@ public class MainPageController {
 	/** The server menu **/
 	@FXML
 	private Menu serverMenu;
-	@FXML
-	private FlowPane buttonSetUp;
 
 	/**
 	 * Initializes the main page
@@ -178,6 +177,9 @@ public class MainPageController {
 			e.printStackTrace();
 		}
 
+		AnchorPane classPane = (AnchorPane) classTab.getContent();
+		FlowPane buttonSetUp = new FlowPane();
+		classPane.getChildren().add(buttonSetUp);
 		ClassButtonsController con = new ClassButtonsController(buttonSetUp);
 		buttonController = con;
 		thisController = this;
@@ -191,6 +193,25 @@ public class MainPageController {
 		} else {
 			requestHelp.setVisible(false);
 		}
+		
+		initTabPane();
+	}
+	
+	/**
+	 * Initializes the tab pane.
+	 */
+	private void initTabPane() {
+	    graphTab.selectedProperty().addListener(new ChangeListener<Object>() {
+
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
+                if (graphTab.isSelected()) {
+                    //Debug.log("GraphTab Selected");
+                    GraphController.currentInstance.update();
+                }
+            }
+	        
+	    });
 	}
 
 	/**
@@ -249,26 +270,13 @@ public class MainPageController {
 		try {
 			Stage stage = new Stage();
 
-			// BorderPane page = (BorderPane)
-			// FXMLLoader.load(getClass().getResource("PermissionsEditor.fxml"));
 			Scene scene = new Scene((Parent) FXMLLoader.load(getClass()
 					.getClassLoader().getResource(
 							"view/administration/permissions_editor.fxml")));
 
-			@SuppressWarnings("unchecked")
-			ListView<String> view = (ListView<String>) scene
-					.lookup("#user_list");
-			ObservableList<String> list = FXCollections.observableArrayList();
-
-			for (User target : users.getUsers()) {
-				list.add(String.format("%-40s%51s", target.getId(),
-						UserTypes.fullName(target.getType())));
-			}
-
-			view.setItems(list);
-
 			stage.setScene(scene);
 			stage.setTitle("Edit User Permissions");
+			stage.getIcons().add(((Stage) tabPane.getScene().getWindow()).getIcons().get(0));
 			stage.setResizable(false);
 
 			stage.show();
@@ -292,6 +300,7 @@ public class MainPageController {
 
 			stage.setScene(scene);
 			stage.setTitle("About Team");
+			stage.getIcons().add(((Stage) tabPane.getScene().getWindow()).getIcons().get(0));
 			stage.setResizable(false);
 			stage.show();
 
@@ -359,25 +368,8 @@ public class MainPageController {
 		thisController.tabPane.getSelectionModel().select(
 				thisController.classTab);
 		disable();
-
-		/*
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../../view/history/history_screen.fxml"));
-		try 
-		{
-		    //you have to call this or it doesn't work for some reason
-		    Pane pane = (Pane) loader.load(); 
-		} 
 		
-		catch (IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
-		HistoryController controller = loader.<HistoryController>getController();
-		//controller.loadClasses();
-		controller.call();
-		*/
-		HistoryController controller = Grader.getHistoryController();
-		controller.loadClasses();
+		HistoryController.currentInstance.loadClasses();
 	}
 
 	/**

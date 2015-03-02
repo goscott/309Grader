@@ -37,6 +37,14 @@ public class Exporter {
 	 * Exports a roster to an excel document. All assignments are printed,
 	 * including sub-assignments
 	 */
+	/*@
+		requires(
+			roster != null
+		);
+		ensures(
+			// the excel file has been created
+		);
+	@*/
 	public static void exportRoster(Roster roster) {
 		// don't save null rosters
 		if (roster == null) {
@@ -74,6 +82,13 @@ public class Exporter {
 	/**
 	 * Adds the data from the roster to the excel sheet
 	 */
+	/*@
+		requires(
+			roster != null
+				&&
+			sheet != null
+		);
+	@*/
 	private static void printRoster(Roster roster, WritableSheet sheet)
 			throws RowsExceededException, WriteException {
 		WritableFont times10pt = new WritableFont(WritableFont.TIMES, 10);

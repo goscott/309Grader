@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.administration.PermissionsEditorController">
+<StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.administration.PermissionsEditorController">
    <children>
-      <VBox fx:id="user_select" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="362.0">
+      <VBox fx:id="user_select">
          <children>
+            <TextField fx:id="search_field" focusTraversable="false" promptText="Search for a user, or type the full name of a user type (eg- &quot;student&quot;)">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </TextField>
             <HBox>
                <children>
                   <ListView fx:id="user_list" prefHeight="741.0" prefWidth="362.0" HBox.hgrow="ALWAYS" />
@@ -25,9 +31,9 @@
             </HBox>
          </children>
       </VBox>
-      <VBox fx:id="user_edit" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="362.0" visible="false">
+      <VBox fx:id="user_edit" alignment="CENTER" layoutX="10.0" layoutY="10.0" visible="false">
          <children>
-            <GridPane gridLinesVisible="true" VBox.vgrow="NEVER">
+            <GridPane gridLinesVisible="true" minHeight="75.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -53,7 +59,39 @@
                   <Label fx:id="user_id" text="userid00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <Label text="Keys:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <ListView fx:id="keys_available" prefHeight="500.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#addKey" text="------&gt;">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Region prefHeight="200.0" />
+                              <Button mnemonicParsing="false" onAction="#removeKey" text="&lt;------">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <ListView fx:id="keys_used" prefHeight="500.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
             <HBox alignment="CENTER">
                <children>
                   <Button fx:id="edit_button1" mnemonicParsing="false" onAction="#permissionsChanged" text="Done">

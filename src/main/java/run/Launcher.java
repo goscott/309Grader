@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.driver.Debug;
@@ -38,6 +39,12 @@ public class Launcher extends Application {
             
             primaryStage.setTitle("GraderTool: Login");
             primaryStage.setScene(scene);
+            try {
+            	primaryStage.getIcons().add(new Image(Launcher.class.getResourceAsStream( "GraderIcon.png" )));
+            }
+            catch(Exception ex) {
+            	Debug.log("Error", "Could not load icon");
+            }
             setUser(scene);
             
             primaryStage.show();

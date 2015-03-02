@@ -14,13 +14,10 @@ public class ClassButtonsController
     public ClassButtonsController(FlowPane buttons)
     {
         buttonSetUp = buttons;
-     //   buttonSetUp.setTranslateX(25);
-    //    buttonSetUp.setTranslateY(25);
-       
+        buttonSetUp.setTranslateX(25);
+        buttonSetUp.setTranslateY(25);
         buttonSetUp.setVgap(50);
         buttonSetUp.setHgap(50);
-        buttonSetUp.setMaxSize(100000, 1000000);
-        buttonSetUp.autosize();
         refreshButtons();
     }
     

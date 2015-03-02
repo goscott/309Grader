@@ -1,5 +1,6 @@
 package model.roster;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -378,7 +379,12 @@ public class Roster implements Serializable {
 	@*/
 	public GradedItem getAssignment(String name) {
 		GradedItem temp = new GradedItem(name, "", 100, false);
-		return assignments.get(assignments.indexOf(temp));
+		for(GradedItem item : assignments) {
+			if(item.name().equals(name)) {
+				return item;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -402,7 +408,6 @@ public class Roster implements Serializable {
 		if (students.contains(student) && assignments.contains(asgn)
 				&& score >= 0 && score <= asgn.maxScore()) {
 			Student stud = students.get(students.indexOf(student));
-			stud.setScore(asgn.name(), score);
 			asgn.setStudentScore(student, score);
 		}
 	}
@@ -683,7 +688,7 @@ public class Roster implements Serializable {
 	public double getMaxPoints() {
 		double max = 0;
 		for (GradedItem item : assignments) {
-			if (!item.isExtraCredit() && !item.hasChildren()) {
+			if (!item.isExtraCredit() && item.hasChildren()) {
 				max += item.maxScore();
 			}
 		}
@@ -818,9 +823,11 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public void archive() {
+	    File thisFile = new File("Rosters/" + courseName + "-" + String.format("%02d", section) + ".rost");
 		current = false;
 		Grader.getHistoryDB().addRoster(this);
-		Save();
+		thisFile.delete();
+		//Save();
 	}
 
 	/**
@@ -866,6 +873,9 @@ public class Roster implements Serializable {
 		return list;
 	}
 
+	/**
+	 * Exports the roster
+	 */
 	/*@
 	 	ensures(
 	 		// the roster is exported

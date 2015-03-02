@@ -217,9 +217,12 @@ public class User {
                 (!other.getId().equals(id)) ==> (\result == false)
             );
      */
-    public boolean equals(User other) {
-
-        if (other.getId().equals(id)) {
+    public boolean equals(Object other) {
+        if (!(other instanceof User)) {
+            return false;
+        }
+        
+        if (((User)other).getId().equals(id)) {
             return true;
         }
 
@@ -271,6 +274,10 @@ public class User {
         }
         
         permissions.add(key);
+    }
+    
+    public void setPermissions(ArrayList<PermissionKeys> list) {
+        permissions = list;
     }
     
     /**

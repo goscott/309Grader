@@ -218,11 +218,13 @@ public class HistoryController {
      */
     private HistoryDB history;
     
+    public static HistoryController currentInstance;
+    
     /**
      * Builds the history view.
      */
     public void initialize() {
-        Grader.setHistoryController(this);
+        currentInstance = this;
         line_chart.setAnimated(false);
         line_chart.setTitle("Average Grade Per Quarter");
         

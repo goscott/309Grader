@@ -1,5 +1,6 @@
 package model.curve;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 /**
@@ -11,12 +12,10 @@ public class Grade implements Comparable<Grade>, Serializable {
     private static final long serialVersionUID = -8509411443331361582L;
     /** Grade Name */
     private final String name;
-    /** Maximum percentage required */
-    private double max;
-    /** Minimum percentage required */
-    private double min;
-    /** Maximum percentage possible */
-    private static double MAX_PERCENT = 100.0;
+    /** Grades above this value have this grade */
+    private double value;
+    /** The color of the grade **/
+    private Color color;
 
     /**
      * Create a new Grade object with
@@ -24,9 +23,17 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param max the maximum percentage required
      * @param min the minimum percentage required
      */
-    public Grade(String name, double max, double min) {
+    public Grade(String name, double val, Color color) {
         this.name = name;
-        this.set(max, min);
+        this.color = color;
+        this.set(val);
+    }
+    
+    /**
+     * Gets the color of the grade
+     */
+    public Color getColor() {
+    	return color;
     }
 
     /**
@@ -36,32 +43,25 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @return a negative integer, zero, or a positive integer as this grade is
      * less than, equal to, or greater than the specified grade.
      */
-    public int compareTo(Grade other) {
-        if (this.overlap(other)) {
-            return 0;
-        }
-        else {
-            return Double.compare(this.max, other.max);
-        }
-    }
-    
     @Override
-    public boolean equals(Object obj) {
-        if (obj != null)
-        {
-            return this.name.equals(((Grade) obj).name);
-        }
-        
-        return false;
+    public int compareTo(Grade other) {
+    	return Double.compare(value, other.value);
     }
     
     /**
-     * Returns true if the two grades percentage scores overlap ranges.
-     * @param other another grade to compare with
-     * @return true if the grades percentage scores overlap
+     * Returns true if this grade is equivalent to another grade as indicated
+     * by its name.
+     * @param obj the object being compared to this grade
+     * @return true if the object is equivalent
      */
-    public boolean overlap(Grade other) {
-        return this.min < other.max && other.min < this.max;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && (obj instanceof Grade))
+        {
+            return name.equals(((Grade) obj).getName());
+        }
+        
+        return false;
     }
     
     /**
@@ -83,14 +83,7 @@ public class Grade implements Comparable<Grade>, Serializable {
         ensures \result == false;
     @*/
     public boolean contains(double percentage) {
-        if (percentage == MAX_PERCENT)
-        {
-            return percentage >= this.min && percentage <= this.max;
-        }
-        else
-        {
-            return percentage >= this.min && percentage < this.max;
-        }
+    	return percentage >= value;
     }
     
     /**
@@ -105,36 +98,13 @@ public class Grade implements Comparable<Grade>, Serializable {
     }
     
     /**
-     * Returns the maximum percentage required.
-     * @return the maximum percentage required
-     */
-    /*@
-        ensures \result.equals(max);
-    @*/
-    public double max() {
-        return max;
-    }
-    
-    /**
-     * Returns the minimum percentage required.
-     * @return the minimum percentage required
+     * Returns the value
      */
     /*@
         ensures \result.equals(min);
     @*/
-    public double min() {
-        return min;
-    }
-    
-    /**
-     * Returns the range of the percentage required.
-     * @return the range of the percentage
-     */
-    /*@
-        ensures \result.equals(max - min);
-    @*/
-    public double range() {
-        return max - min;
+    public double value() {
+        return value;
     }
     
     /**
@@ -154,14 +124,21 @@ public class Grade implements Comparable<Grade>, Serializable {
            requires !(max <= 100.0 && min >= 0.0 && max > min);
            signals_only IllegalArgumentException;
     @*/
-    public void set(double max, double min) {
-        if (max <= 100.0 && min >= 0.0 && max > min) {
-            this.max = max;
-            this.min = min;
+    public void set(double val) {
+        if (val <= 100.0 && val >= 0.0) {
+            value = (int)val;
         }
         else {
             throw new IllegalArgumentException(
-                "Invalid grade percentage range");
+                "Invalid grade percentage");
         }
     }
+    
+    /**
+     * Overrides the toString method to retun the name
+     */
+    public String toString() {
+    	return name;
+    }
+
 }
