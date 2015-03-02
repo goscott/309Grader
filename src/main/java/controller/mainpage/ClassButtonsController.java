@@ -11,6 +11,7 @@ import javafx.scene.layout.FlowPane;
 public class ClassButtonsController
 {
     private FlowPane buttonSetUp;
+    
     public ClassButtonsController(FlowPane buttons)
     {
         buttonSetUp = buttons;

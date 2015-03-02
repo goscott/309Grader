@@ -403,12 +403,16 @@ public class MainPageController {
 	@FXML
 	private void handleLoad(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Import Roster File");
+		fileChooser.setTitle("Import Roster");
 		fileChooser.getExtensionFilters().addAll(
 				new FileChooser.ExtensionFilter("Roster Files", "*.rost"));
 		File file = fileChooser.showOpenDialog(new Stage());
 		if (file != null) {
-			Grader.importRoster(file);
+			Roster roster = Roster.load(file.getAbsolutePath());
+			Roster.save(roster);
+			buttonController.refreshButtons();
+			Alert.show(roster.courseName()
+					+ " imported. A copy has been saved to Rosters/. This copy is what will be edited by the program.");
 		}
 	}
 }
