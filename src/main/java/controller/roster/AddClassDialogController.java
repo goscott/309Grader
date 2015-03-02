@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
+import resources.ResourceLoader;
 import controller.GraderPopup;
 import controller.mainpage.ClassButtonsController;
 import model.driver.Debug;
@@ -101,7 +102,7 @@ public class AddClassDialogController {
 	    catch(NumberFormatException ex)
 	    {
 	        sectionNumber.setBackground(new Background(new BackgroundFill(
-                Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+	        	ResourceLoader.ERROR_RED, CornerRadii.EMPTY, Insets.EMPTY)));
 	        return;
 	    }
 		for(String name : students.getSelectionModel().getSelectedItems()) {

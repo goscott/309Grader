@@ -2,6 +2,7 @@ package controller.roster;
 
 import java.io.IOException;
 
+import resources.ResourceLoader;
 import controller.GraderPopup;
 import model.driver.Debug;
 import model.driver.Grader;
@@ -187,7 +188,7 @@ public class AddAssignmentDialogController {
 		addButton.setDisable(checkValid());
 		if (nameField.getText().length() == 0) {
 			nameField.setBackground(new Background(new BackgroundFill(
-					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+					ResourceLoader.ERROR_RED, CornerRadii.EMPTY, Insets.EMPTY)));
 		}
 		Tooltip tooltip = new Tooltip();
 		if (nameField.getText().length() > maxChars) {
@@ -237,12 +238,12 @@ public class AddAssignmentDialogController {
 		if (nameTaken(nameField.getText())
 				|| nameField.getText().length() > maxChars) {
 			nameField.setBackground(new Background(new BackgroundFill(
-					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+					ResourceLoader.ERROR_RED, CornerRadii.EMPTY, Insets.EMPTY)));
 			return true;
 		}
 		nameField.setStyle("-fx-background: #FFFFFF;");
 		nameField.setBackground(new Background(new BackgroundFill(
-				Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+				ResourceLoader.NOERROR_WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		return false;
 	}
 	
@@ -254,17 +255,17 @@ public class AddAssignmentDialogController {
 		if (maxScoreField.getText().length() == 0){
 				//|| Double.parseDouble(maxScoreField.getText()) > Grader.getAssignment(parentDropdown.getValue()).maxScore()) {
 			maxScoreField.setBackground(new Background(new BackgroundFill(
-					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+					ResourceLoader.ERROR_RED, CornerRadii.EMPTY, Insets.EMPTY)));
 			return true;
 		}
 		try {
 			Double.parseDouble(maxScoreField.getText());
 			maxScoreField.setStyle("-fx-background: #FFFFFF;");
 			maxScoreField.setBackground(new Background(new BackgroundFill(
-					Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+					ResourceLoader.NOERROR_WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		} catch (NumberFormatException ex) {
 			maxScoreField.setBackground(new Background(new BackgroundFill(
-					Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+					ResourceLoader.ERROR_RED, CornerRadii.EMPTY, Insets.EMPTY)));
 			return true;
 		}
 		return false;

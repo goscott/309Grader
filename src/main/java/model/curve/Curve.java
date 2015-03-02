@@ -1,11 +1,11 @@
 package model.curve;
 
-import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.TreeSet;
 
+import resources.ResourceLoader;
 import model.driver.Debug;
 
 /**
@@ -27,11 +27,11 @@ public class Curve implements Serializable {
 	public Curve() {
 		this.name = "";
 		curve = new ArrayList<Grade>();
-		curve.add(new Grade("A", 90, Color.GREEN));
-		curve.add(new Grade("B", 80, Color.CYAN));
-		curve.add(new Grade("C", 70, Color.YELLOW));
-		curve.add(new Grade("D", 60, Color.ORANGE));
-		curve.add(new Grade("F", 0, Color.RED));
+		curve.add(new Grade("A", 90, ResourceLoader.GREEN));
+		curve.add(new Grade("B", 80, ResourceLoader.BLUE));
+		curve.add(new Grade("C", 70, ResourceLoader.YELLOW));
+		curve.add(new Grade("D", 60, ResourceLoader.ORANGE));
+		curve.add(new Grade("F", 0, ResourceLoader.RED));
 	}
 
 	/**

@@ -1,7 +1,7 @@
 package controller.administration;
 
 import controller.GraderPopup;
-import resources.ResourceFetcher;
+import resources.ResourceLoader;
 import run.Launcher;
 import model.administration.User;
 import model.administration.UserDB;
@@ -124,7 +124,7 @@ public class UserLoginController {
 		loadStage.show();
 		
 		StackPane sp = new StackPane();
-		Image img = new Image(ResourceFetcher.class.getResourceAsStream( "GraderLoadScreen.jpg" ));
+		Image img = new Image(ResourceLoader.class.getResourceAsStream( "GraderLoadScreen.jpg" ));
 		ImageView imgView = new ImageView(img);
 		sp.getChildren().add(imgView);
 		

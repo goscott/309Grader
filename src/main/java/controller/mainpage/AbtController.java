@@ -1,6 +1,6 @@
 package controller.mainpage;
 
-import resources.ResourceFetcher;
+import resources.ResourceLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -25,9 +25,9 @@ public class AbtController {
     private static AudioClip clip;
     
     public void initialize() {
-        String url = ResourceFetcher.class.getClassLoader().getResource("resources/song.mp3").toString();
+        String url = ResourceLoader.class.getClassLoader().getResource("resources/song.mp3").toString();
     
-        background.setImage(new Image(ResourceFetcher.class.getClassLoader().getResourceAsStream("resources/background.jpg")));
+        background.setImage(new Image(ResourceLoader.class.getClassLoader().getResourceAsStream("resources/background.jpg")));
         clip = new AudioClip(url);
         clip.play();
     }
