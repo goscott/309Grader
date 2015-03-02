@@ -10,7 +10,14 @@
         <tabs>
           <Tab fx:id="classTab" text="Classes">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane prefViewportHeight="596.0" prefViewportWidth="800.0">
+                           <content>
+                              <FlowPane fx:id="buttonSetUp" prefHeight="596.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab fx:id="gradebookTab" text="GradeBook">
@@ -47,8 +54,8 @@
             <Menu mnemonicParsing="false" text="File">
                <items>
                   <MenuItem fx:id="save" mnemonicParsing="false" onAction="#saveHandler" text="Save" />
-                  <MenuItem fx:id="export" mnemonicParsing="false" text="Export" onAction="#handleExport"/>
-                  <MenuItem id="Load" mnemonicParsing="false" text="Load" onAction="#handleLoad"/>
+                  <MenuItem fx:id="export" mnemonicParsing="false" onAction="#handleExport" text="Export" />
+                  <MenuItem id="Load" mnemonicParsing="false" onAction="#handleLoad" text="Load" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logout" text="Logout" />
                   <MenuItem fx:id="user_exit" mnemonicParsing="false" onAction="#exit" text="Exit" />

@@ -99,6 +99,8 @@ public class MainPageController {
 	/** The server menu **/
 	@FXML
 	private Menu serverMenu;
+	@FXML
+	private FlowPane buttonSetUp;
 
 	/**
 	 * Initializes the main page
@@ -176,9 +178,6 @@ public class MainPageController {
 			e.printStackTrace();
 		}
 
-		AnchorPane classPane = (AnchorPane) classTab.getContent();
-		FlowPane buttonSetUp = new FlowPane();
-		classPane.getChildren().add(buttonSetUp);
 		ClassButtonsController con = new ClassButtonsController(buttonSetUp);
 		buttonController = con;
 		thisController = this;
