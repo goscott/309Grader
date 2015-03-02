@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import controller.mainpage.Alert;
+import controller.Alert;
 import model.driver.Debug;
 
 /**
@@ -76,7 +76,6 @@ public class Exporter {
 		} catch (WriteException ex) {
 			ex.printStackTrace();
 		}
-		Alert.show(fileName + " exported to " + exportFolderName + '/' + fileName + fileType);
 	}
 
 	/**

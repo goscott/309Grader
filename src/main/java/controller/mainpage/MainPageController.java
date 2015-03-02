@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
+
+import controller.Alert;
 import controller.GraderPopup;
 import controller.administration.UserLoginController;
 import controller.graph.GraphController;
@@ -32,6 +37,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import model.administration.PermissionKeys;
 import model.administration.UserDB;
@@ -185,27 +191,28 @@ public class MainPageController {
 		} else {
 			requestHelp.setVisible(false);
 		}
-		
+
 		initTabPane();
-		
+
 		UserLoginController.closeLoadScreen();
 	}
-	
+
 	/**
 	 * Initializes the tab pane.
 	 */
 	private void initTabPane() {
-	    graphTab.selectedProperty().addListener(new ChangeListener<Object>() {
+		graphTab.selectedProperty().addListener(new ChangeListener<Object>() {
 
-            @Override
-            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
-                if (graphTab.isSelected()) {
-                    //Debug.log("GraphTab Selected");
-                    GraphController.currentInstance.update();
-                }
-            }
-	        
-	    });
+			@Override
+			public void changed(ObservableValue<?> observable, Object oldValue,
+					Object newValue) {
+				if (graphTab.isSelected()) {
+					// Debug.log("GraphTab Selected");
+					GraphController.currentInstance.update();
+				}
+			}
+
+		});
 	}
 
 	/**
@@ -220,7 +227,7 @@ public class MainPageController {
 		export.setDisable(true);
 		buttonController.refreshButtons();
 		save.setDisable(true);
-		
+
 		gradebookTab.setText("GradeBook");
 		graphTab.setText("Graphs");
 		announcementsTab.setText("Announcements");
@@ -347,7 +354,8 @@ public class MainPageController {
 		if (Grader.getRoster() != null) {
 			Debug.log("Save", Grader.getRoster().courseName() + " saved");
 			Roster.save(Grader.getRoster());
-			Alert.show("Confirmation", Grader.getRoster().courseName() + " has been saved");
+			Alert.show("Confirmation", Grader.getRoster().courseName()
+					+ " has been saved");
 		}
 	}
 
@@ -361,7 +369,7 @@ public class MainPageController {
 		thisController.tabPane.getSelectionModel().select(
 				thisController.classTab);
 		disable();
-		
+
 		HistoryController.currentInstance.loadClasses();
 	}
 
@@ -376,10 +384,13 @@ public class MainPageController {
 	/**
 	 * Handles the export file menu item
 	 */
+	@SuppressWarnings("deprecation")
 	@FXML
 	private void handleExport(ActionEvent event) {
-		Grader.getRoster().export();
-		Alert.show("Export Confirmation", Grader.getRoster().courseName() + " has been exported");
+		Action response = Alert.showConfirmDialog("Are you sure you want to export the current roster to an Excel file?");
+		if (response == Dialog.ACTION_YES) {
+			Grader.getRoster().export();
+		}
 	}
 
 	/**
