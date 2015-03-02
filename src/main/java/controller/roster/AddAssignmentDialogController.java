@@ -117,8 +117,8 @@ public class AddAssignmentDialogController {
 	 */
 	public void start(Stage stage) {
 		try {
-			BorderPane page = (BorderPane) FXMLLoader.load(getClass()
-					.getResource("../../view/roster/addAssignmentDialog.fxml"));
+			BorderPane page = (BorderPane) FXMLLoader.load(getClass().getClassLoader()
+					.getResource("view/roster/addAssignmentDialog.fxml"));
 			Scene popup = new Scene(page);
 			stage.setTitle("Add Assignment");
 			stage.setScene(popup);

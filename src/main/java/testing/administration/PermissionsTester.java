@@ -37,7 +37,7 @@ public class PermissionsTester extends Application {
         
         try {
             //BorderPane page = (BorderPane) FXMLLoader.load(getClass().getResource("PermissionsEditor.fxml"));
-            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getResource("../../../view/administration/permissions_editor.fxml")));
+            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getClassLoader().getResource("view/administration/permissions_editor.fxml")));
             
             ListView<String> view = (ListView<String>) scene.lookup("#user_list");
             ObservableList<String> list = FXCollections.observableArrayList();

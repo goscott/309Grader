@@ -30,8 +30,8 @@ public class AddAnnouncementController {
 	 */
 	public void start(Stage stage) {
 		try {
-			Pane page = (Pane) FXMLLoader.load(getClass()
-					.getResource("../../view/announcements/addAnnouncementDialog.fxml"));
+			Pane page = (Pane) FXMLLoader.load(getClass().getClassLoader()
+					.getResource("view/announcements/addAnnouncementDialog.fxml"));
 			Scene popup = new Scene(page);
 			stage.setTitle("Add Announement");
 			stage.setScene(popup);

@@ -72,8 +72,8 @@ public class DropStudentDialogController
      */
     public void start(Stage stage) {
         try {
-            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass()
-                    .getResource("../../view/roster/DropStudent.fxml"));
+            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getClassLoader()
+                    .getResource("view/roster/DropStudent.fxml"));
             Scene popup = new Scene(page);
             stage.setTitle("Drop Student");
             stage.setScene(popup);
