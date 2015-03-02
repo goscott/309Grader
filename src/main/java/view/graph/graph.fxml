@@ -106,7 +106,7 @@
                      <children>
                         <StackPane VBox.vgrow="ALWAYS">
                            <children>
-                              <ScrollPane prefViewportHeight="2000.0" prefViewportWidth="242.0">
+                              <ScrollPane fx:id="bar_pane" prefViewportHeight="2000.0" prefViewportWidth="242.0">
                                  <content>
                                     <BarChart fx:id="barChart" alternativeRowFillVisible="false" animated="false" barGap="0.0" categoryGap="0.0" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" minHeight="750.0" verticalGridLinesVisible="false" verticalZeroLineVisible="false" VBox.vgrow="ALWAYS">
                                       <yAxis>

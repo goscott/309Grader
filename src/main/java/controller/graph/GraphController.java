@@ -17,6 +17,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -61,6 +62,8 @@ public class GraphController {
 	private BarChart<Integer, String> barChart;
 	@FXML
 	private PieChart pie_chart;
+	@FXML
+	private ScrollPane bar_pane;
 
 	@FXML
 	private Slider slider;
@@ -241,12 +244,14 @@ public class GraphController {
 	    
 	    if (showPie) {
 	        //switch to lineChart
-	        barChart.setVisible(true);
+	        //barChart.setVisible(true);
+	        bar_pane.setVisible(true);
 	        pie_chart.setVisible(false);
 	    }
 	    
 	    else {
-	        barChart.setVisible(false);
+	        //barChart.setVisible(false);
+	        bar_pane.setVisible(false);
             pie_chart.setVisible(true);
 	    }
 	    
