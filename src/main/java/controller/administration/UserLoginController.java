@@ -1,14 +1,13 @@
 package controller.administration;
 
 import controller.GraderPopup;
+import resources.ResourceFetcher;
 import run.Launcher;
 import model.administration.User;
 import model.administration.UserDB;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.server.Server;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -126,7 +124,7 @@ public class UserLoginController {
 		loadStage.show();
 		
 		StackPane sp = new StackPane();
-		Image img = new Image(this.getClass().getResourceAsStream( "GraderLoadScreen.jpg" ));
+		Image img = new Image(ResourceFetcher.class.getResourceAsStream( "GraderLoadScreen.jpg" ));
 		ImageView imgView = new ImageView(img);
 		sp.getChildren().add(imgView);
 		
