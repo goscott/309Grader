@@ -358,7 +358,6 @@ public class Grader {
 		Debug.log("Grader model accessed", "Student score retrieved");
 		return currentRoster.getStudentByID(student.getId())
 				.getAssignmentScore(asgn);
-		// return currentRoster.getScore(student, asgn);
 	}
 
 	/**
