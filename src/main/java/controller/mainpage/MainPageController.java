@@ -354,8 +354,7 @@ public class MainPageController {
 		if (Grader.getRoster() != null) {
 			Debug.log("Save", Grader.getRoster().courseName() + " saved");
 			Roster.save(Grader.getRoster());
-			Alert.show(Grader.getRoster().courseName()
-					+ " has been saved");
+			Alert.show(Grader.getRoster().courseName() + " has been saved");
 		}
 	}
 
@@ -364,7 +363,9 @@ public class MainPageController {
 	 */
 	@FXML
 	private void pushRoster(ActionEvent event) {
-		Action response = Alert.showWarningDialog("Are you sure you want to push the current roster to the history?");
+		Action response = Alert
+				.showWarningDialog("Warning: Cannot be undone",
+						"Are you sure you want to push the current roster to the history?");
 		if (response == Dialog.ACTION_YES) {
 			Debug.log("Roster status change", "Roster pushed to history");
 			Grader.getRoster().archive();
@@ -389,7 +390,8 @@ public class MainPageController {
 	@SuppressWarnings("deprecation")
 	@FXML
 	private void handleExport(ActionEvent event) {
-		Action response = Alert.showConfirmDialog("Are you sure you want to export the current roster to an Excel file?");
+		Action response = Alert
+				.showConfirmDialog("Are you sure you want to export the current roster to an Excel file?");
 		if (response == Dialog.ACTION_YES) {
 			Grader.getRoster().export();
 		}
