@@ -354,7 +354,7 @@ public class MainPageController {
 		if (Grader.getRoster() != null) {
 			Debug.log("Save", Grader.getRoster().courseName() + " saved");
 			Roster.save(Grader.getRoster());
-			Alert.show("Confirmation", Grader.getRoster().courseName()
+			Alert.show(Grader.getRoster().courseName()
 					+ " has been saved");
 		}
 	}
@@ -364,13 +364,15 @@ public class MainPageController {
 	 */
 	@FXML
 	private void pushRoster(ActionEvent event) {
-		Debug.log("Roster status change", "Roster pushed to history");
-		Grader.getRoster().archive();
-		thisController.tabPane.getSelectionModel().select(
-				thisController.classTab);
-		disable();
-
-		HistoryController.currentInstance.loadClasses();
+		Action response = Alert.showWarningDialog("Are you sure you want to push the current roster to the history?");
+		if (response == Dialog.ACTION_YES) {
+			Debug.log("Roster status change", "Roster pushed to history");
+			Grader.getRoster().archive();
+			thisController.tabPane.getSelectionModel().select(
+					thisController.classTab);
+			disable();
+			HistoryController.currentInstance.loadClasses();
+		}
 	}
 
 	/**

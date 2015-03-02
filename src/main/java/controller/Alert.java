@@ -28,25 +28,17 @@ public class Alert {
 	private static int maxLength = 50;
 	
 	/**
-	 * Shows a messasge with the given message.
-	 * Messages have a 50 character limit.
-	 */
-	public static void show(String message) {
-		show("Alert", message);
-	}
-	
-	/**
 	 * Shows a messasge with the given title and message.
 	 * Messages have a 50 character limit.
 	 */
-	public static void show(String title, String message) {
+	public static void show(String message) {
 		if(message.length() > maxLength) {
 			Debug.log("ERROR", "Alert message too long");
 			return;
 		}
 		
 		Stage dialogStage = new Stage(StageStyle.UTILITY);
-		dialogStage.setTitle(title);
+		dialogStage.setTitle("Grader");
 		dialogStage.setHeight(150);
 		dialogStage.setWidth(350);
 		dialogStage.setResizable(false);
@@ -77,5 +69,16 @@ public class Alert {
 				.message(message)
 				.actions(Dialog.ACTION_YES, Dialog.ACTION_NO)
 				.showConfirm();
+	}
+
+	public static Action showWarningDialog(String message) {
+		return Dialogs
+				.create()
+				.owner(new Stage(StageStyle.UNDECORATED))
+				.title("Grader")
+				.masthead("Warning: Cannot be undone")
+				.message(message)
+				.actions(Dialog.ACTION_YES, Dialog.ACTION_NO)
+				.showWarning();
 	}
 }
