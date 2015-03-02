@@ -76,7 +76,6 @@ public class Launcher extends Application {
             
             try {
                 //reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("model/administration/login.txt")));
-                //System.out.println("**");
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
                 field.setText(reader.readLine());
                 reader.close();

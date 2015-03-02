@@ -236,19 +236,6 @@ public class Curve implements Serializable {
 			return null;
 		}
 		return curve.get(curve.indexOf(grade) + 1);
-		// return curve.higher(grade);
-		/*
-		 * Grade ret = curve.last(); System.out.println("hit 1"); if(grade !=
-		 * null && curve.contains(grade)) { System.out.println("hit 2");
-		 * for(Grade check : curve) { System.out.println("hit  3" + check);
-		 * if(!check.equals(grade) && check.value() > grade.value() &&
-		 * check.value() <= ret.value()) { System.out.println("hit 4");
-		 * System.out.println("setting ret to " + check); ret = check; } } }
-		 * else { System.out.println("hit 5");
-		 * System.out.println("grade below = null"); return null; }
-		 * System.out.println("hit 6"); System.out.println("grade above " +
-		 * grade + " = " + ret); return ret;
-		 */
 	}
 
 	/**
@@ -265,14 +252,6 @@ public class Curve implements Serializable {
 			return null;
 		}
 		return curve.get(curve.indexOf(grade) - 1);
-		// return curve.lower(grade);
-		/*
-		 * Grade ret = null; if(grade != null && curve.contains(grade)) {
-		 * for(Grade check : curve) { if(!check.equals(grade) && check.value() <
-		 * grade.value() && check.value() >= ret.value()) { ret = check; } } }
-		 * else { System.out.println("grade below = null"); return null; }
-		 * System.out.println("grade below " + grade + " = " + ret); return ret;
-		 */
 	}
 
 	public Grade getGrade(String name) {

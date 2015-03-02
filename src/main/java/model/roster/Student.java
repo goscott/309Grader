@@ -181,10 +181,7 @@ public class Student implements Comparable<Student>, Serializable {
     @*/
 	public Grade getGrade() {
 		double percent = getTotalPercentage();
-		Debug.log("Student Grade", percent + "%");
 		if (roster != null) {
-			System.out.println("getting grade for " + name + " : " + roster.getCurve().get(percent));
-			System.out.println("(percent = " + percent + ")");
 			return roster.getCurve().get(percent);
 		}
 		return null;

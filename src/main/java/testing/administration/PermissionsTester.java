@@ -55,7 +55,6 @@ public class PermissionsTester extends Application {
             
         } catch (Exception ex) {
             Logger.getLogger(PermissionsTester.class.getName()).log(Level.SEVERE, null, ex);
-            //System.out.println("ERR");
         }
     }
 }
