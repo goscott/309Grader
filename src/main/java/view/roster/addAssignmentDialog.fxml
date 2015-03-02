@@ -17,7 +17,7 @@
 					<Tooltip text="Enter the name of the assignment (Note: Assignment names must be unique)" />
 			    </tooltip>
             </TextField>
-            <ComboBox fx:id="parentDropdown" layoutX="304.0" layoutY="22.0" prefHeight="25.0" prefWidth="283" promptText="Select Parent" />
+            <ComboBox fx:id="parentDropdown" layoutX="304.0" layoutY="22.0" prefHeight="25.0" prefWidth="283" promptText="Select Parent" style="-fx-background-color: #A1DDE5;" />
          </children>
       </Pane>
    </top>
@@ -25,12 +25,12 @@
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="14.0" layoutY="11.0" text="Description" />
-            <TextArea fx:id="descrField" layoutX="14.0" layoutY="31.0" prefHeight="236.0" prefWidth="572.0" promptText="Enter Assignment Description">
+            <TextArea fx:id="descrField" layoutX="14.0" layoutY="31.0" prefHeight="236.0" prefWidth="572.0" promptText="Enter Assignment Description" style="-fx-background-color: #F7FEFF;">
             	<tooltip>
 					<Tooltip text="Enter a description for the assignment" />
 			    </tooltip>
             </TextArea>
-            <Button fx:id="addButton" defaultButton="true" layoutX="501.0" layoutY="307.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="25.0" prefWidth="85.0" text="Add">
+            <Button fx:id="addButton" defaultButton="true" layoutX="501.0" layoutY="307.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #2EA1B1;" text="Add" textFill="WHITE">
             	<tooltip>
 					<Tooltip text="Adds an assignment with the given information to the gradebook" />
 			    </tooltip>
@@ -40,14 +40,14 @@
 					<Tooltip text="Closes the window. Infomation that has not been added will not be saved." />
 			    </tooltip>
             </Button>
-            <TextField fx:id="maxScoreField" layoutX="74.0" layoutY="275.0" onKeyReleased="#scoreChangeHandler">
+            <TextField fx:id="maxScoreField" layoutX="88.0" layoutY="275.0" onKeyReleased="#scoreChangeHandler">
             	<tooltip>
 					<Tooltip text="The &quot;100%&quot; value for the assignment" />
 			    </tooltip>
             </TextField>
             <Label layoutX="14.0" layoutY="279.0" text="Max Score" />
             <Label layoutX="262.0" layoutY="279.0" text="Extra Credit" />
-            <CheckBox fx:id="ecBox" layoutX="330.0" layoutY="279.0" mnemonicParsing="false" />
+            <CheckBox fx:id="ecBox" layoutX="345.0" layoutY="279.0" mnemonicParsing="false" />
          </children>
       </Pane>
    </center>
