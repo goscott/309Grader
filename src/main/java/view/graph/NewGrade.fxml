@@ -4,13 +4,12 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.graph.NewGradeController">
    <children>
       <ColorPicker fx:id="colorPicker" layoutX="24.0" layoutY="137.0" prefHeight="26.0" prefWidth="301.0" />
       <TextField fx:id="enterGrade" layoutX="24.0" layoutY="45.0" prefHeight="26.0" prefWidth="301.0" promptText="Enter Grade" />
       <TextField fx:id="enterPercent" layoutX="24.0" layoutY="91.0" prefHeight="26.0" prefWidth="301.0" promptText="Enter Percent Value" />
-      <Button layoutX="40.0" layoutY="210.0" mnemonicParsing="false" onAction="#cancel" prefHeight="26.0" prefWidth="98.0" style="-fx-background-color: #74D7E5;" text="Cancel" />
+      <Button layoutX="40.0" layoutY="210.0" mnemonicParsing="false" onAction="#cancel" prefHeight="26.0" prefWidth="98.0" text="Cancel" />
       <Button fx:id="doneButton" layoutX="212.0" layoutY="210.0" mnemonicParsing="false" onAction="#done" prefHeight="26.0" prefWidth="98.0" style="-fx-background-color: #74d7E5;" text="Done" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutY="-2.0" prefHeight="32.0" prefWidth="350.0" style="-fx-background-color: #A1DDE5;" text="New Grade" />
    </children>
