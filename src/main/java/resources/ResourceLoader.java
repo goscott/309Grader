@@ -10,15 +10,16 @@ import javafx.scene.image.Image;
  * @author Gavin Scott
  */
 public class ResourceLoader {
-	public final static Color GREEN = Color.GREEN;
-	public final static Color BLUE = Color.CYAN;
-	public final static Color YELLOW = Color.YELLOW;
-	public final static Color ORANGE = Color.ORANGE;
-	public final static Color RED = Color.RED;
+	public final static Color GREEN = Color.decode("#84F379");
+	public final static Color BLUE = Color.decode("#74D7E5");
+	public final static Color YELLOW = Color.decode("#FFFD7F");
+	public final static Color ORANGE = Color.decode("#FFBC7F");
+	public final static Color RED = Color.decode("#FE7E84");
 	
-	public final static javafx.scene.paint.Color ERROR_RED = javafx.scene.paint.Color.RED;
+	public final static javafx.scene.paint.Color ERROR_RED = javafx.scene.paint.Color.web("#FE7E84");
 	public final static javafx.scene.paint.Color NOERROR_WHITE = javafx.scene.paint.Color.WHITE;
 	
 	public final static Image ICON = new Image(ResourceLoader.class.getResourceAsStream( "GraderIcon.png" ));
 	public final static Image LOAD_SCREEN = new Image(ResourceLoader.class.getResourceAsStream( "GraderLoadScreen.jpg" ));
+
 }
