@@ -83,13 +83,13 @@ public class GradebookController {
 		expandCollapse.setOnAction(new DisplayExpandCollapsePopupEventHandler(
 				expandCollapse, this));
 		// students don't get these options
-		if (current && Grader.getUser().getPermissions().contains(PermissionKeys.EDIT_GRADEBOOK)) {
+		if (current
+				&& Grader.getUser().getPermissions()
+						.contains(PermissionKeys.EDIT_GRADEBOOK)) {
 			MenuItem addAssignment = new MenuItem("Add Assignment");
 			MenuItem dropAssignment = new MenuItem("Drop Assignment");
-			MenuItem importAssignment = new MenuItem("Import Assignment");
 			MenuItem addStudent = new MenuItem("Add Student");
 			MenuItem dropStudent = new MenuItem("Drop Student");
-			MenuItem rosterSynch = new MenuItem("Roster Synch");
 
 			addAssignment
 					.setOnAction(new DisplayAddAssignmentPopupEventHandler(
@@ -104,8 +104,7 @@ public class GradebookController {
 
 			rightClickMenu.getItems().addAll(expandCollapse,
 					new SeparatorMenuItem(), addAssignment, dropAssignment,
-					importAssignment, new SeparatorMenuItem(), addStudent,
-					dropStudent, new SeparatorMenuItem() , rosterSynch);
+					new SeparatorMenuItem(), addStudent, dropStudent);
 		} else {
 			rightClickMenu.getItems().addAll(expandCollapse);
 		}
@@ -145,30 +144,31 @@ public class GradebookController {
 				"Grade");
 		gradeCol.setMinWidth(100);
 		gradeCol.setEditable(false);
-		
-		
-		gradeCol.setCellFactory(new Callback<TableColumn<Student,Grade>, TableCell<Student,Grade>>() {
+
+		gradeCol.setCellFactory(new Callback<TableColumn<Student, Grade>, TableCell<Student, Grade>>() {
 			@Override
-			public TableCell<Student, Grade> call(TableColumn<Student, Grade> param) {
+			public TableCell<Student, Grade> call(
+					TableColumn<Student, Grade> param) {
 				TableCell cell = new TableCell() {
-                    @Override
-                    public void updateItem(Object item, boolean empty) {
-                        if (item != null) {
-                            setText(item.toString());
-                            Grade grade = getRoster().getCurve().getGrade(item.toString());
-                            Color col = grade.getColor();
-                            setStyle("-fx-background-color: rgb(" + 
-                            		col.getRed() + ", " + col.getGreen() + ", " + col.getBlue() + ")");
-                        }
-                    }
-                };
-                cell.setAlignment(Pos.CENTER);
-                
+					@Override
+					public void updateItem(Object item, boolean empty) {
+						if (item != null) {
+							setText(item.toString());
+							Grade grade = getRoster().getCurve().getGrade(
+									item.toString());
+							Color col = grade.getColor();
+							setStyle("-fx-background-color: rgb("
+									+ col.getRed() + ", " + col.getGreen()
+									+ ", " + col.getBlue() + ")");
+						}
+					}
+				};
+				cell.setAlignment(Pos.CENTER);
+
 				return cell;
 			}
 		});
-		
-		
+
 		gradeCol.setCellValueFactory(new Callback() {
 			public SimpleStringProperty call(
 					CellDataFeatures<Student, Grade> param) {
@@ -183,7 +183,7 @@ public class GradebookController {
 				return call((CellDataFeatures<Student, Grade>) (param));
 			}
 		});
-		
+
 		mainTable.getColumns().add(gradeCol);
 	}
 
@@ -447,17 +447,17 @@ public class GradebookController {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Gets the roster being shown
 	 */
 	private Roster getRoster() {
-		if(current) {
+		if (current) {
 			return Grader.getRoster();
 		}
 		return roster;
 	}
-	
+
 	public void showRoster(Roster roster) {
 		current = false;
 		this.roster = roster;
