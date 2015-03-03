@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import model.driver.Grader;
+import model.roster.Student;
+import model.server.Server;
+
 /**
  * Model Announcement class containing the data for an announcement.
  * 
@@ -56,7 +60,14 @@ public class Announcement implements Serializable{
     );
 	@*/
 	public String getPostedBy() {
-		return postedBy;
+		if(Grader.getUser().getId().equals(postedBy)) {
+			return "You";
+		}
+		Student poster = Server.findUser(postedBy);
+		if(poster != null) {
+			return poster.getName();
+		}
+		return "Unknown User";
 	}
 	
 	/**

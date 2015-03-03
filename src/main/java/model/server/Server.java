@@ -50,7 +50,7 @@ public class Server {
 	        (\forall Student student; students.contains(student); student.getId().equals(id))
 	    );
 	@*/
-	public static Student findStudent(String id) {
+	public static Student findUser(String id) {
 		for (Student student : students) {
 			if (student.getId().equals(id)) {
 				return student;

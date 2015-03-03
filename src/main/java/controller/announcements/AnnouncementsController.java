@@ -128,13 +128,4 @@ public class AnnouncementsController {
 		popup.setParent(this);
 		popup.start(newStage);
     }
-    
-    /**
-     * Adds an announcement to the table.
-     * @param announcement the Announcement to be added to the table.
-     */
-    void addAnnouncementToList(Announcement announcement) {
-    	data.add(announcement);
-		table.setItems(data);
-    }
 }

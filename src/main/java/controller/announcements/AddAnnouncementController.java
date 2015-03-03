@@ -55,10 +55,10 @@ public class AddAnnouncementController {
 				&& subjectField.getText().length() > 0) {
 			Debug.log("Announcement Added", subjectField.getText() + " : "
 					+ bodyField.getText());
-			Announcement ann = new Announcement(subjectField.getText(), "You",
+			Announcement ann = new Announcement(subjectField.getText(), Grader.getUser().getId(),
 					bodyField.getText());
-			parent.addAnnouncementToList(ann);
 			Grader.getRoster().addAnnouncement(ann);
+			AnnouncementsController.refresh();
 			bodyField.setText("");
 			subjectField.setText("");
 		}
