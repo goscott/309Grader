@@ -370,9 +370,10 @@ public class GraphController {
 	 */
 	@FXML
 	private void handleNewGrade(ActionEvent event) {
-		Stage stage = new Stage();
-		GraderPopup.setIcon(stage);
 		try {
+			Stage stage = new Stage();
+			GraderPopup.setIcon(stage);
+			stage.setTitle("Grader");
 			Scene scene = new Scene((AnchorPane) FXMLLoader.load(getClass()
 					.getClassLoader().getResource("view/graph/NewGrade.fxml")));
 			stage.setScene(scene);
