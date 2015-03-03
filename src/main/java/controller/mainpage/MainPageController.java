@@ -207,7 +207,7 @@ public class MainPageController {
 					Object newValue) {
 				if (graphTab.isSelected()) {
 					// Debug.log("GraphTab Selected");
-					GraphController.currentInstance.update();
+					GraphController.refresh();
 				}
 			}
 

@@ -92,6 +92,9 @@
                            <center>
                               <ComboBox fx:id="gradeSelectDropdown" onAction="#selectNewGrade" prefHeight="25.0" prefWidth="215.0" promptText="Select Grade to Modify" BorderPane.alignment="CENTER" />
                            </center>
+                           <bottom>
+                              <Button fx:id="newGradeButton" mnemonicParsing="false" onAction="#handleNewGrade" text="Add New Grade" BorderPane.alignment="CENTER" />
+                           </bottom>
                         </BorderPane>
                      </bottom>
                   </BorderPane>

@@ -1,29 +1,41 @@
 package controller.graph; 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import controller.GraderPopup;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import model.curve.Grade;
+import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
 import model.roster.Student;
@@ -64,13 +76,14 @@ public class GraphController {
 	private PieChart pie_chart;
 	@FXML
 	private ScrollPane bar_pane;
-
+	@FXML
+	private Button newGradeButton;
 	@FXML
 	private Slider slider;
 	@FXML
 	private ComboBox<String> gradeSelectDropdown;
 	
-	public static GraphController currentInstance;
+	private static GraphController currentInstance;
 	
 	private ObservableList<Grade> curveData;
 	
@@ -357,6 +370,30 @@ public class GraphController {
 	}
 
 	/**
+	 * Handles adding a new grade (bringing up the dialog)
+	 */
+	@FXML
+	private void handleNewGrade(ActionEvent event) {
+		Stage stage = new Stage();
+		GraderPopup.setIcon(stage);
+		try {
+			Scene scene = new Scene((AnchorPane) FXMLLoader.load(getClass()
+					.getClassLoader().getResource("view/graph/NewGrade.fxml")));
+			stage.setScene(scene);
+			newGradeButton.setDisable(true);
+			stage.setOnHidden(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent arg0) {
+					newGradeButton.setDisable(false);
+				}
+			});
+			stage.show();
+		} catch (IOException ex) {
+			Debug.log("ERROR", "Could not load new grade popup");
+			ex.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Handles the selection of a new grade to edit in the dropdown menu
 	 */
 	@FXML
@@ -400,4 +437,11 @@ public class GraphController {
             return percentage;
         }
     }
+
+	/**
+	 * Allows other classes to update the tab
+	 */
+	public static void refresh() {
+		currentInstance.update();
+	}
 }
