@@ -7,8 +7,6 @@ import java.util.logging.Logger;
 
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
-
 import controller.Alert;
 import controller.GraderPopup;
 import controller.administration.UserLoginController;
@@ -197,8 +195,6 @@ public class MainPageController {
 		}
 
 		initTabPane();
-
-		UserLoginController.closeLoadScreen();
 	}
 
 	/**
@@ -314,7 +310,6 @@ public class MainPageController {
 
 				@Override
 				public void handle(WindowEvent event) {
-					// TODO Auto-generated method stub
 					AbtController.muteStatic();
 				}
 			});

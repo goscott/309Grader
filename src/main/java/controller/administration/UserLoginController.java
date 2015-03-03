@@ -139,7 +139,9 @@ public class UserLoginController {
 	 * Closes the loading screen
 	 */
 	public static void closeLoadScreen() {
-		loadStage.hide();
+		if(loadStage != null) {
+			loadStage.hide();
+		}
 	}
 	
 	/**
@@ -160,6 +162,7 @@ public class UserLoginController {
 				}
 			});
 			stage.show();
+			closeLoadScreen();
 		}
 
 		catch (Exception e) {
