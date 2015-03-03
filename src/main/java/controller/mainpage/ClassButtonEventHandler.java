@@ -44,8 +44,6 @@ public class ClassButtonEventHandler implements EventHandler<ActionEvent> {
 						.showConfirmDialog("Would you like to save the current roster?");
 				if (response == Dialog.ACTION_YES) {
 					Roster.save(Grader.getRoster());
-					Alert.show(Grader.getRoster().courseName()
-							+ " has been saved");
 				}
 			}
 			Grader.setCurrentRoster(rost);

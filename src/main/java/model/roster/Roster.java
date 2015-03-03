@@ -282,12 +282,12 @@ public class Roster implements Serializable {
 	@*/
 	public void addStudent(Student student) {
 		if (student != null && !students.contains(student)) {
-			Server.addRosterToUser(student, this);
-			students.add(student);
-			student.setRoster(this);
-			ids.put(student.getId(), student);
+			Server.addRosterToUser(student.getId(), this);
+			Student stud = student.copyTo(this);
+			students.add(stud);
+			ids.put(stud.getId(), stud);
 			for (GradedItem item : assignments) {
-				item.addStudent(student);
+				item.addStudent(stud);
 			}
 		}
 	}
@@ -411,10 +411,13 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public void addScore(Student student, GradedItem asgn, double score) {
+		System.out.println("1: " + students.contains(student));
+		System.out.println("2: " + assignments.contains(asgn));
 		if (students.contains(student) && assignments.contains(asgn)
 				&& score >= 0 && score <= asgn.maxScore()) {
+			System.out.println("hit inside. id = " + this);
 			Student stud = students.get(students.indexOf(student));
-			asgn.setStudentScore(student, score);
+			asgn.setStudentScore(stud, score);
 		}
 	}
 
@@ -597,10 +600,10 @@ public class Roster implements Serializable {
 		ensures(
 			((String)\result).equals(courseName + " " + section + " : " + instructor)
 		);
-	@*/
+	@*//*
 	public String toString() {
 		return courseName + " " + section + " : " + instructor;
-	}
+	}*/
 
 	/**
 	 * Saves the roster to the computer
@@ -861,7 +864,7 @@ public class Roster implements Serializable {
 	@*/
 	public ArrayList<Student> rosterSynch(boolean extraLocal) {
 		ArrayList<Student> list = new ArrayList<Student>();
-		ArrayList<Student> serverList = Server
+		ArrayList<String> serverList = Server
 				.getStudentsAssociatedWithRoster(this);
 		if (extraLocal) {
 			for (Student student : students) {
@@ -870,9 +873,10 @@ public class Roster implements Serializable {
 				}
 			}
 		} else {
-			for (Student student : serverList) {
-				if (!students.contains(student)) {
-					list.add(student);
+			for (String id : serverList) {
+				Student stud = Server.findUser(id);
+				if (!students.contains(stud)) {
+					list.add(stud);
 				}
 			}
 		}

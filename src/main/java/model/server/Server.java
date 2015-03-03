@@ -24,7 +24,7 @@ public class Server {
 	/** An ObservableList of the students in the server **/
 	private static ObservableList<Student> studentNames;
 	/** A map of which classes a user is enrolled in or teaching **/
-	private static HashMap<Student, ArrayList<String>> associatedClasses;
+	private static HashMap<String, ArrayList<String>> associatedClasses;
 
 	/**
 	 * Gets the list of all students stored in the server
@@ -242,17 +242,17 @@ public class Server {
 	         !associatedClasses.get(student).contains(roster.courseName()))
 	     );
 	@*/
-	public static void addRosterToUser(Student student, Roster roster) {
+	public static void addRosterToUser(String id, Roster roster) {
 		if(associatedClasses == null) {
-			associatedClasses = new HashMap<Student, ArrayList<String>>();
+			associatedClasses = new HashMap<String, ArrayList<String>>();
 		}
 		if (associatedClasses != null
-				&& associatedClasses.get(student) != null
-				&& !associatedClasses.get(student)
+				&& associatedClasses.get(id) != null
+				&& !associatedClasses.get(id)
 						.contains(roster.courseName())) {
-			Debug.log("Server updated", student.getName() + " associated with "
+			Debug.log("Server updated", id + " associated with "
 					+ roster.courseName());
-			associatedClasses.get(student).add(roster.courseName());
+			associatedClasses.get(id).add(roster.courseName());
 		} else {
 			Debug.log("Error",
 					"Null roster associated with student : removal failed");
@@ -267,14 +267,14 @@ public class Server {
 	         (\forall Student student; associatedClasses.keySet().contains(student); list.contains(student)  
 	     );
 	@*/
-	public static ArrayList<Student> getStudentsAssociatedWithRoster(
+	public static ArrayList<String> getStudentsAssociatedWithRoster(
 			Roster roster) {
-		ArrayList<Student> list = new ArrayList<Student>();
+		ArrayList<String> list = new ArrayList<String>();
 		if (associatedClasses != null) {
-			for (Student student : associatedClasses.keySet()) {
-				if (associatedClasses.get(student)
+			for (String id : associatedClasses.keySet()) {
+				if (associatedClasses.get(id)
 						.contains(roster.courseName())) {
-					list.add(student);
+					list.add(id);
 				}
 			}
 		}
@@ -319,9 +319,9 @@ public class Server {
 			students.add(student);
 		}
 
-		associatedClasses = new HashMap<Student, ArrayList<String>>();
+		associatedClasses = new HashMap<String, ArrayList<String>>();
 		for (Student student : students) {
-			associatedClasses.put(student, new ArrayList<String>());
+			associatedClasses.put(student.getId(), new ArrayList<String>());
 		}
 
 		Debug.log("Initializing Server", "Students Loaded");

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import model.administration.PermissionKeys;
 import model.administration.User;
 import model.curve.Grade;
-import model.driver.Debug;
 import model.driver.Grader;
 
 /**
@@ -57,6 +56,10 @@ public class Student implements Comparable<Student>, Serializable {
 		this.roster = roster;
 		this.name = name;
 		this.id = id;
+	}
+	
+	public Student copyTo(Roster rost) {
+		return new Student(name, id, rost);
 	}
 
 	/**
@@ -226,6 +229,8 @@ public class Student implements Comparable<Student>, Serializable {
     @*/
 	public Double getAssignmentScore(String asgn) {
 		if (roster != null) {
+			System.out.println("hit student getter: roster = " + name + " id = " + roster);
+			System.out.println("grade: " + roster.getStudentGrade(this, asgn));
 			return roster.getStudentGrade(this, asgn);
 		}
 		return null;
