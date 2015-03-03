@@ -71,4 +71,8 @@ public class PeopleSoftServer {
 		}
 		return ret;
 	}
+	
+	public static ArrayList<Student> getStudents() {
+		return list;
+	}
 }

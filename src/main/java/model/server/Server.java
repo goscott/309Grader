@@ -314,14 +314,10 @@ public class Server {
 	     );
 	@*/
 	private static void initializeStudents() {
-		students.add(new Student("Jim", "00000"));
-		students.add(new Student("Tim", "11111"));
-		students.add(new Student("Gavin Scott", "12345"));
-		students.add(new Student("Shelli Crispen", "21549"));
-		students.add(new Student("Frank Poole", "34718"));
-		students.add(new Student("Mason Stevenson", "87123"));
-		students.add(new Student("Michael Lenz", "98012"));
-		students.add(new Student("Jacob Hardi", "01968"));
+		PeopleSoftServer.initialize();
+		for(Student student : PeopleSoftServer.getStudents()) {
+			students.add(student);
+		}
 
 		associatedClasses = new HashMap<Student, ArrayList<String>>();
 		for (Student student : students) {
