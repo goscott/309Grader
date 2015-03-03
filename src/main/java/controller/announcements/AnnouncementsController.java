@@ -125,7 +125,6 @@ public class AnnouncementsController {
     public void addAnnouncement() {
     	Stage newStage = new Stage();
     	AddAnnouncementController popup = new AddAnnouncementController();
-		popup.setParent(this);
 		popup.start(newStage);
     }
 }

@@ -6,6 +6,8 @@ import controller.GraderPopup;
 import model.announcements.Announcement;
 import model.driver.Debug;
 import model.driver.Grader;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,8 +25,32 @@ public class AddAnnouncementController {
 	private TextField subjectField;
 	@FXML
 	private Button sendButton;
-	private static AnnouncementsController parent;
 
+	/**
+	 * Initializes the popup
+	 */
+	public void initialize() {
+		sendButton.setDisable(true);
+		subjectField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(
+					final ObservableValue<? extends String> observable,
+					final String oldValue, final String newValue) {
+				sendButton.setDisable(bodyField.getText().length() == 0
+						|| subjectField.getText().length() == 0);
+			}
+		});
+		bodyField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(
+					final ObservableValue<? extends String> observable,
+					final String oldValue, final String newValue) {
+				sendButton.setDisable(bodyField.getText().length() == 0
+						|| subjectField.getText().length() == 0);
+			}
+		});
+	}
+	
 	/**
 	 * Starts the scene
 	 */
@@ -61,9 +87,5 @@ public class AddAnnouncementController {
 			bodyField.setText("");
 			subjectField.setText("");
 		}
-	}
-
-	public void setParent(AnnouncementsController announcementsController) {
-		parent = announcementsController;
 	}
 }

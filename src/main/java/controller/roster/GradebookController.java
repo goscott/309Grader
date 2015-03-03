@@ -117,7 +117,7 @@ public class GradebookController {
 	private ContextMenu makeContextMenu() {
 		ContextMenu rightClickMenu = new ContextMenu();
 		MenuItem expandCollapse = new MenuItem("Expand/Collapse Columns");
-		expandCollapse.setOnAction(getHandler("expandCollapseDialog", expandCollapse));
+		expandCollapse.setOnAction(GraderPopup.getPopupHandler("expandCollapseDialog", expandCollapse));
 		// students don't get these options
 		if (current
 				&& Grader.getUser().getPermissions()
@@ -127,10 +127,10 @@ public class GradebookController {
 			MenuItem addStudent = new MenuItem("Add Student");
 			MenuItem dropStudent = new MenuItem("Drop Student");
 
-			addAssignment.setOnAction(getHandler("addAssignmentDialog", addAssignment));
-			dropAssignment.setOnAction(getHandler("dropAssignment", dropAssignment));
-			addStudent.setOnAction(getHandler("AddStudent",	addStudent));
-			dropStudent.setOnAction(getHandler("DropStudent", dropStudent));
+			addAssignment.setOnAction(GraderPopup.getPopupHandler("addAssignmentDialog", addAssignment));
+			dropAssignment.setOnAction(GraderPopup.getPopupHandler("dropAssignment", dropAssignment));
+			addStudent.setOnAction(GraderPopup.getPopupHandler("AddStudent",	addStudent));
+			dropStudent.setOnAction(GraderPopup.getPopupHandler("DropStudent", dropStudent));
 
 			rightClickMenu.getItems().addAll(expandCollapse,
 					new SeparatorMenuItem(), addAssignment, dropAssignment,
@@ -139,37 +139,6 @@ public class GradebookController {
 			rightClickMenu.getItems().addAll(expandCollapse);
 		}
 		return rightClickMenu;
-	}
-
-	/**
-	 * Makes a handler for a right-click menu item
-	 */
-	private EventHandler<ActionEvent> getHandler(String fxml,
-			MenuItem toDisable) {
-		return new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				try {
-					Stage stage = new Stage();
-					toDisable.setDisable(false);
-					stage.setTitle(toDisable.getText());
-					stage.setScene(new Scene(FXMLLoader.load(getClass()
-							.getClassLoader().getResource(
-									"view/roster/" + fxml + ".fxml"))));
-					stage.setResizable(false);
-					GraderPopup.setIcon(stage);
-					stage.setOnHiding(new EventHandler<WindowEvent>() {
-						public void handle(WindowEvent event) {
-							toDisable.setDisable(true);
-						}
-					});
-					stage.show();
-				} catch (IOException ex) {
-					Debug.log("IO ERROR", "Could not load file to start "
-							+ fxml + ".fxml");
-					ex.printStackTrace();
-				}
-			}
-		};
 	}
 
 	/**
@@ -370,11 +339,8 @@ public class GradebookController {
 	void setAssignmentExpansion(String asgnName, boolean expand) {
 		if (expand) {
 			open(asgnName);
-			// fullRefresh();
-		}
-		if (!expand) {
+		} else {
 			close(asgnName);
-			// fullRefresh();
 		}
 	}
 

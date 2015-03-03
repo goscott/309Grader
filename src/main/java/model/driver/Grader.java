@@ -69,7 +69,6 @@ public class Grader {
 	 * @return User the current user
 	 */
 	public static User getUser() {
-		Debug.log("Gr1ader Accessed", "Current User checked");
 		return user;
 	}
 
