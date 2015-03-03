@@ -133,8 +133,7 @@ public class AddAssignmentDialogController {
 	private void nameChangeHandler(KeyEvent event) {
 		addButton.setDisable(checkValid());
 		if (nameField.getText().length() == 0) {
-			nameField.setBackground(new Background(new BackgroundFill(
-					ResourceLoader.ERROR_RED, CornerRadii.EMPTY, Insets.EMPTY)));
+			addButton.setDisable(true);
 		}
 		Tooltip tooltip = new Tooltip();
 		if (nameField.getText().length() > maxChars) {
