@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
-import controller.Alert;
 import model.driver.Debug;
 
 /**

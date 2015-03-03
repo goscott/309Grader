@@ -1,9 +1,10 @@
 package controller.roster;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 
-import controller.administration.UserLoginController;
+import controller.GraderPopup;
 import model.administration.PermissionKeys;
 import model.curve.Grade;
 import model.driver.Debug;
@@ -13,9 +14,12 @@ import model.roster.Roster;
 import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -27,6 +31,8 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 /**
@@ -52,7 +58,7 @@ public class GradebookController {
 	private ScrollPane scrollPane;
 
 	/** The right-click menu **/
-	private ContextMenu rightClickMenu;
+	// private ContextMenu rightClickMenu;
 	/** An ArrayList holding the names of the columns that are expanded **/
 	private ArrayList<String> expanded;
 	/** The instance of the controller **/
@@ -67,9 +73,9 @@ public class GradebookController {
 	public static GradebookController getController() {
 		return singleton;
 	}
-	
+
 	public static GradebookController getControllerTwo() {
-	    return singletonTwo;
+		return singletonTwo;
 	}
 
 	@FXML
@@ -77,14 +83,13 @@ public class GradebookController {
 	 * Initializes the gradebook view
 	 */
 	public void initialize() {
-	    Debug.log("GradebookController", "controller init");
-	    
-	    if (singleton == null) {
-		    singleton = this;
+		Debug.log("GradebookController", "controller init");
+
+		if (singleton == null) {
+			singleton = this;
 		}
-	    
-	    singletonTwo = this;
-	    
+		singletonTwo = this;
+
 		mainTable.setEditable(true);
 		expanded = new ArrayList<String>();
 		for (String item : getRoster().getAssignmentNameList()) {
@@ -92,11 +97,27 @@ public class GradebookController {
 		}
 		fullRefresh();
 
-		// create right-click menu
-		rightClickMenu = new ContextMenu();
+		mainTable.addEventFilter(MouseEvent.MOUSE_PRESSED,
+				new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						if (event.isSecondaryButtonDown()) {
+							makeContextMenu().show(
+									mainTable.getScene().getWindow(),
+									event.getScreenX(), event.getScreenY());
+							event.consume();
+						}
+					}
+				});
+	}
+
+	/**
+	 * Makes the right-click menu
+	 */
+	private ContextMenu makeContextMenu() {
+		ContextMenu rightClickMenu = new ContextMenu();
 		MenuItem expandCollapse = new MenuItem("Expand/Collapse Columns");
-		expandCollapse.setOnAction(new DisplayExpandCollapsePopupEventHandler(
-				expandCollapse, this));
+		expandCollapse.setOnAction(getHandler("expandCollapseDialog", expandCollapse));
 		// students don't get these options
 		if (current
 				&& Grader.getUser().getPermissions()
@@ -106,16 +127,10 @@ public class GradebookController {
 			MenuItem addStudent = new MenuItem("Add Student");
 			MenuItem dropStudent = new MenuItem("Drop Student");
 
-			addAssignment
-					.setOnAction(new DisplayAddAssignmentPopupEventHandler(
-							addAssignment, this));
-			dropAssignment
-					.setOnAction(new DisplayDropAssignmentPopupEventHandler(
-							dropAssignment, this));
-			addStudent.setOnAction(new DisplayAddStudentPopupEventHandler(
-					addStudent, this));
-			dropStudent.setOnAction(new DisplayDropStudentPopupEventHandler(
-					dropStudent, this));
+			addAssignment.setOnAction(getHandler("addAssignmentDialog", addAssignment));
+			dropAssignment.setOnAction(getHandler("dropAssignment", dropAssignment));
+			addStudent.setOnAction(getHandler("AddStudent",	addStudent));
+			dropStudent.setOnAction(getHandler("DropStudent", dropStudent));
 
 			rightClickMenu.getItems().addAll(expandCollapse,
 					new SeparatorMenuItem(), addAssignment, dropAssignment,
@@ -123,19 +138,38 @@ public class GradebookController {
 		} else {
 			rightClickMenu.getItems().addAll(expandCollapse);
 		}
+		return rightClickMenu;
+	}
 
-		mainTable.addEventFilter(MouseEvent.MOUSE_PRESSED,
-				new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent event) {
-						if (event.isSecondaryButtonDown()) {
-							rightClickMenu.show(mainTable.getScene()
-									.getWindow(), event.getScreenX(), event
-									.getScreenY());
-							event.consume();
+	/**
+	 * Makes a handler for a right-click menu item
+	 */
+	private EventHandler<ActionEvent> getHandler(String fxml,
+			MenuItem toDisable) {
+		return new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				try {
+					Stage stage = new Stage();
+					toDisable.setDisable(false);
+					stage.setTitle(toDisable.getText());
+					stage.setScene(new Scene(FXMLLoader.load(getClass()
+							.getClassLoader().getResource(
+									"view/roster/" + fxml + ".fxml"))));
+					stage.setResizable(false);
+					GraderPopup.setIcon(stage);
+					stage.setOnHiding(new EventHandler<WindowEvent>() {
+						public void handle(WindowEvent event) {
+							toDisable.setDisable(true);
 						}
-					}
-				});
+					});
+					stage.show();
+				} catch (IOException ex) {
+					Debug.log("IO ERROR", "Could not load file to start "
+							+ fxml + ".fxml");
+					ex.printStackTrace();
+				}
+			}
+		};
 	}
 
 	/**
@@ -474,8 +508,15 @@ public class GradebookController {
 		return roster;
 	}
 
+	/**
+	 * Sets the currently shown roster
+	 */
 	public void showRoster(Roster roster) {
 		current = false;
 		this.roster = roster;
+	}
+
+	public static GradebookController get() {
+		return singleton;
 	}
 }

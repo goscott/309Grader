@@ -3,7 +3,6 @@ package controller.history;
 import java.io.IOException;
 import java.util.Calendar;
 
-import controller.administration.UserLoginController;
 import controller.roster.GradebookController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,7 +18,6 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;

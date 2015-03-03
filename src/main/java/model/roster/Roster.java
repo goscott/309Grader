@@ -384,7 +384,6 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public GradedItem getAssignment(String name) {
-		GradedItem temp = new GradedItem(name, "", 100, false);
 		for(GradedItem item : assignments) {
 			if(item.name().equals(name)) {
 				return item;
@@ -411,11 +410,8 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public void addScore(Student student, GradedItem asgn, double score) {
-		System.out.println("1: " + students.contains(student));
-		System.out.println("2: " + assignments.contains(asgn));
 		if (students.contains(student) && assignments.contains(asgn)
 				&& score >= 0 && score <= asgn.maxScore()) {
-			System.out.println("hit inside. id = " + this);
 			Student stud = students.get(students.indexOf(student));
 			asgn.setStudentScore(stud, score);
 		}

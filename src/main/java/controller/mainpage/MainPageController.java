@@ -9,7 +9,6 @@ import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import controller.Alert;
 import controller.GraderPopup;
-import controller.administration.UserLoginController;
 import controller.graph.GraphController;
 import controller.history.HistoryController;
 import controller.roster.GradebookController;
@@ -29,13 +28,11 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import model.administration.PermissionKeys;
 import model.administration.UserDB;
@@ -267,7 +264,6 @@ public class MainPageController {
 	 */
 	public void permissions() {
 		Debug.log("Launching permissions editor");
-		UserDB users = Grader.getUserDB();
 
 		try {
 			Stage stage = new Stage();

@@ -25,12 +25,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
@@ -156,8 +154,6 @@ public class GraphController {
         	public void changed(ObservableValue<? extends Number> ov,
                     Number old_val, Number new_val) {
                 if (slider.isVisible()) {
-                    System.out.println("adjusting "
-                            + gradeSelectDropdown.getValue() + " to " + new_val);
                     Grade grade = Grader.getCurve().getGrade(gradeSelectDropdown.getValue());
                     Grader.getCurve().adjust(grade,
                             new_val.doubleValue());

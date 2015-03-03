@@ -9,17 +9,14 @@ import model.roster.Student;
 import model.server.Server;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 /**
  * controls the Add Student dialog functionality complete
  * @author Shelli Crispen
@@ -37,28 +34,12 @@ public class AddStudentDialogController {
 	private Button cancelButton;
 	/** The controller for the gradebook **/
 	private static GradebookController gbook;
-	/** the MenuItem to set the gradebook to **/
-	private static MenuItem parent;
-	/** the server that holds all student info **/
-	private static Server server;
-	
-	/**
-	 * Sets the parent of the window, so it can grab information from the
-	 * gradebook table
-	 * 
-	 * @param newParent the parent
-	 */
-	public void setParent(MenuItem newParent, GradebookController gbook) {
-		this.gbook = gbook;
-		parent = newParent;
-		parent.setDisable(true);
-	}
-	
 	
 	/**
 	 * Initializes the dropdown box. 
 	 */
 	public void initialize() {
+		gbook = GradebookController.get();
 		resetDropdown();
 	}
 	
@@ -81,12 +62,6 @@ public class AddStudentDialogController {
 			Debug.log("IO ERROR", "Could not load file to start popup");
 			ex.printStackTrace();
 		}
-
-		stage.setOnHiding(new EventHandler<WindowEvent>() {
-			public void handle(WindowEvent event) {
-				parent.setDisable(false);
-			}
-		});
 	}
 	
 	@FXML
@@ -97,7 +72,7 @@ public class AddStudentDialogController {
 	private void handleAddButton(ActionEvent event){
 		if (SelectStudentMenu.getValue() != null) {
 			Student addS = null;
-			for(Student student: server.getObservableStudentList()){
+			for(Student student: Server.getObservableStudentList()){
 				if(student.getName() == SelectStudentMenu.getValue()){
 					addS = student;
 				}

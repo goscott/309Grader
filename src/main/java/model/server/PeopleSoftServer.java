@@ -1,9 +1,6 @@
 package model.server;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import model.administration.User;
 import model.driver.Debug;
 import model.roster.Roster;
 import model.roster.Student;

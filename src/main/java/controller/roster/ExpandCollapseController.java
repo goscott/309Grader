@@ -13,13 +13,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class ExpandCollapseController {
 	@FXML
@@ -28,9 +26,9 @@ public class ExpandCollapseController {
 	private TreeView<String> tree;
 
 	private static GradebookController parent;
-	private static MenuItem callingItem;
 
 	public void initialize() {
+		parent = GradebookController.get();
 		refreshButton.setDisable(true);
 		tree.setOnMouseClicked(new EventHandler<Event>() {
 			@Override
@@ -83,18 +81,6 @@ public class ExpandCollapseController {
 			Debug.log("IO ERROR", "Could not load file to start popup");
 			ex.printStackTrace();
 		}
-
-		stage.setOnHiding(new EventHandler<WindowEvent>() {
-			public void handle(WindowEvent event) {
-				callingItem.setDisable(false);
-			}
-		});
-	}
-
-	public void setParent(MenuItem callItem, GradebookController contr) {
-		callingItem = callItem;
-		parent = contr;
-		callingItem.setDisable(true);
 	}
 
 	@FXML

@@ -1,36 +1,25 @@
 package controller.roster;
 
-import java.io.IOException;
-
 import resources.ResourceLoader;
-import controller.GraderPopup;
-import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
  * The dialog that allows the user to add assignments to the gradebook
@@ -63,8 +52,6 @@ public class AddAssignmentDialogController {
 
 	/** The controller for the gradebook **/
 	private static GradebookController gbook;
-	/** The MenuItem that was clicked to display the window **/
-	private static MenuItem parent;
 	/** The max number of characters allowed in a name **/
 	private final int maxChars = 25;
 	/** Number of parents shown before a scrollbar appears **/
@@ -73,24 +60,11 @@ public class AddAssignmentDialogController {
 	private final String noParent = "<None>";
 
 	/**
-	 * Sets the parent of the window, so it can grab information from the
-	 * gradebook table
-	 * 
-	 * @param newParent
-	 *            the parent
-	 */
-	@SuppressWarnings("static-access")
-	public void setParent(MenuItem newParent, GradebookController gbook) {
-		this.gbook = gbook;
-		parent = newParent;
-		parent.setDisable(true);
-	}
-
-	/**
 	 * Initializes some of the properties. Makes the add button the default.
 	 * Populates the parent list.
 	 */
 	public void initialize() {
+		gbook = GradebookController.get();
 		// disables the add button
 		addButton.setDisable(true);
 		// populates parent list
@@ -107,34 +81,6 @@ public class AddAssignmentDialogController {
 					}
 				});
 		maxScoreField.setText("100");
-	}
-
-	/**
-	 * Creates the popup on the given stage
-	 * 
-	 * @param stage
-	 *            the stage
-	 */
-	public void start(Stage stage) {
-		try {
-			BorderPane page = (BorderPane) FXMLLoader.load(getClass().getClassLoader()
-					.getResource("view/roster/addAssignmentDialog.fxml"));
-			Scene popup = new Scene(page);
-			stage.setTitle("Add Assignment");
-			stage.setScene(popup);
-			stage.setResizable(false);
-			GraderPopup.setIcon(stage);
-			stage.show();
-		} catch (IOException e1) {
-			Debug.log("IO ERROR", "Could not load file to start popup");
-			e1.printStackTrace();
-		}
-
-		stage.setOnHiding(new EventHandler<WindowEvent>() {
-			public void handle(WindowEvent event) {
-				parent.setDisable(false);
-			}
-		});
 	}
 
 	@FXML
@@ -303,8 +249,6 @@ public class AddAssignmentDialogController {
 	 * Resets the parent dropdown menu to reflect any new assignments
 	 */
 	private void resetDropdown() {
-		/*GradedItem curChoice = Grader.getRoster().getAssignment(
-				parentDropdown.getValue());*/
 		String curChoice = parentDropdown.getValue();
 		parentDropdown.setItems(Grader.getAssignmentNameList());
 		parentDropdown.getItems().add(0, noParent);

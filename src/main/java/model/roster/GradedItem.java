@@ -442,15 +442,6 @@ public class GradedItem implements Serializable {
 		((String)\result).equals(name)
 	@*/
 	public String toString() {
-		String ret = "Name: ";
-		if (parent != null)
-			ret += name + " | parent: " + parent.name() + " | ";
-		else
-			ret += name + " | parent: None | ";
-		ret += " children:";
-		for (GradedItem child : children) {
-			ret += " " + child.name();
-		}
 		return name;
 	}
 

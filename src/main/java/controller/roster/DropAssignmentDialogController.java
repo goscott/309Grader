@@ -6,23 +6,15 @@ import controller.GraderPopup;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
-import model.roster.Roster;
-import model.roster.Student;
-import model.server.Server;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
  * The dialog that allows the user to drop assignments from the gradebook
@@ -46,31 +38,16 @@ public class DropAssignmentDialogController
 
     /** The controller for the gradebook **/
     private static GradebookController gbook;
-    /** The MenuItem that was clicked to display the window **/
-    private static MenuItem parent;
     /** Number of parents shown before a scrollbar appears **/
     private final int numParentsShown = 10;
     /** The string displayed that lets the user choose no parent **/
     private final String noParent = "<None>";
-    /** The roster */
-    private static Roster roster;
-    
-    /**
-     * Sets the parent of the window, so it can grab information from the
-     * gradebook table
-     * 
-     * @param newParent the parent
-     */
-    public void setParent(MenuItem newParent, GradebookController gbook) {
-        this.gbook = gbook;
-        parent = newParent;
-        parent.setDisable(true);
-    }
     
     /**
      * Initializes the dropdown box. 
      */
     public void initialize() {
+    	gbook = GradebookController.get();
         resetDropdown();
     }
     
@@ -93,12 +70,6 @@ public class DropAssignmentDialogController
             Debug.log("IO ERROR", "Could not load file to start popup");
             e1.printStackTrace();
         }
-
-        stage.setOnHiding(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent event) {
-                parent.setDisable(false);
-            }
-        });
     }
     @FXML
     /**

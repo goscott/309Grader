@@ -6,7 +6,6 @@ import controller.GraderPopup;
 import model.announcements.Announcement;
 import model.driver.Debug;
 import model.driver.Grader;
-import model.server.Server;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

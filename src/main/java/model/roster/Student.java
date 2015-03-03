@@ -44,20 +44,20 @@ public class Student implements Comparable<Student>, Serializable {
 	 * Creates a student with the given information
 	 */
 	/*@
-        ensures(
-            this.name.equals(name)
-                &&
-            this.id.equals(id)
-                &&
-            this.roster == roster
-        );
-    @*/
+	    ensures(
+	        this.name.equals(name)
+	            &&
+	        this.id.equals(id)
+	            &&
+	        this.roster == roster
+	    );
+	@*/
 	public Student(String name, String id, Roster roster) {
 		this.roster = roster;
 		this.name = name;
 		this.id = id;
 	}
-	
+
 	public Student copyTo(Roster rost) {
 		return new Student(name, id, rost);
 	}
@@ -69,9 +69,9 @@ public class Student implements Comparable<Student>, Serializable {
 	    requires(
 	        this.roster == null
 	            &&
-            roster != null
-        );
-    @*/
+	        roster != null
+	    );
+	@*/
 	public void setRoster(Roster roster) {
 		if (this.roster == null && roster != null) {
 			this.roster = roster;
@@ -84,25 +84,26 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return String the name of the student
 	 */
 	/*@
-        requires(
-            currentUser != null
-                &&
-            currentUser.getPermissions().contains(PermissionKeys.VIEW_STUDENTS)
-                &&
-            !currentUser.getId().equals(id))
-        );
-        ensures(
-            currentUser.getId().equals(id))
-                &&
-            currentUser.getPermissions().contains(PermissionKeys.VIEW_STUDENTS)
-                &&
-            ((String)\result).equals(name)
-        );
-    @*/
+	    requires(
+	        currentUser != null
+	            &&
+	        currentUser.getPermissions().contains(PermissionKeys.VIEW_STUDENTS)
+	            &&
+	        !currentUser.getId().equals(id))
+	    );
+	    ensures(
+	        currentUser.getId().equals(id))
+	            &&
+	        currentUser.getPermissions().contains(PermissionKeys.VIEW_STUDENTS)
+	            &&
+	        ((String)\result).equals(name)
+	    );
+	@*/
 	public String getName() {
 		User currentUser = Grader.getUser();
 		if (currentUser != null
-				&& !currentUser.getPermissions().contains(PermissionKeys.VIEW_STUDENTS)
+				&& !currentUser.getPermissions().contains(
+						PermissionKeys.VIEW_STUDENTS)
 				&& !currentUser.getId().equals(id)) {
 			return "*******";
 		}
@@ -115,10 +116,10 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return String the student's ID
 	 */
 	/*@
-        ensures(
-            ((String)\result).equals(id)
-        );
-    @*/
+	    ensures(
+	        ((String)\result).equals(id)
+	    );
+	@*/
 	public String getId() {
 		return id;
 	}
@@ -129,13 +130,13 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return double the total grade
 	 */
 	/*@
-        requires(
-            roster != null
-        );
-        ensures(
-            ((double)\result).equals(roster.getTotalScore(this))
-        );
-    @*/
+	    requires(
+	        roster != null
+	    );
+	    ensures(
+	        ((double)\result).equals(roster.getTotalScore(this))
+	    );
+	@*/
 	public double getTotalScore() {
 		if (roster != null) {
 			return roster.getTotalScore(this);
@@ -150,14 +151,14 @@ public class Student implements Comparable<Student>, Serializable {
 	 *         possible
 	 */
 	/*@
-        requires(
-            roster != null
-        );
-        ensures(
-            ((double)\result).equals(maxTotal > 0 ? Double.valueOf(twoDForm
-                    .format(getTotalScore() / maxTotal * 100)) : 0)
-        );
-    @*/
+	    requires(
+	        roster != null
+	    );
+	    ensures(
+	        ((double)\result).equals(maxTotal > 0 ? Double.valueOf(twoDForm
+	                .format(getTotalScore() / maxTotal * 100)) : 0)
+	    );
+	@*/
 	public double getTotalPercentage() {
 		if (roster != null) {
 			double maxTotal = roster.getMaxPoints();
@@ -175,13 +176,13 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return Grade the student's total Grade
 	 */
 	/*@
-        requires(
-            roster != null
-        );
-        ensures(
-            ((Grade)\result).equals(roster.getCurve().get(percent))
-        );
-    @*/
+	    requires(
+	        roster != null
+	    );
+	    ensures(
+	        ((Grade)\result).equals(roster.getCurve().get(percent))
+	    );
+	@*/
 	public Grade getGrade() {
 		double percent = getTotalPercentage();
 		if (roster != null) {
@@ -198,13 +199,13 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return Grade the grade
 	 */
 	/*@
-        requires(
-            roster != null
-        );
-        ensures(
-            ((Grade)\result).equals(roster.getCurve().get(getAssignmentScore(asgn)))
-        );
-    @*/
+	    requires(
+	        roster != null
+	    );
+	    ensures(
+	        ((Grade)\result).equals(roster.getCurve().get(getAssignmentScore(asgn)))
+	    );
+	@*/
 	public Grade getGrade(String asgn) {
 		if (roster != null) {
 			return roster.getCurve().get(getAssignmentScore(asgn));
@@ -220,20 +221,15 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return Double the student's score on the assignment
 	 */
 	/*@
-        requires(
-            roster != null
-        );
-        ensures(
-            ((Double)\result).equals(roster.getStudentGrade(this, asgn))
-        );
-    @*/
+	    requires(
+	        roster != null
+	    );
+	    ensures(
+	        ((Double)\result).equals(roster.getStudentGrade(this, asgn))
+	    );
+	@*/
 	public Double getAssignmentScore(String asgn) {
-		if (roster != null) {
-			System.out.println("hit student getter: roster = " + name + " id = " + roster);
-			System.out.println("grade: " + roster.getStudentGrade(this, asgn));
-			return roster.getStudentGrade(this, asgn);
-		}
-		return null;
+		return roster != null ? roster.getStudentGrade(this, asgn) : null;
 	}
 
 	/**
@@ -245,13 +241,13 @@ public class Student implements Comparable<Student>, Serializable {
 	 *            the new score
 	 */
 	/*@
-        requires(
-            roster != null
-        );
-        ensures(
-            roster.setStudentGrade(this, asgn, sc)
-        );
-    @*/
+	    requires(
+	        roster != null
+	    );
+	    ensures(
+	        roster.setStudentGrade(this, asgn, sc)
+	    );
+	@*/
 	public void setScore(String asgn, Double sc) {
 		if (roster != null) {
 			roster.setStudentGrade(this, asgn, sc);
@@ -268,13 +264,13 @@ public class Student implements Comparable<Student>, Serializable {
 	 *            the percent (90.0, etc)
 	 */
 	/*@
-        requires(
-            roster != null
-        );
-        ensures(
-            setScore(asgn, percent / 100 * roster.getAssignment(asgn).maxScore())
-        );
-    @*/
+	    requires(
+	        roster != null
+	    );
+	    ensures(
+	        setScore(asgn, percent / 100 * roster.getAssignment(asgn).maxScore())
+	    );
+	@*/
 	public void setPercentScore(String asgn, double percent) {
 		if (roster != null) {
 			roster.addScore(this, roster.getAssignment(asgn), percent / 100
@@ -286,10 +282,10 @@ public class Student implements Comparable<Student>, Serializable {
 	 * Compares two students by their names
 	 */
 	/*@
-        ensures(
-            ((int)\result).equals(name.toString().compareTo(other.name.toString()))
-        );
-    @*/
+	    ensures(
+	        ((int)\result).equals(name.toString().compareTo(other.name.toString()))
+	    );
+	@*/
 	public int compareTo(Student other) {
 		return name.toString().compareTo(other.name.toString());
 	}
@@ -302,30 +298,29 @@ public class Student implements Comparable<Student>, Serializable {
 	 * @return boolean true if logically equal
 	 */
 	/*@
-        requires(
-           (other != null) && (other instanceof Student) 
-           
-           &&
-           
-           (other != null) && (other instanceof String)
-        );
-        ensures(
-            ((boolean)\result).equals(oth.getId().equals(id))
-            
-            &&
-            
-            ((boolean)\result).equals(oth.equals(id))
-        );
-    @*/
+	    requires(
+	       (other != null) && (other instanceof Student) 
+	       
+	       &&
+	       
+	       (other != null) && (other instanceof String)
+	    );
+	    ensures(
+	        ((boolean)\result).equals(oth.getId().equals(id))
+	        
+	        &&
+	        
+	        ((boolean)\result).equals(oth.equals(id))
+	    );
+	@*/
 	public boolean equals(Object other) {
 		if ((other != null) && (other instanceof Student)) {
 			Student oth = (Student) other;
-			//return oth.getName().equals(name) && oth.getId().equals(id);
+			// return oth.getName().equals(name) && oth.getId().equals(id);
 			return oth.getId().equals(id);
-		}
-		else if((other != null) && (other instanceof String)) {
-		    String oth = (String) other;
-		    return oth.equals(id);
+		} else if ((other != null) && (other instanceof String)) {
+			String oth = (String) other;
+			return oth.equals(id);
 		}
 		return false;
 	}
@@ -340,9 +335,9 @@ public class Student implements Comparable<Student>, Serializable {
 	/*@
 	     ensures(
 	         (\forall Student stu ; students.contains(item) ;
-                stu.name.toString() != null)
-                &&
-             toReturn != null
+	            stu.name.toString() != null)
+	            &&
+	         toReturn != null
 	     );
 	@*/
 	public static String Save(ArrayList<Student> students) {

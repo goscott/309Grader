@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-import controller.history.HistoryController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.administration.User;
@@ -304,10 +303,7 @@ public class Grader {
 	 	);
 	 @*/
 	public static void addScore(Student student, String asgn, double score) {
-		// currentRoster.getStudentByID(student.getId()).setScore(asgn, score);
 		currentRoster.addScore(student, getAssignment(asgn), score);
-		Debug.log("Grader model updated", "Score added -> " + student.getName()
-				+ " has score " + score + " on " + asgn + '.');
 	}
 
 	/**
@@ -367,7 +363,6 @@ public class Grader {
 	 *         currently selected
 	 */
 	public static ObservableList<Student> getStudentList() {
-		Debug.log("Grader model accessed", "Student list retrieved");
 		return currentRoster.getStudentList();
 	}
 
@@ -379,7 +374,6 @@ public class Grader {
 	 *         current roster
 	 */
 	public static ObservableList<String> getAssignmentNameList() {
-		Debug.log("Grader model accessed", "Assignment names retrieved");
 		return currentRoster.getAssignmentNameList();
 	}
 
@@ -391,18 +385,10 @@ public class Grader {
 	 *         roster
 	 */
 	public static ObservableList<GradedItem> getAssignmentList() {
-		Debug.log("Grader model accessed", "Assignment list retrieved");
 		ObservableList<GradedItem> data = FXCollections.observableArrayList();
 		for (GradedItem item : currentRoster.getAssignments()) {
 			data.add(item);
 		}
 		return data;
-	}
-
-	/**
-	 * Loads a roster file from a file if it was not already loaded
-	 */
-	public static void importRoster(File file) {
-		Debug.log("Import", "Attempting to load " + file.getName());
 	}
 }

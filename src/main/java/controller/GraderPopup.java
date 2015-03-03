@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.driver.Debug;
 import resources.ResourceLoader;
