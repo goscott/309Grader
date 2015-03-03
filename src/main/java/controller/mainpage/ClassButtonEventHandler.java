@@ -1,5 +1,10 @@
 package controller.mainpage;
 
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+
+import controller.Alert;
+import controller.announcements.AnnouncementsController;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
@@ -18,7 +23,7 @@ import javafx.stage.Stage;
 public class ClassButtonEventHandler implements EventHandler<ActionEvent> {
 
 	/**
-	 * handdles the event of a class button being pressed by attempting to load
+	 * handles the event of a class button being pressed by attempting to load
 	 * the roster.
 	 */
 	@Override
@@ -31,10 +36,23 @@ public class ClassButtonEventHandler implements EventHandler<ActionEvent> {
 		Roster rost = Roster.load("Rosters/"
 				+ ((Button) event.getSource()).getText() + ".rost");
 		if (rost != null) {
+			if (!Grader.getRoster().courseName().equals(Debug.DEFAULT_NAME)
+					&& Grader.getRoster() != null
+					&& !Grader.getRoster().courseName()
+							.equals(rost.courseName())) {
+				Action response = Alert
+						.showConfirmDialog("Would you like to save the current roster?");
+				if (response == Dialog.ACTION_YES) {
+					Roster.save(Grader.getRoster());
+					Alert.show(Grader.getRoster().courseName()
+							+ " has been saved");
+				}
+			}
 			Grader.setCurrentRoster(rost);
 			MainPageController.enableTabs();
+			AnnouncementsController.refresh();
+			
 		}
 
 	}
-
 }

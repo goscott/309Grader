@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.announcements.Announcement;
 import model.curve.Curve;
 import model.curve.Grade;
 import model.driver.Debug;
@@ -52,6 +53,8 @@ public class Roster implements Serializable {
 	private Calendar startDate = Calendar.getInstance();
 	/** The last date of the course **/
 	private Calendar endDate = Calendar.getInstance();
+	/** The announcements associated with this roster **/
+	private ArrayList<Announcement> announcements;
 
 	/**
 	 * Contructs a roster from the given information. If startDate or endDate
@@ -92,6 +95,7 @@ public class Roster implements Serializable {
 
 		students = new ArrayList<Student>();
 		assignments = new ArrayList<GradedItem>();
+		announcements = new ArrayList<Announcement>();
 		ids = new HashMap<String, Student>();
 		curve = new Curve();
 	}
@@ -907,5 +911,19 @@ public class Roster implements Serializable {
 			data.add(item.name());
 		}
 		return data;
+	}
+
+	/**
+	 * Adds an announcement to a roster
+	 */
+	public void addAnnouncement(Announcement ann) {
+		announcements.add(ann);
+	}
+	
+	/**
+	 * Adds an announcement to a roster
+	 */
+	public ArrayList<Announcement> getAnnouncements() {
+		return announcements;
 	}
 }

@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.announcements.Announcement;
+import model.driver.Grader;
 
 /**
  * 
@@ -38,19 +39,34 @@ public class AnnouncementsController {
     
     private ObservableList<Announcement> data;
     
+    private static AnnouncementsController singleton;
+    
+    /**
+     * Automatically called at startup
+     */
+    public void initialize() {
+    	singleton = this;
+    	update();
+    }
+    
+    /**
+     * Lets other files refresh the tab
+     */
+    public static void refresh() {
+    	singleton.update();
+    }
+    
+    /**
+     * Updates the tab
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void initialize() { //this gets called automatically at startup
+    public void update() { //this gets called automatically at startup
             
-        //Here is some fake data to populate your table with initially.
-        //Eventually, it should come from our "server" (A text file or something)
-        data =
-                FXCollections.observableArrayList(
-                    new Announcement("Subject 1", "Gene Fisher", "content1"),
-                    new Announcement("Subject 2", "Gavin Scott", "content2"),
-                    new Announcement("Subject 3", "Barack Obama", "content3"),
-                    new Announcement("Subject 4", "Snoopy", "content4"),
-                    new Announcement("Subject 5", "Blornog, King of the Martians", "content5")
-                );
+        // loads the announcements
+        data = FXCollections.observableArrayList();
+        for(Announcement ann : Grader.getRoster().getAnnouncements()) {
+        	data.add(ann);
+        }
         
         //These dictate how the columns get the info from the announcement object
         subject_column.setCellValueFactory(new Callback() {

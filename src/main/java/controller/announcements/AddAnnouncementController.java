@@ -5,6 +5,7 @@ import java.io.IOException;
 import controller.GraderPopup;
 import model.announcements.Announcement;
 import model.driver.Debug;
+import model.driver.Grader;
 import model.server.Server;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,7 +58,7 @@ public class AddAnnouncementController {
 			Announcement ann = new Announcement(subjectField.getText(), "You",
 					bodyField.getText());
 			parent.addAnnouncementToList(ann);
-			Server.addAnnouncement(ann);
+			Grader.getRoster().addAnnouncement(ann);
 			bodyField.setText("");
 			subjectField.setText("");
 		}

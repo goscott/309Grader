@@ -1,5 +1,6 @@
 package model.announcements;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -9,7 +10,9 @@ import java.util.Calendar;
  * @author Jacob Hardi
  *
  */
-public class Announcement {
+public class Announcement implements Serializable{
+	/** Announcements are serializable **/
+	private static final long serialVersionUID = 8866620564619813117L;
 	private String subject;
 	private String postedBy;
 	private String dateTime;

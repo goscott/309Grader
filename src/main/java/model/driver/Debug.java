@@ -29,6 +29,8 @@ public class Debug {
 	private final static String fileName = "log.txt";
 	/** The file name of the error log **/
 	private final static String errorFileName = "error_log.txt";
+	/** The default roster name **/
+	public final static String DEFAULT_NAME = "AUTO-POPULATED";
 
 	/**
 	 * Logs a message. Outputs it to the screen, and saves it to the output log
@@ -85,7 +87,7 @@ public class Debug {
 		Calendar end = Calendar.getInstance();		
 		start.set(2015, 01, 01);
         end.set(2015, 04, 01);
-        Roster roster = new Roster("AUTO-POPULATED", "", 1,
+        Roster roster = new Roster(DEFAULT_NAME, "", 1,
                 "", start, end);
         
 		Grader.addRoster(roster);

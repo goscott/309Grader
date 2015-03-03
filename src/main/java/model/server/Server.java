@@ -25,7 +25,6 @@ public class Server {
 	private static ObservableList<Student> studentNames;
 	/** A map of which classes a user is enrolled in or teaching **/
 	private static HashMap<Student, ArrayList<String>> associatedClasses;
-	private static HashMap<String, ArrayList<Announcement>> rosterAnnouncements;
 
 	/**
 	 * Gets the list of all students stored in the server
@@ -307,51 +306,6 @@ public class Server {
 	}
 
 	/**
-	 * Adds an announcement to the server for the current roster
-	 */
-	/*@
-	     requires(
-	         rosterAnnouncements.get(roster.courseName()) != null
-	     );
-	     ensures(
-	         \result.equals.rosterAnnouncements.get(roster.courseName())
-	             ||
-	         \result.equals.new ArrayList<Announcement>()
-	     );
-	@*/
-	public static void addAnnouncement(Announcement announcement) {
-		Debug.log("Server", "Announcement stored in server");
-		Roster roster = Grader.getRoster();
-		ArrayList<Announcement> anns;
-		if (rosterAnnouncements.get(roster.courseName()) != null) {
-			anns = rosterAnnouncements.get(roster.courseName());
-		} else {
-			anns = new ArrayList<Announcement>();
-		}
-		anns.add(announcement);
-		rosterAnnouncements.put(roster.courseName(), anns);
-	}
-
-	/**
-	 * Gets all announcements associated with a roster
-	 */
-	/*@
-	     requires(
-	         roster != null
-	     );
-	     ensures(
-	         rosterAnnouncements.get(roster.courseName())
-	     );
-	@*/
-	public static ArrayList<Announcement> getAssociatedAnnouncements(
-			Roster roster) {
-		if (rosterAnnouncements != null && roster != null) {
-			return rosterAnnouncements.get(roster.courseName());
-		}
-		return new ArrayList<Announcement>();
-	}
-
-	/**
 	 * Populates the server's list of students
 	 */
 	/*@
@@ -377,23 +331,9 @@ public class Server {
 		Debug.log("Initializing Server", "Students Loaded");
 	}
 
-	/**
-	 * Populates the servers list of announcements
-	 */
-	/*@
-	    ensures
-	    (   *
-	        *Gavin's Debug functions to help make sure the server is running correctly. 
-	        *Also that the roster Announcements are initialized
-	    );
-	@*/
-	private static void initializeAnnouncements() {
-		rosterAnnouncements = new HashMap<String, ArrayList<Announcement>>();
-		Debug.log("Initializing Server", "Announcements Loaded");
-	}
 
 	/**
-	 * Populates the server with some default students
+	 * Populates the server
 	 */
 	/*@
 	    ensures
@@ -403,6 +343,7 @@ public class Server {
 	@*/
 	public static void init() {
 		Debug.log("Server initialization", "starting init...");
+		initializeStudents();
 	}
 
 
