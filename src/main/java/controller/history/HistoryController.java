@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import controller.administration.UserLoginController;
+import controller.roster.GradebookController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -125,11 +126,6 @@ public class HistoryController {
     @FXML
     private Button switch_graph;
     
-    /**
-     * Allows for courses to be hidden (does nothing at the moment).
-     */
-    @FXML
-    private CheckBox hide_course;
     
     /**
      * Number of students in a course.
@@ -212,7 +208,7 @@ public class HistoryController {
     /**
      * A reference to the currently selected togglebutton. (null if none is selected)
      */
-    private ToggleButton selectedSection = null;
+    private SectionButton selectedSection = null;
     
     /**
      * A reference to the active history database.
@@ -243,8 +239,7 @@ public class HistoryController {
                             switchToCourse();
                             course_label.setText(class_selector.getExpandedPane().getText());
                             
-                            switch_graph.setDisable(false);
-                            hide_course.setDisable(false);
+                            switch_graph.setVisible(true);
                             fillCharts(selectedCourse);
                         }
                         
@@ -252,8 +247,8 @@ public class HistoryController {
                         else {
                             switchToIntro();
                             
-                            switch_graph.setDisable(true);
-                            hide_course.setDisable(true);
+                            switch_graph.setVisible(false);
+                            button_gradebook.setVisible(false);
                             
                             if (selectedSection != null) {
                                 selectedSection.setSelected(false);
@@ -443,6 +438,8 @@ public class HistoryController {
                     .load(getClass().getClassLoader().getResource(
                             "view/roster/gradebook_screen.fxml"));
             gradebook_view.setCenter(gradebookPage);
+            GradebookController.getControllerTwo().showRoster(selectedSection.getSection());
+            GradebookController.getControllerTwo().initialize();
         } 
         
         catch (IOException e) {
@@ -457,6 +454,7 @@ public class HistoryController {
     public void switchToHistory() {
         history_view.setVisible(true);
         gradebook_view.setVisible(false);
+        section_view.setVisible(true);
     }
     
     /**
@@ -471,6 +469,10 @@ public class HistoryController {
             super(newSection.getQuarter() + " " + newSection.getStartDate().get(Calendar.YEAR) + " Section0" + newSection.getSection());
             section = newSection;
             initialize();
+        }
+        
+        public Roster getSection() {
+            return section;
         }
         
         public void initialize() {
@@ -488,11 +490,11 @@ public class HistoryController {
                             selectedSection.setSelected(false); //deactivate other button
                         }
                         
-                        selectedSection = (ToggleButton) event.getSource();
+                        selectedSection = (SectionButton) event.getSource();
                         
                         section_label.setText(selectedSection.getText());
                         
-                        switch_graph.setDisable(true);
+                        switch_graph.setVisible(false);
                         
                         section_instructor.setText("Instructor: " + section.getInstructor());
                         section_students.setText("Number of Students (x passed, y failed): " + section.getStudents().size() + "(" + section.getPassingNum() + "," + section.getFailingNum() + ")");
@@ -502,13 +504,16 @@ public class HistoryController {
                         section_end_date.setText("End Date: " + section.getEndDateString());
                         
                         fillSectionPie(section);
+                        
+                        button_gradebook.setVisible(true);
                     }
                     
                     // off
                     else {
                         switchToCourse();
                         selectedSection = null;
-                        switch_graph.setDisable(false);
+                        switch_graph.setVisible(true);
+                        button_gradebook.setVisible(false);
                     }
                 }
             });

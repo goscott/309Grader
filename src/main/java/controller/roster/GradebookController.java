@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import controller.administration.UserLoginController;
 import model.administration.PermissionKeys;
 import model.curve.Grade;
+import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
 import model.roster.Roster;
@@ -56,6 +57,8 @@ public class GradebookController {
 	private ArrayList<String> expanded;
 	/** The instance of the controller **/
 	private static GradebookController singleton;
+	/** Like singleton, but one better. (used in history controller) **/
+	private static GradebookController singletonTwo;
 	/** checks if accessing the current roster **/
 	private boolean current = true;
 	/** The roster, if not current **/
@@ -64,13 +67,24 @@ public class GradebookController {
 	public static GradebookController getController() {
 		return singleton;
 	}
+	
+	public static GradebookController getControllerTwo() {
+	    return singletonTwo;
+	}
 
 	@FXML
 	/**
 	 * Initializes the gradebook view
 	 */
-	protected void initialize() {
-		singleton = this;
+	public void initialize() {
+	    Debug.log("GradebookController", "controller init");
+	    
+	    if (singleton == null) {
+		    singleton = this;
+		}
+	    
+	    singletonTwo = this;
+	    
 		mainTable.setEditable(true);
 		expanded = new ArrayList<String>();
 		for (String item : getRoster().getAssignmentNameList()) {
@@ -456,6 +470,7 @@ public class GradebookController {
 		if (current) {
 			return Grader.getRoster();
 		}
+		Debug.log("GradebookController", "returning history roster");
 		return roster;
 	}
 

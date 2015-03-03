@@ -126,17 +126,16 @@
                         </BorderPane>
                         <HBox alignment="CENTER">
                            <children>
-                              <CheckBox fx:id="hide_course" disable="true" mnemonicParsing="false" text="Hide this course">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" top="5.0" />
-                                 </padding>
-                              </CheckBox>
-                              <Button fx:id="switch_graph" disable="true" mnemonicParsing="false" onAction="#switchGraph" style="-fx-background-color: #2EA1B1;" text="View Piechart">
-                                 <HBox.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" style="-fx-background-color: #2EA1B1;" text="See Gradebook" />
+                              <StackPane>
+                                 <children>
+                                    <Button fx:id="switch_graph" mnemonicParsing="false" onAction="#switchGraph" style="-fx-background-color: #2EA1B1;" text="View Piechart" visible="false">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="button_gradebook" mnemonicParsing="false" onAction="#switchToGradebook" style="-fx-background-color: #2EA1B1;" text="See Gradebook" visible="false" />
+                                 </children>
+                              </StackPane>
                            </children>
                            <VBox.margin>
                               <Insets />
