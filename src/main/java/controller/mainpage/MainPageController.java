@@ -43,6 +43,7 @@ import model.administration.PermissionKeys;
 import model.administration.UserDB;
 import model.driver.Debug;
 import model.driver.Grader;
+import model.roster.Exporter;
 import model.roster.Roster;
 
 /**
@@ -82,7 +83,10 @@ public class MainPageController {
 	private MenuItem logout;
 	/** the export menu item **/
 	@FXML
-	private MenuItem export;
+	private MenuItem exportFile;
+	/** the export menu item **/
+	@FXML
+	private MenuItem exportExcel;
 	/** The Quit menu item **/
 	@FXML
 	private MenuItem user_exit;
@@ -224,7 +228,8 @@ public class MainPageController {
 		// predictionsTab.setDisable(true);
 		announcementsTab.setDisable(true);
 		gradebookTab.setDisable(true);
-		export.setDisable(true);
+		exportExcel.setDisable(true);
+		exportFile.setDisable(true);
 		buttonController.refreshButtons();
 		save.setDisable(true);
 
@@ -237,7 +242,8 @@ public class MainPageController {
 	 * Enables class-specific tabs
 	 */
 	private void enable() {
-		export.setDisable(false);
+		exportFile.setDisable(false);
+		exportExcel.setDisable(false);
 		gradebookTab.setDisable(false);
 		graphTab.setDisable(false);
 		// historyTab.setDisable(false);
@@ -385,16 +391,36 @@ public class MainPageController {
 	}
 
 	/**
-	 * Handles the export file menu item
+	 * Handles the export to excel
 	 */
-	@SuppressWarnings("deprecation")
 	@FXML
-	private void handleExport(ActionEvent event) {
-		Action response = Alert
-				.showConfirmDialog("Are you sure you want to export the current roster to an Excel file?");
-		if (response == Dialog.ACTION_YES) {
-			Grader.getRoster().export();
+	private void handleExportToExcel(ActionEvent event) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Choose Export Location");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				"Excel Files (*.xls)", "*.xls");
+		fileChooser.getExtensionFilters().add(extFilter);
+		File file = fileChooser.showSaveDialog(new Stage());
+		if (file != null) {
+			Exporter.exportRosterToExcel(Grader.getRoster(), file);
 		}
+	}
+
+	/**
+	 * Handles the export to file
+	 */
+	@FXML
+	private void handleExportToFile(ActionEvent event) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Choose Export Location");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				"Roster Files (*.rost)", "*.rost");
+		fileChooser.getExtensionFilters().add(extFilter);
+		File file = fileChooser.showSaveDialog(new Stage());
+		if (file != null) {
+			Exporter.exportRosterToFile(Grader.getRoster(), file);
+		}
+
 	}
 
 	/**

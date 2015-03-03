@@ -884,7 +884,7 @@ public class Roster implements Serializable {
 	 	);
 	@*/
 	public void export() {
-		Exporter.exportRoster(this);
+		Exporter.exportRosterToExcel(this);
 	}
 
 	/**

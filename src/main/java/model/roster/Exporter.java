@@ -12,7 +12,9 @@ import jxl.write.Number;
 import jxl.write.biff.RowsExceededException;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 import controller.Alert;
@@ -33,6 +35,12 @@ public class Exporter {
 	/** name of the column containing student ids **/
 	private static String idLabel = "Student ID";
 
+	public static void exportRosterToExcel(Roster roster) {
+		String fileName = roster.courseName() + '-'
+				+ String.format("%02d", roster.getSection());
+		exportRosterToExcel(roster, new File(exportFolderName + '/' + fileName + fileType));
+	}
+	
 	/**
 	 * Exports a roster to an excel document. All assignments are printed,
 	 * including sub-assignments
@@ -45,7 +53,7 @@ public class Exporter {
 			// the excel file has been created
 		);
 	@*/
-	public static void exportRoster(Roster roster) {
+	public static void exportRosterToExcel(Roster roster, File file) {
 		// don't save null rosters
 		if (roster == null) {
 			return;
@@ -57,7 +65,7 @@ public class Exporter {
 		}
 		String fileName = roster.courseName() + '-'
 				+ String.format("%02d", roster.getSection());
-		File file = new File(exportFolderName + '/' + fileName + fileType);
+		//File file = new File(exportFolderName + '/' + fileName + fileType);
 		Debug.log("Exporting to excel", "Exporting " + fileName);
 		// populate document
 		WorkbookSettings settings = new WorkbookSettings();
@@ -128,6 +136,18 @@ public class Exporter {
 				}
 			}
 			column++;
+		}
+	}
+
+	public static void exportRosterToFile(Roster roster, File file) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(file));
+			out.writeObject(roster);
+			out.close();
+		} catch (IOException ex) {
+			Debug.log("SAVE ERROR", "failed to save Roster " + roster.courseName());
+			ex.printStackTrace();
 		}
 	}
 }
