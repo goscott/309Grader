@@ -9,6 +9,7 @@ import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
+import model.roster.PredictionMath;
 import model.roster.Roster;
 import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
@@ -122,12 +123,20 @@ public class GradebookController {
 			MenuItem addStudent = new MenuItem("Add Student");
 			MenuItem dropStudent = new MenuItem("Drop Student");
 			MenuItem ref = new MenuItem("Refresh");
+			MenuItem makePrediction = new MenuItem("Make Prediction");
 			
 			ref.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
 					fullRefresh();
 				}
 			});
+			
+			makePrediction.setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent event) {
+                    PredictionMath.getPrediction(Grader.getRoster(), mainTable.getSelectionModel().getSelectedItem(), Grader.getRoster().getCurve().getGrade("A"));
+                }
+            });
+			
 			addAssignment.setOnAction(GraderPopup.getPopupHandler("addAssignmentDialog", addAssignment));
 			dropAssignment.setOnAction(GraderPopup.getPopupHandler("dropAssignment", dropAssignment));
 			addStudent.setOnAction(GraderPopup.getPopupHandler("AddStudent",	addStudent));
@@ -135,7 +144,7 @@ public class GradebookController {
 
 			rightClickMenu.getItems().addAll(ref, expandCollapse,
 					new SeparatorMenuItem(), addAssignment, dropAssignment,
-					new SeparatorMenuItem(), addStudent, dropStudent);
+					new SeparatorMenuItem(), addStudent, dropStudent, new SeparatorMenuItem(), makePrediction);
 		} else {
 			rightClickMenu.getItems().addAll(expandCollapse);
 		}

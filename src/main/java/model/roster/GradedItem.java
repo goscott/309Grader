@@ -460,6 +460,7 @@ public class GradedItem implements Serializable {
 	public Double getStudentScore(Student student) {
 		if (student != null) {
 			if (children.isEmpty()) {
+			    //Debug.log("Assignment: " + name + " " + student.getName() + "'s grade: " + studentGrades.get(student));
 				return studentGrades.get(student);
 			} else {
 				Double score = null;
