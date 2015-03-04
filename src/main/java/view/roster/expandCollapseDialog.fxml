@@ -5,13 +5,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="327.0" 
-xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.roster.ExpandCollapseController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="327.0" style="-fx-background-color: #A1DDE5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.roster.ExpandCollapseController">
    <center>
       <TreeView fx:id="tree" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
-      <Button fx:id="refreshButton" onAction="#handleButton" mnemonicParsing="false" text="Refresh Gradebook" BorderPane.alignment="CENTER" />
+      <Button fx:id="refreshButton" defaultButton="true" mnemonicParsing="false" onAction="#handleButton" style="-fx-background-color: #2EA1B1;" text="Refresh Gradebook" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

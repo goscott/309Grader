@@ -10,10 +10,10 @@
       <TextField fx:id="className" layoutX="14.0" layoutY="40.0" prefHeight="25.0" prefWidth="163.0" />
       <TextField fx:id="sectionNumber" layoutX="214.0" layoutY="40.0" />
       <TextField fx:id="quarter" layoutX="214.0" layoutY="90.0" />
-      <ListView fx:id="students" layoutX="14.0" layoutY="117.0" prefHeight="200.0" prefWidth="163.0" />
+      <ListView fx:id="students" layoutX="14.0" layoutY="117.0" prefHeight="200.0" prefWidth="163.0" style="-fx-background-color: #A1DDE5;" />
       <Label layoutX="14.0" layoutY="94.0" text="Select Students" />
-      <Button fx:id="AddClassButton" layoutX="42.0" layoutY="346.0" mnemonicParsing="false" onAction="#AddClass" text="Add Class" />
-      <Button fx:id="CancelButton" layoutX="214.0" layoutY="346.0" mnemonicParsing="false" onAction="#Cancel" text="Cancel " />
+      <Button fx:id="AddClassButton" defaultButton="true" layoutX="249.0" layoutY="346.0" mnemonicParsing="false" onAction="#AddClass" style="-fx-background-color: #74D7E5;" text="Add Class" />
+      <Button fx:id="CancelButton" layoutX="64.0" layoutY="346.0" mnemonicParsing="false" onAction="#Cancel" text="Cancel " />
       <Label layoutX="214.0" layoutY="23.0" text="Section number" />
       <DatePicker fx:id="StartDate" layoutX="214.0" layoutY="156.0" prefHeight="25.0" prefWidth="149.0" />
       <Label layoutX="214.0" layoutY="73.0" text="Quarter" />

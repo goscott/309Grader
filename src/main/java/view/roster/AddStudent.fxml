@@ -11,7 +11,7 @@
    <top>
    </top>
    <center>
-      <ComboBox fx:id="SelectStudentMenu" prefHeight="26.0" prefWidth="300.0"  promptText="Select a Student to Import" style="-fx-background-color: #A9E2F3;" BorderPane.alignment="CENTER" />
+      <ComboBox fx:id="SelectStudentMenu" prefHeight="26.0" prefWidth="300.0" promptText="Select a Student to Import" style="-fx-background-color: #A1DDE5;" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
       <AnchorPane prefHeight="125.0" prefWidth="300.0" BorderPane.alignment="CENTER">
@@ -21,7 +21,7 @@
 					<Tooltip text="Cancels adding a new student to the gradebook" />
 			    </tooltip>
             </Button>
-            <Button fx:id="addButton" defaultButton="true" layoutX="200.0" layoutY="95.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="25.0" prefWidth="85.0" text="Add ">
+            <Button fx:id="addButton" defaultButton="true" layoutX="200.0" layoutY="95.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #74D7E5;" text="Add ">
             	<tooltip>
 					<Tooltip text="Adds a new student to the gradebook" />
 			    </tooltip>
