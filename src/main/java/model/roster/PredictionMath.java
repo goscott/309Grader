@@ -37,7 +37,7 @@ public class PredictionMath {
             if (!item.isExtraCredit() && item.hasChildren()) {
                 if (item.getStudentScore(student) == null) {
                     ungradedAssignments++;
-                    result.add(item);
+                    result.add(item.copy());
                     availablePoints += item.maxScore();
                 }
             }
