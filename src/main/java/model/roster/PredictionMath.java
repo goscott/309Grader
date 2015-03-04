@@ -5,9 +5,20 @@ import java.util.ArrayList;
 import model.curve.Grade;
 import model.driver.Debug;
 
+/**
+ * Handles grade prediction calculations.
+ * @author Mason Stevenson
+ */
 public class PredictionMath {
+    /**
+     * Makes a whole number percent grade into a decimal percent grade. e.g. 67 becomes .67
+     */
     private static final double DECIMAL_SHIFT = .01;
     
+    /**
+     * Given a student, a roster, and a desired grade, returns a list of assignment grades needed for that
+     * student to achieve the desired grade.
+     */
     public static ArrayList<GradedItem> getPrediction(Roster roster, Student student, Grade desiredGrade) {
         double maxPoints, curPoints, reqPoints, availablePoints;
         int ungradedAssignments = 0;
