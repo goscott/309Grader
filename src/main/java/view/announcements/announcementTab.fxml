@@ -4,7 +4,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.announcements.AnnouncementsController">
    <center>
       <TableView fx:id="table">
@@ -20,9 +19,9 @@
                                                             </TableView>
   </center>
    <bottom>
-      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" style="-fx-background-color: #a1dde5;" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#addAnnouncement" text="Add Announcement" />
+            <Button mnemonicParsing="false" onAction="#addAnnouncement" style="-fx-background-color: #2ea1b1;" text="Add Announcement" />
          </children>
       </HBox>
    </bottom>

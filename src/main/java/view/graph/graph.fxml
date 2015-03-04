@@ -90,10 +90,10 @@
                      <bottom>
                         <BorderPane prefHeight="125.0" prefWidth="238.0" BorderPane.alignment="CENTER">
                            <center>
-                              <ComboBox fx:id="gradeSelectDropdown" onAction="#selectNewGrade" prefHeight="25.0" prefWidth="215.0" promptText="Select Grade to Modify" BorderPane.alignment="CENTER" />
+                              <ComboBox fx:id="gradeSelectDropdown" onAction="#selectNewGrade" prefHeight="25.0" prefWidth="215.0" promptText="Select Grade to Modify" style="-fx-background-color: #a1dde5;" BorderPane.alignment="CENTER" />
                            </center>
                            <bottom>
-                              <Button fx:id="newGradeButton" mnemonicParsing="false" onAction="#handleNewGrade" text="Add New Grade" BorderPane.alignment="CENTER" />
+                              <Button fx:id="newGradeButton" mnemonicParsing="false" onAction="#handleNewGrade" style="-fx-background-color: #74d7e5;" text="Add New Grade" BorderPane.alignment="CENTER" />
                            </bottom>
                         </BorderPane>
                      </bottom>
@@ -107,9 +107,9 @@
                <content>
                   <VBox alignment="CENTER" style="-fx-background-color: #ffffff;">
                      <children>
-                        <StackPane VBox.vgrow="ALWAYS">
+                        <StackPane style="-fx-background-color: #ffffff;" VBox.vgrow="ALWAYS">
                            <children>
-                              <ScrollPane fx:id="bar_pane" prefViewportHeight="2000.0" prefViewportWidth="242.0">
+                              <ScrollPane fx:id="bar_pane" prefViewportHeight="2000.0" prefViewportWidth="242.0" style="-fx-background-color: #ffffff;">
                                  <content>
                                     <BarChart fx:id="barChart" alternativeRowFillVisible="false" animated="false" barGap="0.0" categoryGap="0.0" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" minHeight="750.0" style="-fx-background-color: #ffffff;" verticalGridLinesVisible="false" verticalZeroLineVisible="false" VBox.vgrow="ALWAYS">
                                       <yAxis>
@@ -124,7 +124,7 @@
                               <PieChart fx:id="pie_chart" visible="false" />
                            </children>
                         </StackPane>
-                        <Button mnemonicParsing="false" onAction="#switchGraph" text="Switch Graph" />
+                        <Button mnemonicParsing="false" onAction="#switchGraph" style="-fx-background-color: #74d7e5;" text="Switch Graph" />
                      </children>
                   </VBox>
                </content></TitledPane>

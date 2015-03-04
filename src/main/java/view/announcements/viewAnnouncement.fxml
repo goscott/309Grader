@@ -4,9 +4,8 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.announcements.ViewAnnouncementController">
+<Pane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #74d7e5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.announcements.ViewAnnouncementController">
    <children>
-      <TextArea fx:id="bodyField" layoutX="10" layoutY="10" prefHeight="390" prefWidth="590" wrapText="true"/>
+      <TextArea fx:id="bodyField" layoutX="5.0" layoutY="5.0" prefHeight="390" prefWidth="590" wrapText="true" />
    </children>
 </Pane>
