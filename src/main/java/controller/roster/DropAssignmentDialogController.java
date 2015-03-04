@@ -19,100 +19,89 @@ import javafx.stage.Stage;
 /**
  * The dialog that allows the user to drop assignments from the gradebook
  * 
- * @author Shelli Crispen 
+ * @author Shelli Crispen
  *
  */
-public class DropAssignmentDialogController
-{
-    /** The drop button **/
-    @FXML
-    private Button dropButton;
-    
-    /** The cancel button **/
-    @FXML
-    private Button cancelButton;
-    
-    /** The dropdown that let's the user choose a parent assignment **/
-    @FXML
-    private ComboBox<String> dropAssignmentSelect;
+public class DropAssignmentDialogController {
+	/** The drop button **/
+	@FXML
+	private Button dropButton;
 
-    /** The controller for the gradebook **/
-    private static GradebookController gbook;
-    /** Number of parents shown before a scrollbar appears **/
-    private final int numParentsShown = 10;
-    /** The string displayed that lets the user choose no parent **/
-    private final String noParent = "<None>";
-    
-    /**
-     * Initializes the dropdown box. 
-     */
-    public void initialize() {
-    	gbook = GradebookController.get();
-        resetDropdown();
-    }
-    
-    /**
-     * Creates the popup on the given stage
-     * 
-     * @param stage the stage
-     */
-    public void start(Stage stage) {
-        try {
-        	AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getClassLoader()
-                    .getResource("view/roster/dropAssignment.fxml"));
-            Scene popup = new Scene(page);
-            stage.setTitle("Drop Assignment");
-            stage.setScene(popup);
-            stage.setResizable(false);
-            GraderPopup.setIcon(stage);
-            stage.show();
-        } catch (IOException e1) {
-            Debug.log("IO ERROR", "Could not load file to start popup");
-            e1.printStackTrace();
-        }
-    }
-    @FXML
-    /**
-     * Handles the cancel button. Closes the window.
-     * @param event the button's event
-     */
-    private void handleDropButton(ActionEvent event)
-    {
-        if (dropAssignmentSelect.getValue() != null) {
-            GradedItem dropS = null;
-            for(GradedItem assignment: Grader.getRoster().getAssignments()){
-                if(assignment.name() == dropAssignmentSelect.getValue()){
-                    dropS = assignment;
-                }
-            }
-                    
-            Grader.getRoster().dropAssignment(dropS);
-        }
-        resetDropdown();
-        gbook.fullRefresh();
-    }
-    
-    @FXML
-    /**
-     * Handles the cancel button. Closes the window.
-     * @param event the button's event
-     */
-    private void handleCancelButton(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.hide();
-    }    
-    
-    /**
-     * Resets the parent dropdown menu to reflect any new assignments
-     */
-    private void resetDropdown() {
-        /*GradedItem curChoice = Grader.getRoster().getAssignment(
-                parentDropdown.getValue());*/
-        String curChoice = dropAssignmentSelect.getValue();
-        dropAssignmentSelect.setItems(Grader.getAssignmentNameList());
-        dropAssignmentSelect.getItems().add(0, noParent);
-        dropAssignmentSelect.setVisibleRowCount(numParentsShown);
-        dropAssignmentSelect.setValue(curChoice);
-    }
+	/** The cancel button **/
+	@FXML
+	private Button cancelButton;
+
+	/** The dropdown that let's the user choose a parent assignment **/
+	@FXML
+	private ComboBox<String> dropAssignmentSelect;
+
+	/** The controller for the gradebook **/
+	private static GradebookController gbook;
+	/** Number of parents shown before a scrollbar appears **/
+	private final int numParentsShown = 10;
+	/** The string displayed that lets the user choose no parent **/
+	private final String noParent = "<None>";
+
+	/**
+	 * Initializes the dropdown box.
+	 */
+	public void initialize() {
+		gbook = GradebookController.get();
+		resetDropdown();
+	}
+
+	/**
+	 * Creates the popup on the given stage
+	 * 
+	 * @param stage
+	 *            the stage
+	 */
+	public void start(Stage stage) {
+		GraderPopup.getPopupStage("Drop Assignment",
+				"view/roster/dropAssignment.fxml").show();
+	}
+
+	@FXML
+	/**
+	 * Handles the cancel button. Closes the window.
+	 * @param event the button's event
+	 */
+	private void handleDropButton(ActionEvent event) {
+		if (dropAssignmentSelect.getValue() != null) {
+			GradedItem dropS = null;
+			for (GradedItem assignment : Grader.getRoster().getAssignments()) {
+				if (assignment.name() == dropAssignmentSelect.getValue()) {
+					dropS = assignment;
+				}
+			}
+
+			Grader.getRoster().dropAssignment(dropS);
+		}
+		resetDropdown();
+		gbook.fullRefresh();
+	}
+
+	@FXML
+	/**
+	 * Handles the cancel button. Closes the window.
+	 * @param event the button's event
+	 */
+	private void handleCancelButton(ActionEvent event) {
+		Node source = (Node) event.getSource();
+		Stage stage = (Stage) source.getScene().getWindow();
+		stage.hide();
+	}
+
+	/**
+	 * Resets the parent dropdown menu to reflect any new assignments
+	 */
+	private void resetDropdown() {
+		/*GradedItem curChoice = Grader.getRoster().getAssignment(
+		        parentDropdown.getValue());*/
+		String curChoice = dropAssignmentSelect.getValue();
+		dropAssignmentSelect.setItems(Grader.getAssignmentNameList());
+		dropAssignmentSelect.getItems().add(0, noParent);
+		dropAssignmentSelect.setVisibleRowCount(numParentsShown);
+		dropAssignmentSelect.setValue(curChoice);
+	}
 }

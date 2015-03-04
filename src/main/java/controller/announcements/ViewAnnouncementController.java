@@ -28,21 +28,12 @@ public class ViewAnnouncementController {
 	/**
 	 * Starts the scene
 	 */
-	public void start(Stage stage) {
-		try {
-			Pane page = (Pane) FXMLLoader.load(getClass().getResource(
-					"../../view/announcements/viewAnnouncement.fxml"));
-			Scene popup = new Scene(page);
-			stage.setTitle(announcement.getSubject() + " - posted by "
-					+ announcement.getPostedBy());
-			stage.setScene(popup);
-			stage.setResizable(false);
-			GraderPopup.setIcon(stage);
-			stage.show();
-		} catch (IOException e1) {
-			Debug.log("IO ERROR", "Could not load file to start popup");
-			e1.printStackTrace();
-		}
+	public void start(Stage stg) {
+		// "../../view/announcements/viewAnnouncement.fxml"
+		Stage stage = GraderPopup.getPopupStage(announcement.getSubject()
+				+ " - posted by " + announcement.getPostedBy(),
+				"view/announcements/viewAnnouncement.fxml");
+		stage.show();
 	}
 
 	public void initialize() {

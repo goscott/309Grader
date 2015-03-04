@@ -3,6 +3,7 @@ package testing.administration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import controller.GraderPopup;
 import model.administration.User;
 import model.administration.UserDB;
 import model.administration.UserTypes;
@@ -36,8 +37,7 @@ public class PermissionsTester extends Application {
         UserDB users = new UserDB();
         
         try {
-            //BorderPane page = (BorderPane) FXMLLoader.load(getClass().getResource("PermissionsEditor.fxml"));
-            Scene scene = new Scene((Parent) FXMLLoader.load(getClass().getClassLoader().getResource("view/administration/permissions_editor.fxml")));
+            Scene scene = new Scene(GraderPopup.getResource("view/administration/permissions_editor.fxml"));
             
             ListView<String> view = (ListView<String>) scene.lookup("#user_list");
             ObservableList<String> list = FXCollections.observableArrayList();

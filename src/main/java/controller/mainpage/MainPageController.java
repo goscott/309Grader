@@ -97,9 +97,10 @@ public class MainPageController {
 	/** The server menu **/
 	@FXML
 	private Menu serverMenu;
-	
+
 	@FXML
-    private FlowPane buttonSetUp;
+	private FlowPane buttonSetUp;
+
 	/**
 	 * Initializes the main page
 	 */
@@ -110,9 +111,7 @@ public class MainPageController {
 		// loads tab contents
 		try {
 			// add gradebook
-			TableView<?> gradebookPage = (TableView<?>) FXMLLoader
-					.load(getClass().getClassLoader().getResource(
-							"view/roster/gradebook_screen.fxml"));
+			TableView<?> gradebookPage = (TableView<?>) GraderPopup.getResource("view/roster/gradebook_screen.fxml");
 			gradebookTab.setContent(gradebookPage);
 			gradebookTab.selectedProperty().addListener(
 					new ChangeListener<Boolean>() {
@@ -130,25 +129,20 @@ public class MainPageController {
 					});
 
 			// Add graphs
-			SplitPane graphPage = (SplitPane) FXMLLoader.load(getClass()
-					.getClassLoader().getResource("view/graph/graph.fxml"));
+			SplitPane graphPage = (SplitPane) GraderPopup.getResource("view/graph/graph.fxml");
 			graphTab.setContent(graphPage);
 
 			// add historytab -Mason
 			// (students do not see)
 			if (Grader.getUser().getPermissions()
 					.contains(PermissionKeys.VIEW_HISTORY)) {
-				StackPane historyPage = (StackPane) FXMLLoader.load(getClass()
-						.getClassLoader().getResource(
-								"view/history/history_screen.fxml"));
+				StackPane historyPage = (StackPane) GraderPopup.getResource("view/history/history_screen.fxml");
 				historyTab.setContent(historyPage);
 			} else {
 				historyTab.setDisable(true);
 			}
 			// add announcementsTab -Jacob
-			BorderPane announcemetsPage = (BorderPane) FXMLLoader
-					.load(getClass().getClassLoader().getResource(
-							"view/announcements/announcementTab.fxml"));
+			BorderPane announcemetsPage = (BorderPane) GraderPopup.getResource("view/announcements/announcementTab.fxml");
 			announcementsTab.setContent(announcemetsPage);
 
 			// add predictions
@@ -170,15 +164,13 @@ public class MainPageController {
 				serverMenu.setDisable(true);
 			}
 
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 
 		ClassButtonsController con = new ClassButtonsController(buttonSetUp);
-        buttonController = con;
-        thisController = this;
+		buttonController = con;
+		thisController = this;
 
 		disable();
 
@@ -264,24 +256,9 @@ public class MainPageController {
 	 */
 	public void permissions() {
 		Debug.log("Launching permissions editor");
+		GraderPopup.getPopupStage("Edit User Permissions",
+				"view/administration/permissions_editor.fxml").show();
 
-		try {
-			Stage stage = new Stage();
-
-			Scene scene = new Scene((Parent) FXMLLoader.load(getClass()
-					.getClassLoader().getResource(
-							"view/administration/permissions_editor.fxml")));
-
-			stage.setScene(scene);
-			stage.setTitle("Edit User Permissions");
-			stage.setResizable(false);
-			GraderPopup.setIcon(stage);
-			stage.show();
-
-		} catch (Exception ex) {
-			Logger.getLogger(PermissionsTester.class.getName()).log(
-					Level.SEVERE, null, ex);
-		}
 	}
 
 	/**
@@ -290,17 +267,8 @@ public class MainPageController {
 	@FXML
 	public void launchAbout() {
 		try {
-			Stage stage = new Stage();
-
-			Scene scene = new Scene((Parent) FXMLLoader.load(getClass()
-					.getClassLoader().getResource("view/mainpage/Abt.fxml")));
-
-			stage.setScene(scene);
-			stage.setTitle("About Team");
-			stage.setResizable(false);
-			GraderPopup.setIcon(stage);
+			Stage stage = GraderPopup.getPopupStage("About Grader", "view/mainpage/Abt.fxml");
 			stage.show();
-
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 				@Override

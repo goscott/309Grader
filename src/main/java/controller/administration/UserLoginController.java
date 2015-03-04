@@ -148,13 +148,8 @@ public class UserLoginController {
 	 */
 	private void launchMainPage() {
 		try {
-			Stage stage = new Stage();
-			Scene scene = new Scene((BorderPane) FXMLLoader.load(getClass()
-					.getClassLoader().getResource("view/mainpage/MainPage.fxml")));
-
-			stage.setScene(scene);
-			stage.setTitle("GraderTool");
-			GraderPopup.setIcon(stage);
+			Stage stage = GraderPopup.getPopupStage("view/mainpage/MainPage.fxml");
+			stage.setResizable(true);
 			stage.setOnHiding(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent event) {
 					Server.backup();
@@ -174,24 +169,14 @@ public class UserLoginController {
 	 */
 	private void launchNewUser() {
 	    try {
-            Stage stage = new Stage();
-            Scene scene = new Scene((Parent) FXMLLoader.load(getClass()
-                    .getClassLoader().getResource("view/administration/new_user.fxml")));
-
-            stage.setScene(scene);
-            stage.setTitle("Create New User");
-            GraderPopup.setIcon(stage);
-            stage.show();
-            
-            stage.setResizable(false);
-            
+            Stage stage = GraderPopup.getPopupStage("Create New User", "view/administration/new_user.fxml");
             stage.setOnHiding(new EventHandler<WindowEvent>() {
-
                 public void handle(WindowEvent event) {
                     Launcher launch = new Launcher();
                     launch.start(new Stage());
                 }
             });
+            stage.show();
         }
 
         catch (Exception e) {

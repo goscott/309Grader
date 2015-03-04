@@ -50,24 +50,13 @@ public class AddAnnouncementController {
 			}
 		});
 	}
-	
+
 	/**
 	 * Starts the scene
 	 */
 	public void start(Stage stage) {
-		try {
-			Pane page = (Pane) FXMLLoader.load(getClass().getClassLoader()
-					.getResource("view/announcements/addAnnouncementDialog.fxml"));
-			Scene popup = new Scene(page);
-			stage.setTitle("Add Announement");
-			stage.setScene(popup);
-			stage.setResizable(false);
-			GraderPopup.setIcon(stage);
-			stage.show();
-		} catch (IOException e1) {
-			Debug.log("IO ERROR", "Could not load file to start popup");
-			e1.printStackTrace();
-		}
+		GraderPopup.getPopupStage("Add Announcement",
+				"view/announcements/addAnnouncementDialog.fxml").show();
 	}
 
 	/**
@@ -80,8 +69,8 @@ public class AddAnnouncementController {
 				&& subjectField.getText().length() > 0) {
 			Debug.log("Announcement Added", subjectField.getText() + " : "
 					+ bodyField.getText());
-			Announcement ann = new Announcement(subjectField.getText(), Grader.getUser().getId(),
-					bodyField.getText());
+			Announcement ann = new Announcement(subjectField.getText(), Grader
+					.getUser().getId(), bodyField.getText());
 			Grader.getRoster().addAnnouncement(ann);
 			AnnouncementsController.refresh();
 			bodyField.setText("");

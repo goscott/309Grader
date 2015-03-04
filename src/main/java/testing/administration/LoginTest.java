@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import controller.GraderPopup;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +32,7 @@ public class LoginTest extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Scene scene = new Scene((VBox) FXMLLoader.load(getClass().getClassLoader().getResource("view/administration/user_login.fxml")));
+            Scene scene = new Scene((VBox) GraderPopup.getResource("view/administration/user_login.fxml"));
             
             primaryStage.setScene(scene);
             primaryStage.setTitle("GraderTool: Login");

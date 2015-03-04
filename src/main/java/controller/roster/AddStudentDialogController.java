@@ -17,8 +17,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
 /**
  * controls the Add Student dialog functionality complete
+ * 
  * @author Shelli Crispen
  * 
  */
@@ -26,64 +28,53 @@ public class AddStudentDialogController {
 	/** contains the ComboBox with all the students names to add **/
 	@FXML
 	private ComboBox<String> SelectStudentMenu;
-	/** the add button  **/
+	/** the add button **/
 	@FXML
 	private Button addButton;
-	/** the cancel button  **/
+	/** the cancel button **/
 	@FXML
 	private Button cancelButton;
 	/** The controller for the gradebook **/
 	private static GradebookController gbook;
-	
+
 	/**
-	 * Initializes the dropdown box. 
+	 * Initializes the dropdown box.
 	 */
 	public void initialize() {
 		gbook = GradebookController.get();
 		resetDropdown();
 	}
-	
+
 	/**
 	 * Creates the popup on the given stage
 	 * 
-	 * @param stage the stage
+	 * @param stage
+	 *            the stage
 	 */
 	public void start(Stage stage) {
-		try {
-			BorderPane page = (BorderPane) FXMLLoader.load(getClass().getClassLoader()
-					.getResource("view/roster/AddStudent.fxml"));
-			Scene popup = new Scene(page);
-			stage.setTitle("Add Student");
-			stage.setScene(popup);
-			stage.setResizable(false);
-			GraderPopup.setIcon(stage);
-			stage.show();
-		} catch (IOException ex) {
-			Debug.log("IO ERROR", "Could not load file to start popup");
-			ex.printStackTrace();
-		}
+		GraderPopup.getPopupStage("Add Student", "view/roster/AddStudent.fxml").show();
 	}
-	
+
 	@FXML
 	/**
 	 * Handles the Add button. Closes the window.
 	 * @param event the button's event
 	 */
-	private void handleAddButton(ActionEvent event){
+	private void handleAddButton(ActionEvent event) {
 		if (SelectStudentMenu.getValue() != null) {
 			Student addS = null;
-			for(Student student: Server.getObservableStudentList()){
-				if(student.getName() == SelectStudentMenu.getValue()){
+			for (Student student : Server.getObservableStudentList()) {
+				if (student.getName() == SelectStudentMenu.getValue()) {
 					addS = student;
 				}
 			}
-					
+
 			Grader.getRoster().addStudent(addS);
 		}
 		resetDropdown();
 		gbook.refresh();
 	}
-	
+
 	@FXML
 	/**
 	 * Handles the cancel button. Closes the window.
@@ -94,14 +85,15 @@ public class AddStudentDialogController {
 		Stage stage = (Stage) source.getScene().getWindow();
 		stage.hide();
 	}
-	
+
 	/**
-	 * Resets the parent dropdown menu to reflect
-	 * that students are added to the gradebook and no longer only in the server
+	 * Resets the parent dropdown menu to reflect that students are added to the
+	 * gradebook and no longer only in the server
 	 */
 	private void resetDropdown() {
-		ObservableList<String> studentList = Server.getStudentListNameNotRoster();
-		if(studentList != null){
+		ObservableList<String> studentList = Server
+				.getStudentListNameNotRoster();
+		if (studentList != null) {
 			SelectStudentMenu.setItems(studentList);
 		}
 	}

@@ -38,39 +38,38 @@ import javafx.stage.WindowEvent;
  */
 public class AddClassDialogController {
 
-    /** contains the resource bundle **/
+	/** contains the resource bundle **/
 	@FXML
 	private ResourceBundle resources;
 	/** the location of the main fxml file **/
 	@FXML
 	private URL location;
-	/** the cancel button  **/
+	/** the cancel button **/
 	@FXML
 	private Button CancelButton;
 	/** the viewable list of students **/
 	@FXML
 	private ListView<String> students;
-	/** Text field to enter the class name  **/
+	/** Text field to enter the class name **/
 	@FXML
 	private TextField className;
-	/** Text field to enter the Section Number  **/
-    @FXML
-    private TextField sectionNumber;
+	/** Text field to enter the Section Number **/
+	@FXML
+	private TextField sectionNumber;
 	/** button to add the class **/
 	@FXML
 	private Button AddClassButton;
 	/** The parent of the dialog **/
 	private static ClassButtonsController parent;
-	
-	
-    @FXML
-    private DatePicker StartDate;
-    
 
-    @FXML
-    private TextField quarter;
+	@FXML
+	private DatePicker StartDate;
+
+	@FXML
+	private TextField quarter;
+
 	/**
-	 * initializes and displays a new 
+	 * initializes and displays a new
 	 */
 	@FXML
 	void initialize() {
@@ -81,29 +80,31 @@ public class AddClassDialogController {
 		this.StartDate.setValue(LocalDate.now());
 		// students.setItems(items);
 	}
-	
+
 	/**
 	 * Handels the event of when the addClass button is pressed
-	 * @param event event to be handeled
+	 * 
+	 * @param event
+	 *            event to be handeled
 	 */
 	@FXML
 	private void AddClass(ActionEvent event) {
-	    
-	    Calendar cal = Calendar.getInstance();
-	    cal.setTime(java.sql.Date.valueOf(StartDate.getValue()));
-	    Roster roster = null;
-	    try
-	    {
-		roster = new Roster(className.getText(), "DefaultInstructor", Integer.parseInt(sectionNumber.getText()),
-		    quarter.getText(), cal, Calendar.getInstance());
-	    }
-	    catch(NumberFormatException ex)
-	    {
-	        sectionNumber.setBackground(new Background(new BackgroundFill(
-	        	ResourceLoader.ERROR_RED, CornerRadii.EMPTY, Insets.EMPTY)));
-	        return;
-	    }
-		for(String name : students.getSelectionModel().getSelectedItems()) {
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(java.sql.Date.valueOf(StartDate.getValue()));
+		Roster roster = null;
+		try {
+			roster = new Roster(className.getText(), "DefaultInstructor",
+					Integer.parseInt(sectionNumber.getText()),
+					quarter.getText(), cal, Calendar.getInstance());
+		} catch (NumberFormatException ex) {
+			sectionNumber
+					.setBackground(new Background(new BackgroundFill(
+							ResourceLoader.ERROR_RED, CornerRadii.EMPTY,
+							Insets.EMPTY)));
+			return;
+		}
+		for (String name : students.getSelectionModel().getSelectedItems()) {
 			roster.addStudent(Server.getStudentByName(name));
 		}
 		roster.Save();
@@ -111,8 +112,10 @@ public class AddClassDialogController {
 		parent.refreshButtons();
 		((Stage) AddClassButton.getScene().getWindow()).close();
 	}
+
 	/**
 	 * cances and closes the dialog
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -124,29 +127,11 @@ public class AddClassDialogController {
 	 * starts the add class dialog
 	 * 
 	 * @param stage
-	 * @param superClass 
+	 * @param superClass
 	 */
-	public void start(Stage stage, ClassButtonsController superClass) {
-	    parent = superClass;
-		try {
-			Pane page = (Pane) FXMLLoader.load(getClass().getClassLoader()
-					.getResource(("view/roster/addClassDialog.fxml")));
-			Scene popup = new Scene(page);
-			stage.setTitle("Add Class");
-			stage.setScene(popup);
-			stage.setResizable(false);
-			GraderPopup.setIcon(stage);
-			stage.show();
-		} catch (IOException e1) {
-			Debug.log("IO ERROR", "Could not load file to start popup");
-			e1.printStackTrace();
-		}
-
-		stage.setOnHiding(new EventHandler<WindowEvent>() {
-			public void handle(WindowEvent event) {
-				// parent.setDisable(false);
-			}
-		});
+	public void start(Stage stg, ClassButtonsController superClass) {
+		GraderPopup.getPopupStage("Add Class",
+				"view/roster/addClassDialog.fxml").show();
 	}
 
 }

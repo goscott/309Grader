@@ -67,20 +67,8 @@ public class ExpandCollapseController {
 	}
 
 	public void start(Stage stage) {
-		try {
-			BorderPane page = (BorderPane) FXMLLoader
-					.load(getClass().getResource(
-							"../../view/roster/expandCollapseDialog.fxml"));
-			Scene popup = new Scene(page);
-			stage.setTitle("Expand/Collapse Columns");
-			stage.setScene(popup);
-			stage.setResizable(false);
-			GraderPopup.setIcon(stage);
-			stage.show();
-		} catch (IOException ex) {
-			Debug.log("IO ERROR", "Could not load file to start popup");
-			ex.printStackTrace();
-		}
+		GraderPopup.getPopupStage("Expand/Collapse Colummns",
+				"../../view/roster/expandCollapseDialog.fxml").show();
 	}
 
 	@FXML
@@ -91,7 +79,7 @@ public class ExpandCollapseController {
 		}
 		if (parent != null)
 			parent.fullRefresh();
-		
+
 		// TODO Have it refresh so it doesn't have to close
 		// closes the window on click
 		((Stage) refreshButton.getScene().getWindow()).hide();
