@@ -13,6 +13,8 @@ import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
 import model.server.Server;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -72,12 +74,35 @@ public class AddClassDialogController {
 	 */
 	@FXML
 	void initialize() {
-		/*ObservableList<String> items = FXCollections
-				.observableArrayList("There will be students here someday");*/
 		students.setItems(Server.getStudentListName());
 		students.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		this.StartDate.setValue(LocalDate.now());
-		// students.setItems(items);
+		AddClassButton.setDisable(true);
+		
+		quarter.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(
+					final ObservableValue<? extends String> observable,
+					final String oldValue, final String newValue) {
+				AddClassButton.setDisable(!isValid());
+			}
+		});
+		
+		sectionNumber.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(
+					final ObservableValue<? extends String> observable,
+					final String oldValue, final String newValue) {
+				AddClassButton.setDisable(!isValid());
+				if(!isSectionValid()) {
+					sectionNumber.setBackground(new Background(new BackgroundFill(
+							ResourceLoader.ERROR_RED, CornerRadii.EMPTY, Insets.EMPTY)));
+				} else {
+					sectionNumber.setBackground(new Background(new BackgroundFill(
+							ResourceLoader.NOERROR_WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+				}
+			}
+		});
 	}
 
 	/**
@@ -110,6 +135,21 @@ public class AddClassDialogController {
 		Debug.log("Roster created and saved");
 		ClassButtonsController.refresh();
 		((Stage) AddClassButton.getScene().getWindow()).close();
+	}
+
+	private boolean isValid() {
+		return isSectionValid() 
+				&& quarter.getText().trim().length() > 0
+				&& className.getText().trim().length() > 0;
+	}
+
+	private boolean isSectionValid() {
+		try {
+			Integer.parseInt(sectionNumber.getText());
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 	/**
