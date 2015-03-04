@@ -76,6 +76,9 @@ public class GraderPopup {
 	 * Loads an fxml resource
 	 */
 	public static Parent getResource(String fxml) {
+		if(!fxml.contains(".fxml")) {
+			fxml += ".fxml";
+		}
 		try {
 			return FXMLLoader.load(GraderPopup.class.getClassLoader()
 					.getResource(fxml));

@@ -1,7 +1,6 @@
 package controller.roster;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import controller.GraderPopup;
@@ -17,9 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -31,8 +28,6 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 /**
@@ -126,13 +121,19 @@ public class GradebookController {
 			MenuItem dropAssignment = new MenuItem("Drop Assignment");
 			MenuItem addStudent = new MenuItem("Add Student");
 			MenuItem dropStudent = new MenuItem("Drop Student");
-
+			MenuItem ref = new MenuItem("Refresh");
+			
+			ref.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					fullRefresh();
+				}
+			});
 			addAssignment.setOnAction(GraderPopup.getPopupHandler("addAssignmentDialog", addAssignment));
 			dropAssignment.setOnAction(GraderPopup.getPopupHandler("dropAssignment", dropAssignment));
 			addStudent.setOnAction(GraderPopup.getPopupHandler("AddStudent",	addStudent));
 			dropStudent.setOnAction(GraderPopup.getPopupHandler("DropStudent", dropStudent));
 
-			rightClickMenu.getItems().addAll(expandCollapse,
+			rightClickMenu.getItems().addAll(ref, expandCollapse,
 					new SeparatorMenuItem(), addAssignment, dropAssignment,
 					new SeparatorMenuItem(), addStudent, dropStudent);
 		} else {

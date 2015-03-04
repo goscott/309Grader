@@ -71,7 +71,7 @@
             <Menu fx:id="serverMenu" mnemonicParsing="false" text="Server">
                <items>
                	<MenuItem mnemonicParsing="false" onAction="#pushRoster" text="Push Current Roster to History" />
-                   <MenuItem mnemonicParsing="false" onAction="#synchRoster" text="Synch Current Roster" />
+                   <MenuItem fx:id="synch" mnemonicParsing="false" onAction="#synchRoster" text="Synch Current Roster" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">

@@ -1,12 +1,12 @@
 package controller.mainpage;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
+
 import controller.Alert;
 import controller.GraderPopup;
 import controller.graph.GraphController;
@@ -17,11 +17,9 @@ import testing.administration.PermissionsTester;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
@@ -91,6 +89,9 @@ public class MainPageController {
 	/** The request help menu item **/
 	@FXML
 	private MenuItem requestHelp;
+	/** The roster synch menu item **/
+	@FXML
+	private MenuItem synch;
 	/** The settings menu **/
 	@FXML
 	private Menu settings;
@@ -111,7 +112,8 @@ public class MainPageController {
 		// loads tab contents
 		try {
 			// add gradebook
-			TableView<?> gradebookPage = (TableView<?>) GraderPopup.getResource("view/roster/gradebook_screen.fxml");
+			TableView<?> gradebookPage = (TableView<?>) GraderPopup
+					.getResource("view/roster/gradebook_screen.fxml");
 			gradebookTab.setContent(gradebookPage);
 			gradebookTab.selectedProperty().addListener(
 					new ChangeListener<Boolean>() {
@@ -129,20 +131,23 @@ public class MainPageController {
 					});
 
 			// Add graphs
-			SplitPane graphPage = (SplitPane) GraderPopup.getResource("view/graph/graph.fxml");
+			SplitPane graphPage = (SplitPane) GraderPopup
+					.getResource("view/graph/graph.fxml");
 			graphTab.setContent(graphPage);
 
 			// add historytab -Mason
 			// (students do not see)
 			if (Grader.getUser().getPermissions()
 					.contains(PermissionKeys.VIEW_HISTORY)) {
-				StackPane historyPage = (StackPane) GraderPopup.getResource("view/history/history_screen.fxml");
+				StackPane historyPage = (StackPane) GraderPopup
+						.getResource("view/history/history_screen.fxml");
 				historyTab.setContent(historyPage);
 			} else {
 				historyTab.setDisable(true);
 			}
 			// add announcementsTab -Jacob
-			BorderPane announcemetsPage = (BorderPane) GraderPopup.getResource("view/announcements/announcementTab.fxml");
+			BorderPane announcemetsPage = (BorderPane) GraderPopup
+					.getResource("view/announcements/announcementTab.fxml");
 			announcementsTab.setContent(announcemetsPage);
 
 			// add predictions
@@ -190,16 +195,34 @@ public class MainPageController {
 	 */
 	private void initTabPane() {
 		graphTab.selectedProperty().addListener(new ChangeListener<Object>() {
-
 			@Override
 			public void changed(ObservableValue<?> observable, Object oldValue,
 					Object newValue) {
 				if (graphTab.isSelected()) {
-					// Debug.log("GraphTab Selected");
 					GraphController.refresh();
 				}
+				if(gradebookTab.isSelected()) {
+					GradebookController.get().fullRefresh();
+				}
 			}
-
+		});
+		// TODO Make work so no extra grade
+		gradebookTab.setOnSelectionChanged(new EventHandler<Event>() {
+			public void handle(Event event) {
+				GradebookController.get().fullRefresh();
+			}
+		});
+		synch.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				Stage stage = GraderPopup.getPopupStage("Roster Sync", "view/mainpage/RosterSync.fxml");
+				synch.setDisable(true);
+				stage.setOnHidden(new EventHandler<WindowEvent>() {
+					public void handle(WindowEvent event) {
+						synch.setDisable(false);
+					}
+				});
+				stage.show();
+			}
 		});
 	}
 
@@ -216,6 +239,7 @@ public class MainPageController {
 		exportFile.setDisable(true);
 		buttonController.refreshButtons();
 		save.setDisable(true);
+		serverMenu.setDisable(true);
 
 		gradebookTab.setText("GradeBook");
 		graphTab.setText("Graphs");
@@ -234,6 +258,7 @@ public class MainPageController {
 		// predictionsTab.setDisable(false);
 		announcementsTab.setDisable(false);
 		save.setDisable(false);
+		serverMenu.setDisable(false);
 
 		gradebookTab.setText("GradeBook - " + Grader.getRoster().courseName());
 		graphTab.setText("Graphs - " + Grader.getRoster().courseName());
@@ -267,7 +292,8 @@ public class MainPageController {
 	@FXML
 	public void launchAbout() {
 		try {
-			Stage stage = GraderPopup.getPopupStage("About Grader", "view/mainpage/Abt.fxml");
+			Stage stage = GraderPopup.getPopupStage("About Grader",
+					"view/mainpage/Abt.fxml");
 			stage.show();
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
