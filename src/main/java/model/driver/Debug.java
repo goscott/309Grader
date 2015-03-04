@@ -97,26 +97,13 @@ public class Debug {
 		GradedItem test2 = new GradedItem("Midterms", "sfds", 150, false);
 		GradedItem test3 = new GradedItem("Midterm 1", "sfds", 150, test2,
 				false);
-		GradedItem test4 = new GradedItem("Midterm 2", "sfds", 150, test2,
-				false);
-		GradedItem test5 = new GradedItem("Midterm 3", "sfds", 150, test2,
-				false);
 		Grader.addAssignment(test2);
 		Grader.addAssignment(test3);
-		Grader.addAssignment(test4);
-		Grader.addAssignment(test5);
 		Grader.addAssignment(new GradedItem("Q1", "wefgr", 75, test3, false));
-		Grader.addAssignment(new GradedItem("Q2", "wefgr", 75, test3, false));
 
 		Student bob = new Student("Bob", "123");
-		Student bill = new Student("Bill", "321");
 
-		Grader.addStudent(new Student("Bob", "123"));
-		Grader.addStudent(new Student("Bill", "321"));
-		Grader.addScore(bob, "Midterm 2", 86);
-		Grader.addScore(bob, "Midterm 3", 95);
-		Grader.addScore(bill, "Midterm 2", 67);
-		Grader.addScore(bill, "Midterm 3", 59);
+		Grader.addStudent(bob);
 	}
 
 	/**

@@ -34,6 +34,11 @@ public class CellEditEventHandler implements
 	 */
 	public void handle(CellEditEvent<Student, String> t) {
 		String input = t.getNewValue();
+		if(input.trim().length() == 0) {
+			Grader.addScore(t.getRowValue(), t.getTableColumn().getText(),
+					null);
+			return;
+		}
 		try {
 			double newGrade = Double.parseDouble(input);
 			double maxScore = Grader.getAssignment(t.getTableColumn().getText()).maxScore();

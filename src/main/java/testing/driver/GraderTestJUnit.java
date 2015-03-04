@@ -26,23 +26,23 @@ public class GraderTestJUnit
         if (Grader.getScore(student1, "temp1") != null)
             fail("Scores initialized incorrectly : " + Grader.getScore(student1, "temp1"));
         
-        Grader.addScore(student1, "temp1", 50);
+        Grader.addScore(student1, "temp1", 50.0);
         if (Grader.getScore(student1, "temp1") != 50)
             fail("Score set incorrectly : " + Grader.getScore(student1, "temp1"));
         
-        Grader.addScore(student1, "temp1", 100);
+        Grader.addScore(student1, "temp1", 100.0);
         if (Grader.getScore(student1, "temp1") != 100)
             fail("Score set incorrectly (not accepting max score) : " + Grader.getScore(student1, "temp1"));
         
-        Grader.addScore(student1, "temp1", 0);
+        Grader.addScore(student1, "temp1", 0.0);
         if (Grader.getScore(student1, "temp1") != 0)
             fail("Score set incorrectly (not accepting zero) : " + Grader.getScore(student1, "temp1"));
         
-        Grader.addScore(student1, "temp1", 150);
+        Grader.addScore(student1, "temp1", 150.0);
         if (Grader.getScore(student1, "temp1") != 0)
             fail("Score accepting values above max score : " + Grader.getScore(student1, "temp1"));
         
-        Grader.addScore(student1, "temp1", -10);
+        Grader.addScore(student1, "temp1", -10.0);
         if (Grader.getScore(student1, "temp1") != 0)
             fail("Score accepting values below zero : " + Grader.getScore(student1, "temp1"));
         

@@ -495,7 +495,7 @@ public class GradedItem implements Serializable {
 	 	);
 	 @*/
 	public void setStudentScore(Student student, Double sc) {
-		if (children.isEmpty() && sc <= maxScore && sc >= 0) {
+		if (children.isEmpty() && (sc == null || (sc <= maxScore && sc >= 0))) {
 			studentGrades.put(student, sc);
 		}
 	}

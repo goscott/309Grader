@@ -409,9 +409,9 @@ public class Roster implements Serializable {
 			student.getAssignmentScore(asgn.name()) == score
 		);
 	@*/
-	public void addScore(Student student, GradedItem asgn, double score) {
+	public void addScore(Student student, GradedItem asgn, Double score) {
 		if (students.contains(student) && assignments.contains(asgn)
-				&& score >= 0 && score <= asgn.maxScore()) {
+				&& (score == null || (score >= 0 && score <= asgn.maxScore()))) {
 			Student stud = students.get(students.indexOf(student));
 			asgn.setStudentScore(stud, score);
 		}

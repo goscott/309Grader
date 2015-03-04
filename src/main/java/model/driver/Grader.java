@@ -301,7 +301,7 @@ public class Grader {
 	 		getAssignment(asgn).score() == score
 	 	);
 	 @*/
-	public static void addScore(Student student, String asgn, double score) {
+	public static void addScore(Student student, String asgn, Double score) {
 		currentRoster.addScore(student, getAssignment(asgn), score);
 	}
 
