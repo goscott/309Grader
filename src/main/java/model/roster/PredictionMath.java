@@ -1,6 +1,7 @@
 package model.roster;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.curve.Grade;
 import model.driver.Debug;
@@ -19,11 +20,11 @@ public class PredictionMath {
      * Given a student, a roster, and a desired grade, returns a list of assignment grades needed for that
      * student to achieve the desired grade.
      */
-    public static ArrayList<GradedItem> getPrediction(Roster roster, Student student, Grade desiredGrade) {
-        double maxPoints, curPoints, reqPoints, availablePoints;
+    public static HashMap<GradedItem, Double> getPrediction(Roster roster, Student student, Grade desiredGrade) {
+        double maxPoints, curPoints, reqPoints, availablePoints, chunk;
         int ungradedAssignments = 0;
         GradedItem temp;
-        ArrayList<GradedItem> result = new ArrayList<GradedItem>();
+        HashMap<GradedItem, Double> result = new HashMap<GradedItem, Double>();
         String word = " are ";
         
         Debug.log("PredictionMath", "Desired grade for student " + student.getName() + ": " + desiredGrade.getName());
@@ -48,7 +49,7 @@ public class PredictionMath {
             if (!item.isExtraCredit() && item.hasChildren()) {
                 if (item.getStudentScore(student) == null) {
                     ungradedAssignments++;
-                    result.add(item.copy());
+                    result.put(item, null);
                     availablePoints += item.maxScore();
                 }
             }
@@ -67,7 +68,50 @@ public class PredictionMath {
         }
         
         //give a portion of the remaining points to each assignment 
+        //chunk = Math.ceil(reqPoints / ungradedAssignments);
+        chunk = (reqPoints / ungradedAssignments);
         
+        //first try to give each gradeded item an equal chunk of the remaining points
+        for (GradedItem item : result.keySet()) {
+            
+            //make sure we dont add too many points because of rounding
+            if (reqPoints < chunk) {
+                chunk = reqPoints;
+            }
+            
+            //can fit a whole chunk
+            if (chunk <= item.maxScore()) {
+                result.put(item, chunk);
+                reqPoints -= chunk;
+            }
+                //can only fit part of a chunk
+            else {
+                result.put(item, item.maxScore());
+                reqPoints -= item.maxScore();
+            }
+        }
+        
+        //next add the rest of the points to any item available
+        outerloop:
+        for (GradedItem item : result.keySet()) {
+            if (reqPoints == 0) {
+                break outerloop;
+            }
+            
+            chunk = item.maxScore() - result.get(item);
+            
+            if (chunk > reqPoints) {
+                chunk = reqPoints;
+            }
+            
+            result.put(item, result.get(item) + chunk);
+            reqPoints -= chunk;
+        }
+        
+        Debug.log("Prediction Math", "Result is: ");
+        for (GradedItem item : result.keySet()) {
+            Debug.log("PredictionMath", item.name() + ": " + result.get(item));
+        }
         //return the assignments
         return result;
     }
