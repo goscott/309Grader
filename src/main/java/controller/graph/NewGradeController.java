@@ -12,30 +12,31 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.stage.Stage;
-
 import java.awt.Color;
-
 import resources.ResourceLoader;
 import model.curve.Grade;
 import model.driver.Grader;
 
 /**
- * The controller for the "Add New Grade" popup
- * 
+ * The controller for the "Add New Grade" pop up dialog
  * @author Gavin Scott
  */
 public class NewGradeController {
 	@FXML
+	/** Grade color picker */
 	private ColorPicker colorPicker;
 	@FXML
+	/** Enter grade text field */
 	private TextField enterGrade;
 	@FXML
+	/** Enter percentage text field */
 	private TextField enterPercent;
 	@FXML
+	/** Complete button */
 	private Button doneButton;
 
 	/**
-	 * Initializes listners on the popup
+	 * Initializes listeners on the pop up dialog.
 	 */
 	public void initialize() {
 		doneButton.setDisable(true);
@@ -84,6 +85,10 @@ public class NewGradeController {
 		}
 	}
 
+	/**
+	 * Return true if this is a valid percentage.
+	 * @return true if this is a valid percentage
+	 */
 	private boolean isPercentInvalid() {
 		try {
 			double val = Double.parseDouble(enterPercent.getText());
@@ -101,6 +106,10 @@ public class NewGradeController {
 		return false;
 	}
 
+	/**
+	 * Return true if this is an invalid grade.
+	 * @return true if this is an invalid grade
+	 */
 	private boolean isGradeInvalid() {
 		for (Grade grade : Grader.getCurve().getGrades()) {
 			if (grade.getName().equals(enterGrade.getText())) {
@@ -111,11 +120,19 @@ public class NewGradeController {
 	}
 
 	@FXML
+	/**
+	 * Cancel the action event.
+	 * @param event the action event
+	 */
 	private void cancel(ActionEvent event) {
 		((Stage) enterGrade.getScene().getWindow()).close();
 	}
 
 	@FXML
+	/**
+	 * Complete the action event.
+	 * @param event the action event
+	 */
 	private void done(ActionEvent event) {		
 		Color color = new Color((int) colorPicker.getValue().getRed()*255,
 				(int) colorPicker.getValue().getGreen()*255, (int) colorPicker

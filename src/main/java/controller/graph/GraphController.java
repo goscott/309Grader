@@ -1,9 +1,7 @@
 package controller.graph;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import controller.GraderPopup;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -13,8 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -28,65 +24,80 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import model.curve.Grade;
-import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
 import model.roster.Student;
 
 /**
  * Controls the Graphs tab visuals and interface
- * 
  * @author Frank Poole
  */
 public class GraphController {
 	@FXML
+	/** Students label */
 	private Label studentsLabel;
 	@FXML
+	/** Grade Label */
 	private Label gradeLabel;
 	@FXML
+	/** Percentage label */
 	private Label percentageLabel;
 	@FXML
+	/** Curve Table */
 	private TableView<Grade> curveTable;
 	@FXML
+	/** Grade column */
 	private TableColumn<Grade, String> gradeCol;
 	@FXML
+	/** Minimum column */
 	private TableColumn<Grade, String> minCol;
 	@FXML
+	/** Students grade table */
 	private TableView<StudentsPerGradeObject> studentTable;
 	@FXML
+	/** Students per grade - grade */
 	private TableColumn<StudentsPerGradeObject, String> spg_grade;
 	@FXML
+	/** Students per grade - students */
 	private TableColumn<StudentsPerGradeObject, String> spg_students;
 	@FXML
+	/** Students per grade percentage */
 	private TableColumn<StudentsPerGradeObject, String> spg_percentage;
 	@FXML
+	/** X Axis - Number of students */
 	private NumberAxis xAxis;
 	@FXML
+	/** Y Axis - Grade category */
 	private CategoryAxis yAxis;
 	@FXML
+	/** Bar Chart */
 	private BarChart<Integer, String> barChart;
 	@FXML
+	/** Pie Chart */
 	private PieChart pie_chart;
 	@FXML
+	/** Slider bar scroll pane */
 	private ScrollPane bar_pane;
 	@FXML
+	/** New grade button */
 	private Button newGradeButton;
 	@FXML
+	/** Grade adjustment sldier */
 	private Slider slider;
 	@FXML
+	/** Select grade drop down menu */
 	private ComboBox<String> gradeSelectDropdown;
-
+	/** Graph controller reference */
 	private static GraphController currentInstance;
-
+	/** Current roster curve data */
 	private ObservableList<Grade> curveData;
-
+	/** Current roster grade data */
 	private ObservableList<StudentsPerGradeObject> gradeData;
-
+	/** Pie chart is visible */
 	private boolean showPie;
 
 	/**
@@ -237,6 +248,9 @@ public class GraphController {
 		curveTable.setItems(curveData);
 	}
 
+	/**
+	 * Update the grade table.
+	 */
 	@SuppressWarnings("unchecked")
 	public void updateGradeTable() {
 		gradeData.clear();
@@ -265,6 +279,9 @@ public class GraphController {
 		studentTable.setItems(gradeData);
 	}
 
+	/**
+	 * Switch the the graph not in focus (either bar chart or pie chart).
+	 */
 	public void switchGraph() {
 
 		if (showPie) {
@@ -283,6 +300,9 @@ public class GraphController {
 		showPie = !showPie;
 	}
 
+	/**
+	 * Update the pie chart with the the student roster data.
+	 */
 	private void updatePieChart() {
 		ObservableList<PieChart.Data> pieChartData = FXCollections
 				.observableArrayList();
@@ -300,7 +320,7 @@ public class GraphController {
 	}
 
 	/**
-	 * populates the combobox
+	 * Populate the combo box with current roster data.
 	 */
 	private void updateCombobox() {
 		gradeSelectDropdown.getItems().clear();
@@ -313,6 +333,9 @@ public class GraphController {
 		}
 	}
 
+	/**
+	 * Create a new grade series to populate the bar chart.
+	 */
 	private void createGradeSeries() {
 		XYChart.Series<Integer, String> fSeries = new XYChart.Series<Integer, String>();
 		XYChart.Series<Integer, String> dSeries = new XYChart.Series<Integer, String>();
@@ -426,26 +449,48 @@ public class GraphController {
 		}
 	}
 
+	/**
+	 * A students per grade object represents a collection of students in the
+	 * same grade category.
+	 */
 	private class StudentsPerGradeObject {
 		private String grade;
 		private int numStudents;
 		private String percentage;
 
+		/**
+		 * Create a new students per grade object.
+		 * @param newGrade the grade category
+		 * @param newNumStudents the number of students
+		 * @param newPercentage the grade percentage
+		 */
 		public StudentsPerGradeObject(String newGrade, int newNumStudents,
 				String newPercentage) {
 			grade = newGrade;
 			numStudents = newNumStudents;
 			percentage = newPercentage;
 		}
-
+		
+		/**
+		 * Return the grade representation.
+		 * @return the grade representation
+		 */
 		public String getGrade() {
 			return grade;
 		}
 
+		/**
+		 * Return the number of students.
+		 * @return the number of students
+		 */
 		public int getNumStudents() {
 			return numStudents;
 		}
 
+		/**
+		 * Return the grade percentage description.
+		 * @return
+		 */
 		public String getPercentage() {
 			return percentage;
 		}
