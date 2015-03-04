@@ -12,18 +12,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class GradeShape extends Rectangle {
 	private Line line;
 	private Text text;
-	private final int WIDTH = 30;
-	private final int HEIGHT = 30;
-	private final int ROUNDEDNESS = 20;
-	private boolean selected;
+	private final double WIDTH = 30;
+	private final double HEIGHT = 30;
+	private final double ROUNDNESS = 20;
+	private final double FONT_SCALE = 1.5;
 
 	public GradeShape(double x, double y, Grade grade) {
-		setArcHeight(ROUNDEDNESS);
-		setArcWidth(ROUNDEDNESS);
+		setArcHeight(ROUNDNESS);
+		setArcWidth(ROUNDNESS);
 		setFill(new Color(grade.getColor().getRed() / 255, grade.getColor()
 				.getGreen() / 255, grade.getColor().getBlue() / 255, 1));
 		setHeight(HEIGHT);
@@ -32,38 +33,26 @@ public class GradeShape extends Rectangle {
 		setY(y);
 		text = new Text(grade.getName());
 		text.setFill(Color.BLACK);
-		text.setScaleX(2);
-		selected = false;
-		text.setScaleY(2);
+		text.setScaleX(FONT_SCALE);
+		text.setScaleY(FONT_SCALE);
+		text.setTextAlignment(TextAlignment.CENTER);
+		
+		text.addEventFilter(MouseEvent.MOUSE_DRAGGED,
+				new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				move(event.getSceneY());
+			}
+		});
+		
+		addEventFilter(MouseEvent.MOUSE_DRAGGED,
+				new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						move(event.getSceneY());
+					}
+				});
 
-		setOnMouseMoved(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent event) {
-				if (selected && event.isAltDown()) {
-					move(event.getSceneY());
-				}
-			}
-		});
-		/*
-		setOnMousePressed(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent event) {
-				selected = true;
-			}
-		});
-		
-		setOnMouseReleased(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent event) {
-				selected = false;
-			}
-		});
-*/
-		text.setOnMouseMoved(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent event) {
-				if (event.isAltDown()) {
-					move(event.getSceneY());
-				}
-			}
-		});
-		
 		line = new Line();
 		moveLineAndText();
 	}
@@ -91,7 +80,7 @@ public class GradeShape extends Rectangle {
 		line.setEndX(0);
 		line.setEndY(getY() + getHeight() / 2);
 
-		text.setX(getX() + getWidth() / 2.8);
-		text.setY(getY() + getHeight() / 1.8);
+		text.setX(getX() + getWidth() / 2.5);
+		text.setY(getY() + getHeight() / 1.7);
 	}
 }
