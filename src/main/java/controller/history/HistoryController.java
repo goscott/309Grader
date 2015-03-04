@@ -498,7 +498,7 @@ public class HistoryController {
 						switch_graph.setVisible(false);
 
 						section_instructor.setText("Instructor: "
-								+ section.getInstructor());
+								+ section.getInstructorId());
 						section_students
 								.setText("Number of Students (x passed, y failed): "
 										+ section.getStudents().size()

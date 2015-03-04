@@ -44,7 +44,7 @@ public class Roster implements Serializable {
 	/** The course's name **/
 	private String courseName;
 	/** The course's instructor **/
-	private String instructor;
+	private String instructorId;
 	/** The course's section **/
 	private int section;
 	/** The course's quarter (or semester) **/
@@ -79,10 +79,10 @@ public class Roster implements Serializable {
 			this.startDate != null
 		);
 	@*/
-	public Roster(String name, String instructor, int section, String quarter,
+	public Roster(String name, String instructorId, int section, String quarter,
 			Calendar startDate, Calendar endDate) {
 		courseName = name;
-		this.instructor = instructor;
+		this.instructorId = instructorId;
 		this.section = section;
 		this.quarter = quarter;
 
@@ -124,8 +124,8 @@ public class Roster implements Serializable {
 			((String)\result).equals(instructor)
 		);
 	@*/
-	public String getInstructor() {
-		return instructor;
+	public String getInstructorId() {
+		return instructorId;
 	}
 
 	/**

@@ -37,7 +37,7 @@ public class StudentTest {
         assertEquals("00000", student.getId());
                 
         assertEquals("name", roster.courseName());
-        assertEquals("instructor", roster.getInstructor());
+        assertEquals("instructor", roster.getInstructorId());
         assertEquals(1, roster.getSection());
         assertEquals("quarter", roster.getQuarter());
     }

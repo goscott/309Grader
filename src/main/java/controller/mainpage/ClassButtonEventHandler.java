@@ -5,6 +5,7 @@ import org.controlsfx.dialog.Dialog;
 
 import controller.Alert;
 import controller.announcements.AnnouncementsController;
+import controller.roster.GradebookController;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
@@ -49,7 +50,7 @@ public class ClassButtonEventHandler implements EventHandler<ActionEvent> {
 			Grader.setCurrentRoster(rost);
 			MainPageController.enableTabs();
 			AnnouncementsController.refresh();
-			
+			GradebookController.get().fullRefresh();
 		}
 
 	}

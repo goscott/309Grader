@@ -10,6 +10,7 @@ import resources.ResourceLoader;
 import controller.GraderPopup;
 import controller.mainpage.ClassButtonsController;
 import model.driver.Debug;
+import model.driver.Grader;
 import model.roster.Roster;
 import model.server.Server;
 import javafx.event.ActionEvent;
@@ -59,8 +60,6 @@ public class AddClassDialogController {
 	/** button to add the class **/
 	@FXML
 	private Button AddClassButton;
-	/** The parent of the dialog **/
-	private static ClassButtonsController parent;
 
 	@FXML
 	private DatePicker StartDate;
@@ -94,7 +93,7 @@ public class AddClassDialogController {
 		cal.setTime(java.sql.Date.valueOf(StartDate.getValue()));
 		Roster roster = null;
 		try {
-			roster = new Roster(className.getText(), "DefaultInstructor",
+			roster = new Roster(className.getText(), Grader.getUser().getId(),
 					Integer.parseInt(sectionNumber.getText()),
 					quarter.getText(), cal, Calendar.getInstance());
 		} catch (NumberFormatException ex) {
@@ -109,7 +108,7 @@ public class AddClassDialogController {
 		}
 		roster.Save();
 		Debug.log("Roster created and saved");
-		parent.refreshButtons();
+		ClassButtonsController.refresh();
 		((Stage) AddClassButton.getScene().getWindow()).close();
 	}
 
