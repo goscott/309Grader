@@ -19,6 +19,7 @@ public class GradeShape extends Rectangle {
 	private final int WIDTH = 30;
 	private final int HEIGHT = 30;
 	private final int ROUNDEDNESS = 20;
+	private boolean selected;
 
 	public GradeShape(double x, double y, Grade grade) {
 		setArcHeight(ROUNDEDNESS);
@@ -32,16 +33,29 @@ public class GradeShape extends Rectangle {
 		text = new Text(grade.getName());
 		text.setFill(Color.BLACK);
 		text.setScaleX(2);
+		selected = false;
 		text.setScaleY(2);
 
 		setOnMouseMoved(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				if (event.isAltDown()) {
+				if (selected && event.isAltDown()) {
 					move(event.getSceneY());
 				}
 			}
 		});
-
+		/*
+		setOnMousePressed(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				selected = true;
+			}
+		});
+		
+		setOnMouseReleased(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				selected = false;
+			}
+		});
+*/
 		text.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
 				if (event.isAltDown()) {

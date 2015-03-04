@@ -25,11 +25,11 @@ public class TEST extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, 500, 500);
         
-        Grade grade = new Grade("B", 80, java.awt.Color.BLUE);
+        Grade b = new Grade("B", 80, java.awt.Color.BLUE);
+        Grade a = new Grade("A", 90, java.awt.Color.GREEN);
         
-        GradeShape obj = new GradeShape(250, 250, grade);
-        
-        root.getChildren().addAll(obj.get());
+        root.getChildren().addAll(new GradeShape(250, 250, a).get());
+        root.getChildren().addAll(new GradeShape(250, 300, b).get());
         stage.setScene(scene);
         stage.show();
     }
