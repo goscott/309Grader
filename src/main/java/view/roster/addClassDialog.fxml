@@ -7,22 +7,17 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.roster.AddClassDialogController">
    <children>
       <Label layoutX="14.0" layoutY="23.0" text="Class Name" />
-      <TextField fx:id="className" layoutX="14.0" layoutY="40.0" prefHeight="25.0" prefWidth="163.0" >
+      <TextField fx:id="className" layoutX="14.0" layoutY="40.0" prefHeight="25.0" prefWidth="163.0">
       	<tooltip>
 			<Tooltip text="The name of the course" />
 	    </tooltip>
       </TextField>
-      <TextField fx:id="sectionNumber" layoutX="214.0" layoutY="40.0" >
+      <TextField fx:id="sectionNumber" layoutX="214.0" layoutY="40.0">
       	<tooltip>
 			<Tooltip text="The section of the course. Must be a valid integer." />
 	    </tooltip>
       </TextField>
-      <TextField fx:id="quarter" layoutX="214.0" layoutY="90.0" >
-      	<tooltip>
-			<Tooltip text="The quarter in which the class takes place (Fall, Winter, etc.)" />
-	    </tooltip>
-      </TextField>
-      <ListView fx:id="students" layoutX="14.0" layoutY="117.0" prefHeight="200.0" prefWidth="163.0" style="-fx-background-color: #A1DDE5;" >
+      <ListView fx:id="students" layoutX="14.0" layoutY="117.0" prefHeight="200.0" prefWidth="163.0" style="-fx-background-color: #A1DDE5;">
       	<tooltip>
 			<Tooltip text="Choose any number of students to enroll in the course. Further students can be added after the course has been created." />
 	    </tooltip>
@@ -39,12 +34,20 @@
 	    </tooltip>
       </Button>
       <Label layoutX="214.0" layoutY="23.0" text="Section number" />
-      <DatePicker fx:id="StartDate" layoutX="214.0" layoutY="156.0" prefHeight="25.0" prefWidth="149.0" >
+      <DatePicker fx:id="StartDate" layoutX="214.0" layoutY="156.0" prefHeight="25.0" prefWidth="149.0">
       	<tooltip>
 			<Tooltip text="Choose an official start date of the course" />
 	    </tooltip>
       </DatePicker>
       <Label layoutX="214.0" layoutY="73.0" text="Quarter" />
       <Label layoutX="220.0" layoutY="139.0" text="Start Date" />
+      <MenuButton fx:id="quarter" layoutX="214.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Select a Quarter">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#springSelected" text="Spring" />
+          <MenuItem mnemonicParsing="false" onAction="#summerSelected" text="Summer" />
+            <MenuItem mnemonicParsing="false" onAction="#fallSelected" text="Fall" />
+            <MenuItem mnemonicParsing="false" onAction="#winterSelected" text="Winter" />
+        </items>
+      </MenuButton>
    </children>
 </Pane>

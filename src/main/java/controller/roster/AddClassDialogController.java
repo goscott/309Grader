@@ -24,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
@@ -67,7 +68,7 @@ public class AddClassDialogController {
 	private DatePicker StartDate;
 
 	@FXML
-	private TextField quarter;
+	private MenuButton quarter;
 
 	/**
 	 * initializes and displays a new
@@ -104,6 +105,22 @@ public class AddClassDialogController {
 			}
 		});
 	}
+	
+	public void springSelected() {
+	    quarter.setText("Spring");
+	}
+	
+	public void summerSelected() {
+	    quarter.setText("Summer");
+	}
+	
+	public void fallSelected() {
+	    quarter.setText("Fall");
+	}
+	
+	public void winterSelected() {
+	    quarter.setText("Winter");
+	}
 
 	/**
 	 * Handels the event of when the addClass button is pressed
@@ -139,7 +156,7 @@ public class AddClassDialogController {
 
 	private boolean isValid() {
 		return isSectionValid() 
-				&& quarter.getText().trim().length() > 0
+				&& !quarter.getText().equals("Select a Quarter")
 				&& className.getText().trim().length() > 0;
 	}
 
