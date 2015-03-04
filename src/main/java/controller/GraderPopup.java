@@ -13,6 +13,11 @@ import javafx.stage.WindowEvent;
 import model.driver.Debug;
 import resources.ResourceLoader;
 
+/**
+ * Standardizes Popup functionality
+ * 
+ * @author Gavin Scott
+ */
 public class GraderPopup {
 
 	/**
