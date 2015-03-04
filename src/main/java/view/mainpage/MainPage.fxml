@@ -20,16 +20,25 @@
                         </ScrollPane>
                      </children></AnchorPane>
             </content>
+            <tooltip>
+				<Tooltip text="Shows all classes that you are associated with, and allows instructors to create new courses." />
+		    </tooltip>
           </Tab>
           <Tab fx:id="gradebookTab" style="-fx-background-color: #2EA1B1; -fx-text-base-color: #ffffff;" text="GradeBook">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" />
             </content>
+            <tooltip>
+				<Tooltip text="Displays the current roster" />
+		    </tooltip>
           </Tab>
             <Tab fx:id="graphTab" style="-fx-background-color: #2EA1B1; -fx-text-base-color: #ffffff;" text="Graphs">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" />
               </content>
+              <tooltip>
+				<Tooltip text="Displays statistics on the current class and allows for curve manipulation" />
+		      </tooltip>
             </Tab>
             <!--<Tab fx:id="predictionsTab" text="Predictions">
               <content>
@@ -40,11 +49,17 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" />
               </content>
+              <tooltip>
+				<Tooltip text="View and create announcements that will be visible to everyone in the class" />
+		      </tooltip>
             </Tab>
             <Tab fx:id="historyTab" style="-fx-background-color: #2EA1B1; -fx-text-base-color: #ffffff;" text="History">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" />
               </content>
+              <tooltip>
+				<Tooltip text="Displays historical courses" />
+		      </tooltip>
             </Tab>
         </tabs>
       </TabPane>
@@ -70,7 +85,7 @@
             </Menu>
             <Menu fx:id="serverMenu" mnemonicParsing="false" text="Server">
                <items>
-               	<MenuItem mnemonicParsing="false" onAction="#pushRoster" text="Push Current Roster to History" />
+               	   <MenuItem mnemonicParsing="false" onAction="#pushRoster" text="Push Current Roster to History" />
                    <MenuItem fx:id="synch" mnemonicParsing="false" onAction="#synchRoster" text="Synch Current Roster" />
                </items>
             </Menu>
