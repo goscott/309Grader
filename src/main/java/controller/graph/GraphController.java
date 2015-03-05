@@ -2,7 +2,9 @@ package controller.graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
 import controller.GraderPopup;
+import controller.roster.GradebookController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -175,6 +177,7 @@ public class GraphController {
 					Grade grade = Grader.getCurve().getGrade(
 							gradeSelectDropdown.getValue());
 					Grader.getCurve().adjust(grade, new_val.doubleValue());
+					GradebookController.edited = true;
 				}
 
 				updateCurveTable();

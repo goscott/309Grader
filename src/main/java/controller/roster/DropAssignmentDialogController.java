@@ -74,7 +74,7 @@ public class DropAssignmentDialogController {
 					dropS = assignment;
 				}
 			}
-
+			GradebookController.edited = true;
 			Grader.getRoster().dropAssignment(dropS);
 		}
 		resetDropdown();

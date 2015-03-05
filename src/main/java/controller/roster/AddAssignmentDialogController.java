@@ -100,6 +100,7 @@ public class AddAssignmentDialogController {
 				descrField.getText(), Double.parseDouble(maxScoreField
 						.getText()), asgnParent, ecBox.isSelected());
 		Grader.addAssignment(item);
+		GradebookController.edited = true;
 		gbook.setAssignmentExpansion(item.name(), true);
 		nameField.setText("");
 		descrField.setText("");

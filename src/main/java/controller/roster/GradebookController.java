@@ -65,6 +65,10 @@ public class GradebookController {
 	private boolean current = true;
 	/** The roster, if not current **/
 	private Roster roster = null;
+	/** Whether or not the gradebook is in prediction mode **/
+	public static boolean predictionMode = false;
+	/** whether or not changes have been made **/
+	public static boolean edited;
 
 	public static GradebookController getController() {
 		return singleton;

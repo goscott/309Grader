@@ -40,7 +40,8 @@ public class ClassButtonEventHandler implements EventHandler<ActionEvent> {
 			if (!Grader.getRoster().courseName().equals(Debug.DEFAULT_NAME)
 					&& Grader.getRoster() != null
 					&& !Grader.getRoster().courseName()
-							.equals(rost.courseName())) {
+							.equals(rost.courseName())
+					&& GradebookController.edited) {
 				Action response = Alert
 						.showConfirmDialog("Would you like to save the current roster?");
 				if (response == Dialog.ACTION_YES) {
@@ -51,6 +52,7 @@ public class ClassButtonEventHandler implements EventHandler<ActionEvent> {
 			MainPageController.enableTabs();
 			AnnouncementsController.refresh();
 			GradebookController.get().fullRefresh();
+			GradebookController.edited = false;
 		}
 
 	}

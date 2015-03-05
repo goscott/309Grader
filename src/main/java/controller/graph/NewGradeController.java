@@ -12,7 +12,10 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.stage.Stage;
+
 import java.awt.Color;
+
+import controller.roster.GradebookController;
 import resources.ResourceLoader;
 import model.curve.Grade;
 import model.driver.Grader;
@@ -144,5 +147,6 @@ public class NewGradeController {
 		enterPercent.setText("");
 		colorPicker.setValue(javafx.scene.paint.Color.WHITE);
 		GraphController.refresh();
+		GradebookController.edited = true;
 	}
 }

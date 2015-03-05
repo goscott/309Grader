@@ -45,6 +45,7 @@ public class CellEditEventHandler implements
 			if (newGrade < 0 || newGrade > maxScore) {
 				throw new NumberFormatException();
 			}
+			GradebookController.edited = true;
 			Grader.addScore(t.getRowValue(), t.getTableColumn().getText(),
 					newGrade);
 		} catch (NumberFormatException ex) {
@@ -57,6 +58,7 @@ public class CellEditEventHandler implements
 				if (newGrade < 0 || newGrade > 100) {
 					throw new NumberFormatException();
 				}
+				GradebookController.edited = true;
 				Grader.addPercentageScore(t.getRowValue(), t.getTableColumn().getText(),
 						newGrade);
 				

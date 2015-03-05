@@ -66,7 +66,7 @@ public class DropStudentDialogController {
 					dropS = student;
 				}
 			}
-
+			GradebookController.edited = true;
 			Grader.getRoster().dropStudent(dropS);
 		}
 		resetDropdown();

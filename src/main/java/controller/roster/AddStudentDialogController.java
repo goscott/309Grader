@@ -68,7 +68,7 @@ public class AddStudentDialogController {
 					addS = student;
 				}
 			}
-
+			GradebookController.edited = true;
 			Grader.getRoster().addStudent(addS);
 		}
 		resetDropdown();
