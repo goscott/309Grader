@@ -112,7 +112,7 @@ public class MainPageController {
 		// loads tab contents
 		try {
 			// add gradebook
-			TableView<?> gradebookPage = (TableView<?>) GraderPopup
+			BorderPane gradebookPage = (BorderPane) GraderPopup
 					.getResource("view/roster/gradebook_screen.fxml");
 			gradebookTab.setContent(gradebookPage);
 			gradebookTab.selectedProperty().addListener(

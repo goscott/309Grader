@@ -22,13 +22,16 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 /**
@@ -52,6 +55,10 @@ public class GradebookController {
 	/** The scrollpane that holds the TableView **/
 	@FXML
 	private ScrollPane scrollPane;
+	@FXML
+	private VBox expander;
+	@FXML
+	private SplitPane splitPane;
 
 	/** The right-click menu **/
 	// private ContextMenu rightClickMenu;
@@ -65,10 +72,10 @@ public class GradebookController {
 	private boolean current = true;
 	/** The roster, if not current **/
 	private Roster roster = null;
-	/** Whether or not the gradebook is in prediction mode **/
-	public static boolean predictionMode = false;
-	/** whether or not changes have been made **/
-	public static boolean edited;
+	   /** Whether or not the gradebook is in prediction mode **/
+	    public static boolean predictionMode = false;
+	    /** whether or not changes have been made **/
+	    public static boolean edited;
 
 	public static GradebookController getController() {
 		return singleton;
@@ -117,7 +124,14 @@ public class GradebookController {
 	private ContextMenu makeContextMenu() {
 		ContextMenu rightClickMenu = new ContextMenu();
 		MenuItem expandCollapse = new MenuItem("Expand/Collapse Columns");
-		expandCollapse.setOnAction(GraderPopup.getPopupHandler("expandCollapseDialog", expandCollapse));
+		//expandCollapse.setOnAction(GraderPopup.getPopupHandler("expandCollapseDialog", expandCollapse));
+		expandCollapse.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                expander.setMaxWidth(250);
+                expander.setMinWidth(250);
+            }
+        });
+		
 		// students don't get these options
 		if (current
 				&& Grader.getUser().getPermissions()
@@ -154,6 +168,11 @@ public class GradebookController {
 		}
 		return rightClickMenu;
 	}
+	
+	public void collapseTree() {
+        expander.setMaxWidth(0);
+        expander.setMinWidth(0);
+    }
 
 	/**
 	 * Supresses unnecessary warnings
