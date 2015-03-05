@@ -17,7 +17,7 @@
                <children>
                   <HBox VBox.vgrow="ALWAYS">
                      <children>
-                        <TreeView maxWidth="250.0" minWidth="0.0" prefHeight="200.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
+                        <TreeView fx:id="tree" maxWidth="250.0" minWidth="0.0" prefHeight="200.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
                         <Button focusTraversable="false" graphicTextGap="0.0" minWidth="24.0" mnemonicParsing="false" onAction="#collapseTree" prefHeight="100000.0" prefWidth="10.0" text="&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;" textAlignment="CENTER" wrapText="true" />
                      </children>
                   </HBox>

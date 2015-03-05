@@ -111,6 +111,7 @@ public class AddAssignmentDialogController {
 		else {
 			gbook.refresh();
 		}
+		gbook.populateTree();
 	}
 
 	@FXML

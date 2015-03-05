@@ -79,6 +79,7 @@ public class DropAssignmentDialogController {
 		}
 		resetDropdown();
 		gbook.fullRefresh();
+		gbook.populateTree();
 	}
 
 	@FXML

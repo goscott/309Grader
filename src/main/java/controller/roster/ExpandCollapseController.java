@@ -1,22 +1,16 @@
 package controller.roster;
 
-import java.io.IOException;
-
 import controller.GraderPopup;
-import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class ExpandCollapseController {

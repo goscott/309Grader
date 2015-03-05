@@ -16,6 +16,7 @@ import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -26,6 +27,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -61,6 +63,8 @@ public class GradebookController {
 	private VBox expander;
 	@FXML
 	private SplitPane splitPane;
+	@FXML
+	private TreeView<String> tree;
 
 	/** The right-click menu **/
 	// private ContextMenu rightClickMenu;
@@ -118,6 +122,14 @@ public class GradebookController {
 						}
 					}
 				});
+		
+		tree.setOnMouseClicked(new EventHandler<Event>() {
+			@Override
+			public void handle(Event arg0) {
+				handleTreeEvent();
+			}
+		});
+		populateTree();
 	}
 
 	/**
@@ -479,6 +491,7 @@ public class GradebookController {
 		studentColumns();
 		endColumns();
 		refresh();
+		populateTree();
 	}
 
 	/**
@@ -576,5 +589,48 @@ public class GradebookController {
 
 	public static GradebookController get() {
 		return singleton;
+	}
+	
+	void populateTree() {
+		TreeItem<String> root = new TreeItem<String>("All Columns");
+		root.setExpanded(true);
+
+		for (TableColumn<?, ?> topColumn : getTopLevelColumns()) {
+			TreeItem<String> item = makeTreeItem(topColumn.getText());
+			System.out.println("hit " + item.getValue());
+			item.setExpanded(getExpanded().contains(topColumn.getText()));
+			root.getChildren().add(item);
+		}
+		tree.setRoot(root);
+	}
+	
+	private TreeItem<String> makeTreeItem(String name) {
+		GradedItem temp = Grader.getAssignment(name);
+		TreeItem<String> item = new TreeItem<String>(name);
+		if (temp != null) {
+			for (GradedItem child : temp.getChildren()) {
+				TreeItem<String> childItem = makeTreeItem(child.name());
+				childItem.setExpanded(getExpanded().contains(
+						child.name()));
+				item.getChildren().add(childItem);
+			}
+		}
+		return item;
+	}
+	
+	private void handleTreeEvent() {
+		for (TreeItem<String> item : tree.getRoot().getChildren()) {
+			mirrorInGradebook(item);
+		}
+		fullRefresh();
+	}
+	
+	private void mirrorInGradebook(TreeItem<String> item) {
+		setAssignmentExpansion(item.getValue(), item.isExpanded());
+		if (item.isExpanded()) {
+			for (TreeItem<String> child : item.getChildren()) {
+				mirrorInGradebook(child);
+			}
+		}
 	}
 }
