@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import javafx.scene.Node;
 import model.curve.Grade;
+import model.driver.Grader;
 
 public class GradeShapeGroup {
 	private ArrayList<Node> grades;
@@ -15,18 +16,18 @@ public class GradeShapeGroup {
 	public GradeShapeGroup() {
 		grades = new ArrayList<Node>();
 		int y = 20;
-		/*
+		
 		for(Grade grade : Grader.getCurve().getGrades()) {
-			grades.addAll(new GradeShape(100, y, grade).get());
+			grades.add(new GradeShape(100, y, grade));
 			y += 20;
 		}
-		*/
+		/*
 		grades.add(new GradeShape(100, y, new Grade("A", 90, Color.GREEN)));
 		y+=30;
 		grades.add(new GradeShape(100, y, new Grade("B", 80, Color.CYAN)));
 		y+=30;
 		grades.add(new GradeShape(100, y, new Grade("C", 70, Color.YELLOW)));
-		
+		*/
 		locations = new HashMap<String, Double>();
 	}
 	

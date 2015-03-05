@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import controller.GraderPopup;
+import controller.graph.TEST2;
 import model.administration.PermissionKeys;
 import model.curve.Grade;
 import model.driver.Debug;
@@ -36,6 +37,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -170,6 +172,7 @@ public class GradebookController {
 			MenuItem dropStudent = new MenuItem("Drop Student");
 			MenuItem ref = new MenuItem("Refresh");
 			MenuItem makePrediction = new MenuItem("Make Prediction");
+			MenuItem test = new MenuItem("Test Slider");
 			
 			ref.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
@@ -183,12 +186,24 @@ public class GradebookController {
                 }
             });
 			
+			test.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					TEST2 temp = new TEST2();
+					try {
+						temp.start(new Stage());
+					} catch (Exception ex) {
+						// TODO Auto-generated catch block
+						ex.printStackTrace();
+					}
+				}
+			});
+			
 			addAssignment.setOnAction(GraderPopup.getPopupHandler("addAssignmentDialog", addAssignment));
 			dropAssignment.setOnAction(GraderPopup.getPopupHandler("dropAssignment", dropAssignment));
 			addStudent.setOnAction(GraderPopup.getPopupHandler("AddStudent",	addStudent));
 			dropStudent.setOnAction(GraderPopup.getPopupHandler("DropStudent", dropStudent));
 
-			rightClickMenu.getItems().addAll(predictionToggle, ref, expandCollapse,
+			rightClickMenu.getItems().addAll(test, predictionToggle, ref, expandCollapse,
 					new SeparatorMenuItem(), addAssignment, dropAssignment,
 					new SeparatorMenuItem(), addStudent, dropStudent, new SeparatorMenuItem(), makePrediction);
 		} else {
