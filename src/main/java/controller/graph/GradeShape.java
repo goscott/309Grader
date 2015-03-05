@@ -17,12 +17,14 @@ import javafx.scene.text.TextAlignment;
 public class GradeShape extends Rectangle {
 	private Line line;
 	private Text text;
+	private String name;
 	private final double WIDTH = 30;
 	private final double HEIGHT = 30;
 	private final double ROUNDNESS = 20;
 	private final double FONT_SCALE = 1.5;
 
 	public GradeShape(double x, double y, Grade grade) {
+		name = grade.getName();
 		setArcHeight(ROUNDNESS);
 		setArcWidth(ROUNDNESS);
 		setFill(new Color(grade.getColor().getRed() / 255, grade.getColor()
@@ -41,7 +43,9 @@ public class GradeShape extends Rectangle {
 				new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				move(event.getSceneY());
+				if(moveValid()) {
+					move(event.getSceneY());
+				}
 			}
 		});
 		
@@ -70,8 +74,11 @@ public class GradeShape extends Rectangle {
 	}
 
 	private void move(double y) {
-		setY(y - getHeight() / 2);
-		moveLineAndText();
+		if(y % 10 == 0) {
+			setY(y - getHeight() / 2);
+			GradeShapeGroup.updateLocation(name, getY());
+			moveLineAndText();
+		}
 	}
 
 	private void moveLineAndText() {
@@ -82,5 +89,9 @@ public class GradeShape extends Rectangle {
 
 		text.setX(getX() + getWidth() / 2.5);
 		text.setY(getY() + getHeight() / 1.7);
+	}
+	
+	private boolean moveValid() {
+		return getY() > 0;
 	}
 }
