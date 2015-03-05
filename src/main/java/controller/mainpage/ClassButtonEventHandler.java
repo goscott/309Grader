@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  * handles the event of a class button being pressed
  * 
  * @author Michael Lenz
- *
+ * @author Gavin Scott
  */
 public class ClassButtonEventHandler implements EventHandler<ActionEvent> {
 
@@ -41,7 +41,8 @@ public class ClassButtonEventHandler implements EventHandler<ActionEvent> {
 					&& Grader.getRoster() != null
 					&& !Grader.getRoster().courseName()
 							.equals(rost.courseName())
-					&& GradebookController.edited) {
+					&& GradebookController.edited
+					&& !GradebookController.predictionMode) {
 				Action response = Alert
 						.showConfirmDialog("Would you like to save the current roster?");
 				if (response == Dialog.ACTION_YES) {

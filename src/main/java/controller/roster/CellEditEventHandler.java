@@ -20,7 +20,6 @@ public class CellEditEventHandler implements
 	
 	/**
 	 * Initializes an event, with the given controller
-	 * @param ctrl the gradebook's controller
 	 */
 	public CellEditEventHandler(GradebookController ctrl) {
 		controller = ctrl;
@@ -28,9 +27,6 @@ public class CellEditEventHandler implements
 	
 	/**
 	 * Handles the event
-	 * 
-	 * @param t
-	 *            The CellEditEvent
 	 */
 	public void handle(CellEditEvent<Student, String> t) {
 		String input = t.getNewValue();

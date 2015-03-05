@@ -55,6 +55,8 @@ public class Roster implements Serializable {
 	private Calendar endDate = Calendar.getInstance();
 	/** The announcements associated with this roster **/
 	private ArrayList<Announcement> announcements;
+	/** The name for temporary roster **/
+	public final static String TEMP_NAME = "TEMP_ROSTER";
 
 	/**
 	 * Contructs a roster from the given information. If startDate or endDate
@@ -629,6 +631,18 @@ public class Roster implements Serializable {
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream("Rosters/" + rost.courseName + "-"
 							+ String.format("%02d", rost.section) + ".rost"));
+			out.writeObject(rost);
+			out.close();
+		} catch (IOException ex) {
+			Debug.log("SAVE ERROR", "failed to save Roster " + rost.courseName);
+			ex.printStackTrace();
+		}
+	}
+	
+	public static void saveTemp(Roster rost) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream("Rosters/" + TEMP_NAME + ".rost"));
 			out.writeObject(rost);
 			out.close();
 		} catch (IOException ex) {
