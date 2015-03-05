@@ -2,6 +2,7 @@ package controller.roster;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import controller.GraderPopup;
 import model.administration.PermissionKeys;
@@ -25,6 +26,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TreeView;
@@ -123,6 +125,7 @@ public class GradebookController {
 	 */
 	private ContextMenu makeContextMenu() {
 		ContextMenu rightClickMenu = new ContextMenu();
+		MenuItem predictionToggle = new MenuItem("Toggle Prediction Mode");
 		MenuItem expandCollapse = new MenuItem("Expand/Collapse Columns");
 		//expandCollapse.setOnAction(GraderPopup.getPopupHandler("expandCollapseDialog", expandCollapse));
 		expandCollapse.setOnAction(new EventHandler<ActionEvent>() {
@@ -131,6 +134,19 @@ public class GradebookController {
                 expander.setMinWidth(250);
             }
         });
+		predictionToggle.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				predictionMode = !predictionMode;
+				if (predictionMode) {
+					Roster.saveTemp(Grader.getRoster());
+					predictionToggle.setText("dsfgdsasfgh");
+				} else {
+					Roster rost = Roster.load("Rosters/" + Roster.TEMP_NAME + ".rost");
+					Grader.setCurrentRoster(rost);
+				}
+				GradebookController.get().fullRefresh();
+			}
+		});
 		
 		// students don't get these options
 		if (current
@@ -160,11 +176,11 @@ public class GradebookController {
 			addStudent.setOnAction(GraderPopup.getPopupHandler("AddStudent",	addStudent));
 			dropStudent.setOnAction(GraderPopup.getPopupHandler("DropStudent", dropStudent));
 
-			rightClickMenu.getItems().addAll(ref, expandCollapse,
+			rightClickMenu.getItems().addAll(predictionToggle, ref, expandCollapse,
 					new SeparatorMenuItem(), addAssignment, dropAssignment,
 					new SeparatorMenuItem(), addStudent, dropStudent, new SeparatorMenuItem(), makePrediction);
 		} else {
-			rightClickMenu.getItems().addAll(expandCollapse);
+			rightClickMenu.getItems().addAll(predictionToggle, expandCollapse);
 		}
 		return rightClickMenu;
 	}
@@ -191,15 +207,22 @@ public class GradebookController {
 						"totalPercentage"));
 		mainTable.getColumns().add(percentCol);
 
-		TableColumn<Student, Grade> gradeCol = new TableColumn<Student, Grade>(
+		/*TableColumn<Student, String> gradeCol = new TableColumn<Student, String>(
 				"Grade");
 		gradeCol.setMinWidth(100);
-		gradeCol.setEditable(false);
-
-		gradeCol.setCellFactory(new Callback<TableColumn<Student, Grade>, TableCell<Student, Grade>>() {
+		gradeCol.setEditable(true);//GradebookController.predictionMode);
+		gradeCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Student, String>>() {
+			public void handle(CellEditEvent<Student, String> event) {
+				Grade newGrade = Grader.getCurve().getGrade(event.getNewValue());
+				System.out.println("new grade: " + newGrade);
+				//event.getRowValue().setScore(asgn, sc);
+			}
+		});
+/*
+		gradeCol.setCellFactory(new Callback<TableColumn<Student, String>, TableCell<Student, String>>() {
 			@Override
-			public TableCell<Student, Grade> call(
-					TableColumn<Student, Grade> param) {
+			public TableCell<Student, String> call(
+					TableColumn<Student, String> param) {
 				TableCell cell = new TableCell() {
 					@Override
 					public void updateItem(Object item, boolean empty) {
@@ -219,23 +242,59 @@ public class GradebookController {
 				return cell;
 			}
 		});
-
+*//*
 		gradeCol.setCellValueFactory(new Callback() {
 			public SimpleStringProperty call(
-					CellDataFeatures<Student, Grade> param) {
-				if (param.getValue().getGrade() != null) {
-					return new SimpleStringProperty(param.getValue().getGrade()
-							.getName());
+					CellDataFeatures<Student, String> param) {
+				if (param.getValue() != null) {
+					return new SimpleStringProperty(param.getValue().getGrade().getName());
 				}
 				return new SimpleStringProperty("");
 			}
 
 			public Object call(Object param) {
-				return call((CellDataFeatures<Student, Grade>) (param));
+				return call((CellDataFeatures<Student, String>) (param));
+			}
+		});*/
+		TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
+				"Grade");
+		newColumn.setMinWidth(100);
+		newColumn.setEditable(predictionMode);
+
+		newColumn.setCellValueFactory(new Callback() {
+			public SimpleStringProperty call(
+					CellDataFeatures<Student, String> param) {
+				return new SimpleStringProperty(param.getValue()
+						.getGrade().getName()
+						+ "");
+			}
+
+			public Object call(Object param) {
+				return call((CellDataFeatures<Student, String>) (param));
+			}
+		});
+		newColumn.setCellFactory(TextFieldTableCell
+				.<Student> forTableColumn());
+		/* When a user types a change */
+		//newColumn.setOnEditCommit(new CellEditEventHandler(this));
+		newColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Student,String>>() {
+			public void handle(CellEditEvent<Student, String> event) {
+				if(Grader.getCurve().getGrade(event.getNewValue()) != null) {
+					 Roster rost = Roster.load("Rosters/" + Roster.TEMP_NAME + ".rost");
+					 Grader.setCurrentRoster(rost);
+					 HashMap<GradedItem, Double> map = PredictionMath.getPrediction(Grader.getRoster(),
+							 mainTable.getSelectionModel().getSelectedItem(),
+							 Grader.getRoster().getCurve().getGrade(event.getNewValue()));
+					 for(GradedItem item : map.keySet()) {
+						 Grader.addScore(event.getRowValue(), item.name(),
+									map.get(item));
+					 }
+				}
+				fullRefresh();
 			}
 		});
 
-		mainTable.getColumns().add(gradeCol);
+		mainTable.getColumns().add(newColumn);
 	}
 
 	/**

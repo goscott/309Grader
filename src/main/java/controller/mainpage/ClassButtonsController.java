@@ -52,7 +52,8 @@ public class ClassButtonsController {
 						&& (temp.getInstructorId().equals(
 								Grader.getUser().getId()) || temp
 								.getStudentByID(Grader.getUser().getId()) != null)
-						&& !temp.courseName().equals(Debug.DEFAULT_NAME);
+						&& !temp.courseName().equals(Debug.DEFAULT_NAME)
+						&& !name.contains(Roster.TEMP_NAME);
 			}
 
 		});

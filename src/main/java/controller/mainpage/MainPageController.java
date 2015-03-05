@@ -341,10 +341,14 @@ public class MainPageController {
 	 */
 	@FXML
 	private void saveHandler(ActionEvent event) {
-		if (Grader.getRoster() != null) {
-			Debug.log("Save", Grader.getRoster().courseName() + " saved");
-			Roster.save(Grader.getRoster());
-			Alert.show(Grader.getRoster().courseName() + " has been saved");
+		if(!GradebookController.predictionMode) {
+			if (Grader.getRoster() != null) {
+				Debug.log("Save", Grader.getRoster().courseName() + " saved");
+				Roster.save(Grader.getRoster());
+				Alert.show(Grader.getRoster().courseName() + " has been saved");
+			}
+		} else {
+			Alert.showWarningDialog(Grader.getRoster().courseName() + " cannot be saved", "You are in prediction mode");
 		}
 	}
 
