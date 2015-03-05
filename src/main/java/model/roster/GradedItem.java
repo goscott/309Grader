@@ -2,6 +2,7 @@ package model.roster;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -533,6 +534,89 @@ public class GradedItem implements Serializable {
 	public void addStudent(Student student) {
 		if (student != null && !studentGrades.containsKey(student)) {
 			studentGrades.remove(student);
+		}
+	}
+	
+	/** STATISTICS **/
+	
+	public int getNumGraded() {
+		int total = 0;
+		for(Double grade : studentGrades.values()) {
+			if(grade != null) {
+				++total;
+			}
+		}
+		return total;
+	}
+	
+	public double getMean() {
+		double sum = 0;
+		int num = 0;
+		for(Double grade : studentGrades.values()) {
+			if(grade != null) {
+				sum += grade;
+				++num;
+			}
+		}
+		return sum / num;
+	}
+	
+	public double getMedian() {
+		ArrayList<Double> list = new ArrayList<Double>();
+		for(Double grade : studentGrades.values()) {
+			list.add(grade);
+		}
+		Collections.sort(list);
+		if(list.size() % 2 != 0) {
+			return list.get((list.size() + 1) / 2);
+		} else {
+			return list.get(list.size() / 2) + list.get((list.size() / 2) + 1);
+		}
+	}
+	
+	public double getMode() {
+		HashMap<Double, Integer> map = new HashMap<Double, Integer>();
+		for(Double grade : studentGrades.values()) {
+			if(map.containsKey(grade)) {
+				map.put(grade, map.get(grade) + 1);
+			} else {
+				map.put(grade, 1);
+			}
+		}
+		double count = -1;
+		double ret = -1;
+		for(Double grade : map.keySet()) {
+			if(map.get(grade) > count) {
+				count = map.get(grade);
+				ret = grade;
+			}
+		}
+		return ret;
+	}
+	
+	public double getMax() {
+		ArrayList<Double> list = new ArrayList<Double>();
+		for(Double grade : studentGrades.values()) {
+			list.add(grade);
+		}
+		Collections.sort(list);
+		if(list.size() > 0) {
+			return list.get(list.size() - 1);
+		} else {
+			return -1;
+		}
+	}
+	
+	public double getMin() {
+		ArrayList<Double> list = new ArrayList<Double>();
+		for(Double grade : studentGrades.values()) {
+			list.add(grade);
+		}
+		Collections.sort(list);
+		if(list.size() > 0) {
+			return list.get(0);
+		} else {
+			return -1;
 		}
 	}
 }
