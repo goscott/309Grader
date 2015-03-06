@@ -60,7 +60,7 @@ public class GradeShape extends Rectangle {
 		addEventFilter(MouseEvent.MOUSE_DRAGGED,
 				new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent event) {
-						move(event.getScreenY() + Histogram.getScrollLevel());
+						move(event.getScreenY());
 					}
 				});
 		
