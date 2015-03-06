@@ -1,5 +1,11 @@
 package model.server;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -328,31 +334,71 @@ public class Server {
 
 
 	/**
-	 * Populates the server
-	 */
-	/*@
-	    ensures
-	    (   *
-	        *Gavin's Debug functions to help make sure the server is running correctly. 
-	    );
-	@*/
-	public static void init() {
-		Debug.log("Server initialization", "starting init...");
-		initializeStudents();
-	}
+     * Populates the server
+     */
+    /*@
+        ensures
+        (   *
+            *Gavin's Debug functions to help make sure the server is running correctly. 
+        );
+    @*/
+    @SuppressWarnings("unchecked")
+    public static void init() {
+        
+        //initializeStudents();
+        
+        Debug.log("Server initialization", "starting init...");
+        try {
+            FileInputStream in = new FileInputStream("server.sav");
+            ObjectInputStream obj = new ObjectInputStream(in);
+            students = (ArrayList<Student>) obj.readObject();
+            associatedClasses = (HashMap<String, ArrayList<String>>) obj.readObject();
+            obj.close();
+            Debug.log("Server", "Sucessfuly loaded");
+
+        } catch (FileNotFoundException e) {
+            Debug.log("No Server loaded", "initialize default");
+            initializeStudents();
+
+        } catch (IOException e) {
+            Debug.log(
+                    "IO ERROR",
+                    "Could not locate file at server.sav"
+                            + "(IOException)");
+        } catch (ClassNotFoundException e) {
+            Debug.log(
+                    "IO ERROR",
+                    "Could not locate file at server.sav"
+                            + "(Class Not Found)");
+        }
+        
+        
+        
+    }
 
 
-	/**
-	 * Commits the new server data to files so they will be preserved between
-	 * runs of the program
-	 */
-	/*@
-	     ensures
-	     (   *
-	         *Gavin's Debug functions to help make sure the server is running correctly. 
-	     );
-	@*/
-	public static void backup() {
-		Debug.log("Server Backup", "Starting backup...");
-	}
+    /**
+     * Commits the new server data to files so they will be preserved between
+     * runs of the program
+     */
+    /*@
+         ensures
+         (   *
+             *Gavin's Debug functions to help make sure the server is running correctly. 
+         );
+    @*/
+    public static void backup() {
+        Debug.log("Server Backup", "Starting backup...");
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(
+                    new FileOutputStream("server.sav"));
+            out.writeObject(students);
+            out.writeObject(associatedClasses);
+            out.close();
+        } catch (IOException ex) {
+            Debug.log("SAVE ERROR", "failed to backup server");
+            ex.printStackTrace();
+        } 
+        
+    }
 }
