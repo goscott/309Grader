@@ -58,7 +58,7 @@ public class MainPageController {
 	private Tab classTab;
 	/** The gradebook tab **/
 	@FXML
-	private static Tab gradebookTab;
+	private Tab gradebookTab;
 	/** The graph tab **/
 	@FXML
 	private Tab graphTab;
@@ -269,7 +269,7 @@ public class MainPageController {
 	}
 	
 	public static boolean isEnabled() {
-		return !gradebookTab.isDisabled();
+		return !thisController.gradebookTab.isDisabled();
 	}
 
 	/**
