@@ -24,6 +24,7 @@ public class Histogram extends Application {
 	public static final int TICK_WIDTH = 10;
 	public static final int BIG_TICK_WIDTH = 20;
 	public static final int MAIN_LINE_WIDTH = 3;
+	public static final int MIN_LINES = 15;
 	
 	private int maxNumber = 0;
 
@@ -65,9 +66,10 @@ public class Histogram extends Application {
         	drawingPane.getChildren().add(rect);
         }
         // student number lines
-        for(int count = 1; count < maxNumber + 1; count++) {
+        for(int count = 1; count < ((maxNumber + 1) > MIN_LINES ? (maxNumber + 1) : MIN_LINES); count++) {
         	Line line = new Line(DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, 0, DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, BAR_WIDTH*NUM_TICKS);
-        	line.getStrokeDashArray().addAll(25d, 10d);
+        	line.getStrokeDashArray().addAll(2d);
+        	drawingPane.getChildren().add(line);
         }
         
         // add sliders
