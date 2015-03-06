@@ -22,7 +22,7 @@ public class ResourceLoader {
 	//Line color and bar color
 	//back ground color for the slidy thingy 
 	public final static javafx.scene.paint.Color LINE_COLOR = javafx.scene.paint.Color.web("#03434B");
-    public final static javafx.scene.paint.Color BAR_COLOR = javafx.scene.paint.Color.web("#BC7B39");
+    public final static javafx.scene.paint.Color BAR_COLOR = javafx.scene.paint.Color.web("#BC7BE9");
     public final static javafx.scene.paint.Color BACKGROUND = javafx.scene.paint.Color.web("#C2F7FF");
 
 	
