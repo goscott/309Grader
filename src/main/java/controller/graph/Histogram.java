@@ -37,7 +37,7 @@ public class Histogram extends Application {
     @Override
     public void start(Stage stage) throws Exception {
     	drawingPane = new Pane();
-        //drawingPane.setPrefSize(800, 800);
+        drawingPane.setPrefSize(DEFAULT_PANE_WIDTH, DEFAULT_PANE_HEIGHT);
         drawingPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         scrollPane = new ScrollPane(drawingPane);
         scrollPane.setPrefSize(DEFAULT_PANE_WIDTH, DEFAULT_PANE_HEIGHT);

@@ -42,7 +42,8 @@ public class ClassButtonEventHandler implements EventHandler<ActionEvent> {
 					&& !Grader.getRoster().courseName()
 							.equals(rost.courseName())
 					&& GradebookController.edited
-					&& !GradebookController.predictionMode) {
+					&& !GradebookController.predictionMode
+					&& MainPageController.isEnabled()) {
 				Action response = Alert
 						.showConfirmDialog("Would you like to save the current roster?");
 				if (response == Dialog.ACTION_YES) {

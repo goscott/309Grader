@@ -58,7 +58,7 @@ public class MainPageController {
 	private Tab classTab;
 	/** The gradebook tab **/
 	@FXML
-	private Tab gradebookTab;
+	private static Tab gradebookTab;
 	/** The graph tab **/
 	@FXML
 	private Tab graphTab;
@@ -266,6 +266,10 @@ public class MainPageController {
 				+ Grader.getRoster().courseName());*/
 		announcementsTab.setText("Announcements - "
 				+ Grader.getRoster().courseName());
+	}
+	
+	public static boolean isEnabled() {
+		return !gradebookTab.isDisabled();
 	}
 
 	/**
