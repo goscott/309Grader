@@ -33,10 +33,12 @@ public class Histogram extends Application {
 	private int maxNumber = 0;
 	private static ScrollPane scrollPane;
 	private static Pane drawingPane;
+	
+	private static Histogram singleton;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-    	drawingPane = new Pane();
+	public void initialize() {
+		singleton = this;
+		drawingPane = new Pane();
         drawingPane.setPrefSize(DEFAULT_PANE_WIDTH, DEFAULT_PANE_HEIGHT);
         drawingPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         scrollPane = new ScrollPane(drawingPane);
@@ -48,8 +50,12 @@ public class Histogram extends Application {
         drawingPane.setBackground(new Background(new BackgroundFill(ResourceLoader.BACKGROUND, null, null)));
         // screen pane size
         drawingPane.setMinHeight(NUM_TICKS * BAR_WIDTH + 2*TOP_BUFFER);
-        
-        for(int i = NUM_TICKS; i > 0; i--) {
+        update();
+	}
+	
+	public void update() {
+		drawingPane.getChildren().removeAll(drawingPane.getChildren());
+		for(int i = NUM_TICKS; i > 0; i--) {
         	if(i % TICKS_UNTIL_TEXT == 0) {
         		// Label and big tick
         		drawingPane.getChildren().add(new Text(DIST_TO_LINE / 4, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER+BAR_WIDTH, i + ""));
@@ -66,8 +72,8 @@ public class Histogram extends Application {
         	Rectangle rect = new Rectangle(DIST_TO_LINE+MAIN_LINE_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+1+TOP_BUFFER, INCR_PER_PERSON*getNum(i), BAR_WIDTH - 2*BUFFER);
         	rect.setFill(ResourceLoader.BAR_COLOR);
         	drawingPane.getChildren().add(rect);
-        }
-        // student number lines
+		}
+    	// student number lines
         for(int count = 1; count < ((maxNumber + 1) > MIN_LINES ? (maxNumber + 1) : MIN_LINES); count++) {
         	Line line = new Line(DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, TOP_BUFFER, DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, TOP_BUFFER+BAR_WIDTH*NUM_TICKS);
         	line.getStrokeDashArray().addAll(3d);
@@ -84,6 +90,15 @@ public class Histogram extends Application {
         x_axis.setFill(ResourceLoader.LINE_COLOR);
         drawingPane.getChildren().addAll(y_axis, x_axis);
         
+	}
+	
+	public static void refresh() {
+		singleton.update();
+	}
+	
+    @Override
+    public void start(Stage stage) throws Exception {
+    	initialize();
         Scene scene = new Scene(drawingPane);
         stage.setMinWidth(100);
         stage.setMinHeight(100);

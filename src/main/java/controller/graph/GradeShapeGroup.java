@@ -2,7 +2,6 @@ package controller.graph;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 import javafx.scene.Node;
 import model.curve.Grade;
@@ -12,10 +11,6 @@ public class GradeShapeGroup {
 	private ArrayList<Node> grades;
 	
 	public GradeShapeGroup() {
-		update();
-	}
-	
-	public void update() {
 		grades = new ArrayList<Node>();	
 		for(Grade grade : Grader.getCurve().getGrades()) {
 			grades.add(new GradeShape(Histogram.SQUARE_START, getStartingLocation(grade), grade));
@@ -32,10 +27,6 @@ public class GradeShapeGroup {
 			list.addAll(((GradeShape)shape).get());
 		}
 		return list;
-	}
-	
-	static double getLocationAbove(String grade) {
-		return 0;
 	}
 	
 	private double getStartingLocation(Grade grade) {
