@@ -449,6 +449,7 @@ public class HistoryController {
 		GradebookController.getControllerTwo().showRoster(
 				selectedSection.getSection());
 		GradebookController.getControllerTwo().initialize();
+		GradebookController.getControllerTwo().deactivateCellEditing();
 	}
 
 	/**

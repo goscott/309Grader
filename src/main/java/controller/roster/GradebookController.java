@@ -643,4 +643,8 @@ public class GradebookController {
 			}
 		}
 	}
+	
+	public void deactivateCellEditing() {
+	    mainTable.setEditable(false);
+	}
 }
