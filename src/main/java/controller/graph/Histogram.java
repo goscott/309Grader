@@ -25,6 +25,7 @@ public class Histogram extends Application {
 	public static final int BIG_TICK_WIDTH = 20;
 	public static final int MAIN_LINE_WIDTH = 3;
 	public static final int MIN_LINES = 15;
+	public static final int TOP_BUFFER = 30;
 	
 	private int maxNumber = 0;
 
@@ -41,33 +42,33 @@ public class Histogram extends Application {
         scrollPane.setBackground(new Background(new BackgroundFill(ResourceLoader.BACKGROUND, null, null)));
         drawingPane.setBackground(new Background(new BackgroundFill(ResourceLoader.BACKGROUND, null, null)));
         // screen pane size
-        drawingPane.setMinHeight(NUM_TICKS * BAR_WIDTH);
+        drawingPane.setMinHeight(NUM_TICKS * BAR_WIDTH + 2*TOP_BUFFER);
         // y axis
-        Rectangle axis = new Rectangle(DIST_TO_LINE - 1, 0, MAIN_LINE_WIDTH + 1, NUM_TICKS * BAR_WIDTH);
+        Rectangle axis = new Rectangle(DIST_TO_LINE - 1, TOP_BUFFER, MAIN_LINE_WIDTH + 1, NUM_TICKS * BAR_WIDTH);
         axis.setFill(ResourceLoader.LINE_COLOR);
         drawingPane.getChildren().add(axis);
         
         for(int i = NUM_TICKS; i > 0; i--) {
         	if(i % TICKS_UNTIL_TEXT == 0) {
         		// Label and big tick
-        		drawingPane.getChildren().add(new Text(DIST_TO_LINE / 4, (NUM_TICKS-i)*BAR_WIDTH, i + ""));
-        		Line line = new Line(DIST_TO_LINE, (NUM_TICKS-i)*BAR_WIDTH, DIST_TO_LINE + BIG_TICK_WIDTH, (NUM_TICKS-i)*BAR_WIDTH);
+        		drawingPane.getChildren().add(new Text(DIST_TO_LINE / 4, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER, i + ""));
+        		Line line = new Line(DIST_TO_LINE, (NUM_TICKS-i)*BAR_WIDTH + TOP_BUFFER, DIST_TO_LINE + BIG_TICK_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER);
         		line.setFill(ResourceLoader.LINE_COLOR);
         		drawingPane.getChildren().add(line);
         	} else {
         		// tick
-        		Line line = new Line(DIST_TO_LINE, (NUM_TICKS-i)*BAR_WIDTH, DIST_TO_LINE + TICK_WIDTH, (NUM_TICKS-i)*BAR_WIDTH);
+        		Line line = new Line(DIST_TO_LINE, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER, DIST_TO_LINE + TICK_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER);
         		line.setFill(ResourceLoader.LINE_COLOR);
         		drawingPane.getChildren().add(line);
         	}
         	// bar for number of students
-        	Rectangle rect = new Rectangle(DIST_TO_LINE+MAIN_LINE_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+1, INCR_PER_PERSON*getNum(i), BAR_WIDTH - 2*BUFFER);
+        	Rectangle rect = new Rectangle(DIST_TO_LINE+MAIN_LINE_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+1+TOP_BUFFER, INCR_PER_PERSON*getNum(i), BAR_WIDTH - 2*BUFFER + TOP_BUFFER);
         	rect.setFill(ResourceLoader.BAR_COLOR);
         	drawingPane.getChildren().add(rect);
         }
         // student number lines
         for(int count = 1; count < ((maxNumber + 1) > MIN_LINES ? (maxNumber + 1) : MIN_LINES); count++) {
-        	Line line = new Line(DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, 0, DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, BAR_WIDTH*NUM_TICKS);
+        	Line line = new Line(DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, TOP_BUFFER, DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, TOP_BUFFER+BAR_WIDTH*NUM_TICKS);
         	line.getStrokeDashArray().addAll(2d);
         	drawingPane.getChildren().add(line);
         }

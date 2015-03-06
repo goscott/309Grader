@@ -91,6 +91,6 @@ public class GradeShape extends Rectangle {
 	}
 	
 	private boolean moveValid() {
-		return getY() > 0;
+		return getY() > Histogram.TOP_BUFFER;
 	}
 }
