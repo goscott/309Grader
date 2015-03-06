@@ -28,13 +28,14 @@ public class Histogram extends Application {
 	public static final int TOP_BUFFER = 30;
 	
 	private int maxNumber = 0;
+	private static ScrollPane scrollPane;
 
     @Override
     public void start(Stage stage) throws Exception {
         Pane drawingPane = new Pane();
         drawingPane.setPrefSize(800, 800);
         drawingPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        ScrollPane scrollPane = new ScrollPane(drawingPane);
+        scrollPane = new ScrollPane(drawingPane);
         scrollPane.setPrefSize(300, 500);
         scrollPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         scrollPane.setFitToWidth(true);
@@ -89,5 +90,9 @@ public class Histogram extends Application {
 			maxNumber = num;
 		}
 		return num;
+	}
+	
+	public static double getScrollLevel() {
+		return scrollPane.getVvalue();
 	}
 }
