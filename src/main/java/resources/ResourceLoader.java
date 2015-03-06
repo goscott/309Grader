@@ -18,6 +18,12 @@ public class ResourceLoader {
 	
 	public final static javafx.scene.paint.Color ERROR_RED = javafx.scene.paint.Color.web("#FE7E84");
 	public final static javafx.scene.paint.Color NOERROR_WHITE = javafx.scene.paint.Color.WHITE;
+	//Line color and bar color
+	//back ground color for the slidy thingy 
+	public final static javafx.scene.paint.Color LINE_COLOR = javafx.scene.paint.Color.web("#03434B");
+    public final static javafx.scene.paint.Color BAR_COLOR = javafx.scene.paint.Color.web("#BC7B39");
+    public final static javafx.scene.paint.Color BACKGROUND = javafx.scene.paint.Color.web("#C2F7FF");
+
 	
 	public final static Image ICON = new Image(ResourceLoader.class.getResourceAsStream( "GraderIcon.png" ));
 	public final static Image LOAD_SCREEN = new Image(ResourceLoader.class.getResourceAsStream( "GraderLoadScreen.jpg" ));
