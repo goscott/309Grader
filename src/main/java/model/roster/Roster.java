@@ -507,6 +507,16 @@ public class Roster implements Serializable {
 		}
 		return ret;
 	}
+	
+	public int getNumStudentsWithScore(Double score) {
+		int ret = 0;
+		for (Student student : students) {
+			if (student.getTotalPercentage() == score) {
+				ret++;
+			}
+		}
+		return ret;
+	}
 
 	/**
 	 * Returns the number of students who are passing the course.

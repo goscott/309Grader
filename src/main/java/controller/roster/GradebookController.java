@@ -1,13 +1,11 @@
 package controller.roster;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import controller.GraderPopup;
-import controller.graph.TEST2;
+import controller.graph.Histogram;
 import model.administration.PermissionKeys;
-import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
@@ -20,13 +18,11 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -188,7 +184,7 @@ public class GradebookController {
 			
 			test.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
-					TEST2 temp = new TEST2();
+					Histogram temp = new Histogram();
 					try {
 						temp.start(new Stage());
 					} catch (Exception ex) {

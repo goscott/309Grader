@@ -1,6 +1,5 @@
 package controller.graph;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -17,18 +16,18 @@ import javafx.scene.text.TextAlignment;
 public class GradeShape extends Rectangle {
 	private Line line;
 	private Text text;
-	private String name;
+	private Grade grade;
 	private final double WIDTH = 30;
 	private final double HEIGHT = 30;
 	private final double ROUNDNESS = 20;
 	private final double FONT_SCALE = 1.5;
 
 	public GradeShape(double x, double y, Grade grade) {
-		name = grade.getName();
+		this.grade = grade;
 		setArcHeight(ROUNDNESS);
 		setArcWidth(ROUNDNESS);
-		setFill(new Color(grade.getColor().getRed() / 255, grade.getColor()
-				.getGreen() / 255, grade.getColor().getBlue() / 255, 1));
+		setFill(Color.AQUAMARINE);/*new Color(grade.getColor().getRed() / 255, grade.getColor()
+				.getGreen() / 255, grade.getColor().getBlue() / 255, 1));*/
 		setHeight(HEIGHT);
 		setWidth(WIDTH);
 		setX(x);
@@ -74,9 +73,9 @@ public class GradeShape extends Rectangle {
 	}
 
 	private void move(double y) {
-		if(y % 10 == 0) {
+		if(y % Histogram.BAR_WIDTH == 0) {
 			setY(y - getHeight() / 2);
-			GradeShapeGroup.updateLocation(name, getY());
+			GradeShapeGroup.updateLocation(grade.getName(), getY());
 			moveLineAndText();
 		}
 	}
@@ -84,7 +83,7 @@ public class GradeShape extends Rectangle {
 	private void moveLineAndText() {
 		line.setStartX(getX());
 		line.setStartY(getY() + getHeight() / 2);
-		line.setEndX(0);
+		line.setEndX(Histogram.DIST_TO_LINE + Histogram.MAIN_LINE_WIDTH);
 		line.setEndY(getY() + getHeight() / 2);
 
 		text.setX(getX() + getWidth() / 2.5);

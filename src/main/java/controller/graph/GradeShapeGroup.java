@@ -18,7 +18,7 @@ public class GradeShapeGroup {
 		int y = 20;
 		
 		for(Grade grade : Grader.getCurve().getGrades()) {
-			grades.add(new GradeShape(100, y, grade));
+			grades.add(new GradeShape(Histogram.SQUARE_START, y, grade));
 			y += 20;
 		}
 		/*
