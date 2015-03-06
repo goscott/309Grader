@@ -8,16 +8,15 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Histogram extends Application {
-	public static final int INCR_PER_PERSON = 25;
+	public static final int INCR_PER_PERSON = 35;
 	public static final int DIST_TO_LINE = 25;
-	public static final int BAR_WIDTH = 7;
+	public static final int BAR_WIDTH = 10;
 	public static final int BUFFER = 1;
 	public static final int SQUARE_START = 150;
 	public static final int NUM_TICKS = 100;
@@ -25,6 +24,8 @@ public class Histogram extends Application {
 	public static final int TICK_WIDTH = 10;
 	public static final int BIG_TICK_WIDTH = 20;
 	public static final int MAIN_LINE_WIDTH = 3;
+	
+	private int maxNumber = 0;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -63,6 +64,12 @@ public class Histogram extends Application {
         	rect.setFill(ResourceLoader.BAR_COLOR);
         	drawingPane.getChildren().add(rect);
         }
+        // student number lines
+        for(int count = 1; count < maxNumber + 1; count++) {
+        	Line line = new Line(DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, 0, DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, BAR_WIDTH*NUM_TICKS);
+        	line.getStrokeDashArray().addAll(25d, 10d);
+        }
+        
         // add sliders
         drawingPane.getChildren().addAll(new GradeShapeGroup().get());
         
@@ -74,6 +81,10 @@ public class Histogram extends Application {
     }
 
 	private int getNum(double score) {
-		return Grader.getRoster().getNumStudentsWithScore(score);
+		int num = Grader.getRoster().getNumStudentsWithScore(score);
+		if(num > maxNumber) {
+			maxNumber = num;
+		}
+		return num;
 	}
 }
