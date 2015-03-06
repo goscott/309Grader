@@ -644,6 +644,9 @@ public class GradebookController {
 		}
 	}
 	
+	/**
+	 * Makes the gradebook non-editable
+	 */
 	public void deactivateCellEditing() {
 	    mainTable.setEditable(false);
 	}
