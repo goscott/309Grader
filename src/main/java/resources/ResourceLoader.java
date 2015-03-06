@@ -23,7 +23,7 @@ public class ResourceLoader {
 	//back ground color for the slidy thingy 
 	public final static javafx.scene.paint.Color LINE_COLOR = javafx.scene.paint.Color.web("#03434B");
     public final static javafx.scene.paint.Color BAR_COLOR = javafx.scene.paint.Color.web("#BC7BE9");
-    public final static javafx.scene.paint.Color BACKGROUND = javafx.scene.paint.Color.web("#FFFEB2");
+    public final static javafx.scene.paint.Color BACKGROUND = javafx.scene.paint.Color.web("#CBEFF4");
 
 	
 	public final static Image ICON = new Image(ResourceLoader.class.getResourceAsStream( "GraderIcon.png" ));
