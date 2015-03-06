@@ -7,7 +7,8 @@ import javafx.scene.image.Image;
 /**
  * Standardizes coloring and resource loading
  * 
- * @author Gavin Scott
+ * @author Gavin Scott 
+ * @author Shelli Crispen
  */
 public class ResourceLoader {
 	public final static Color GREEN = Color.decode("#84F379");
