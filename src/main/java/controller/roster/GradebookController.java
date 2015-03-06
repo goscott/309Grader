@@ -45,6 +45,8 @@ public class GradebookController {
 	/** The main gradebook table **/
 	@FXML
 	private TableView<Student> mainTable;
+	@FXML
+	private TableView stats_table;
 	/** The column showing the students' ids **/
 	@FXML
 	private TableColumn<Student, String> idCol;
@@ -80,6 +82,7 @@ public class GradebookController {
 	    public static boolean predictionMode = false;
 	    /** whether or not changes have been made **/
 	    public static boolean edited;
+	public static final int COLUMN_WIDTH = 125;
 
 	public static GradebookController getController() {
 		return singleton;
@@ -224,7 +227,7 @@ public class GradebookController {
 		TableColumn<Student, Double> percentCol = new TableColumn<Student, Double>(
 				"Percentage");
 		percentCol.setEditable(false);
-		percentCol.setMinWidth(100);
+		percentCol.setMinWidth(COLUMN_WIDTH);
 		percentCol
 				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 						"totalPercentage"));
@@ -232,7 +235,7 @@ public class GradebookController {
 
 		/*TableColumn<Student, String> gradeCol = new TableColumn<Student, String>(
 				"Grade");
-		gradeCol.setMinWidth(100);
+		gradeCol.setMinWidth(COLUMN_WIDTH);
 		gradeCol.setEditable(true);//GradebookController.predictionMode);
 		gradeCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Student, String>>() {
 			public void handle(CellEditEvent<Student, String> event) {
@@ -281,7 +284,7 @@ public class GradebookController {
 		});*/
 		TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
 				"Grade");
-		newColumn.setMinWidth(100);
+		newColumn.setMinWidth(COLUMN_WIDTH);
 		newColumn.setEditable(predictionMode);
 
 		newColumn.setCellValueFactory(new Callback() {
@@ -325,18 +328,18 @@ public class GradebookController {
 	 */
 	@SuppressWarnings("unchecked")
 	private void studentColumns() {
-		nameCol.setMinWidth(100);
+		nameCol.setMinWidth(COLUMN_WIDTH);
 		nameCol.setEditable(false);
 		nameCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
 				"name"));
 
-		idCol.setMinWidth(100);
+		idCol.setMinWidth(COLUMN_WIDTH);
 		idCol.setEditable(false);
 		idCol.setCellValueFactory(new PropertyValueFactory<Student, String>(
 				"id"));
 
 		totalGradeCol.setEditable(false);
-		totalGradeCol.setMinWidth(100);
+		totalGradeCol.setMinWidth(COLUMN_WIDTH);
 		totalGradeCol
 				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 						"totalScore"));
@@ -398,7 +401,7 @@ public class GradebookController {
 								.getParent().name()))) {
 					TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
 							item.name());
-					newColumn.setMinWidth(100);
+					newColumn.setMinWidth(COLUMN_WIDTH);
 					newColumn.setEditable(item.hasChildren());
 
 					newColumn.setCellValueFactory(new Callback() {
@@ -436,7 +439,35 @@ public class GradebookController {
 			// force hard refresh
 			mainTable.getColumns().add(0, new TableColumn<Student, String>());
 			mainTable.getColumns().remove(0);
+			
+			populateStatsTable();
 		}
+	}
+	
+	public void populateStatsTable() {
+	    TableColumn targetColumn;
+	    TableColumn newColumn, bufferColumn1, bufferColumn2, bufferColumn3;
+	    
+	    stats_table.getColumns().clear();
+	    
+	    bufferColumn1 = new TableColumn("");
+	    bufferColumn2 = new TableColumn("");
+	    bufferColumn3 = new TableColumn("");
+	    
+	    bufferColumn1.setMinWidth(COLUMN_WIDTH + 6);
+	    bufferColumn2.setMinWidth(COLUMN_WIDTH);
+	    bufferColumn3.setMinWidth(COLUMN_WIDTH);
+	    
+	    stats_table.getColumns().add(bufferColumn1);
+	    stats_table.getColumns().add(bufferColumn2);
+	    stats_table.getColumns().add(bufferColumn3);
+	    
+	    for (int index = 3; index < mainTable.getColumns().size() - 1; index++) {
+	        targetColumn = mainTable.getColumns().get(index);
+	        newColumn = new TableColumn(targetColumn.getText());
+            newColumn.setMinWidth(COLUMN_WIDTH);
+            stats_table.getColumns().add(newColumn);
+	    }
 	}
 
 	ObservableList<TableColumn<Student, ?>> getTopLevelColumns() {
