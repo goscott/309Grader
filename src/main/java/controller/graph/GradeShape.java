@@ -53,6 +53,7 @@ public class GradeShape extends Rectangle {
 			public void handle(MouseEvent event) {
 				if(moveValid()) {
 					move(event.getSceneY());
+					//if(getScoreFromLocation() > getLowestPossibleScore() )
 				}
 			}
 		});
@@ -83,9 +84,10 @@ public class GradeShape extends Rectangle {
 		menu.getItems().add(delete);
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				Action response = Alert.showWarningDialog("Warning: Grade deletion will be permanent", "Are you sure you want to delete " + grade.getName() + "?");
+				Action response = Alert.showWarningDialog("Warning: Grade deletion will be permanent", "Are you sure you want to delete '" + grade.getName() + "' from the curve?");
 				if(response == Dialog.ACTION_YES) {
-					//Grader.getCurve().remove(grade);
+					Grader.getCurve().remove(grade);
+					Histogram.refresh();
 				}
 			}
 		});
@@ -110,10 +112,6 @@ public class GradeShape extends Rectangle {
 		
 		line = new Line();
 		moveLineAndText();
-	}
-
-	public Line getLine() {
-		return line;
 	}
 
 	public Collection<Node> get() {
@@ -145,29 +143,34 @@ public class GradeShape extends Rectangle {
 		//System.out.println("test get score: " + getScoreFromLocation());
 		return line.getStartY() > Histogram.TOP_BUFFER
 				&& line.getStartY() < Histogram.TOP_BUFFER + Histogram.NUM_TICKS*Histogram.BAR_WIDTH
-				&& getScoreFromLocation() > getLowestPossibleScore() + 1
-				&& getScoreFromLocation() < getHighestPossibleScore() - 1;
+				&& getScoreFromLocation() > getLowestPossibleScore()
+				&& getScoreFromLocation() < getHighestPossibleScore();
 	}
 	
 	private double getLowestPossibleScore() {
 		if(Grader.getCurve().getGradeBelow(grade) != null) {
-			//System.out.println("lowest possible = " + Grader.getCurve().getGradeBelow(grade).value());
-			return Grader.getCurve().getGradeBelow(grade).value();
+			return Grader.getCurve().getGradeBelow(grade).value() + 1;
 		}
-		//System.out.println("lowest possible = 0");
 		return 0;
 	}
 	
 	private double getHighestPossibleScore() {
 		if(Grader.getCurve().getGradeAbove(grade) != null) {
-			//System.out.println("highest possible = " + Grader.getCurve().getGradeAbove(grade).value());
-			return Grader.getCurve().getGradeAbove(grade).value();
+			return Grader.getCurve().getGradeAbove(grade).value() - 1;
 		}
-		//System.out.println("highest possible = 100");
 		return 100;
 	}
 	
 	private double getScoreFromLocation() {
+		System.out.println("current score: " + (1.5 + ((line.getStartY() + Histogram.BAR_WIDTH/2 - Histogram.TOP_BUFFER) / Histogram.BAR_WIDTH - Histogram.NUM_TICKS) * -1));
+		
 		return 1.5 + ((line.getStartY() + Histogram.BAR_WIDTH/2 - Histogram.TOP_BUFFER) / Histogram.BAR_WIDTH - Histogram.NUM_TICKS) * -1;
+	}
+	
+	public boolean equals(Object other) {
+		if(other == null || !(other instanceof GradeShape)) {
+			return false;
+		}
+		return ((GradeShape)other).grade.equals(grade);
 	}
 }
