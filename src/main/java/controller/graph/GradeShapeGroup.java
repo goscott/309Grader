@@ -10,15 +10,16 @@ import model.driver.Grader;
 
 public class GradeShapeGroup {
 	private ArrayList<Node> grades;
-	private static HashMap<String, Double> locations;
 	
 	public GradeShapeGroup() {
-		grades = new ArrayList<Node>();
-		
+		update();
+	}
+	
+	public void update() {
+		grades = new ArrayList<Node>();	
 		for(Grade grade : Grader.getCurve().getGrades()) {
 			grades.add(new GradeShape(Histogram.SQUARE_START, getStartingLocation(grade), grade));
 		}
-		locations = new HashMap<String, Double>();
 	}
 	
 	public void add(GradeShape grade) {
@@ -33,12 +34,8 @@ public class GradeShapeGroup {
 		return list;
 	}
 	
-	static void updateLocation(String grade, double y) {
-		locations.put(grade, y);
-	}
-	
 	static double getLocationAbove(String grade) {
-		return locations.get(grade);
+		return 0;
 	}
 	
 	private double getStartingLocation(Grade grade) {

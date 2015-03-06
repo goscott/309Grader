@@ -70,7 +70,7 @@ public class Histogram extends Application {
         // student number lines
         for(int count = 1; count < ((maxNumber + 1) > MIN_LINES ? (maxNumber + 1) : MIN_LINES); count++) {
         	Line line = new Line(DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, TOP_BUFFER, DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, TOP_BUFFER+BAR_WIDTH*NUM_TICKS);
-        	line.getStrokeDashArray().addAll(2d);
+        	line.getStrokeDashArray().addAll(3d);
         	drawingPane.getChildren().add(line);
         }
         

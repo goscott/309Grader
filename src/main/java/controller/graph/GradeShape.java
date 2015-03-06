@@ -3,9 +3,19 @@ package controller.graph;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+
+import controller.Alert;
+import controller.roster.GradebookController;
 import model.curve.Grade;
+import model.driver.Grader;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -40,7 +50,6 @@ public class GradeShape extends Rectangle {
 		
 		text.addEventFilter(MouseEvent.MOUSE_DRAGGED,
 				new EventHandler<MouseEvent>() {
-			@Override
 			public void handle(MouseEvent event) {
 				if(moveValid()) {
 					move(event.getSceneY());
@@ -50,12 +59,55 @@ public class GradeShape extends Rectangle {
 		
 		addEventFilter(MouseEvent.MOUSE_DRAGGED,
 				new EventHandler<MouseEvent>() {
-					@Override
 					public void handle(MouseEvent event) {
 						move(event.getScreenY() + Histogram.getScrollLevel());
 					}
 				});
-
+		
+		addEventFilter(MouseEvent.MOUSE_RELEASED,
+				new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+						GradebookController.get().fullRefresh();
+					}
+				});
+		
+		text.addEventFilter(MouseEvent.MOUSE_RELEASED,
+				new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+						GradebookController.get().fullRefresh();
+					}
+				});
+		
+		ContextMenu menu = new ContextMenu();
+		MenuItem delete = new MenuItem("Remove Grade");
+		menu.getItems().add(delete);
+		menu.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				Action response = Alert.showWarningDialog("Warning: Grade deletion will be permanent", "Are you sure you want to delete " + grade.getName() + "?");
+				if(response == Dialog.ACTION_YES) {
+					//Grader.getCurve().remove(grade);
+				}
+			}
+		});
+		
+		addEventFilter(MouseEvent.MOUSE_CLICKED,
+				new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+						 if (event.getButton() == MouseButton.SECONDARY) {
+							menu.show(text, event.getScreenX(), event.getScreenY());
+						 }
+					}
+				});
+		
+		text.addEventFilter(MouseEvent.MOUSE_CLICKED,
+				new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+						 if (event.getButton() == MouseButton.SECONDARY) {
+							 menu.show(text, event.getScreenX(), event.getScreenY());
+						 }
+					}
+				});
+		
 		line = new Line();
 		moveLineAndText();
 	}
@@ -75,8 +127,8 @@ public class GradeShape extends Rectangle {
 	private void move(double y) {
 		if(y % Histogram.BAR_WIDTH == 0) {
 			setY(y - getHeight() / 2);
-			GradeShapeGroup.updateLocation(grade.getName(), getY());
 			moveLineAndText();
+			Grader.getCurve().adjust(grade, getScoreFromLocation());
 		}
 	}
 
@@ -90,7 +142,32 @@ public class GradeShape extends Rectangle {
 	}
 	
 	private boolean moveValid() {
-		return getY() > Histogram.TOP_BUFFER
-				&& getY() < Histogram.TOP_BUFFER + Histogram.NUM_TICKS*Histogram.BAR_WIDTH;
+		//System.out.println("test get score: " + getScoreFromLocation());
+		return line.getStartY() > Histogram.TOP_BUFFER
+				&& line.getStartY() < Histogram.TOP_BUFFER + Histogram.NUM_TICKS*Histogram.BAR_WIDTH
+				&& getScoreFromLocation() > getLowestPossibleScore() + 1
+				&& getScoreFromLocation() < getHighestPossibleScore() - 1;
+	}
+	
+	private double getLowestPossibleScore() {
+		if(Grader.getCurve().getGradeBelow(grade) != null) {
+			//System.out.println("lowest possible = " + Grader.getCurve().getGradeBelow(grade).value());
+			return Grader.getCurve().getGradeBelow(grade).value();
+		}
+		//System.out.println("lowest possible = 0");
+		return 0;
+	}
+	
+	private double getHighestPossibleScore() {
+		if(Grader.getCurve().getGradeAbove(grade) != null) {
+			//System.out.println("highest possible = " + Grader.getCurve().getGradeAbove(grade).value());
+			return Grader.getCurve().getGradeAbove(grade).value();
+		}
+		//System.out.println("highest possible = 100");
+		return 100;
+	}
+	
+	private double getScoreFromLocation() {
+		return 1.5 + ((line.getStartY() + Histogram.BAR_WIDTH/2 - Histogram.TOP_BUFFER) / Histogram.BAR_WIDTH - Histogram.NUM_TICKS) * -1;
 	}
 }
