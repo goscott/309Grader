@@ -268,6 +268,9 @@ public class MainPageController {
 				+ Grader.getRoster().courseName());
 	}
 	
+	/**
+	 * Checks if the tabs are enabled
+	 */
 	public static boolean isEnabled() {
 		return !thisController.gradebookTab.isDisabled();
 	}
