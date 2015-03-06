@@ -20,6 +20,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
@@ -272,9 +273,11 @@ public class HistoryController {
 	 */
 	private void initStyle() {
 
-		course_view.setStyle("-fx-background-color: grey;");
+		course_view.setStyle("-fx-background-color: white;");
+		
+		history_view.setStyle("-fx-background-color: white;");
 
-		course_label.setStyle("-fx-text-fill: white;");
+		//course_label.setStyle("-fx-text-fill: white;");
 		// "-fx-border-style: solid;" +
 		// "-fx-border-width: 2;" +
 		// "-fx-border-color: black;" +
@@ -290,6 +293,8 @@ public class HistoryController {
 		section_info_box.setStyle("-fx-border-style: solid;"
 				+ "-fx-border-width: 2;" + "-fx-border-color: black;"
 				+ "-fx-background-color: white;");
+		
+		//line_chart.setStyle(".default-color0.chart-plot-background{ -fx-background-color: white; }"); //DOESN'T WORK....
 	}
 
 	/**
@@ -367,6 +372,7 @@ public class HistoryController {
 			VBox.setMargin(temp, new Insets(0, 0, 10, 0));
 		}
 
+		content.setStyle("-fx-background-color: white;");
 		toAdd = new TitledPane(course.getCourseName(), content);
 
 		toAdd.setAnimated(true);
@@ -437,7 +443,7 @@ public class HistoryController {
 		gradebook_view.setVisible(true);
 		section_view.setVisible(false);
 
-		TableView<?> gradebookPage = (TableView<?>) GraderPopup
+		BorderPane gradebookPage = (BorderPane) GraderPopup
 				.getResource("view/roster/gradebook_screen.fxml");
 		gradebook_view.setCenter(gradebookPage);
 		GradebookController.getControllerTwo().showRoster(

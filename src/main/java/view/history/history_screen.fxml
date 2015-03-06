@@ -149,7 +149,7 @@
       </BorderPane>
       <BorderPane fx:id="gradebook_view" prefHeight="200.0" prefWidth="200.0" visible="false">
          <bottom>
-            <Button fx:id="button_history" mnemonicParsing="false" onAction="#switchToHistory" text="TEST: Back to History" BorderPane.alignment="CENTER" />
+            <Button fx:id="button_history" mnemonicParsing="false" onAction="#switchToHistory" text="Back to History" BorderPane.alignment="CENTER" />
          </bottom>
       </BorderPane>
    </children>
