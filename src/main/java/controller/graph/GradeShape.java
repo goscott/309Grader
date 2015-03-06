@@ -28,11 +28,13 @@ public class GradeShape extends Rectangle {
 	private Text text;
 	private Grade grade;
 	private final double WIDTH = 30;
-	private final double HEIGHT = 30;
+	private final double HEIGHT = 15;
 	private final double ROUNDNESS = 20;
 	private final double FONT_SCALE = 1.5;
+	private final double CLOSENESS_THRESHOLD = 3;
+	private final double EXPANED_SLIDER_X = Histogram.SQUARE_START + WIDTH * 1.5;
 
-	public GradeShape(double x, double y, Grade grade) {
+	public GradeShape(double y, Grade grade) {
 		this.grade = grade;
 		setArcHeight(ROUNDNESS);
 		setArcWidth(ROUNDNESS);
@@ -40,7 +42,7 @@ public class GradeShape extends Rectangle {
 				.getGreen() / 255, grade.getColor().getBlue() / 255, 1));*/
 		setHeight(HEIGHT);
 		setWidth(WIDTH);
-		setX(x);
+		setX(Histogram.SQUARE_START);
 		setY(y);
 		text = new Text(grade.getName());
 		text.setFill(Color.BLACK);
@@ -50,12 +52,9 @@ public class GradeShape extends Rectangle {
 		
 		text.addEventFilter(MouseEvent.MOUSE_DRAGGED,
 				new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent event) {
-				if(moveValid()) {
-					move(event.getSceneY());
-					//if(getScoreFromLocation() > getLowestPossibleScore() )
-				}
-			}
+					public void handle(MouseEvent event) {
+						move(event.getSceneY());
+					}
 		});
 		
 		addEventFilter(MouseEvent.MOUSE_DRAGGED,
@@ -123,8 +122,10 @@ public class GradeShape extends Rectangle {
 	}
 	
 	private void move(double y) {
-		if(y % Histogram.BAR_WIDTH == 0) {
+		if(y % Histogram.BAR_WIDTH == 0
+				&& moveValid(y - getHeight() / 2)) {
 			setY(y - getHeight() / 2);
+			setX(closeToOtherSlider() ? EXPANED_SLIDER_X : Histogram.SQUARE_START);
 			moveLineAndText();
 			Grader.getCurve().adjust(grade, getScoreFromLocation());
 		}
@@ -139,8 +140,12 @@ public class GradeShape extends Rectangle {
 		text.setY(getY() + getHeight() / 1.7);
 	}
 	
-	private boolean moveValid() {
-		//System.out.println("test get score: " + getScoreFromLocation());
+	private boolean closeToOtherSlider() {
+		return getScoreFromLocation() < getLowestPossibleScore() + CLOSENESS_THRESHOLD
+				|| getScoreFromLocation() > getHighestPossibleScore() - CLOSENESS_THRESHOLD;
+	}
+	
+	private boolean moveValid(double y) {
 		return line.getStartY() > Histogram.TOP_BUFFER
 				&& line.getStartY() < Histogram.TOP_BUFFER + Histogram.NUM_TICKS*Histogram.BAR_WIDTH
 				&& getScoreFromLocation() > getLowestPossibleScore()
@@ -162,8 +167,6 @@ public class GradeShape extends Rectangle {
 	}
 	
 	private double getScoreFromLocation() {
-		System.out.println("current score: " + (1.5 + ((line.getStartY() + Histogram.BAR_WIDTH/2 - Histogram.TOP_BUFFER) / Histogram.BAR_WIDTH - Histogram.NUM_TICKS) * -1));
-		
 		return 1.5 + ((line.getStartY() + Histogram.BAR_WIDTH/2 - Histogram.TOP_BUFFER) / Histogram.BAR_WIDTH - Histogram.NUM_TICKS) * -1;
 	}
 	

@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class Histogram extends Application {
 	public static final int INCR_PER_PERSON = 35;
 	public static final int DIST_TO_LINE = 30;
-	public static final int BAR_WIDTH = 10;
+	public static final int BAR_WIDTH = 6;
 	public static final int BUFFER = 1;
 	public static final int SQUARE_START = 150;
 	public static final int NUM_TICKS = 100;

@@ -13,7 +13,9 @@ public class GradeShapeGroup {
 	public GradeShapeGroup() {
 		grades = new ArrayList<Node>();	
 		for(Grade grade : Grader.getCurve().getGrades()) {
-			grades.add(new GradeShape(Histogram.SQUARE_START, getStartingLocation(grade), grade));
+			if(!grade.getName().equals("F")) {
+				grades.add(new GradeShape(getStartingLocation(grade), grade));
+			}
 		}
 	}
 	
