@@ -84,7 +84,7 @@ public class Histogram extends Application {
         x_axis.setFill(ResourceLoader.LINE_COLOR);
         drawingPane.getChildren().addAll(y_axis, x_axis);
         
-        Scene scene = new Scene(scrollPane);
+        Scene scene = new Scene(drawingPane);
         stage.setMinWidth(100);
         stage.setMinHeight(100);
         stage.setScene(scene);
