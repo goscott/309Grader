@@ -1,6 +1,5 @@
 package controller.graph;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,19 +14,10 @@ public class GradeShapeGroup {
 	
 	public GradeShapeGroup() {
 		grades = new ArrayList<Node>();
-		int y = 20;
 		
 		for(Grade grade : Grader.getCurve().getGrades()) {
-			grades.add(new GradeShape(Histogram.SQUARE_START, y, grade));
-			y += 20;
+			grades.add(new GradeShape(Histogram.SQUARE_START, getStartingLocation(grade), grade));
 		}
-		/*
-		grades.add(new GradeShape(100, y, new Grade("A", 90, Color.GREEN)));
-		y+=30;
-		grades.add(new GradeShape(100, y, new Grade("B", 80, Color.CYAN)));
-		y+=30;
-		grades.add(new GradeShape(100, y, new Grade("C", 70, Color.YELLOW)));
-		*/
 		locations = new HashMap<String, Double>();
 	}
 	
@@ -49,5 +39,9 @@ public class GradeShapeGroup {
 	
 	static double getLocationAbove(String grade) {
 		return locations.get(grade);
+	}
+	
+	private double getStartingLocation(Grade grade) {
+		return (Histogram.NUM_TICKS - grade.value()) * Histogram.BAR_WIDTH + Histogram.TOP_BUFFER - Histogram.BAR_WIDTH / 2;
 	}
 }

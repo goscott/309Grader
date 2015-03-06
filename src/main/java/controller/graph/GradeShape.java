@@ -52,7 +52,7 @@ public class GradeShape extends Rectangle {
 				new EventHandler<MouseEvent>() {
 					@Override
 					public void handle(MouseEvent event) {
-						move(event.getSceneY() + Histogram.getScrollLevel());
+						move(event.getScreenY() + Histogram.getScrollLevel());
 					}
 				});
 
@@ -71,7 +71,7 @@ public class GradeShape extends Rectangle {
 		list.add(text);
 		return list;
 	}
-
+	
 	private void move(double y) {
 		if(y % Histogram.BAR_WIDTH == 0) {
 			setY(y - getHeight() / 2);
@@ -85,7 +85,6 @@ public class GradeShape extends Rectangle {
 		line.setStartY(getY() + getHeight() / 2);
 		line.setEndX(Histogram.DIST_TO_LINE + Histogram.MAIN_LINE_WIDTH);
 		line.setEndY(getY() + getHeight() / 2);
-
 		text.setX(getX() + getWidth() / 2.5);
 		text.setY(getY() + getHeight() / 1.7);
 	}

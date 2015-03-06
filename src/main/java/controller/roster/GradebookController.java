@@ -608,7 +608,6 @@ public class GradebookController {
 
 		for (TableColumn<?, ?> topColumn : getTopLevelColumns()) {
 			TreeItem<String> item = makeTreeItem(topColumn.getText());
-			System.out.println("hit " + item.getValue());
 			item.setExpanded(getExpanded().contains(topColumn.getText()));
 			root.getChildren().add(item);
 		}

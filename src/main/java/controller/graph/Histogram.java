@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 public class Histogram extends Application {
 	public static final int INCR_PER_PERSON = 35;
-	public static final int DIST_TO_LINE = 25;
+	public static final int DIST_TO_LINE = 30;
 	public static final int BAR_WIDTH = 10;
 	public static final int BUFFER = 1;
 	public static final int SQUARE_START = 150;
@@ -27,16 +27,20 @@ public class Histogram extends Application {
 	public static final int MIN_LINES = 15;
 	public static final int TOP_BUFFER = 30;
 	
+	private static final int DEFAULT_PANE_WIDTH = 300;
+	private static final int DEFAULT_PANE_HEIGHT = 500;
+	
 	private int maxNumber = 0;
 	private static ScrollPane scrollPane;
+	private static Pane drawingPane;
 
     @Override
     public void start(Stage stage) throws Exception {
-        Pane drawingPane = new Pane();
-        drawingPane.setPrefSize(800, 800);
+    	drawingPane = new Pane();
+        //drawingPane.setPrefSize(800, 800);
         drawingPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         scrollPane = new ScrollPane(drawingPane);
-        scrollPane.setPrefSize(300, 500);
+        scrollPane.setPrefSize(DEFAULT_PANE_WIDTH, DEFAULT_PANE_HEIGHT);
         scrollPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
@@ -44,15 +48,11 @@ public class Histogram extends Application {
         drawingPane.setBackground(new Background(new BackgroundFill(ResourceLoader.BACKGROUND, null, null)));
         // screen pane size
         drawingPane.setMinHeight(NUM_TICKS * BAR_WIDTH + 2*TOP_BUFFER);
-        // y axis
-        Rectangle axis = new Rectangle(DIST_TO_LINE - 1, TOP_BUFFER, MAIN_LINE_WIDTH + 1, NUM_TICKS * BAR_WIDTH);
-        axis.setFill(ResourceLoader.LINE_COLOR);
-        drawingPane.getChildren().add(axis);
         
         for(int i = NUM_TICKS; i > 0; i--) {
         	if(i % TICKS_UNTIL_TEXT == 0) {
         		// Label and big tick
-        		drawingPane.getChildren().add(new Text(DIST_TO_LINE / 4, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER, i + ""));
+        		drawingPane.getChildren().add(new Text(DIST_TO_LINE / 4, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER+BAR_WIDTH, i + ""));
         		Line line = new Line(DIST_TO_LINE, (NUM_TICKS-i)*BAR_WIDTH + TOP_BUFFER, DIST_TO_LINE + BIG_TICK_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER);
         		line.setFill(ResourceLoader.LINE_COLOR);
         		drawingPane.getChildren().add(line);
@@ -63,7 +63,7 @@ public class Histogram extends Application {
         		drawingPane.getChildren().add(line);
         	}
         	// bar for number of students
-        	Rectangle rect = new Rectangle(DIST_TO_LINE+MAIN_LINE_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+1+TOP_BUFFER, INCR_PER_PERSON*getNum(i), BAR_WIDTH - 2*BUFFER + TOP_BUFFER);
+        	Rectangle rect = new Rectangle(DIST_TO_LINE+MAIN_LINE_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+1+TOP_BUFFER, INCR_PER_PERSON*getNum(i), BAR_WIDTH - 2*BUFFER);
         	rect.setFill(ResourceLoader.BAR_COLOR);
         	drawingPane.getChildren().add(rect);
         }
@@ -77,6 +77,13 @@ public class Histogram extends Application {
         // add sliders
         drawingPane.getChildren().addAll(new GradeShapeGroup().get());
         
+        // x and y axis
+        Rectangle y_axis = new Rectangle(DIST_TO_LINE - 1, TOP_BUFFER, MAIN_LINE_WIDTH + 1, NUM_TICKS * BAR_WIDTH);
+        y_axis.setFill(ResourceLoader.LINE_COLOR);
+        Rectangle x_axis = new Rectangle(DIST_TO_LINE - 1, TOP_BUFFER + BAR_WIDTH*NUM_TICKS, MIN_LINES*INCR_PER_PERSON, MAIN_LINE_WIDTH);
+        x_axis.setFill(ResourceLoader.LINE_COLOR);
+        drawingPane.getChildren().addAll(y_axis, x_axis);
+        
         Scene scene = new Scene(scrollPane);
         stage.setMinWidth(100);
         stage.setMinHeight(100);
@@ -88,6 +95,9 @@ public class Histogram extends Application {
 		int num = Grader.getRoster().getNumStudentsWithScore(score);
 		if(num > maxNumber) {
 			maxNumber = num;
+		}
+		if(drawingPane.getWidth() < maxNumber*INCR_PER_PERSON + 3*INCR_PER_PERSON) {
+			drawingPane.setMinWidth(maxNumber*INCR_PER_PERSON + 3*INCR_PER_PERSON);
 		}
 		return num;
 	}
