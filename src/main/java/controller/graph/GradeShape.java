@@ -28,7 +28,7 @@ public class GradeShape extends Rectangle {
 	private Text text;
 	private Grade grade;
 	private final double WIDTH = 30;
-	private final double HEIGHT = 15;
+	private final double HEIGHT = 30;
 	private final double ROUNDNESS = 20;
 	private final double FONT_SCALE = 1.5;
 	private final double CLOSENESS_THRESHOLD = 3;
