@@ -38,8 +38,11 @@ public class GradeShape extends Rectangle {
 		this.grade = grade;
 		setArcHeight(ROUNDNESS);
 		setArcWidth(ROUNDNESS);
-		setFill(Color.AQUAMARINE);/*new Color(grade.getColor().getRed() / 255, grade.getColor()
-				.getGreen() / 255, grade.getColor().getBlue() / 255, 1));*/
+		Color color = new Color(
+				((double)grade.getColor().getRed())/255,
+				((double)grade.getColor().getGreen())/255,
+				((double)grade.getColor().getBlue())/255, 1);
+		setFill(color);
 		setHeight(HEIGHT);
 		setWidth(WIDTH);
 		setX(Histogram.SQUARE_START);
@@ -147,9 +150,9 @@ public class GradeShape extends Rectangle {
 	
 	private boolean moveValid(double y) {
 		return line.getStartY() > Histogram.TOP_BUFFER
-				&& line.getStartY() < Histogram.TOP_BUFFER + Histogram.NUM_TICKS*Histogram.BAR_WIDTH
-				&& getScoreFromLocation() > getLowestPossibleScore()
-				&& getScoreFromLocation() < getHighestPossibleScore();
+				&& line.getStartY() < Histogram.TOP_BUFFER + Histogram.NUM_TICKS*Histogram.BAR_WIDTH;
+				//&& getScoreFromLocation() > getLowestPossibleScore()
+				//&& getScoreFromLocation() < getHighestPossibleScore();
 	}
 	
 	private double getLowestPossibleScore() {
