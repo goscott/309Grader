@@ -31,7 +31,7 @@ public class StudentTest {
     @Test
     public void testConstructor() {
         Roster roster = new Roster("name", "instructor", 1, "quarter", null, null);
-        Student student = new Student("name", "00000", roster);
+        Student student = new Student("name", "00000", "19403278", "Softwhere Engeineering", false, 4, roster);
 
         assertEquals("name", student.getName());
         assertEquals("00000", student.getId());

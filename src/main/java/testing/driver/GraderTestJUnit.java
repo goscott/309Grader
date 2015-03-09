@@ -19,7 +19,7 @@ public class GraderTestJUnit
     @Test
     public void testAddScore() {
         Grader.setCurrentRoster(new Roster("temp", "ins", 1, "fall", null, null));
-        Student student1 = new Student("Bob", "12345");
+        Student student1 = new Student("Bob", "12345", "19403278", "Softwhere Engeineering", false, 4);
         Grader.addStudent(student1);
         Grader.addAssignment(new GradedItem("temp1", "", 100, false));
         Grader.addAssignment(new GradedItem("temp2", "", 100, false));
@@ -73,7 +73,7 @@ public class GraderTestJUnit
         if (Grader.getStudentList().size() != 0)
             fail("Grader's list of students is not initialized correctly");
 
-        Student student1 = new Student("Bob", "12345");
+        Student student1 = new Student("Bob", "12345", "19403278", "Softwhere Engeineering", false, 4);
         Grader.addStudent(student1);
         if (Grader.getStudentList().size() != 1)
             fail("Incorrect number of students added");

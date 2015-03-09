@@ -123,7 +123,7 @@ public class GradedItemTestJUnit
         GradedItem child1 = new GradedItem("child", "", 100, parent1, false);
         GradedItem child2 = new GradedItem("child", "", 100, parent1, false);
         GradedItem child3 = new GradedItem("child", "", 100, parent1, false);
-        Student student = new Student("student", "12345");
+        Student student = new Student("student", "12345", "19403278", "Softwhere Engeineering", false, 4);
         
         assertEquals(grandparent.getStudentScore(student), null);
         assertEquals(parent1.getStudentScore(student), null);
@@ -150,7 +150,7 @@ public class GradedItemTestJUnit
     @Test
     public void testSetStudentScore() {
     	GradedItem item = new GradedItem("child", "", 100, null, false);
-        Student student = new Student("student", "12345");
+        Student student = new Student("student", "12345", "19403278", "Softwhere Engeineering", false, 4);
         
         assertEquals(item.getStudentScore(student), null);
         
@@ -176,8 +176,8 @@ public class GradedItemTestJUnit
     @Test
     public void testAddStudent() {
     	GradedItem item = new GradedItem("child", "", 100, null, false);
-        Student student = new Student("student", "12345");
-        Student student2 = new Student("student", "123456");
+        Student student = new Student("student", "12345", "19403278", "Softwhere Engeineering", false, 4);
+        Student student2 = new Student("student", "123456", "19403278", "Softwhere Engeineering", false, 4);
  
         assertEquals(null, item.getStudentScore(null));
         assertEquals(null, item.getStudentScore(student));
@@ -220,8 +220,8 @@ public class GradedItemTestJUnit
     @Test
     public void testRemoveStudent() {
     	GradedItem item = new GradedItem("child", "", 100, null, false);
-        Student student = new Student("student", "12345");
-        Student student2 = new Student("student", "123456");
+        Student student = new Student("student", "12345", "19403278", "Softwhere Engeineering", false, 4);
+        Student student2 = new Student("student", "123456", "19403278", "Softwhere Engeineering", false, 4);
         
         assertEquals(null, item.getStudentScore(null));
         assertEquals(null, item.getStudentScore(student));
@@ -268,7 +268,7 @@ public class GradedItemTestJUnit
     	GradedItem item5 = new GradedItem("test", "", 100, true);
     	
     	GradedItem item6 = new GradedItem("Test", "descr", 50, false);
-    	Student student = new Student("name", "12345");
+    	Student student = new Student("name", "12345", "19403278", "Softwhere Engeineering", false, 4);
     	
     	assertEquals(item, item);
     	assertEquals(item, item2);

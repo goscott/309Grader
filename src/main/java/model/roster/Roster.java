@@ -461,7 +461,7 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public boolean containsStudent(String id) {
-		return students.contains(new Student("temp", id));
+		return students.contains(new Student("temp", id, null, null, false, 0));
 	}
 
 	/**

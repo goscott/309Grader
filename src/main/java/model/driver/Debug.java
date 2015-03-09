@@ -101,9 +101,9 @@ public class Debug {
 		Grader.addAssignment(test3);
 		Grader.addAssignment(new GradedItem("Q1", "wefgr", 75, test3, false));
 
-		Student bob = new Student("Bob", "123");
+		//Student bob = new Student("Bob", "123");
 
-		Grader.addStudent(bob);
+		//Grader.addStudent(bob);
 	}
 
 	/**

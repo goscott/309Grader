@@ -73,7 +73,7 @@ public class CourseHistoryTestJUnit {
         CourseHistory history = new CourseHistory("CSC 01");
         Roster roster = new Roster("CSC 01", "Bob", 1, "Spring", 
                 Calendar.getInstance(), Calendar.getInstance());
-        roster.addStudent(new Student("Student1", "1"));
+        roster.addStudent(new Student("Student1", "1", "19403278", "Softwhere Engeineering", false, 4));
         
         history.addRoster(roster);
         assertEquals("Roster was added more than once.", 1, history.getHistory().size());

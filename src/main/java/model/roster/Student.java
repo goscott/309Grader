@@ -21,6 +21,14 @@ public class Student implements Comparable<Student>, Serializable {
 	private final String name;
 	/** The student's id **/
 	private final String id;
+	/** The student's emplID */
+	private final String emplID;
+	/** The student's Major */
+	private final String major;
+	/** Ferpa satus */
+	private final boolean ferpa;
+	/** number of units taken */
+	private final int units;
 	/** The roster for this student **/
 	private Roster roster;
 
@@ -36,8 +44,8 @@ public class Student implements Comparable<Student>, Serializable {
 	         this.roster == null
 	     );
 	@*/
-	public Student(String name, String id) {
-		this(name, id, null);
+	public Student(String name, String id, String emplID, String major, boolean ferpa, int units) {
+		this(name, id, emplID, major,  ferpa,  units, null);
 	}
 
 	/**
@@ -52,14 +60,18 @@ public class Student implements Comparable<Student>, Serializable {
 	        this.roster == roster
 	    );
 	@*/
-	public Student(String name, String id, Roster roster) {
+	public Student(String name, String id, String emplID, String major, boolean ferpa, int units, Roster roster) {
 		this.roster = roster;
 		this.name = name;
 		this.id = id;
+		this.emplID = emplID;
+		this.major = major;
+		this.ferpa = ferpa;
+		this.units = units;
 	}
 
 	public Student copyTo(Roster rost) {
-		return new Student(name, id, rost);
+		return new Student(name, id, emplID, major, ferpa, units, rost);
 	}
 
 	/**

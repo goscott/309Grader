@@ -62,8 +62,8 @@ public class RosterTest {
 	@Test
 	public void testAddDropStudent() {
 		Roster roster = new Roster("name", "instructor", 1, "quarter", null, null);
-		Student student = new Student("name", "12345");
-		Student student2 = new Student("name", "123456");
+		Student student = new Student("name", "12345", "19403278", "Softwhere Engeineering", false, 4);
+		Student student2 = new Student("name", "123456", "19403278", "Softwhere Engeineering", false, 4);
 		
 		assertFalse(Server.getStudentsAssociatedWithRoster(roster).contains(student));
 		assertFalse(Server.getStudentsAssociatedWithRoster(roster).contains(student2));
@@ -119,6 +119,6 @@ public class RosterTest {
 		assertFalse(roster.equals(roster7));
 		
 		assertFalse(roster.equals(null));
-		assertFalse(roster.equals(new Student("name", "12345")));
+		assertFalse(roster.equals(new Student("name", "12345", "19403278", "Softwhere Engeineering", false, 4)));
 	}
 }
