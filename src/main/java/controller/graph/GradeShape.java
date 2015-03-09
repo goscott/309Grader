@@ -32,16 +32,16 @@ public class GradeShape extends Rectangle {
 	private final double ROUNDNESS = 20;
 	private final double FONT_SCALE = 1.5;
 	private final double CLOSENESS_THRESHOLD = 3;
-	private final double EXPANED_SLIDER_X = Histogram.SQUARE_START + WIDTH * 1.5;
+	private final double EXPANED_SLIDER_X = Histogram.SQUARE_START + WIDTH
+			* 1.5;
 
 	public GradeShape(double y, Grade grade) {
 		this.grade = grade;
 		setArcHeight(ROUNDNESS);
 		setArcWidth(ROUNDNESS);
-		Color color = new Color(
-				((double)grade.getColor().getRed())/255,
-				((double)grade.getColor().getGreen())/255,
-				((double)grade.getColor().getBlue())/255, 1);
+		Color color = new Color(((double) grade.getColor().getRed()) / 255,
+				((double) grade.getColor().getGreen()) / 255, ((double) grade
+						.getColor().getBlue()) / 255, 1);
 		setFill(color);
 		setHeight(HEIGHT);
 		setWidth(WIDTH);
@@ -52,21 +52,21 @@ public class GradeShape extends Rectangle {
 		text.setScaleX(FONT_SCALE);
 		text.setScaleY(FONT_SCALE);
 		text.setTextAlignment(TextAlignment.CENTER);
-		
-//		text.addEventFilter(MouseEvent.MOUSE_DRAGGED,
-//				new EventHandler<MouseEvent>() {
-//					public void handle(MouseEvent event) {
-//						move(event.getSceneY());
-//					}
-//		});
-		
+
+		text.addEventFilter(MouseEvent.MOUSE_DRAGGED,
+				new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+						move(event.getY());
+					}
+				});
+
 		addEventFilter(MouseEvent.MOUSE_DRAGGED,
 				new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent event) {
-						move(event.getSceneY());
+						move(event.getY());
 					}
 				});
-		
+
 		addEventFilter(MouseEvent.MOUSE_RELEASED,
 				new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent event) {
@@ -74,45 +74,50 @@ public class GradeShape extends Rectangle {
 						GraphController.refresh();
 					}
 				});
-		
-//		text.addEventFilter(MouseEvent.MOUSE_RELEASED,
-//				new EventHandler<MouseEvent>() {
-//					public void handle(MouseEvent event) {
-//						GradebookController.get().fullRefresh();
-//					}
-//				});
-		
+
+		text.addEventFilter(MouseEvent.MOUSE_RELEASED,
+				new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent event) {
+						GradebookController.get().fullRefresh();
+					}
+				});
+
 		ContextMenu menu = new ContextMenu();
 		MenuItem delete = new MenuItem("Remove Grade");
 		menu.getItems().add(delete);
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				Action response = Alert.showWarningDialog("Warning: Grade deletion will be permanent", "Are you sure you want to delete '" + grade.getName() + "' from the curve?");
-				if(response == Dialog.ACTION_YES) {
+				Action response = Alert.showWarningDialog(
+						"Warning: Grade deletion will be permanent",
+						"Are you sure you want to delete '" + grade.getName()
+								+ "' from the curve?");
+				if (response == Dialog.ACTION_YES) {
 					Grader.getCurve().remove(grade);
 					Histogram.refresh();
 				}
 			}
 		});
-		
+
 		addEventFilter(MouseEvent.MOUSE_CLICKED,
 				new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent event) {
-						 if (event.getButton() == MouseButton.SECONDARY) {
-							menu.show(text, event.getScreenX(), event.getScreenY());
-						 }
+						if (event.getButton() == MouseButton.SECONDARY) {
+							menu.show(text, event.getScreenX(),
+									event.getScreenY());
+						}
 					}
 				});
-		
+
 		text.addEventFilter(MouseEvent.MOUSE_CLICKED,
 				new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent event) {
-						 if (event.getButton() == MouseButton.SECONDARY) {
-							 menu.show(text, event.getScreenX(), event.getScreenY());
-						 }
+						if (event.getButton() == MouseButton.SECONDARY) {
+							menu.show(text, event.getScreenX(),
+									event.getScreenY());
+						}
 					}
 				});
-		
+
 		line = new Line();
 		moveLineAndText();
 	}
@@ -124,12 +129,12 @@ public class GradeShape extends Rectangle {
 		list.add(text);
 		return list;
 	}
-	
+
 	private void move(double y) {
-		if(y % Histogram.BAR_WIDTH == 0
-				&& moveValid(y - getHeight() / 2)) {
-			setY(y - getHeight() / 2);
-			setX(closeToOtherSlider() ? EXPANED_SLIDER_X : Histogram.SQUARE_START);
+		if (y % Histogram.BAR_WIDTH == 0 && moveValid(y + getHeight() / 2)) {
+			setY(y - getHeight());
+			setX(closeToOtherSlider() ? EXPANED_SLIDER_X
+					: Histogram.SQUARE_START);
 			moveLineAndText();
 			Grader.getCurve().adjust(grade, getScoreFromLocation());
 		}
@@ -143,41 +148,46 @@ public class GradeShape extends Rectangle {
 		text.setX(getX() + getWidth() / 2.5);
 		text.setY(getY() + getHeight() / 1.7);
 	}
-	
+
 	private boolean closeToOtherSlider() {
-		return getScoreFromLocation() < getLowestPossibleScore() + CLOSENESS_THRESHOLD
-				|| getScoreFromLocation() > getHighestPossibleScore() - CLOSENESS_THRESHOLD;
+		return getScoreFromLocation() < getLowestPossibleScore()
+				+ CLOSENESS_THRESHOLD
+				|| getScoreFromLocation() > getHighestPossibleScore()
+						- CLOSENESS_THRESHOLD;
 	}
-	
+
 	private boolean moveValid(double y) {
 		return line.getStartY() > Histogram.TOP_BUFFER
-				&& line.getStartY() < Histogram.TOP_BUFFER + Histogram.NUM_TICKS*Histogram.BAR_WIDTH;
-				//&& getScoreFromLocation() > getLowestPossibleScore()
-				//&& getScoreFromLocation() < getHighestPossibleScore();
+				&& line.getStartY() < Histogram.TOP_BUFFER
+						+ Histogram.NUM_TICKS * Histogram.BAR_WIDTH;
+//				&& getScoreFromLocation() > getLowestPossibleScore()
+//				&& getScoreFromLocation() < getHighestPossibleScore();
 	}
-	
+
 	private double getLowestPossibleScore() {
-		if(Grader.getCurve().getGradeBelow(grade) != null) {
+		if (Grader.getCurve().getGradeBelow(grade) != null) {
 			return Grader.getCurve().getGradeBelow(grade).value() + 1;
 		}
 		return 0;
 	}
-	
+
 	private double getHighestPossibleScore() {
-		if(Grader.getCurve().getGradeAbove(grade) != null) {
+		if (Grader.getCurve().getGradeAbove(grade) != null) {
 			return Grader.getCurve().getGradeAbove(grade).value() - 1;
 		}
 		return 100;
 	}
-	
+
 	private double getScoreFromLocation() {
-		return 1.5 + ((line.getStartY() + Histogram.BAR_WIDTH/2 - Histogram.TOP_BUFFER) / Histogram.BAR_WIDTH - Histogram.NUM_TICKS) * -1;
+		return 1.5
+				+ ((line.getStartY() + Histogram.BAR_WIDTH / 2 - Histogram.TOP_BUFFER)
+						/ Histogram.BAR_WIDTH - Histogram.NUM_TICKS) * -1;
 	}
-	
+
 	public boolean equals(Object other) {
-		if(other == null || !(other instanceof GradeShape)) {
+		if (other == null || !(other instanceof GradeShape)) {
 			return false;
 		}
-		return ((GradeShape)other).grade.equals(grade);
+		return ((GradeShape) other).grade.equals(grade);
 	}
 }
