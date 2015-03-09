@@ -1,11 +1,13 @@
 package controller.roster;
  
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import controller.GraderPopup;
 import controller.graph.Histogram;
 import model.administration.PermissionKeys;
+import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.GradedItem;
@@ -18,11 +20,13 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -299,8 +303,31 @@ public class GradebookController {
 				return call((CellDataFeatures<Student, String>) (param));
 			}
 		});
-		newColumn.setCellFactory(TextFieldTableCell
-				.<Student> forTableColumn());
+		newColumn.setCellFactory(new Callback<TableColumn<Student, String>, TableCell<Student, String>>() {
+			@Override
+			public TableCell<Student, String> call(
+					TableColumn<Student, String> param) {
+				TableCell cell = new TableCell() {
+					@Override
+					public void updateItem(Object item, boolean empty) {
+						if (item != null) {
+							setText(item.toString());
+							Grade grade = getRoster().getCurve().getGrade(
+									item.toString());
+							Color col = grade.getColor();
+							setStyle("-fx-background-color: rgb("
+									+ col.getRed() + ", " + col.getGreen()
+									+ ", " + col.getBlue() + ")");
+						}
+					}
+				};
+				cell.setAlignment(Pos.CENTER);
+
+				return cell;
+			}
+		});
+//		newColumn.setCellFactory(TextFieldTableCell
+//				.<Student> forTableColumn());
 		/* When a user types a change */
 		//newColumn.setOnEditCommit(new CellEditEventHandler(this));
 		newColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Student,String>>() {
