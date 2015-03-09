@@ -32,6 +32,6 @@ public class GradeShapeGroup {
 	}
 	
 	private double getStartingLocation(Grade grade) {
-		return (Histogram.NUM_TICKS - grade.value()) * Histogram.BAR_WIDTH + Histogram.TOP_BUFFER - Histogram.BAR_WIDTH / 2;
+		return (Histogram.NUM_TICKS - grade.value()) * Histogram.BAR_WIDTH + Histogram.TOP_BUFFER - Histogram.BAR_WIDTH / 2 - 2*Histogram.BAR_WIDTH;
 	}
 }

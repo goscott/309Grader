@@ -406,6 +406,7 @@ public class GraphController {
 		Grade grade = Grader.getCurve()
 				.getGrade(gradeSelectDropdown.getValue());
 		if (grade != null) {
+			slider.setVisible(false);
 			slider.setValue(grade.value());
 			slider.setMax(100);
 			if (Grader.getCurve().getGradeAbove(grade) != null) {
