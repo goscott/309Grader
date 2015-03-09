@@ -2,8 +2,7 @@ package controller.graph;
 
 import resources.ResourceLoader;
 import model.driver.Grader;
-import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -11,9 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-public class Histogram extends Application {
+public class Histogram {
 	public static final int INCR_PER_PERSON = 35;
 	public static final int DIST_TO_LINE = 30;
 	public static final int BAR_WIDTH = 6;
@@ -96,14 +94,16 @@ public class Histogram extends Application {
 		singleton.update();
 	}
 	
-    @Override
-    public void start(Stage stage) throws Exception {
-    	initialize();
-        Scene scene = new Scene(drawingPane);
-        stage.setMinWidth(100);
-        stage.setMinHeight(100);
-        stage.setScene(scene);
-        stage.show();
+	public Node getNode() {
+		return scrollPane;
+	}
+	
+    public static Node get() {
+    	if(singleton == null) {
+	    	Histogram histo = new Histogram();
+	    	histo.initialize();
+    	}
+    	return singleton.getNode();
     }
 
 	private int getNum(double score) {

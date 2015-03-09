@@ -189,7 +189,7 @@ public class GradebookController {
 				public void handle(ActionEvent event) {
 					Histogram temp = new Histogram();
 					try {
-						temp.start(new Stage());
+						//temp.start(new Stage());
 					} catch (Exception ex) {
 						// TODO Auto-generated catch block
 						ex.printStackTrace();

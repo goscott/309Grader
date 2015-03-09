@@ -26,6 +26,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
@@ -90,6 +91,9 @@ public class GraphController {
 	@FXML
 	/** Grade adjustment sldier */
 	private Slider slider;
+	@FXML
+	/** The right-most pane **/
+	private TitledPane graphPane;
 	@FXML
 	/** Select grade drop down menu */
 	private ComboBox<String> gradeSelectDropdown;
@@ -178,6 +182,7 @@ public class GraphController {
 							gradeSelectDropdown.getValue());
 					Grader.getCurve().adjust(grade, new_val.doubleValue());
 					GradebookController.edited = true;
+					Histogram.refresh();
 				}
 
 				updateCurveTable();
@@ -206,6 +211,7 @@ public class GraphController {
 						}
 					}
 				});
+		graphPane.setContent(Histogram.get());
 	}
 
 	/**
@@ -504,5 +510,6 @@ public class GraphController {
 	 */
 	public static void refresh() {
 		currentInstance.update();
+		Histogram.refresh();
 	}
 }
