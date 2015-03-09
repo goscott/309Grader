@@ -464,9 +464,28 @@ public class GradebookController {
 	    
 	    for (int index = 3; index < mainTable.getColumns().size() - 1; index++) {
 	        targetColumn = mainTable.getColumns().get(index);
+	        //newColumn = new TableColumn(targetColumn.getText());
+            //newColumn.setMinWidth(COLUMN_WIDTH);
+            //stats_table.getColumns().add(newColumn);
+	        dfsAddCollumns(targetColumn);
+	    }
+	}
+	
+	private void dfsAddCollumns(TableColumn targetColumn) {
+	    TableColumn newColumn;
+	    
+	    //leaf
+	    if (targetColumn.getColumns().isEmpty()) {
 	        newColumn = new TableColumn(targetColumn.getText());
             newColumn.setMinWidth(COLUMN_WIDTH);
             stats_table.getColumns().add(newColumn);
+	        return;
+	    }
+	    
+	    else {
+	        for (TableColumn child : ((ObservableList<TableColumn>)targetColumn.getColumns())) {
+	            dfsAddCollumns(child);
+	        }
 	    }
 	}
 
