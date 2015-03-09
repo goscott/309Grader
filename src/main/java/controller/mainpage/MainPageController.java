@@ -213,6 +213,9 @@ public class MainPageController {
 		announcementsTab.setOnSelectionChanged(getStyleHandler());
 		historyTab.setOnSelectionChanged(getStyleHandler());
 		
+	    classTab.setStyle("-fx-background-color: #74D7E5; -fx-text-base-color: #ffffff;");
+
+		
 		synch.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				Stage stage = GraderPopup.getPopupStage("Roster Sync", "view/mainpage/RosterSync.fxml");

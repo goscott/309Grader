@@ -29,6 +29,22 @@
                </BorderPane.margin>
             </Label>
          </top>
+         <bottom>
+            <HBox alignment="CENTER">
+               <children>
+                  <Button fx:id="mute_button" focusTraversable="false" mnemonicParsing="false" onAction="#mute" style="-fx-background-color: #74D7E5;" text="Mute">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#close" style="-fx-background-color: #74D7E5;" text="Done" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </bottom>
          <center>
             <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
               <columnConstraints>
@@ -44,103 +60,69 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Gavin Scott">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text="Gavin Scott" GridPane.halignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
-                     <GridPane.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Shelli Crispen" GridPane.rowIndex="1">
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="308.0" style="-fx-background-color: #A1DDE5;" text="Team Leader, Programmer" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
-                     <GridPane.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Jacob Hardi" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text="Shelli Crispen" GridPane.rowIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Frank Poole" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text="UI Programmer" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Michael Lenz" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text="Jacob Hardi" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Mason Stevenson" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text="Frank Poole" GridPane.rowIndex="3">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Team Lead" GridPane.columnIndex="1">
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text="Michael Lenz" GridPane.rowIndex="4">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="UI Programmer" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text=" Mason Stevenson" GridPane.rowIndex="5">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Programmer, Librarian" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text="Programmer" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Programmer" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text="Programmer" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Programmer, Technical Consultant" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text="Programmer, Technical Consultant" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </TextField>
-                  <TextField alignment="CENTER" editable="false" focusTraversable="false" text="Programmer" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="303.0" style="-fx-background-color: #A1DDE5;" text="Programmer" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </TextField>
+                  </Label>
                </children>
             </GridPane>
          </center>
-         <bottom>
-            <HBox alignment="CENTER">
-               <children>
-                  <Button fx:id="mute_button" focusTraversable="false" mnemonicParsing="false" onAction="#mute" text="Mute">
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#close" text="Done" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </BorderPane.margin>
-                  </Button>
-               </children>
-            </HBox>
-         </bottom>
       </BorderPane>
    </children>
 </StackPane>
