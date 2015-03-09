@@ -201,13 +201,13 @@ public class GraphController {
 						if (!isNowChanging) {
 							Grade grade = Grader.getCurve().getGrade(
 									gradeSelectDropdown.getValue());
-							if (slider.getValue() == Grader.getCurve()
+							/*if (slider.getValue() == Grader.getCurve()
 									.getGradeAbove(grade).value()
 									|| slider.getValue() == Grader.getCurve()
 											.getGradeBelow(grade).value()) {
 								Grader.getCurve().remove(grade);
 								update();
-							}
+							}*/
 						}
 					}
 				});
@@ -447,11 +447,11 @@ public class GraphController {
 			slider.setValue(grade.value());
 			slider.setMax(100);
 			if (Grader.getCurve().getGradeAbove(grade) != null) {
-				slider.setMax(Grader.getCurve().getGradeAbove(grade).value());
+				slider.setMax(Grader.getCurve().getGradeAbove(grade).value() - 1);
 			}
 			slider.setMin(0);
 			if (Grader.getCurve().getGradeBelow(grade) != null) {
-				slider.setMin(Grader.getCurve().getGradeBelow(grade).value());
+				slider.setMin(Grader.getCurve().getGradeBelow(grade).value() + 1);
 			}
 			slider.setValue(grade.value());
 			slider.setVisible(true);

@@ -18,7 +18,7 @@ public class Histogram {
 	public static final int BUFFER = 1;
 	public static final int SQUARE_START = 150;
 	public static final int NUM_TICKS = 100;
-	public static final int TICKS_UNTIL_TEXT = 10;
+	public static final int TICKS_UNTIL_TEXT = 5;
 	public static final int TICK_WIDTH = 10;
 	public static final int BIG_TICK_WIDTH = 20;
 	public static final int MAIN_LINE_WIDTH = 3;
