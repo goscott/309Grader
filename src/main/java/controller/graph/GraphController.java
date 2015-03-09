@@ -27,6 +27,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
@@ -71,20 +73,8 @@ public class GraphController {
 	/** Students per grade percentage */
 	private TableColumn<StudentsPerGradeObject, String> spg_percentage;
 	@FXML
-	/** X Axis - Number of students */
-	private NumberAxis xAxis;
-	@FXML
-	/** Y Axis - Grade category */
-	private CategoryAxis yAxis;
-	@FXML
-	/** Bar Chart */
-	private BarChart<Integer, String> barChart;
-	@FXML
 	/** Pie Chart */
 	private PieChart pie_chart;
-	@FXML
-	/** Slider bar scroll pane */
-	private ScrollPane bar_pane;
 	@FXML
 	/** New grade button */
 	private Button newGradeButton;
@@ -93,7 +83,7 @@ public class GraphController {
 	private Slider slider;
 	@FXML
 	/** The right-most pane **/
-	private TitledPane graphPane;
+	private StackPane graphPane;
 	@FXML
 	/** Select grade drop down menu */
 	private ComboBox<String> gradeSelectDropdown;
@@ -211,7 +201,8 @@ public class GraphController {
 						}
 					}
 				});
-		graphPane.setContent(Histogram.get());
+		graphPane.getChildren().clear();
+		graphPane.getChildren().add(Histogram.get());
 	}
 
 	/**
@@ -291,21 +282,20 @@ public class GraphController {
 	/**
 	 * Switch the the graph not in focus (either bar chart or pie chart).
 	 */
+	@FXML
 	public void switchGraph() {
 
 		if (showPie) {
 			// switch to lineChart
-			// barChart.setVisible(true);
-			bar_pane.setVisible(true);
 			pie_chart.setVisible(false);
+			graphPane.setVisible(true);
+			Histogram.refresh();
 		}
-
 		else {
-			// barChart.setVisible(false);
-			bar_pane.setVisible(false);
+			graphPane.setVisible(false);
 			pie_chart.setVisible(true);
+			
 		}
-
 		showPie = !showPie;
 	}
 
@@ -411,14 +401,6 @@ public class GraphController {
 				maxVal = (maxVal < scores[i]) ? scores[i] : maxVal;
 			}
 		}
-
-		barChart.getData().clear();
-		barChart.getData().add(fSeries);
-		barChart.getData().add(dSeries);
-		barChart.getData().add(cSeries);
-		barChart.getData().add(bSeries);
-		barChart.getData().add(aSeries);
-		xAxis.setUpperBound(maxVal);
 	}
 
 	/**
