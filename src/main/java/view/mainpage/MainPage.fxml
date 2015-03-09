@@ -11,9 +11,9 @@
         <tabs>
           <Tab fx:id="classTab" style="-fx-background-color: #2EA1B1; -fx-text-base-color: #ffffff;" text="Classes">
                <content>
-              <AnchorPane>
+              <AnchorPane style="-fx-background-color: #ffffff;">
                      <children>
-                        <ScrollPane fitToWidth="true" prefViewportHeight="596.0" prefViewportWidth="800.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                        <ScrollPane fx:id="classesScrollPane" fitToWidth="true" layoutX="-2.0" prefViewportHeight="596.0" prefViewportWidth="800.0" style="-fx-background: #C2F7FF;" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
                            <content>
                               <FlowPane fx:id="buttonSetUp" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </content>

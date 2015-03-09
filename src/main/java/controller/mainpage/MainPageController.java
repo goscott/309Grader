@@ -1,5 +1,6 @@
 package controller.mainpage;
 
+
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,13 +21,18 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
@@ -102,6 +108,8 @@ public class MainPageController {
 	@FXML
 	private FlowPane buttonSetUp;
 
+	@FXML
+	private ScrollPane classesScrollPane;
 	/**
 	 * Initializes the main page
 	 */
@@ -176,6 +184,8 @@ public class MainPageController {
 		ClassButtonsController con = new ClassButtonsController(buttonSetUp);
 		buttonController = con;
 		thisController = this;
+	    (classesScrollPane).setBorder(new Border(new BorderStroke(null, null, null, new BorderWidths(25.0))));
+
 
 		disable();
 

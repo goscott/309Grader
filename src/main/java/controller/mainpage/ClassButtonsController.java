@@ -7,6 +7,7 @@ import model.administration.PermissionKeys;
 import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Roster;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 
@@ -19,7 +20,6 @@ public class ClassButtonsController {
 		buttonSetUp = buttons;
 		// buttonSetUp.setTranslateX(25);
 		// buttonSetUp.setTranslateY(25);
-
 		buttonSetUp.setVgap(50);
 		buttonSetUp.setHgap(50);
 		buttonSetUp.setMaxSize(100000, 1000000);
@@ -63,6 +63,11 @@ public class ClassButtonsController {
 			String name = rosters[i].getName();
 			name = name.substring(0, name.length() - 5);
 			button = new Button(name);
+			button.setStyle("-fx-background-color: #2EA1B1, linear-gradient(#2EA1B1, #74D7E5); "
+			                + "-fx-text-base-color: #ffffff;"
+			                + "-fx-background-insets: 0,1,2;"
+			                + "-fx-background-radius: 3,2,1;"
+			                + "-fx-padding: 15 30 15 30;");
 			button.setOnAction(new ClassButtonEventHandler());
 			buttonSetUp.getChildren().add(button);
 		}
@@ -70,6 +75,11 @@ public class ClassButtonsController {
 		if (Grader.getUser().getPermissions()
 				.contains(PermissionKeys.ADD_CLASS)) {
 			button = new Button("Add Class");
+	        button.setStyle("-fx-background-color: #2EA1B1, linear-gradient(#2EA1B1, #74D7E5); "
+	                            + "-fx-text-base-color: #ffffff;"
+	                            + "-fx-background-insets: 0,1,2;"
+	                            + "-fx-background-radius: 3,2,1;"
+	                            + "-fx-padding: 15 30 15 30;");
 			button.setOnAction(new AddClassButtonEventHandler(this));
 			buttonSetUp.getChildren().add(button);
 		}
