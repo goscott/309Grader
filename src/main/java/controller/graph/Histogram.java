@@ -104,7 +104,9 @@ public class Histogram {
 	 * Refreshes the histogram to reflect the current curve
 	 */
 	public static void refresh() {
-		singleton.update();
+		if(singleton != null) {
+			singleton.update();
+		}
 	}
 	
 	/**

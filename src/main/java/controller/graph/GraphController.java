@@ -13,21 +13,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -82,8 +77,11 @@ public class GraphController {
 	/** Grade adjustment sldier */
 	private Slider slider;
 	@FXML
+	/** The histogram pane **/
+	private StackPane histoPane;
+	@FXML
 	/** The right-most pane **/
-	private StackPane graphPane;
+	private TitledPane rightPane;
 	@FXML
 	/** Select grade drop down menu */
 	private ComboBox<String> gradeSelectDropdown;
@@ -182,27 +180,8 @@ public class GraphController {
 				createGradeSeries();
 			}
 		});
-		// only do this when change is finished
-		slider.valueChangingProperty().addListener(
-				new ChangeListener<Boolean>() {
-					@Override
-					public void changed(ObservableValue<? extends Boolean> obs,
-							Boolean wasChanging, Boolean isNowChanging) {
-						if (!isNowChanging) {
-							Grade grade = Grader.getCurve().getGrade(
-									gradeSelectDropdown.getValue());
-							/*if (slider.getValue() == Grader.getCurve()
-									.getGradeAbove(grade).value()
-									|| slider.getValue() == Grader.getCurve()
-											.getGradeBelow(grade).value()) {
-								Grader.getCurve().remove(grade);
-								update();
-							}*/
-						}
-					}
-				});
-		graphPane.getChildren().clear();
-		graphPane.getChildren().add(Histogram.get());
+		histoPane.getChildren().clear();
+		histoPane.getChildren().add(Histogram.get());
 	}
 
 	/**
@@ -223,6 +202,13 @@ public class GraphController {
 		updateGradeTable();
 	}
 
+	/**
+	 * Gets the singleton instance of this controller
+	 */
+	public static GraphController get() {
+		return currentInstance;
+	}
+	
 	/**
 	 * Updates the stats box.
 	 */
@@ -284,17 +270,15 @@ public class GraphController {
 	 */
 	@FXML
 	public void switchGraph() {
-
+		rightPane.setText("Breakdown");
 		if (showPie) {
 			// switch to lineChart
 			pie_chart.setVisible(false);
-			graphPane.setVisible(true);
+			histoPane.setVisible(true);
 			Histogram.refresh();
-		}
-		else {
-			graphPane.setVisible(false);
+		} else {
+			histoPane.setVisible(false);
 			pie_chart.setVisible(true);
-			
 		}
 		showPie = !showPie;
 	}
@@ -493,5 +477,16 @@ public class GraphController {
 	public static void refresh() {
 		currentInstance.update();
 		Histogram.refresh();
+	}
+	
+	/**
+	 * Sets the given grade as selected
+	 */
+	public void setSelectedGrade(Grade grade) {
+		if(grade != null) {
+			rightPane.setText("Currently selected:   " + grade.getName());
+		} else {
+			rightPane.setText("Breakdown");
+		}
 	}
 }

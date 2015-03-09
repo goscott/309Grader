@@ -104,6 +104,7 @@ public class GradeShape extends Rectangle {
 	private EventHandler<MouseEvent> getDragHandler() {
 		return new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
+				GraphController.get().setSelectedGrade(grade);
 				move(event.getY());
 			}
 		};
@@ -122,7 +123,7 @@ public class GradeShape extends Rectangle {
 		ArrayList<Node> list = new ArrayList<Node>();
 		list.add(this);
 		list.add(line);
-		list.add(text);
+		//list.add(text);
 		return list;
 	}
 
