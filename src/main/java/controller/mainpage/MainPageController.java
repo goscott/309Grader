@@ -206,12 +206,13 @@ public class MainPageController {
 				}
 			}
 		});
-		// TODO Make work so no extra grade
-		gradebookTab.setOnSelectionChanged(new EventHandler<Event>() {
-			public void handle(Event event) {
-				GradebookController.get().fullRefresh();
-			}
-		});
+		
+		gradebookTab.setOnSelectionChanged(getStyleHandler());
+		graphTab.setOnSelectionChanged(getStyleHandler());
+		classTab.setOnSelectionChanged(getStyleHandler());
+		announcementsTab.setOnSelectionChanged(getStyleHandler());
+		historyTab.setOnSelectionChanged(getStyleHandler());
+		
 		synch.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				Stage stage = GraderPopup.getPopupStage("Roster Sync", "view/mainpage/RosterSync.fxml");
@@ -224,6 +225,18 @@ public class MainPageController {
 				stage.show();
 			}
 		});
+	}
+	
+	private EventHandler<Event> getStyleHandler() {
+	    return new EventHandler<Event>() {
+            public void handle(Event event) {
+                GradebookController.get().fullRefresh();
+                if(!((Tab)event.getTarget()).isSelected())
+                    ((Tab)event.getTarget()).setStyle("-fx-background-color: #2EA1B1; -fx-text-base-color: #ffffff;");
+                else
+                    ((Tab)event.getTarget()).setStyle("-fx-background-color: #74D7E5; -fx-text-base-color: #ffffff;");
+            }
+        };
 	}
 
 	/**
