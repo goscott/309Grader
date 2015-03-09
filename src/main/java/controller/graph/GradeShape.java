@@ -53,34 +53,13 @@ public class GradeShape extends Rectangle {
 		text.setScaleY(FONT_SCALE);
 		text.setTextAlignment(TextAlignment.CENTER);
 
-		text.addEventFilter(MouseEvent.MOUSE_DRAGGED,
-				new EventHandler<MouseEvent>() {
-					public void handle(MouseEvent event) {
-						move(event.getY());
-					}
-				});
+		// drag
+		addEventFilter(MouseEvent.MOUSE_DRAGGED, getDragHandler());
+		text.addEventFilter(MouseEvent.MOUSE_DRAGGED, getDragHandler());
 
-		addEventFilter(MouseEvent.MOUSE_DRAGGED,
-				new EventHandler<MouseEvent>() {
-					public void handle(MouseEvent event) {
-						move(event.getY());
-					}
-				});
-
-		addEventFilter(MouseEvent.MOUSE_RELEASED,
-				new EventHandler<MouseEvent>() {
-					public void handle(MouseEvent event) {
-						GradebookController.get().fullRefresh();
-						GraphController.refresh();
-					}
-				});
-
-		text.addEventFilter(MouseEvent.MOUSE_RELEASED,
-				new EventHandler<MouseEvent>() {
-					public void handle(MouseEvent event) {
-						GradebookController.get().fullRefresh();
-					}
-				});
+		// release
+		addEventFilter(MouseEvent.MOUSE_RELEASED, getReleaseHandler());
+		text.addEventFilter(MouseEvent.MOUSE_RELEASED, getReleaseHandler());
 
 		ContextMenu menu = new ContextMenu();
 		MenuItem delete = new MenuItem("Remove Grade");
@@ -122,6 +101,23 @@ public class GradeShape extends Rectangle {
 		moveLineAndText();
 	}
 
+	private EventHandler<MouseEvent> getDragHandler() {
+		return new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				move(event.getY());
+			}
+		};
+	}
+	
+	private EventHandler<MouseEvent> getReleaseHandler() {
+		return new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				GradebookController.get().fullRefresh();
+				GraphController.refresh();
+			}
+		};
+	}
+	
 	public Collection<Node> get() {
 		ArrayList<Node> list = new ArrayList<Node>();
 		list.add(this);
