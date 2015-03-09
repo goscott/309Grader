@@ -247,21 +247,17 @@ public class GraphController {
 		Collections.reverse(gradesSorted);
 		for (Grade grade : gradesSorted) {
 			numStudents = Grader.getRoster().getStudentsByGrade(grade).size();
-
 			// avoid divide by zero error
 			if (Grader.getRoster().getStudents().size() > 0) {
 				percentage = (int) (((double) numStudents / (double) Grader
 						.getRoster().getStudents().size()) * 100);
-			}
-
-			else {
+			} else {
 				percentage = 0;
 			}
 
 			gradeData.add(new StudentsPerGradeObject(grade.getName(),
 					numStudents, percentage + "%"));
 		}
-
 		studentTable.setItems(gradeData);
 	}
 

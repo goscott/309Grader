@@ -27,6 +27,7 @@ public class GradeShape extends Rectangle {
 	private Line line;
 	private Text text;
 	private Grade grade;
+	private ContextMenu menu;
 	private final double WIDTH = 30;
 	private final double HEIGHT = 30;
 	private final double ROUNDNESS = 20;
@@ -61,12 +62,16 @@ public class GradeShape extends Rectangle {
 		addEventFilter(MouseEvent.MOUSE_RELEASED, getReleaseHandler());
 		text.addEventFilter(MouseEvent.MOUSE_RELEASED, getReleaseHandler());
 
-		ContextMenu menu = new ContextMenu();
+		// click
+		addEventFilter(MouseEvent.MOUSE_CLICKED, getClickHandler());
+		text.addEventFilter(MouseEvent.MOUSE_CLICKED, getClickHandler());
+		
+		menu = new ContextMenu();
 		MenuItem delete = new MenuItem("Remove Grade");
 		menu.getItems().add(delete);
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				Action response = Alert.showWarningDialog(
+				Action response = Alert.showWarningQuestion(
 						"Warning: Grade deletion will be permanent",
 						"Are you sure you want to delete '" + grade.getName()
 								+ "' from the curve?");
@@ -76,26 +81,6 @@ public class GradeShape extends Rectangle {
 				}
 			}
 		});
-
-		addEventFilter(MouseEvent.MOUSE_CLICKED,
-				new EventHandler<MouseEvent>() {
-					public void handle(MouseEvent event) {
-						if (event.getButton() == MouseButton.SECONDARY) {
-							menu.show(text, event.getScreenX(),
-									event.getScreenY());
-						}
-					}
-				});
-
-		text.addEventFilter(MouseEvent.MOUSE_CLICKED,
-				new EventHandler<MouseEvent>() {
-					public void handle(MouseEvent event) {
-						if (event.getButton() == MouseButton.SECONDARY) {
-							menu.show(text, event.getScreenX(),
-									event.getScreenY());
-						}
-					}
-				});
 
 		line = new Line();
 		moveLineAndText();
@@ -115,6 +100,17 @@ public class GradeShape extends Rectangle {
 			public void handle(MouseEvent event) {
 				GradebookController.get().fullRefresh();
 				GraphController.refresh();
+			}
+		};
+	}
+	
+	private EventHandler<MouseEvent> getClickHandler() {
+		return new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				if (event.getButton() == MouseButton.SECONDARY) {
+					menu.show(text, event.getX(),
+							event.getY());
+				}
 			}
 		};
 	}

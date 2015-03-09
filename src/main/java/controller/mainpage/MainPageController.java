@@ -257,8 +257,6 @@ public class MainPageController {
 	 */
 	private void disable() {
 		graphTab.setDisable(true);
-		// historyTab.setDisable(true);
-		// predictionsTab.setDisable(true);
 		announcementsTab.setDisable(true);
 		gradebookTab.setDisable(true);
 		exportExcel.setDisable(true);
@@ -267,9 +265,9 @@ public class MainPageController {
 		save.setDisable(true);
 		serverMenu.setDisable(true);
 
-		gradebookTab.setText("GradeBook");
-		graphTab.setText("Graphs");
-		announcementsTab.setText("Announcements");
+//		gradebookTab.setText("GradeBook");
+//		graphTab.setText("Graphs");
+//		announcementsTab.setText("Announcements");
 	}
 
 	/**
@@ -280,18 +278,14 @@ public class MainPageController {
 		exportExcel.setDisable(false);
 		gradebookTab.setDisable(false);
 		graphTab.setDisable(false);
-		// historyTab.setDisable(false);
-		// predictionsTab.setDisable(false);
 		announcementsTab.setDisable(false);
 		save.setDisable(false);
 		serverMenu.setDisable(false);
 
-		gradebookTab.setText("GradeBook - " + Grader.getRoster().courseName());
-		graphTab.setText("Graphs - " + Grader.getRoster().courseName());
-		/*predictionsTab.setText("Predictions - "
-				+ Grader.getRoster().courseName());*/
-		announcementsTab.setText("Announcements - "
-				+ Grader.getRoster().courseName());
+//		gradebookTab.setText("GradeBook - " + Grader.getRoster().courseName());
+//		graphTab.setText("Graphs - " + Grader.getRoster().courseName());
+//		announcementsTab.setText("Announcements - "
+//				+ Grader.getRoster().courseName());
 	}
 	
 	/**
@@ -381,7 +375,7 @@ public class MainPageController {
 				Alert.show(Grader.getRoster().courseName() + " has been saved");
 			}
 		} else {
-			Alert.showWarningDialog(Grader.getRoster().courseName() + " cannot be saved", "You are in prediction mode");
+			Alert.showWarningMessage(Grader.getRoster().courseName() + " cannot be saved", "You are in prediction mode");
 		}
 	}
 
@@ -391,7 +385,7 @@ public class MainPageController {
 	@FXML
 	private void pushRoster(ActionEvent event) {
 		Action response = Alert
-				.showWarningDialog("Warning: Cannot be undone",
+				.showWarningQuestion("Warning: Cannot be undone",
 						"Are you sure you want to push the current roster to the history?");
 		if (response == Dialog.ACTION_YES) {
 			Debug.log("Roster status change", "Roster pushed to history");

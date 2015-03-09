@@ -47,9 +47,18 @@ public class Alert {
 	 * Shows an alert dialog with the given message, returning Dialog.ACTION_YES
 	 * or Dialog.ACTION_NO depending on what the user selects
 	 */
-	public static Action showWarningDialog(String errorMessage, String message) {
+	public static Action showWarningQuestion(String errorMessage, String message) {
 		return Dialogs.create().owner(new Stage(StageStyle.UNDECORATED))
 				.title("Grader").masthead(errorMessage).message(message)
 				.actions(Dialog.ACTION_YES, Dialog.ACTION_NO).showWarning();
+	}
+	
+	/**
+	 * Shows an alert message with the given message
+	 */
+	public static Action showWarningMessage(String errorMessage, String message) {
+		return Dialogs.create().owner(new Stage(StageStyle.UNDECORATED))
+				.title("Grader").masthead(errorMessage).message(message)
+				.actions(Dialog.ACTION_OK).showWarning();
 	}
 }
