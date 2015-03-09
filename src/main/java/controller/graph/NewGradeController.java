@@ -137,9 +137,9 @@ public class NewGradeController {
 	 * @param event the action event
 	 */
 	private void done(ActionEvent event) {		
-		Color color = new Color((int) colorPicker.getValue().getRed()*255,
-				(int) colorPicker.getValue().getGreen()*255, (int) colorPicker
-						.getValue().getBlue()*255);
+		Color color = new Color((int)(colorPicker.getValue().getRed()*255),
+				(int) (colorPicker.getValue().getGreen()*255), (int) (colorPicker
+						.getValue().getBlue()*255));
 		Grade grade = new Grade(enterGrade.getText(),
 				Double.parseDouble(enterPercent.getText()), color);
 		Grader.getCurve().add(grade);
