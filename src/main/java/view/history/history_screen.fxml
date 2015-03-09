@@ -14,11 +14,11 @@
    <children>
       <BorderPane fx:id="history_view" prefHeight="200.0" prefWidth="200.0">
          <left>
-            <VBox BorderPane.alignment="CENTER">
+            <VBox style="-fx-background: #C2F7FF;" BorderPane.alignment="CENTER">
                <children>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background: #74D7E5;" VBox.vgrow="ALWAYS">
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background: #C2f7ff;" VBox.vgrow="ALWAYS">
                      <content>
-                        <Accordion fx:id="class_selector" minWidth="200.0" prefWidth="200.0" />
+                        <Accordion fx:id="class_selector" minWidth="200.0" prefWidth="200.0" style="-fx-background: #E5fCFF;" />
                      </content>
                   </ScrollPane>
                </children>
@@ -101,12 +101,12 @@
                                        <children>
                                           <StackPane>
                                              <children>
-                                                <LineChart fx:id="line_chart">
+                                                <LineChart fx:id="line_chart" style="-fx-background: #ffffff;">
                                                   <xAxis>
-                                                    <CategoryAxis side="BOTTOM" />
+                                                    <CategoryAxis side="BOTTOM" style="-fx-background: #ffffff;" />
                                                   </xAxis>
                                                   <yAxis>
-                                                    <NumberAxis side="LEFT" />
+                                                    <NumberAxis side="LEFT" style="-fx-background: #ffffff;" />
                                                   </yAxis>
                                                 </LineChart>
                                                 <PieChart fx:id="pie_chart">

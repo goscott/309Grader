@@ -13,7 +13,7 @@
                <content>
               <AnchorPane style="-fx-background-color: #ffffff;">
                      <children>
-                        <ScrollPane fx:id="classesScrollPane" fitToWidth="true" layoutX="-2.0" prefViewportHeight="596.0" prefViewportWidth="800.0" style="-fx-background: #C2F7FF;" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
+                        <ScrollPane fx:id="classesScrollPane" fitToWidth="true" layoutX="-2.0" prefViewportHeight="596.0" prefViewportWidth="800.0" style="-fx-background: #E5fCFF;" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
                            <content>
                               <FlowPane fx:id="buttonSetUp" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </content>
@@ -65,7 +65,7 @@
       </TabPane>
    </center>
    <top>
-      <MenuBar prefHeight="15.0" prefWidth="800.0" style="-fx-background-color: #C2F7FF;" BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="15.0" prefWidth="800.0" style="-fx-background-color: #f7feff;" BorderPane.alignment="CENTER">
         <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>

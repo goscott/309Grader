@@ -475,6 +475,11 @@ public class HistoryController {
 					+ newSection.getStartDate().get(Calendar.YEAR)
 					+ " Section0" + newSection.getSection());
 			section = newSection;
+            this.setStyle("-fx-background-color: #2EA1B1, linear-gradient(#2EA1B1, #74D7E5); "
+                            + "-fx-text-base-color: #ffffff;"
+                            + "-fx-background-radius: 3,2,1;"
+                            + "-fx-text-alignment: left;"
+                            );
 			initialize();
 		}
 
