@@ -11,6 +11,10 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+/**
+ * A histogram displaying the current roster's curve
+ * @author Gavin Scott
+ */
 public class Histogram {
 	public static final int INCR_PER_PERSON = 35;
 	public static final int DIST_TO_LINE = 30;
@@ -34,6 +38,9 @@ public class Histogram {
 	
 	private static Histogram singleton;
 
+	/**
+	 * Initializes the histogram
+	 */
 	public void initialize() {
 		singleton = this;
 		drawingPane = new Pane();
@@ -51,7 +58,10 @@ public class Histogram {
         update();
 	}
 	
-	public void update() {
+	/**
+	 * Redraws the histogram
+	 */
+	private void update() {
 		drawingPane.getChildren().removeAll(drawingPane.getChildren());
 		for(int i = NUM_TICKS; i > 0; i--) {
         	if(i % TICKS_UNTIL_TEXT == 0) {
@@ -90,14 +100,23 @@ public class Histogram {
         
 	}
 	
+	/**
+	 * Refreshes the histogram to reflect the current curve
+	 */
 	public static void refresh() {
 		singleton.update();
 	}
 	
-	public Node getNode() {
+	/**
+	 * Get's the scroll pane for the histogram
+	 */
+	private Node getNode() {
 		return scrollPane;
 	}
 	
+	/**
+	 * Gets the histogram as a node
+	 */
     public static Node get() {
     	if(singleton == null) {
 	    	Histogram histo = new Histogram();
@@ -106,6 +125,10 @@ public class Histogram {
     	return singleton.getNode();
     }
 
+    /**
+     * Gets the largest number of students that have any
+     * one grade
+     */
 	private int getNum(double score) {
 		int num = Grader.getRoster().getNumStudentsWithScore(score);
 		if(num > maxNumber) {
@@ -115,9 +138,5 @@ public class Histogram {
 			drawingPane.setMinWidth(maxNumber*INCR_PER_PERSON + 3*INCR_PER_PERSON);
 		}
 		return num;
-	}
-	
-	public static double getScrollLevel() {
-		return scrollPane.getVvalue();
 	}
 }

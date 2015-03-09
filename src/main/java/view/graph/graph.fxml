@@ -103,24 +103,13 @@
       </VBox>
       <VBox>
          <children>
-            <TitledPane fx:id="graphPane" alignment="CENTER" collapsible="false" minWidth="0.0" prefHeight="5000.0" style="-fx-background-color: #ffffff;" text="Breakdown" VBox.vgrow="ALWAYS">
+            <TitledPane alignment="CENTER" collapsible="false" minWidth="0.0" prefHeight="5000.0" style="-fx-background-color: #ffffff;" text="Breakdown" VBox.vgrow="ALWAYS">
                <content>
                   <VBox alignment="CENTER" style="-fx-background-color: #ffffff;">
                      <children>
                         <StackPane style="-fx-background-color: #ffffff;" VBox.vgrow="ALWAYS">
                            <children>
-                              <ScrollPane fx:id="bar_pane" prefViewportHeight="2000.0" prefViewportWidth="242.0" style="-fx-background-color: #ffffff;">
-                                 <content>
-                                    <BarChart fx:id="barChart" alternativeRowFillVisible="false" animated="false" barGap="0.0" categoryGap="0.0" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" minHeight="750.0" style="-fx-background-color: #ffffff;" verticalGridLinesVisible="false" verticalZeroLineVisible="false" VBox.vgrow="ALWAYS">
-                                      <yAxis>
-                                        <CategoryAxis fx:id="yAxis" animated="false" label="Percentage Score" side="LEFT" style="-fx-background-color: #ffffff;" tickLabelGap="0.0" tickLength="10.0" />
-                                      </yAxis>
-                                      <xAxis>
-                                        <NumberAxis animated="false" autoRanging="false" forceZeroInRange="false" label="Number of Students" minorTickCount="0" side="BOTTOM" style="-fx-background-color: #ffffff;" tickLabelGap="0.0" tickUnit="1.0" upperBound="15.0" fx:id="xAxis" />
-                                      </xAxis>
-                                    </BarChart>
-                                 </content>
-                              </ScrollPane>
+                              <StackPane fx:id="graphPane"/>
                               <PieChart fx:id="pie_chart" visible="false" />
                            </children>
                         </StackPane>
