@@ -172,7 +172,16 @@ public class GradedItem implements Serializable {
 		);
 	@*/
 	public double maxScore() {
-		return maxScore;
+		if(hasChildren()) {
+			double sum = 0;
+			for(GradedItem child : children) {
+				sum += child.maxScore();
+			}
+			return sum;
+		}
+		else {
+			return maxScore;
+		}
 	}
 
 	/**
@@ -597,7 +606,9 @@ public class GradedItem implements Serializable {
 	public double getMax() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
-			list.add(grade);
+			if(grade != null) {
+				list.add(grade);
+			}
 		}
 		Collections.sort(list);
 		if(list.size() > 0) {
@@ -610,7 +621,9 @@ public class GradedItem implements Serializable {
 	public double getMin() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
-			list.add(grade);
+			if(grade != null) {
+				list.add(grade);
+			}
 		}
 		Collections.sort(list);
 		if(list.size() > 0) {

@@ -20,19 +20,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 public class GradeShape extends Rectangle {
 	private Line line;
-	private Text text;
 	private Grade grade;
 	private ContextMenu menu;
 	private final double WIDTH = 30;
 	private final double HEIGHT = 30;
 	private final double ROUNDNESS = 20;
-	private final double FONT_SCALE = 1.5;
-	private final double CLOSENESS_THRESHOLD = 3;
+	private final double CLOSENESS_THRESHOLD = 5;
 	private final double EXPANED_SLIDER_X = Histogram.SQUARE_START + WIDTH
 			* 1.5;
 
@@ -46,25 +42,12 @@ public class GradeShape extends Rectangle {
 		setFill(color);
 		setHeight(HEIGHT);
 		setWidth(WIDTH);
-		setX(Histogram.SQUARE_START);
 		setY(y);
-		text = new Text(grade.getName());
-		text.setFill(Color.BLACK);
-		text.setScaleX(FONT_SCALE);
-		text.setScaleY(FONT_SCALE);
-		text.setTextAlignment(TextAlignment.CENTER);
+		setX(Histogram.SQUARE_START);
 
-		// drag
 		addEventFilter(MouseEvent.MOUSE_DRAGGED, getDragHandler());
-		text.addEventFilter(MouseEvent.MOUSE_DRAGGED, getDragHandler());
-
-		// release
 		addEventFilter(MouseEvent.MOUSE_RELEASED, getReleaseHandler());
-		text.addEventFilter(MouseEvent.MOUSE_RELEASED, getReleaseHandler());
-
-		// click
 		addEventFilter(MouseEvent.MOUSE_CLICKED, getClickHandler());
-		text.addEventFilter(MouseEvent.MOUSE_CLICKED, getClickHandler());
 		
 		menu = new ContextMenu();
 		MenuItem delete = new MenuItem("Remove Grade");
@@ -108,7 +91,7 @@ public class GradeShape extends Rectangle {
 		return new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
 				if (event.getButton() == MouseButton.SECONDARY) {
-					menu.show(text, event.getX(),
+					menu.show(line, event.getX(),
 							event.getY());
 				}
 			}
@@ -129,7 +112,7 @@ public class GradeShape extends Rectangle {
 			setX(closeToOtherSlider() ? EXPANED_SLIDER_X
 					: Histogram.SQUARE_START);
 			moveLineAndText();
-			Grader.getCurve().adjust(grade, getScoreFromLocation());
+			Grader.getCurve().adjust(grade, getScoreFromLocation(getLineY()));
 		}
 	}
 
@@ -138,44 +121,46 @@ public class GradeShape extends Rectangle {
 		line.setStartY(getY() + getHeight() / 2);
 		line.setEndX(Histogram.DIST_TO_LINE + Histogram.MAIN_LINE_WIDTH);
 		line.setEndY(getY() + getHeight() / 2);
-		text.setX(getX() + getWidth() / 2.5);
-		text.setY(getY() + getHeight() / 1.7);
 	}
 
 	private boolean closeToOtherSlider() {
-		return getScoreFromLocation() < getLowestPossibleScore()
+		return getScoreFromLocation(getLineY()) < getLowestPossibleScore()
 				+ CLOSENESS_THRESHOLD
-				|| getScoreFromLocation() > getHighestPossibleScore()
+				|| getScoreFromLocation(getLineY()) > getHighestPossibleScore()
 						- CLOSENESS_THRESHOLD;
 	}
 
 	private boolean moveValid(double y) {
-		return line.getStartY() > Histogram.TOP_BUFFER
-				&& line.getStartY() < Histogram.TOP_BUFFER
-						+ Histogram.NUM_TICKS * Histogram.BAR_WIDTH;
-//				&& getScoreFromLocation() > getLowestPossibleScore()
-//				&& getScoreFromLocation() < getHighestPossibleScore();
+		return y > Histogram.TOP_BUFFER
+				&& y < Histogram.TOP_BUFFER
+						+ Histogram.NUM_TICKS * Histogram.BAR_WIDTH
+				&& getScoreFromLocation(y) > getLowestPossibleScore()
+				&& getScoreFromLocation(y) < getHighestPossibleScore();
 	}
 
 	private double getLowestPossibleScore() {
 		if (Grader.getCurve().getGradeBelow(grade) != null) {
-			return Grader.getCurve().getGradeBelow(grade).value() + 1;
+			return Grader.getCurve().getGradeBelow(grade).value();
 		}
 		return 0;
 	}
 
 	private double getHighestPossibleScore() {
 		if (Grader.getCurve().getGradeAbove(grade) != null) {
-			return Grader.getCurve().getGradeAbove(grade).value() - 1;
+			return Grader.getCurve().getGradeAbove(grade).value();
 		}
 		return 100;
 	}
 
-	private double getScoreFromLocation() {
-		return ((line.getStartY() + Histogram.BAR_WIDTH / 2 - Histogram.TOP_BUFFER)
+	private double getScoreFromLocation(double y) {
+		return 1 + ((y + Histogram.BAR_WIDTH / 2 - Histogram.TOP_BUFFER)
 						/ Histogram.BAR_WIDTH - Histogram.NUM_TICKS) * -1;
 	}
 
+	private double getLineY() {
+		return getY() + getHeight() / 2;
+	}
+	
 	public boolean equals(Object other) {
 		if (other == null || !(other instanceof GradeShape)) {
 			return false;
