@@ -1,6 +1,9 @@
 package controller.administration;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
+
 import controller.GraderPopup;
+import controller.roster.GradebookController;
 import resources.ResourceLoader;
 import run.Launcher;
 import model.administration.User;
@@ -11,12 +14,16 @@ import model.server.Server;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -156,6 +163,13 @@ public class UserLoginController {
 				}
 			});
 			stage.show();
+			
+			//Links the horizontal scrollbars for the two tables in the gradebook
+			//This only works if you put the code here, where the mainpage is initialized
+			ScrollBar table1Scroller = findHorizontalScrollBar(GradebookController.getController().getMainTable());  
+	        ScrollBar table2Scroller = findHorizontalScrollBar(GradebookController.getController().getStatsTable());  
+	        
+	        table1Scroller.valueProperty().bindBidirectional(table2Scroller.valueProperty());
 			closeLoadScreen();
 		}
 
@@ -163,6 +177,24 @@ public class UserLoginController {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Locates the horizontal scroll bar for a table
+	 */
+	@SuppressWarnings({ "rawtypes", "restriction" })
+    private ScrollBar findHorizontalScrollBar(TableView<?> table) {  
+        //return (ScrollBar) table.lookup(".scroll-bar:vertical");  
+        VirtualFlow vf = (VirtualFlow)table.getChildrenUnmodifiable().get(1);
+        ScrollBar scrollBar1 = null;
+        for (final Node subNode: vf.getChildrenUnmodifiable()) {
+            if (subNode instanceof ScrollBar && 
+                    ((ScrollBar)subNode).getOrientation() == Orientation.HORIZONTAL) {
+                scrollBar1 = (ScrollBar)subNode;
+            }
+         }
+        
+        return scrollBar1;
+    } 
 	
 	/**
 	 * Launches the new user dialog.

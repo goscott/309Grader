@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
+
 import controller.GraderPopup;
 import controller.graph.Histogram;
 import model.administration.PermissionKeys;
+import model.announcements.Announcement;
 import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
@@ -15,14 +18,18 @@ import model.roster.PredictionMath;
 import model.roster.Roster;
 import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.SplitPane;
@@ -95,6 +102,14 @@ public class GradebookController {
 	public static GradebookController getControllerTwo() {
 		return singletonTwo;
 	}
+	
+	public TableView getMainTable() {
+	    return mainTable;
+	}
+	
+	public TableView getStatsTable() {
+	    return stats_table;
+	}
 
 	@FXML
 	/**
@@ -135,7 +150,7 @@ public class GradebookController {
 			}
 		});
 		populateTree();
-	}
+	} 
 
 	/**
 	 * Makes the right-click menu
@@ -471,40 +486,76 @@ public class GradebookController {
 		}
 	}
 	
-	public void populateStatsTable() {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+    public void populateStatsTable() {
 	    TableColumn targetColumn;
-	    TableColumn newColumn, bufferColumn1, bufferColumn2, bufferColumn3;
+	    TableColumn<AggregateInfo, String> newColumn, titleColumn, bufferColumn2, bufferColumn3, bufferColumn4;
+	    ObservableList<AggregateInfo> data;
 	    
 	    stats_table.getColumns().clear();
 	    
-	    bufferColumn1 = new TableColumn("");
+	    titleColumn = new TableColumn<AggregateInfo, String>("");
 	    bufferColumn2 = new TableColumn("");
 	    bufferColumn3 = new TableColumn("");
+	    bufferColumn4 = new TableColumn("");
 	    
-	    bufferColumn1.setMinWidth(COLUMN_WIDTH + 6);
+	    titleColumn.setCellValueFactory(new Callback() {
+            public SimpleStringProperty call(CellDataFeatures<AggregateInfo, String> param) {
+                return new SimpleStringProperty(param.getValue().getTitle());
+            }
+
+            public Object call(Object param) {
+                return call((CellDataFeatures<AggregateInfo, String>) (param));
+            }
+        });
+	    
+	    titleColumn.setMinWidth(COLUMN_WIDTH);
 	    bufferColumn2.setMinWidth(COLUMN_WIDTH);
 	    bufferColumn3.setMinWidth(COLUMN_WIDTH);
+	    bufferColumn4.setMinWidth(COLUMN_WIDTH);
 	    
-	    stats_table.getColumns().add(bufferColumn1);
+	    stats_table.getColumns().add(titleColumn);
 	    stats_table.getColumns().add(bufferColumn2);
 	    stats_table.getColumns().add(bufferColumn3);
 	    
 	    for (int index = 3; index < mainTable.getColumns().size() - 1; index++) {
 	        targetColumn = mainTable.getColumns().get(index);
-	        //newColumn = new TableColumn(targetColumn.getText());
-            //newColumn.setMinWidth(COLUMN_WIDTH);
-            //stats_table.getColumns().add(newColumn);
 	        dfsAddCollumns(targetColumn);
 	    }
+	    
+	    stats_table.getColumns().add(bufferColumn4);
+	    
+	    stats_table.getItems().clear();
+	    
+	    data = FXCollections.observableArrayList(
+	            new AggregateInfo("Maximum Point Value"), 
+	            new AggregateInfo("# of Data Points"), 
+	            new AggregateInfo("Range"),
+	            new AggregateInfo("Mean"),
+	            new AggregateInfo("Standard Deviation"),
+	            new AggregateInfo("Median"));
+	    stats_table.setItems(data);
 	}
 	
-	private void dfsAddCollumns(TableColumn targetColumn) {
-	    TableColumn newColumn;
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+    private void dfsAddCollumns(TableColumn targetColumn) {
+	    TableColumn<AggregateInfo, String> newColumn;
 	    
 	    //leaf
 	    if (targetColumn.getColumns().isEmpty()) {
-	        newColumn = new TableColumn(targetColumn.getText());
+	        newColumn = new TableColumn<AggregateInfo, String>(targetColumn.getText());
             newColumn.setMinWidth(COLUMN_WIDTH);
+            
+            newColumn.setCellValueFactory(new Callback() {
+                public SimpleStringProperty call(CellDataFeatures<AggregateInfo, String> param) {
+                    return new SimpleStringProperty(param.getValue().getCell(newColumn.getText()));
+                }
+
+                public Object call(Object param) {
+                    return call((CellDataFeatures<AggregateInfo, String>) (param));
+                }
+            });
+            
             stats_table.getColumns().add(newColumn);
 	        return;
 	    }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
- 
+
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -31,7 +31,7 @@
                      		<TableColumn id="totalGradeCol" fx:id="totalGradeCol" prefWidth="125.0" text="Overall Grade" />
                     </columns>
                   </TableView>
-                  <TableView fx:id="stats_table" focusTraversable="false" prefHeight="50.0" prefWidth="200.0" VBox.vgrow="NEVER">
+                  <TableView fx:id="stats_table" focusTraversable="false" prefHeight="180.0" prefWidth="200.0" VBox.vgrow="NEVER">
                     <columns>
                       <TableColumn prefWidth="125.0" />
                       <TableColumn prefWidth="125.0" />
