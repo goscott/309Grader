@@ -12,6 +12,10 @@ public class AggregateInfo {
         cells = new HashMap<String, String>();
     }
     
+    public void addCell(String column, int cell) {
+        cells.put(column, cell + "");
+    }
+    
     public void addCell(String column, double cell) {
         cells.put(column, String.format("%.2f", cell));
     }

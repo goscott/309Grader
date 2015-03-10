@@ -490,7 +490,7 @@ public class GradebookController {
     public void populateStatsTable() {
 	    TableColumn targetColumn;
 	    TableColumn<AggregateInfo, String> newColumn, titleColumn, bufferColumn2, bufferColumn3, bufferColumn4;
-	    AggregateInfo pointValues;
+	    
 	    ObservableList<AggregateInfo> data;
 	    
 	    stats_table.getColumns().clear();
@@ -528,21 +528,84 @@ public class GradebookController {
 	    
 	    stats_table.getItems().clear();
 	    
-	    pointValues = new AggregateInfo("Maximum Point Value");
 	    
-	    for (GradedItem item : Grader.getAssignmentList()) {
-	        pointValues.addCell(item.name(), item.maxScore());
-	    }
 	    
 	    data = FXCollections.observableArrayList(
-	            pointValues,
-	            new AggregateInfo("# of Data Points"), 
-	            new AggregateInfo("Range"),
-	            new AggregateInfo("Mean"),
-	            new AggregateInfo("Standard Deviation"),
-	            new AggregateInfo("Median"));
+	            getPointValues(),
+	            getDataPoints(), 
+	            getRanges(),
+	            getMeans(),
+	            getDeviations(),
+	            getMedians());
 	    stats_table.setItems(data);
 	}
+	
+	private AggregateInfo getPointValues() {
+	    AggregateInfo pointValues;
+	    
+	    pointValues = new AggregateInfo("Maximum Point Value");
+        
+        for (GradedItem item : Grader.getAssignmentList()) {
+            pointValues.addCell(item.name(), item.maxScore());
+        }
+        
+        return pointValues;
+	}
+	
+	private AggregateInfo getDataPoints() {
+	    AggregateInfo dataPoints;
+	    dataPoints = new AggregateInfo("# of Data Points");
+	    
+	    for (GradedItem item : Grader.getAssignmentList()) {
+	        dataPoints.addCell(item.name(), item.getNumGraded());
+	    }
+	    
+	    return dataPoints;
+	}
+	
+	private AggregateInfo getRanges() {
+        AggregateInfo range;
+        range = new AggregateInfo("Range");
+        
+        for (GradedItem item : Grader.getAssignmentList()) {
+            range.addCell(item.name(), item.getMax() - item.getMin());
+        }
+        
+        return range;
+    }
+	
+	private AggregateInfo getMeans() {
+        AggregateInfo mean;
+        mean = new AggregateInfo("Mean");
+        
+        for (GradedItem item : Grader.getAssignmentList()) {
+            mean.addCell(item.name(), item.getMean());
+        }
+        
+        return mean;
+    }
+	
+	private AggregateInfo getMedians() {
+        AggregateInfo median;
+        median = new AggregateInfo("Median");
+        
+        for (GradedItem item : Grader.getAssignmentList()) {
+            median.addCell(item.name(), "BROKEN"); //item.getMedian());
+        }
+        
+        return median;
+    }
+	
+	private AggregateInfo getDeviations() {
+        AggregateInfo standardDeviation;
+        standardDeviation = new AggregateInfo("Standard Deviation");
+        
+        for (GradedItem item : Grader.getAssignmentList()) {
+            standardDeviation.addCell(item.name(), "Need Method"); 
+        }
+        
+        return standardDeviation;
+    }
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
     private void dfsAddCollumns(TableColumn targetColumn) {
