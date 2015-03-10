@@ -490,6 +490,7 @@ public class GradebookController {
     public void populateStatsTable() {
 	    TableColumn targetColumn;
 	    TableColumn<AggregateInfo, String> newColumn, titleColumn, bufferColumn2, bufferColumn3, bufferColumn4;
+	    AggregateInfo pointValues;
 	    ObservableList<AggregateInfo> data;
 	    
 	    stats_table.getColumns().clear();
@@ -527,8 +528,14 @@ public class GradebookController {
 	    
 	    stats_table.getItems().clear();
 	    
+	    pointValues = new AggregateInfo("Maximum Point Value");
+	    
+	    for (GradedItem item : Grader.getAssignmentList()) {
+	        pointValues.addCell(item.name(), item.maxScore());
+	    }
+	    
 	    data = FXCollections.observableArrayList(
-	            new AggregateInfo("Maximum Point Value"), 
+	            pointValues,
 	            new AggregateInfo("# of Data Points"), 
 	            new AggregateInfo("Range"),
 	            new AggregateInfo("Mean"),

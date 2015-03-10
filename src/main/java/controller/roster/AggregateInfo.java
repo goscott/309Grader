@@ -10,8 +10,6 @@ public class AggregateInfo {
     public AggregateInfo(String newTitle) {
         title = newTitle;
         cells = new HashMap<String, String>();
-        addCell("Exam 1", 100.0);
-        addCell("Exam 2", 100.0);
     }
     
     public void addCell(String column, double cell) {
