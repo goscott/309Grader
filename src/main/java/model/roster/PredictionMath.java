@@ -46,7 +46,7 @@ public class PredictionMath {
         for (GradedItem item : roster.getAssignments()) {
             
             // not extra credit, and has no children
-            if (!item.isExtraCredit() && item.hasChildren()) {
+            if (!item.isExtraCredit() && item.isLeaf()) {
                 if (item.getStudentScore(student) == null) {
                     ungradedAssignments++;
                     result.put(item, null);

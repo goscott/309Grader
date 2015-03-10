@@ -172,7 +172,7 @@ public class GradedItem implements Serializable {
 		);
 	@*/
 	public double maxScore() {
-		if(hasChildren()) {
+		if(!isLeaf()) {
 			double sum = 0;
 			for(GradedItem child : children) {
 				sum += child.maxScore();
@@ -296,7 +296,7 @@ public class GradedItem implements Serializable {
 			((boolean)\result) == children.isEmpty()
 		);
 	@*/
-	public boolean hasChildren() {
+	public boolean isLeaf() {
 		return children.isEmpty();
 	}
 
