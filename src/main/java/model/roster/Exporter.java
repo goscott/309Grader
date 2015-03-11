@@ -136,6 +136,23 @@ public class Exporter {
 			}
 			column++;
 		}
+		// percentage
+		sheet.addCell(new Label(column, 0, "Percentage", times));
+		sheet.setColumnView(column,
+				"Percentage".length() > minColWidth ? "Percentage".length()
+						: minColWidth);
+		row = 1;
+		for (Student student : students) {
+				sheet.addCell(new Number(column, row++, student.getTotalPercentage(), times));
+		}
+		column++;
+		// grade
+		sheet.addCell(new Label(column, 0, "Grade", times));
+		sheet.setColumnView(column, minColWidth);
+		row = 1;
+		for (Student student : students) {
+				sheet.addCell(new Label(column, row++, student.getGrade().getName(), times));
+		}
 	}
 
 	public static void exportRosterToFile(Roster roster, File file) {
