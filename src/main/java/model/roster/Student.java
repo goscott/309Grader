@@ -173,7 +173,7 @@ public class Student implements Comparable<Student>, Serializable {
 	@*/
 	public double getTotalPercentage() {
 		if (roster != null) {
-			double maxTotal = roster.getMaxPoints();
+			double maxTotal = roster.getMaxPoints(this);
 			DecimalFormat twoDForm = new DecimalFormat("#.##");
 			return maxTotal > 0 ? Double.valueOf(twoDForm
 					.format(getTotalScore() / maxTotal * 100)) : 0;

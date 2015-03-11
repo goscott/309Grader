@@ -47,7 +47,7 @@ public class GradeShape extends Rectangle {
 
 		addEventFilter(MouseEvent.MOUSE_DRAGGED, getDragHandler());
 		addEventFilter(MouseEvent.MOUSE_RELEASED, getReleaseHandler());
-		addEventFilter(MouseEvent.MOUSE_CLICKED, getClickHandler());
+		addEventFilter(MouseEvent.MOUSE_PRESSED, getClickHandler());
 		
 		menu = new ContextMenu();
 		MenuItem delete = new MenuItem("Remove Grade");
@@ -81,7 +81,7 @@ public class GradeShape extends Rectangle {
 	private EventHandler<MouseEvent> getReleaseHandler() {
 		return new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				GradebookController.get().fullRefresh();
+				//GradebookController.get().fullRefresh();
 				GraphController.refresh();
 			}
 		};
@@ -90,11 +90,15 @@ public class GradeShape extends Rectangle {
 	private EventHandler<MouseEvent> getClickHandler() {
 		return new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				System.out.println("hit click handler");
-				if (event.getButton() == MouseButton.SECONDARY) {
-					System.out.println("hit RIGHT-click handler");
-					menu.show(line, event.getX(),
-							event.getY());
+				if (event.getButton() == MouseButton.SECONDARY){// && event.isControlDown()) {
+					Action response = Alert.showWarningQuestion(
+							"Warning: Grade deletion will be permanent",
+							"Are you sure you want to delete '" + grade.getName()
+									+ "' from the curve?");
+					if (response == Dialog.ACTION_YES) {
+						Grader.getCurve().remove(grade);
+						Histogram.refresh();
+					}
 				}
 			}
 		};

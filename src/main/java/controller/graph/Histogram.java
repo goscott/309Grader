@@ -139,6 +139,7 @@ public class Histogram {
 		if(drawingPane.getWidth() < maxNumber*INCR_PER_PERSON + 3*INCR_PER_PERSON) {
 			drawingPane.setMinWidth(maxNumber*INCR_PER_PERSON + 3*INCR_PER_PERSON);
 		}
+		System.out.println("num for " + score + " = " + num);
 		return num;
 	}
 }

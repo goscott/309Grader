@@ -181,11 +181,11 @@ public class GradebookController {
 				predictionMode = !predictionMode;
 				if(predictionMode) {
 					Roster.saveTemp(Grader.getRoster());
-					GradebookController.get().fullRefresh();
 				} else {
 					Roster rost = Roster.load("Rosters/" + Roster.TEMP_NAME + ".rost");
 					Grader.setCurrentRoster(rost);
 				}
+				GradebookController.get().fullRefresh();
 			}
 		});
 		

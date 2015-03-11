@@ -511,7 +511,7 @@ public class Roster implements Serializable {
 	public int getNumStudentsWithScore(Double score) {
 		int ret = 0;
 		for (Student student : students) {
-			if (student.getTotalPercentage() == score) {
+			if (((int)student.getTotalPercentage()) == score) {
 				ret++;
 			}
 		}
@@ -718,6 +718,16 @@ public class Roster implements Serializable {
 		double max = 0;
 		for (GradedItem item : assignments) {
 			if (!item.isExtraCredit() && item.isLeaf()) {
+				max += item.maxScore();
+			}
+		}
+		return max;
+	}
+	
+	public double getMaxPoints(Student student) {
+		double max = 0;
+		for (GradedItem item : assignments) {
+			if (!item.isExtraCredit() && item.isLeaf() && item.getStudentScore(student) != null) {
 				max += item.maxScore();
 			}
 		}
