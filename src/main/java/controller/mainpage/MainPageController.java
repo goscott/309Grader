@@ -131,9 +131,7 @@ public class MainPageController {
 								Boolean oldPropertyValue,
 								Boolean newPropertyValue) {
 							if (newPropertyValue) {
-								GradebookController gbook = GradebookController
-										.getController();
-								gbook.fullRefresh();
+								GradebookController.get().fullRefresh();
 							}
 						}
 					});
