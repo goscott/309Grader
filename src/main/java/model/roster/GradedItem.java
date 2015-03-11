@@ -573,23 +573,33 @@ public class GradedItem implements Serializable {
 	public double getMedian() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
-			list.add(grade);
+			if(grade != null) {
+				list.add(grade);
+			}
 		}
-		Collections.sort(list);
-		if(list.size() % 2 != 0) {
-			return list.get((list.size() + 1) / 2);
-		} else {
-			return list.get(list.size() / 2) + list.get((list.size() / 2) + 1);
+		if(list.size() > 0) {
+			if(list.size() == 1) {
+				return list.get(0);
+			}
+			Collections.sort(list);
+			if(list.size() % 2 != 0) {
+				return list.get((list.size() + 1) / 2 - 1);
+			} else {
+				return (list.get(list.size() / 2) + list.get((list.size() / 2) - 1)) / 2;
+			}
 		}
+		return 0;
 	}
 	
 	public double getMode() {
 		HashMap<Double, Integer> map = new HashMap<Double, Integer>();
 		for(Double grade : studentGrades.values()) {
-			if(map.containsKey(grade)) {
-				map.put(grade, map.get(grade) + 1);
-			} else {
-				map.put(grade, 1);
+			if(grade != null) {
+				if(map.containsKey(grade)) {
+					map.put(grade, map.get(grade) + 1);
+				} else {
+					map.put(grade, 1);
+				}
 			}
 		}
 		double count = -1;

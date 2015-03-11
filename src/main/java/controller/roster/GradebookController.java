@@ -590,7 +590,7 @@ public class GradebookController {
         median = new AggregateInfo("Median");
         
         for (GradedItem item : Grader.getAssignmentList()) {
-            median.addCell(item.name(), "BROKEN"); //item.getMedian());
+            median.addCell(item.name(), item.getMedian());
         }
         
         return median;
