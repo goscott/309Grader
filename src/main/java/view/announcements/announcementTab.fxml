@@ -21,7 +21,7 @@
    <bottom>
       <HBox alignment="CENTER" style="-fx-background-color: #a1dde5;" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#addAnnouncement" style="-fx-background-color: #2ea1b1;" text="Add Announcement" />
+            <Button fx:id="add_announcent" mnemonicParsing="false" onAction="#addAnnouncement" style="-fx-background-color: #2ea1b1;" text="Add Announcement" />
          </children>
       </HBox>
    </bottom>

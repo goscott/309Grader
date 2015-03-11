@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import model.administration.PermissionKeys;
 import model.announcements.Announcement;
 import model.driver.Grader;
 
@@ -46,6 +47,9 @@ public class AnnouncementsController {
      */
     public void initialize() {
     	singleton = this;
+    	if(!Grader.getUser().getPermissions().contains(PermissionKeys.SAVE)) {
+    		add_announcent.setVisible(false);
+    	}
     	update();
     }
     
@@ -61,7 +65,6 @@ public class AnnouncementsController {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void update() { //this gets called automatically at startup
-            
         // loads the announcements
         data = FXCollections.observableArrayList();
         for(Announcement ann : Grader.getRoster().getAnnouncements()) {
@@ -122,6 +125,7 @@ public class AnnouncementsController {
     /**
      * Launches a new announcement dialog, and then adds the announcement to the list.
      */
+    @FXML
     public void addAnnouncement() {
     	Stage newStage = new Stage();
     	AddAnnouncementController popup = new AddAnnouncementController();

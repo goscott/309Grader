@@ -63,11 +63,12 @@ public class Announcement implements Serializable{
 		if(Grader.getUser().getId().equals(postedBy)) {
 			return "You";
 		}
+		return postedBy;/*
 		Student poster = Server.findUser(postedBy);
 		if(poster != null) {
 			return poster.getName();
 		}
-		return "Unknown User";
+		return "Unknown User";*/
 	}
 	
 	/**
