@@ -152,13 +152,14 @@ public class GradebookController {
 		});
 		populateTree();
 		
+		/*
 		mainTable.getColumns().addListener(new ListChangeListener<TableColumn<?,?>>() {  
 		     @Override  
 		     public void onChanged(Change<? extends TableColumn<?,?>> change) {  
 		          // table columns changed, perhaps due to reordering...  
 		         populateStatsTable();
 		     }  
-		});  
+		}); */
 	} 
 
 	/**
@@ -430,7 +431,7 @@ public class GradebookController {
 			mainTable.getColumns().add(0, new TableColumn<Student, String>());
 			mainTable.getColumns().remove(0);
 			
-			//populateStatsTable();
+			populateStatsTable();
 		}
 	}
 	

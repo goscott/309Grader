@@ -307,7 +307,7 @@ public class HistoryController {
 		int temp;
 
 		for (QuarterAverage ave : selectedCourse.getAverages()) {
-			Debug.log(ave.getQuarter());
+			//Debug.log(ave.getQuarter());
 			series.getData().add(
 					new XYChart.Data<String, Double>(ave.getQuarter() + " "
 							+ ave.getYear(), ave.getValue()));

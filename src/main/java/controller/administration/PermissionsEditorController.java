@@ -114,6 +114,8 @@ public class PermissionsEditorController {
      */
     private char userType;
     
+    private static final String SPACING = " %-36s%35s";
+    
     /**
      * Runs on startup.
      */
@@ -136,9 +138,10 @@ public class PermissionsEditorController {
         ObservableList<String> list = FXCollections.observableArrayList();
         
         for (User target : users.getUsers()) {
-            list.add(String.format(" %-36s%36s", target.getId(), UserTypes.fullName(target.getType())));
+            list.add(String.format(SPACING, target.getId(), UserTypes.fullName(target.getType())));
         }
         
+        list.sort(null);
         user_list.setItems(list);
     }
     
@@ -183,11 +186,12 @@ public class PermissionsEditorController {
             ObservableList<String> list = FXCollections.observableArrayList();
 
             for (User target : users.getUsers()) {
-                list.add(String.format(" %-36s%36s", target.getId(),
+                list.add(String.format(SPACING, target.getId(),
                         UserTypes.fullName(target.getType())));
             }
  
             user_list.getItems().clear();
+            list.sort(null);
             user_list.setItems(list);
         } 
         
@@ -212,10 +216,11 @@ public class PermissionsEditorController {
                         target.getfName().toLowerCase().startsWith(search_field.getText().toLowerCase()) || 
                         target.getlName().toLowerCase().startsWith(search_field.getText().toLowerCase()) ||
                         UserTypes.fullName(target.getType()).toLowerCase().equals(search_field.getText().toLowerCase())) {
-                    list.add(String.format(" %-36s%36s", target.getId(), UserTypes.fullName(target.getType())));
+                    list.add(String.format(SPACING, target.getId(), UserTypes.fullName(target.getType())));
                 }
             }
             
+            list.sort(null);
             user_list.setItems(list);
         }
     }

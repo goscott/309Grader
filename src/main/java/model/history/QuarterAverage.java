@@ -85,7 +85,7 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
                  );
      @*/
     public int compareTo(QuarterAverage otherAverage) {
-        ArrayList<String> quarters = new ArrayList<String>(Arrays.asList(new String[]{"Spring", "Summer", "Fall", "Winter"}));
+        ArrayList<String> quarters = new ArrayList<String>(Arrays.asList(new String[]{"Winter", "Spring", "Summer", "Fall"}));
         
         if (otherAverage.getYear() != year) {
             return year - otherAverage.getYear();
