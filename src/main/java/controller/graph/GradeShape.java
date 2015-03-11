@@ -107,7 +107,7 @@ public class GradeShape extends Rectangle {
 	}
 
 	private void move(double y) {
-		if (y % Histogram.BAR_WIDTH == 0 && moveValid(y - getHeight() / 2)) {
+		if ((y + Histogram.BAR_WIDTH/2) % Histogram.BAR_WIDTH == 0 && moveValid(y - getHeight() / 2)) {
 			setY(y - getHeight());
 			setX(closeToOtherSlider() ? EXPANED_SLIDER_X
 					: Histogram.SQUARE_START);
@@ -153,7 +153,7 @@ public class GradeShape extends Rectangle {
 	}
 
 	private double getScoreFromLocation(double y) {
-		return 1 + ((y + Histogram.BAR_WIDTH / 2 - Histogram.TOP_BUFFER)
+		return ((y + Histogram.BAR_WIDTH / 2 - Histogram.TOP_BUFFER)
 						/ Histogram.BAR_WIDTH - Histogram.NUM_TICKS) * -1;
 	}
 
