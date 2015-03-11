@@ -221,7 +221,6 @@ public class Grader {
 		/*if(!currentRoster.containsStudent(student.getId()) &&
 				Server.getStudents().contains(student))*/
 		currentRoster.addStudent(student);
-		Debug.log("Grader model updated", "Student added to current roster");
 	}
 
 	/**
@@ -259,7 +258,6 @@ public class Grader {
 	 @*/
 	public static void addAssignment(GradedItem item) {
 		currentRoster.addAssignment(item);
-		Debug.log("Grader model updated", "Assignment added to current roster");
 	}
 
 	/**
@@ -269,8 +267,6 @@ public class Grader {
 	 *            the GradedItem that will be added to the roster
 	 */
 	public static GradedItem getAssignment(String asgn) {
-		Debug.log("Grader model accessed",
-				"Assignment pulled from current roster");
 		return currentRoster.getAssignment(asgn);
 	}
 
@@ -336,7 +332,6 @@ public class Grader {
 			double percent) {
 		currentRoster.getStudentByID(student.getId()).setPercentScore(asgn,
 				percent);
-		Debug.log("Grader model updated", "Score added");
 	}
 
 	/**
@@ -350,7 +345,6 @@ public class Grader {
 	 * @return double the student's score on that assignment
 	 */
 	public static Double getScore(Student student, String asgn) {
-		Debug.log("Grader model accessed", "Student score retrieved");
 		return currentRoster.getStudentByID(student.getId())
 				.getAssignmentScore(asgn);
 	}

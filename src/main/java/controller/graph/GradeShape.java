@@ -90,7 +90,9 @@ public class GradeShape extends Rectangle {
 	private EventHandler<MouseEvent> getClickHandler() {
 		return new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
+				System.out.println("hit click handler");
 				if (event.getButton() == MouseButton.SECONDARY) {
+					System.out.println("hit RIGHT-click handler");
 					menu.show(line, event.getX(),
 							event.getY());
 				}
