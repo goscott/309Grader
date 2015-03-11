@@ -19,6 +19,7 @@ import model.roster.Roster;
 import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -150,6 +151,14 @@ public class GradebookController {
 			}
 		});
 		populateTree();
+		
+		mainTable.getColumns().addListener(new ListChangeListener<TableColumn<?,?>>() {  
+		     @Override  
+		     public void onChanged(Change<? extends TableColumn<?,?>> change) {  
+		          // table columns changed, perhaps due to reordering...  
+		         populateStatsTable();
+		     }  
+		});  
 	} 
 
 	/**
@@ -421,12 +430,13 @@ public class GradebookController {
 			mainTable.getColumns().add(0, new TableColumn<Student, String>());
 			mainTable.getColumns().remove(0);
 			
-			populateStatsTable();
+			//populateStatsTable();
 		}
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
     public void populateStatsTable() {
+	    Debug.log("GradebookController", "Populating Stats Table");
 	    TableColumn targetColumn;
 	    TableColumn<AggregateInfo, String> newColumn, titleColumn, bufferColumn2, bufferColumn3, bufferColumn4;
 	    
@@ -490,6 +500,8 @@ public class GradebookController {
             pointValues.addCell(item.name(), item.maxScore());
         }
         
+        pointValues.addCell("Percentage", Grader.getMaxPoints());
+        
         return pointValues;
 	}
 	
@@ -500,6 +512,8 @@ public class GradebookController {
 	    for (GradedItem item : Grader.getAssignmentList()) {
 	        dataPoints.addCell(item.name(), item.getNumGraded());
 	    }
+	    
+	    dataPoints.addCell("Percentage", Grader.getStudentList().size());
 	    
 	    return dataPoints;
 	}
@@ -512,6 +526,8 @@ public class GradebookController {
             range.addCell(item.name(), item.getMax() - item.getMin());
         }
         
+        range.addCell("Percentage", "Need Method");
+        
         return range;
     }
 	
@@ -522,6 +538,8 @@ public class GradebookController {
         for (GradedItem item : Grader.getAssignmentList()) {
             mean.addCell(item.name(), item.getMean());
         }
+        
+        mean.addCell("Percentage", Grader.getRoster().getPercentAverage());
         
         return mean;
     }
@@ -534,6 +552,8 @@ public class GradebookController {
             median.addCell(item.name(), item.getMedian());
         }
         
+        median.addCell("Percentage", "Need Method");
+        
         return median;
     }
 	
@@ -544,6 +564,8 @@ public class GradebookController {
         for (GradedItem item : Grader.getAssignmentList()) {
             standardDeviation.addCell(item.name(), item.getStandardDeviation()); 
         }
+        
+        standardDeviation.addCell("Percentage", "Need Method");
         
         return standardDeviation;
     }
@@ -556,6 +578,8 @@ public class GradebookController {
             mins.addCell(item.name(), item.getMin()); 
         }
         
+        mins.addCell("Percentage", "Need Method");
+        
         return mins;
     }
 	
@@ -566,6 +590,8 @@ public class GradebookController {
         for (GradedItem item : Grader.getAssignmentList()) {
             max.addCell(item.name(), item.getMax()); 
         }
+        
+        max.addCell("Percentage", "Need Method");
         
         return max;
     }
