@@ -90,7 +90,7 @@ public class GradeShape extends Rectangle {
 	private EventHandler<MouseEvent> getClickHandler() {
 		return new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				if (event.getButton() == MouseButton.SECONDARY){// && event.isControlDown()) {
+				if (event.getButton() == MouseButton.SECONDARY && event.isControlDown()) {
 					Action response = Alert.showWarningQuestion(
 							"Warning: Grade deletion will be permanent",
 							"Are you sure you want to delete '" + grade.getName()
