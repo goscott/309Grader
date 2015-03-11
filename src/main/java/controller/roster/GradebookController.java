@@ -536,7 +536,9 @@ public class GradebookController {
 	            getRanges(),
 	            getMeans(),
 	            getDeviations(),
-	            getMedians());
+	            getMedians(),
+	            getMax(),
+	            getMin());
 	    stats_table.setItems(data);
 	}
 	
@@ -601,10 +603,32 @@ public class GradebookController {
         standardDeviation = new AggregateInfo("Standard Deviation");
         
         for (GradedItem item : Grader.getAssignmentList()) {
-            standardDeviation.addCell(item.name(), "Need Method"); 
+            standardDeviation.addCell(item.name(), item.getStandardDeviation()); 
         }
         
         return standardDeviation;
+    }
+	
+	private AggregateInfo getMin() {
+        AggregateInfo mins;
+        mins = new AggregateInfo("Minimum Score");
+        
+        for (GradedItem item : Grader.getAssignmentList()) {
+            mins.addCell(item.name(), item.getMin()); 
+        }
+        
+        return mins;
+    }
+	
+	private AggregateInfo getMax() {
+        AggregateInfo max;
+        max = new AggregateInfo("Maximum Score");
+        
+        for (GradedItem item : Grader.getAssignmentList()) {
+            max.addCell(item.name(), item.getMax()); 
+        }
+        
+        return max;
     }
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })

@@ -642,4 +642,22 @@ public class GradedItem implements Serializable {
 			return -1;
 		}
 	}
+	
+	public double getStandardDeviation() {
+		ArrayList<Double> list = new ArrayList<Double>();
+		for(Double grade : studentGrades.values()) {
+			if(grade != null) {
+				list.add(grade);
+			}
+		}
+		if(list.size() > 0) {
+			double sumOfSquares = 0;
+			double mean = getMean();
+			for(double grade : list) {
+				sumOfSquares += (grade - mean) * (grade - mean);
+			}
+			return sumOfSquares / list.size();
+		}
+		return 0;
+	}
 }
