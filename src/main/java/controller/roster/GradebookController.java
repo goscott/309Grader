@@ -169,14 +169,13 @@ public class GradebookController {
 		predictionToggle.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				predictionMode = !predictionMode;
-				if (predictionMode) {
+				if(predictionMode) {
 					Roster.saveTemp(Grader.getRoster());
-					predictionToggle.setText("dsfgdsasfgh");
+					GradebookController.get().fullRefresh();
 				} else {
 					Roster rost = Roster.load("Rosters/" + Roster.TEMP_NAME + ".rost");
 					Grader.setCurrentRoster(rost);
 				}
-				GradebookController.get().fullRefresh();
 			}
 		});
 		
@@ -190,7 +189,6 @@ public class GradebookController {
 			MenuItem dropStudent = new MenuItem("Drop Student");
 			MenuItem ref = new MenuItem("Refresh");
 			MenuItem makePrediction = new MenuItem("Make Prediction");
-			MenuItem test = new MenuItem("Test Slider");
 			
 			ref.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
@@ -204,29 +202,16 @@ public class GradebookController {
                 }
             });
 			
-			test.setOnAction(new EventHandler<ActionEvent>() {
-				public void handle(ActionEvent event) {
-					Histogram temp = new Histogram();
-					try {
-						//temp.start(new Stage());
-					} catch (Exception ex) {
-						// TODO Auto-generated catch block
-						ex.printStackTrace();
-					}
-				}
-			});
-			
 			addAssignment.setOnAction(GraderPopup.getPopupHandler("addAssignmentDialog", addAssignment));
 			dropAssignment.setOnAction(GraderPopup.getPopupHandler("dropAssignment", dropAssignment));
 			addStudent.setOnAction(GraderPopup.getPopupHandler("AddStudent",	addStudent));
 			dropStudent.setOnAction(GraderPopup.getPopupHandler("DropStudent", dropStudent));
 
-			rightClickMenu.getItems().addAll(test, predictionToggle, ref, expandCollapse,
+			rightClickMenu.getItems().addAll(ref,
 					new SeparatorMenuItem(), addAssignment, dropAssignment,
-					new SeparatorMenuItem(), addStudent, dropStudent, new SeparatorMenuItem(), makePrediction);
-		} else {
-			rightClickMenu.getItems().addAll(predictionToggle, expandCollapse);
+					new SeparatorMenuItem(), addStudent, dropStudent, new SeparatorMenuItem());
 		}
+		rightClickMenu.getItems().addAll(predictionToggle, expandCollapse);
 		return rightClickMenu;
 	}
 	
@@ -252,61 +237,12 @@ public class GradebookController {
 						"totalPercentage"));
 		mainTable.getColumns().add(percentCol);
 
-		/*TableColumn<Student, String> gradeCol = new TableColumn<Student, String>(
+		TableColumn<Student, String> gradeCol = new TableColumn<Student, String>(
 				"Grade");
 		gradeCol.setMinWidth(COLUMN_WIDTH);
-		gradeCol.setEditable(true);//GradebookController.predictionMode);
-		gradeCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Student, String>>() {
-			public void handle(CellEditEvent<Student, String> event) {
-				Grade newGrade = Grader.getCurve().getGrade(event.getNewValue());
-				System.out.println("new grade: " + newGrade);
-				//event.getRowValue().setScore(asgn, sc);
-			}
-		});
-/*
-		gradeCol.setCellFactory(new Callback<TableColumn<Student, String>, TableCell<Student, String>>() {
-			@Override
-			public TableCell<Student, String> call(
-					TableColumn<Student, String> param) {
-				TableCell cell = new TableCell() {
-					@Override
-					public void updateItem(Object item, boolean empty) {
-						if (item != null) {
-							setText(item.toString());
-							Grade grade = getRoster().getCurve().getGrade(
-									item.toString());
-							Color col = grade.getColor();
-							setStyle("-fx-background-color: rgb("
-									+ col.getRed() + ", " + col.getGreen()
-									+ ", " + col.getBlue() + ")");
-						}
-					}
-				};
-				cell.setAlignment(Pos.CENTER);
+		gradeCol.setEditable(predictionMode);
 
-				return cell;
-			}
-		});
-*//*
 		gradeCol.setCellValueFactory(new Callback() {
-			public SimpleStringProperty call(
-					CellDataFeatures<Student, String> param) {
-				if (param.getValue() != null) {
-					return new SimpleStringProperty(param.getValue().getGrade().getName());
-				}
-				return new SimpleStringProperty("");
-			}
-
-			public Object call(Object param) {
-				return call((CellDataFeatures<Student, String>) (param));
-			}
-		});*/
-		TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
-				"Grade");
-		newColumn.setMinWidth(COLUMN_WIDTH);
-		newColumn.setEditable(predictionMode);
-
-		newColumn.setCellValueFactory(new Callback() {
 			public SimpleStringProperty call(
 					CellDataFeatures<Student, String> param) {
 				return new SimpleStringProperty(param.getValue()
@@ -318,34 +254,37 @@ public class GradebookController {
 				return call((CellDataFeatures<Student, String>) (param));
 			}
 		});
-		newColumn.setCellFactory(new Callback<TableColumn<Student, String>, TableCell<Student, String>>() {
-			@Override
-			public TableCell<Student, String> call(
-					TableColumn<Student, String> param) {
-				TableCell cell = new TableCell() {
-					@Override
-					public void updateItem(Object item, boolean empty) {
-						if (item != null) {
-							setText(item.toString());
-							Grade grade = getRoster().getCurve().getGrade(
-									item.toString());
-							Color col = grade.getColor();
-							setStyle("-fx-background-color: rgb("
-									+ col.getRed() + ", " + col.getGreen()
-									+ ", " + col.getBlue() + ")");
+		if(!predictionMode) {
+			gradeCol.setCellFactory(new Callback<TableColumn<Student, String>, TableCell<Student, String>>() {
+				@Override
+				public TableCell<Student, String> call(
+						TableColumn<Student, String> param) {
+					TableCell cell = new TableCell() {
+						@Override
+						public void updateItem(Object item, boolean empty) {
+							if (item != null) {
+								setText(item.toString());
+								Grade grade = getRoster().getCurve().getGrade(
+										item.toString());
+								Color col = grade.getColor();
+								setStyle("-fx-background-color: rgb("
+										+ col.getRed() + ", " + col.getGreen()
+										+ ", " + col.getBlue() + ")");
+							}
 						}
-					}
-				};
-				cell.setAlignment(Pos.CENTER);
-
-				return cell;
-			}
-		});
-//		newColumn.setCellFactory(TextFieldTableCell
-//				.<Student> forTableColumn());
+					};
+					cell.setAlignment(Pos.CENTER);
+	
+					return cell;
+				}
+			});
+		} else {
+			gradeCol.setCellFactory(TextFieldTableCell
+				.<Student> forTableColumn());
+		}
 		/* When a user types a change */
 		//newColumn.setOnEditCommit(new CellEditEventHandler(this));
-		newColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Student,String>>() {
+		gradeCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Student,String>>() {
 			public void handle(CellEditEvent<Student, String> event) {
 				if(Grader.getCurve().getGrade(event.getNewValue()) != null) {
 					 Roster rost = Roster.load("Rosters/" + Roster.TEMP_NAME + ".rost");
@@ -362,7 +301,7 @@ public class GradebookController {
 			}
 		});
 
-		mainTable.getColumns().add(newColumn);
+		mainTable.getColumns().add(gradeCol);
 	}
 
 	/**
