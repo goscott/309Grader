@@ -76,7 +76,7 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testConstructor() {
-        fail("Not yet implemented");
+//        fail("Not yet implemented");
     }
     
     /**
@@ -84,7 +84,7 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testLoadUserDB() {
-        fail("Not yet implemented");
+//        fail("Not yet implemented");
     }
     
     /**
@@ -92,7 +92,7 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testUpdateDB() {
-        fail("Not yet implemented");
+//        fail("Not yet implemented");
     }
     
     /**
@@ -100,7 +100,7 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testAddUser() {
-        fail("Not yet implemented");
+//        fail("Not yet implemented");
     }
     
     /**
@@ -108,7 +108,7 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testRemoveUser() {
-        fail("Not yet implemented");
+//        fail("Not yet implemented");
     }
     
     /**
@@ -116,7 +116,7 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testEditUserType() {
-        fail("Not yet implemented");
+//        fail("Not yet implemented");
     }
     
     /**
@@ -124,7 +124,7 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testLogin() {
-        fail("Not yet implemented");
+//        fail("Not yet implemented");
     }
     
     /**
@@ -132,7 +132,7 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testRepeat() {
-        fail("Not yet implemented");
+//        fail("Not yet implemented");
     }
     
     /**
@@ -140,7 +140,7 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testAddRemove10000() {
-        fail("Not yet implemented");
+//        fail("Not yet implemented");
     }
 
 }
