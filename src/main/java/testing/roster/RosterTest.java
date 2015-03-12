@@ -188,6 +188,8 @@ public class RosterTest {
 		assertTrue(item.getChildren().contains(child2));
 		
 		roster.dropAssignment(child1);
+		roster.dropAssignment(null);
+		
 		assertEquals(2, roster.getAssignments().size());
 		assertTrue(roster.getAssignments().contains(item));
 		assertFalse(roster.getAssignments().contains(child1));
@@ -205,7 +207,6 @@ public class RosterTest {
 	/**
 	 * @author Gavin Scott
 	 */
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testScores() {
 		Roster roster = new Roster("TEST", "instructor", 1, "quarter", null, null);
@@ -213,9 +214,15 @@ public class RosterTest {
 		GradedItem item = new GradedItem("Test", "", 100, false);
 		Student s1 = new Student("bob", "123", "123", "afs", false, 189);
 		Student s2 = new Student("bob2", "1234", "1234", "fafs", false, 189);
+		
+		roster.addAssignment(item);
+		roster.addScore(s1, item, new Double(100));
+		roster.addScore(s1, new GradedItem("as", "", 100, false), new Double(10));
+		roster.addStudent(s1);
+		roster.addScore(s1, new GradedItem("as", "", 100, false), new Double(10));
+		
 		roster.addAssignment(new GradedItem("asdfss", "", 100, true));
 		roster.addAssignment(item);
-		roster.addStudent(s1);
 		roster.addStudent(s2);
 		
 		assertEquals(null, Grader.getScore(s1,  item.name()));
@@ -236,9 +243,13 @@ public class RosterTest {
 		roster.addScore(s1, item, null);
 		roster.addScore(null, item, null);
 		roster.addScore(null, new GradedItem("sadasda", "", 1, true), null);
+		
 		assertEquals(null, Grader.getScore(s1,  item.name()));
 		assertEquals(null, Grader.getScore(s2,  item.name()));
 		assertEquals(null, roster.getStudentGrade(null, ""));
+		
+		roster.addAssignment(new GradedItem("asdasd", "", 90, false));
+		assertEquals(null, Grader.getScore(s2,  "asdasd"));
 		
 		Roster empty = new Roster("", "", 1, "", null, null);
 		assertEquals(null, empty.getStudentGrade(s1, item.name()));
@@ -272,6 +283,7 @@ public class RosterTest {
 		assertEquals(0, roster2.getFailingNum());
 		assertEquals(1, roster2.getPassingNum());
 		assertEquals(new Double(100.0), new Double(roster2.getMaxPoints()));
+		
 		assertEquals(new Double(0), new Double(roster2.getMaxPoints(s1)));
 		assertEquals(1, roster2.getNumStudentsWithScore(100.0));
 		assertEquals(0, roster2.getNumStudentsWithScore(0.0));
@@ -281,6 +293,9 @@ public class RosterTest {
 		assertEquals(new Double(0), new Double(roster2.getTotalScore(null)));
 		roster2.addAssignment(new GradedItem("1", "", item, 100, false));
 		assertEquals(new Double(0), new Double(roster2.getTotalScore(s1)));
+		
+		assertEquals(new Double(0), new Double(roster.getMaxPoints()));
+		assertEquals(new Double(0), new Double(roster.getMaxPoints(s1)));
 	}
 	
 	/**

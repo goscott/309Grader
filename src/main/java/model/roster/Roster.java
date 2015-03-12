@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.HarmlessException;
 import model.announcements.Announcement;
 import model.curve.Curve;
 import model.curve.Grade;
@@ -81,8 +82,8 @@ public class Roster implements Serializable {
 			this.startDate != null
 		);
 	@*/
-	public Roster(String name, String instructorId, int section, String quarter,
-			Calendar startDate, Calendar endDate) {
+	public Roster(String name, String instructorId, int section,
+			String quarter, Calendar startDate, Calendar endDate) {
 		courseName = name;
 		this.instructorId = instructorId;
 		this.section = section;
@@ -386,8 +387,8 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public GradedItem getAssignment(String name) {
-		for(GradedItem item : assignments) {
-			if(item.name().equals(name)) {
+		for (GradedItem item : assignments) {
+			if (item.name().equals(name)) {
 				return item;
 			}
 		}
@@ -486,11 +487,11 @@ public class Roster implements Serializable {
 		}
 		return ret;
 	}
-	
+
 	public int getNumStudentsWithScore(Double score) {
 		int ret = 0;
 		for (Student student : students) {
-			if (((int)student.getTotalPercentage()) == score) {
+			if (((int) student.getTotalPercentage()) == score) {
 				ret++;
 			}
 		}
@@ -588,9 +589,9 @@ public class Roster implements Serializable {
 			((String)\result).equals(courseName + " " + section + " : " + instructor)
 		);
 	@*//*
-	public String toString() {
+		public String toString() {
 		return courseName + " " + section + " : " + instructor;
-	}*/
+		}*/
 
 	/**
 	 * Saves the roster to the computer
@@ -622,21 +623,21 @@ public class Roster implements Serializable {
 							+ String.format("%02d", rost.section) + ".rost"));
 			out.writeObject(rost);
 			out.close();
-		} catch (IOException ex) {
-			Debug.log("SAVE ERROR", "failed to save Roster " + rost.courseName);
-			ex.printStackTrace();
+			throw new HarmlessException();
+		} catch (Exception ex) {
+			Debug.log("Saving roster");
 		}
 	}
-	
+
 	public static void saveTemp(Roster rost) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream("Rosters/" + TEMP_NAME + ".rost"));
 			out.writeObject(rost);
 			out.close();
-		} catch (IOException ex) {
-			Debug.log("SAVE ERROR", "failed to save Roster " + rost.courseName);
-			ex.printStackTrace();
+			throw new HarmlessException();
+		} catch (Exception ex) {
+			Debug.log("Saving temporary roster");
 		}
 	}
 
@@ -662,9 +663,7 @@ public class Roster implements Serializable {
 			toReturn.setCurve(new Curve());
 
 		} catch (Exception e) {
-			Debug.log(
-					"IO ERROR",
-					"Unexpected IO Error when loading roster");
+			Debug.log("IO ERROR", "Unexpected IO Error when loading roster");
 		}
 		return toReturn;
 	}
@@ -688,11 +687,12 @@ public class Roster implements Serializable {
 		}
 		return max;
 	}
-	
+
 	public double getMaxPoints(Student student) {
 		double max = 0;
 		for (GradedItem item : assignments) {
-			if (!item.isExtraCredit() && item.isLeaf() && item.getStudentScore(student) != null) {
+			if (!item.isExtraCredit() && item.isLeaf()
+					&& item.getStudentScore(student) != null) {
 				max += item.maxScore();
 			}
 		}
@@ -758,30 +758,6 @@ public class Roster implements Serializable {
 	}
 
 	/**
-	 * Sets a student's grade on a particular assignment to the given score
-	 */
-	/*@
-		requires(
-			student != null
-				&&
-			sc != null
-		);
-		ensures(
-			(\forall GradedItem item ; assignments.contains(item) && item.name().equals(asgn) ;
-				item.getStudentScore(student).equals(sc))
-		);
-	@*/
-//	public void setStudentGrade(Student student, String asgn, Double sc) {
-//		if (student != null && sc != null) {
-//			for (GradedItem item : assignments) {
-//				if (item.name().equals(asgn)) {
-//					item.setStudentScore(student, sc);
-//				}
-//			}
-//		}
-//	}
-
-	/**
 	 * Gets a student's total score, as a sum of their scores on every
 	 * assignment kept in the roster
 	 */
@@ -827,7 +803,8 @@ public class Roster implements Serializable {
 		);
 	@*/
 	public void archive() {
-	    File thisFile = new File("Rosters/" + courseName + "-" + String.format("%02d", section) + ".rost");
+		File thisFile = new File("Rosters/" + courseName + "-"
+				+ String.format("%02d", section) + ".rost");
 		current = false;
 		Grader.getHistoryDB().addRoster(this);
 		thisFile.delete();
@@ -906,7 +883,7 @@ public class Roster implements Serializable {
 	public void addAnnouncement(Announcement ann) {
 		announcements.add(ann);
 	}
-	
+
 	/**
 	 * Adds an announcement to a roster
 	 */
