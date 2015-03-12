@@ -1,12 +1,17 @@
 package testing.roster;
 
 import java.awt.Color;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.Calendar;
 
 import model.announcements.Announcement;
 import model.curve.Curve;
 import model.curve.Grade;
+import model.driver.Debug;
 import model.driver.Grader;
+import model.roster.Exporter;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.Student;
@@ -234,7 +239,7 @@ public class RosterTest {
 		assertEquals(null, Grader.getScore(s1,  item.name()));
 		assertEquals(null, Grader.getScore(s2,  item.name()));
 		assertEquals(null, roster.getStudentGrade(null, ""));
-		roster.export();
+		
 		Roster empty = new Roster("", "", 1, "", null, null);
 		assertEquals(null, empty.getStudentGrade(s1, item.name()));
 	}
@@ -341,5 +346,11 @@ public class RosterTest {
 		
 		roster = Roster.load("TEST");
 		assertEquals(null, roster);
+		
+		try {
+			Files.deleteIfExists(FileSystems.getDefault().getPath("Rosters/" + Roster.TEMP_NAME + "-01.rost"));
+		} catch (IOException ex) {
+			Debug.log("Error", "Testing error");
+		}
 	}
 }

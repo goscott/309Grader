@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
+import model.HarmlessException;
 import model.driver.Debug;
 
 /**
@@ -25,8 +26,6 @@ import model.driver.Debug;
  * @author Gavin Scott
  */
 public class Exporter {
-	/** folder containing exported files **/
-	private static String exportFolderName = "Exports";
 	/** export filetype **/
 	private static String fileType = ".xls";
 	/** name of the column containing student names **/
@@ -34,12 +33,6 @@ public class Exporter {
 	/** name of the column containing student ids **/
 	private static String idLabel = "Student ID";
 
-	public static void exportRosterToExcel(Roster roster) {
-		String fileName = roster.courseName() + '-'
-				+ String.format("%02d", roster.getSection());
-		exportRosterToExcel(roster, new File(exportFolderName + '/' + fileName + fileType));
-	}
-	
 	/**
 	 * Exports a roster to an excel document. All assignments are printed,
 	 * including sub-assignments
@@ -54,13 +47,8 @@ public class Exporter {
 	@*/
 	public static void exportRosterToExcel(Roster roster, File file) {
 		// don't save null rosters
-		if (roster == null) {
+		if (roster == null || file == null) {
 			return;
-		}
-		// check export directory exists
-		File dir = new File(exportFolderName);
-		if (!dir.exists()) {
-			dir.mkdir();
 		}
 		String fileName = roster.courseName() + '-'
 				+ String.format("%02d", roster.getSection());
@@ -78,10 +66,9 @@ public class Exporter {
 
 			workbook.write();
 			workbook.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} catch (WriteException ex) {
-			ex.printStackTrace();
+			throw new HarmlessException();
+		} catch (Exception ex) {
+			Debug.log("Error", "Could not export to excel");
 		}
 	}
 
@@ -138,9 +125,7 @@ public class Exporter {
 		}
 		// percentage
 		sheet.addCell(new Label(column, 0, "Percentage", times));
-		sheet.setColumnView(column,
-				"Percentage".length() > minColWidth ? "Percentage".length()
-						: minColWidth);
+		sheet.setColumnView(column, minColWidth);
 		row = 1;
 		for (Student student : students) {
 				sheet.addCell(new Number(column, row++, student.getTotalPercentage(), times));
@@ -157,13 +142,15 @@ public class Exporter {
 
 	public static void exportRosterToFile(Roster roster, File file) {
 		try {
+			if(roster == null || file == null) {
+				throw new NullPointerException();
+			}
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
 			out.writeObject(roster);
 			out.close();
-		} catch (IOException ex) {
-			Debug.log("SAVE ERROR", "failed to save Roster " + roster.courseName());
-			ex.printStackTrace();
+		} catch (Exception ex) {
+			Debug.log("SAVE ERROR", "failed to save Roster.");
 		}
 	}
 }

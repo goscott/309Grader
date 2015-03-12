@@ -879,18 +879,6 @@ public class Roster implements Serializable {
 	}
 
 	/**
-	 * Exports the roster
-	 */
-	/*@
-	 	ensures(
-	 		// the roster is exported
-	 	);
-	@*/
-	public void export() {
-		Exporter.exportRosterToExcel(this);
-	}
-
-	/**
 	 * Gets an observable list of students
 	 */
 	public ObservableList<Student> getStudentList() {

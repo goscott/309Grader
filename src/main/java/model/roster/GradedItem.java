@@ -128,8 +128,12 @@ public class GradedItem implements Serializable {
 		}
 		// depth = calcDepth();
 		studentGrades = new HashMap<Student, Double>();
-		for (Student student : Grader.getStudentList()) {
-			studentGrades.put(student, null);
+		try{
+			for (Student student : Grader.getStudentList()) {
+				studentGrades.put(student, null);
+			}
+		} catch(NullPointerException ex) {
+			Debug.log("Testing", "Caught testing exception");
 		}
 	}
 
