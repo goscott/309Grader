@@ -31,6 +31,8 @@ public class Student implements Comparable<Student>, Serializable {
 	private final int units;
 	/** The roster for this student **/
 	private Roster roster;
+	/** A censored name **/
+	public static final String CENSORED = "*******";
 
 	/**
 	 * Makes a student without a roster
@@ -117,7 +119,7 @@ public class Student implements Comparable<Student>, Serializable {
 				&& !currentUser.getPermissions().contains(
 						PermissionKeys.VIEW_STUDENTS)
 				&& !currentUser.getId().equals(id)) {
-			return "*******";
+			return CENSORED;
 		}
 		return name;
 	}
