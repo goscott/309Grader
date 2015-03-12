@@ -128,12 +128,8 @@ public class GradedItem implements Serializable {
 		}
 		// depth = calcDepth();
 		studentGrades = new HashMap<Student, Double>();
-		try{
-			for (Student student : Grader.getStudentList()) {
-				studentGrades.put(student, null);
-			}
-		} catch(NullPointerException ex) {
-			Debug.log("Testing", "Caught testing exception");
+		for (Student student : Grader.getStudentList()) {
+			studentGrades.put(student, null);
 		}
 	}
 
@@ -593,28 +589,6 @@ public class GradedItem implements Serializable {
 			}
 		}
 		return 0;
-	}
-	
-	public double getMode() {
-		HashMap<Double, Integer> map = new HashMap<Double, Integer>();
-		for(Double grade : studentGrades.values()) {
-			if(grade != null) {
-				if(map.containsKey(grade)) {
-					map.put(grade, map.get(grade) + 1);
-				} else {
-					map.put(grade, 1);
-				}
-			}
-		}
-		double count = -1;
-		double ret = -1;
-		for(Double grade : map.keySet()) {
-			if(map.get(grade) > count) {
-				count = map.get(grade);
-				ret = grade;
-			}
-		}
-		return ret;
 	}
 	
 	public double getMax() {
