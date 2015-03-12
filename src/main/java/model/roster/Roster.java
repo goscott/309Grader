@@ -420,27 +420,6 @@ public class Roster implements Serializable {
 	}
 
 	/**
-	 * Gets the score of a student on an assignment with the given name
-	 */
-	/*@
-		requires(
-			students.contains(student)
-				&&
-			assignments.contains(asgn)
-		);
-		ensures(
-			((double)\result) == student.getAssignmentScore(asgn)
-		);
-	@*/
-	public double getScore(Student student, String asgn) {
-		if (students.contains(student) && assignments.contains(asgn)) {
-			Student stud = students.get(students.indexOf(student));
-			return stud.getAssignmentScore(asgn);
-		}
-		return -1;
-	}
-
-	/**
 	 * Searches for a student by their ID
 	 */
 	/*@
@@ -682,24 +661,10 @@ public class Roster implements Serializable {
 			obj.close();
 			toReturn.setCurve(new Curve());
 
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			Debug.log(
 					"IO ERROR",
-					"Could not locate file at "
-							+ url.substring(0, url.length() - 4));
-
-		} catch (IOException e) {
-			Debug.log(
-					"IO ERROR",
-					"Could not locate file at "
-							+ url.substring(0, url.length() - 4)
-							+ "(IOException)");
-		} catch (ClassNotFoundException e) {
-			Debug.log(
-					"IO ERROR",
-					"Could not locate file at "
-							+ url.substring(0, url.length() - 4)
-							+ "(Class Not Found)");
+					"Unexpected IO Error when loading roster");
 		}
 		return toReturn;
 	}
@@ -806,15 +771,15 @@ public class Roster implements Serializable {
 				item.getStudentScore(student).equals(sc))
 		);
 	@*/
-	public void setStudentGrade(Student student, String asgn, Double sc) {
-		if (student != null && sc != null) {
-			for (GradedItem item : assignments) {
-				if (item.name().equals(asgn)) {
-					item.setStudentScore(student, sc);
-				}
-			}
-		}
-	}
+//	public void setStudentGrade(Student student, String asgn, Double sc) {
+//		if (student != null && sc != null) {
+//			for (GradedItem item : assignments) {
+//				if (item.name().equals(asgn)) {
+//					item.setStudentScore(student, sc);
+//				}
+//			}
+//		}
+//	}
 
 	/**
 	 * Gets a student's total score, as a sum of their scores on every
@@ -898,7 +863,7 @@ public class Roster implements Serializable {
 				.getStudentsAssociatedWithRoster(this);
 		if (extraLocal) {
 			for (Student student : students) {
-				if (!serverList.contains(student)) {
+				if (!serverList.contains(student.getId())) {
 					list.add(student);
 				}
 			}

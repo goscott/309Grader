@@ -522,7 +522,7 @@ public class GradedItem implements Serializable {
 		);
 	@*/
 	public void removeStudent(Student student) {
-		if (studentGrades.containsKey(student)) {
+		if (student != null && studentGrades.containsKey(student)) {
 			studentGrades.remove(student);
 		}
 	}
@@ -542,7 +542,7 @@ public class GradedItem implements Serializable {
 	@*/
 	public void addStudent(Student student) {
 		if (student != null && !studentGrades.containsKey(student)) {
-			studentGrades.remove(student);
+			studentGrades.put(student, null);
 		}
 	}
 	

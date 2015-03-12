@@ -356,7 +356,10 @@ public class Grader {
 	 *         currently selected
 	 */
 	public static ObservableList<Student> getStudentList() {
-		return currentRoster.getStudentList();
+		if(currentRoster != null) {
+			return currentRoster.getStudentList();
+		}
+		return null;
 	}
 
 	/**

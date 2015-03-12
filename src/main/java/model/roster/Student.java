@@ -262,7 +262,7 @@ public class Student implements Comparable<Student>, Serializable {
 	@*/
 	public void setScore(String asgn, Double sc) {
 		if (roster != null) {
-			roster.setStudentGrade(this, asgn, sc);
+			roster.addScore(this, roster.getAssignment(asgn), sc);
 		}
 	}
 

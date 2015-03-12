@@ -345,7 +345,7 @@ public class Server {
     @SuppressWarnings("unchecked")
     public static void init() {
         
-        //initializeStudents();
+        initializeStudents();
         
         Debug.log("Server initialization", "starting init...");
         try {
