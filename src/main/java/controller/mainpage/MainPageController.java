@@ -22,6 +22,8 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -104,12 +106,15 @@ public class MainPageController {
 	/** The server menu **/
 	@FXML
 	private Menu serverMenu;
-
+	/** Classes button setup **/
 	@FXML
 	private FlowPane buttonSetUp;
-
+	/** Scroll pane for classes tab **/
 	@FXML
 	private ScrollPane classesScrollPane;
+	/** The list for local roster **/
+	
+	
 	/**
 	 * Initializes the main page
 	 */
@@ -396,11 +401,12 @@ public class MainPageController {
 	}
 
 	/**
-	 * Synchs the current roster
+	 * Syncs the current roster
 	 */
 	@FXML
 	private void synchRoster(ActionEvent event) {
-		Debug.log("Roster synch", "Roster synched with server");
+		Debug.log("Roster sync", "Roster synced with server");
+		
 	}
 
 	/**
