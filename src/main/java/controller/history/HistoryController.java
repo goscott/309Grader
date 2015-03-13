@@ -498,6 +498,12 @@ public class HistoryController {
 					if (((ToggleButton) event.getSource()).isSelected()) {
 						switchToSection();
 
+						((ToggleButton) event.getSource()).setStyle("-fx-background-color: #74D7E5, "
+						                + "linear-gradient(#74D7E5, #A1DDE5);"
+			                            + "-fx-text-base-color: #ffffff;"
+			                            + "-fx-background-radius: 3,2,1;"
+			                            + "-fx-text-alignment: left;"
+			                            );
 						if (selectedSection != null) {
 							selectedSection.setSelected(false); // deactivate
 																// other button
