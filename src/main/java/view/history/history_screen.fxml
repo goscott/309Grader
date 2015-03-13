@@ -68,7 +68,7 @@
                         </VBox>
                      </top>
                      <center>
-                        <PieChart fx:id="section_pie" title="Grade Breakdown" BorderPane.alignment="CENTER">
+                        <PieChart fx:id="section_pie" stylesheets="@pieChart.css" title="Grade Breakdown" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets bottom="40.0" top="20.0" />
                            </BorderPane.margin>
