@@ -2,6 +2,12 @@ package testing.administration;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
+import model.administration.User;
+import model.administration.UserDB;
+import model.administration.UserTypes;
+
 import org.junit.Test;
 
 /**
@@ -76,31 +82,62 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testConstructor() {
-//        fail("Not yet implemented");
+        String directory = "LoginData";
+        String fileName = "dbtest.udb";
+        File file;
+        
+        UserDB database = new UserDB(fileName);
+        file = new File(directory + "/" + fileName);
+        
+        assertEquals(directory + "/" + fileName + "does not exist", true, file.exists());
+        
+        file.delete();
     }
     
     /**
-     * Phase 2.
+     * Phase 2/Phase 3
      */
     @Test
     public void testLoadUserDB() {
-//        fail("Not yet implemented");
+        String fileName = "dbtest.udb";
+        String directory = "LoginData";
+        File file;
+        User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
+        
+        UserDB database = new UserDB(fileName);
+        database.addUser(user, true);
+        
+        database = null;
+        database = new UserDB(fileName);
+        
+        assertEquals("User was not written to the database file", true, database.get(user.getId()) != null);
+        assertEquals("User retrieved from database file is incorrect", true, database.get(user.getId()).equals(user));
+        
+        file = new File(directory + "/" + fileName);
+        file.delete();
     }
     
     /**
-     * Phase 3.
-     */
-    @Test
-    public void testUpdateDB() {
-//        fail("Not yet implemented");
-    }
-    
-    /**
-     * Phase 4.
+     * Phase 4
      */
     @Test
     public void testAddUser() {
-//        fail("Not yet implemented");
+        String fileName = "dbtest.udb";
+        String directory = "LoginData";
+        File file;
+        User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
+        
+        UserDB database = new UserDB(fileName);
+        database.addUser(user, true);
+        
+        assertEquals("User was not written to the database file", true, database.get(user.getId()) != null);
+        assertEquals("User retrieved from database file is incorrect", true, database.get(user.getId()).equals(user));
+        
+        database.addUser(user, true);
+        assertEquals("User was added to userDB twice", true, database.getUsers().size() == 1);
+        
+        file = new File(directory + "/" + fileName);
+        file.delete();
     }
     
     /**
@@ -108,7 +145,24 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testRemoveUser() {
-//        fail("Not yet implemented");
+        String fileName = "dbtest.udb";
+        String directory = "LoginData";
+        File file;
+        User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
+        
+        UserDB database = new UserDB(fileName);
+        database.addUser(user, true);
+        assertEquals("User was not written to the database file", true, database.get(user.getId()) != null);
+        
+        database.removeUser(user);
+        assertEquals("User was not removed from the database file", true, database.get(user.getId()) == null);
+        
+        database = null;
+        database = new UserDB(fileName);
+        assertEquals("User was not removed from the database file", true, database.get(user.getId()) == null);
+        
+        file = new File(directory + "/" + fileName);
+        file.delete();
     }
     
     /**
@@ -116,7 +170,23 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testEditUserType() {
-//        fail("Not yet implemented");
+        String fileName = "dbtest.udb";
+        String directory = "LoginData";
+        File file;
+        User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
+        
+        UserDB database = new UserDB(fileName);
+        database.addUser(user, true);
+        assertEquals("User was not written to the database file", true, database.get(user.getId()) != null);
+        
+        database.editUserType(user, UserTypes.USER_INSTRUCTOR);
+        assertEquals("User type was not changed", true, database.get(user.getId()).getType() == UserTypes.USER_INSTRUCTOR);
+        
+        database.editUserType(user, '@');
+        assertEquals("User type was set to an invalid value", true, database.get(user.getId()).getType() == UserTypes.USER_INSTRUCTOR);
+        
+        file = new File(directory + "/" + fileName);
+        file.delete();
     }
     
     /**
@@ -124,7 +194,21 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testLogin() {
-//        fail("Not yet implemented");
+        String fileName = "dbtest.udb";
+        String directory = "LoginData";
+        File file;
+        User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
+        
+        UserDB database = new UserDB(fileName);
+        database.addUser(user, true);
+        assertEquals("User was not written to the database file", true, database.get(user.getId()) != null);
+        
+        assertEquals("Login did not return the correct user object", true, database.login(user.getId(), user.getPassword()).equals(user));
+        assertEquals("Login did not return when given an invalid password", true, database.login(user.getId(), "NOTMYPW") == null);
+        assertEquals("Login did not return when given an invalid password", true, database.login("NOTMYUSERNAME", user.getPassword()) == null);
+        
+        file = new File(directory + "/" + fileName);
+        file.delete();
     }
     
     /**
@@ -132,7 +216,12 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testRepeat() {
-//        fail("Not yet implemented");
+        testConstructor();
+        testLoadUserDB();
+        testAddUser();
+        testRemoveUser();
+        testEditUserType();
+        testLogin();
     }
     
     /**
@@ -140,7 +229,36 @@ public class UserDBTestJUnit {
      */
     @Test
     public void testAddRemove10000() {
-//        fail("Not yet implemented");
+        String fileName = "dbtest.udb";
+        String directory = "LoginData";
+        File file;
+        int numToAdd = 10000;
+        User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
+        
+        UserDB database = new UserDB(fileName);
+        
+        for (int count = 0; count < numToAdd; count++) {
+            database.addUser(new User("Bob", "McBob", "bmcb" + count, "12345", UserTypes.USER_STUDENT), true);
+        }
+        
+        database = null;
+        database = new UserDB(fileName);
+        
+        assertEquals("All " + numToAdd + " users were not loaded from the udb", true, database.getUsers().size() == numToAdd);
+        
+        for (int count = 0; count < numToAdd; count++) {
+            database.removeUser(new User("Bob", "McBob", "bmcb" + count, "12345", UserTypes.USER_STUDENT));
+        }
+        
+        assertEquals("Not all users were dropped from the udb", true, database.getUsers().size() == 0);
+        
+        database = null;
+        database = new UserDB(fileName);
+        
+        assertEquals("Not all users were dropped from the udb", true, database.getUsers().size() == 0);
+        
+        file = new File(directory + "/" + fileName);
+        file.delete();
     }
 
 }
