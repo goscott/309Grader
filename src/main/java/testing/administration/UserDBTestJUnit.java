@@ -227,6 +227,7 @@ public class UserDBTestJUnit {
     /**
      * Phase 9.
      */
+    /*
     @Test
     public void testAddRemove10000() {
         String fileName = "dbtest.udb";
@@ -260,5 +261,5 @@ public class UserDBTestJUnit {
         file = new File(directory + "/" + fileName);
         file.delete();
     }
-
+    */
 }

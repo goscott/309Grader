@@ -378,8 +378,8 @@ public class UserDB {
     /**
      * Prints the user database to system.out
      */
+    /*
     public void print() {
-
         System.out.println("USER DB:");
         System.out
                 .println("----------------------------------------------------------------------------------------");
@@ -392,5 +392,5 @@ public class UserDB {
         }
         System.out
                 .println("----------------------------------------------------------------------------------------\n\n");
-    }
+    }*/
 }

@@ -5,32 +5,18 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-
-import controller.Alert;
-import controller.GraderPopup;
-import controller.graph.GraphController;
-import controller.history.HistoryController;
-import controller.roster.GradebookController;
-import run.Launcher;
-import testing.administration.PermissionsTester;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
@@ -46,6 +32,16 @@ import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Exporter;
 import model.roster.Roster;
+
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+
+import run.Launcher;
+import controller.Alert;
+import controller.GraderPopup;
+import controller.graph.GraphController;
+import controller.history.HistoryController;
+import controller.roster.GradebookController;
 
 /**
  * Controller for the main GraderTool view
@@ -334,7 +330,7 @@ public class MainPageController {
 			});
 
 		} catch (Exception ex) {
-			Logger.getLogger(PermissionsTester.class.getName()).log(
+			Logger.getLogger(MainPageController.class.getName()).log(
 					Level.SEVERE, null, ex);
 		}
 	}

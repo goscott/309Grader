@@ -6,10 +6,7 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import controller.GraderPopup;
-import testing.administration.LoginTest;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -17,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.driver.Debug;
 import model.server.Server;
+import controller.GraderPopup;
 
 
 public class Launcher extends Application {
@@ -47,7 +45,7 @@ public class Launcher extends Application {
             Debug.log("Grader Tool", "Initializing...\n");
             
         } catch (Exception ex) {
-            Logger.getLogger(LoginTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
             Debug.log("ERROR", "Exception thrown during application start");
         }
     }
