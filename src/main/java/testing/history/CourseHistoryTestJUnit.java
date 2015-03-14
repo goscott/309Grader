@@ -85,6 +85,12 @@ public class CourseHistoryTestJUnit {
         assertEquals("Roster was added more than once.", 1, history.getHistory().size());
         assertEquals("numSectionsTaught is incorrect", 1, history.getNumSectionsTaught());
         assertEquals("totalStudents is incorrect", 1, history.getTotalStudents());
+        
+        history.hideCourse(roster);
+        history.addRoster(roster);
+        assertEquals("Roster was added more than once.", 0, history.getHistory().size());
+        assertEquals("numSectionsTaught is incorrect", 1, history.getNumSectionsTaught());
+        assertEquals("totalStudents is incorrect", 1, history.getTotalStudents());
     }
     
     /**
@@ -129,11 +135,14 @@ public class CourseHistoryTestJUnit {
                 Calendar.getInstance(), null);
         
         history.addRoster(roster);
+        history.hideCourse(roster);
         history.unHideCourse(roster);
         
         assertEquals("Roster did not appear in history", 1, history.getHistory().size());
         assertEquals("Roster was not moved from hidden to history", 0, history.getHidden().size());
         assertEquals("Roster does not equal the roster in history", true, history.getHistory().get(0).equals(roster));
+        
+        history.unHideCourse(roster);
     }
     
     /**

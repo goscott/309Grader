@@ -35,7 +35,7 @@ public class UserDB {
     /**
      * Directory for login.txt.
      */
-    private static final String DIR = "LoginData";
+    private static String DIR = "LoginData";
     
     /**
      * The string that delimits the items in the user info file.
@@ -54,17 +54,19 @@ public class UserDB {
     }
     
     /**
-     * Constructor for UserDB. Sets a custom database filename.
+     * Constructor for UserDB. Sets a custom database location.
      */
     /*@
           ensures
           (
               DATABASE.equals(fileName) &&
+              DIR.equals(dirName) &&
               users != null;
           );
      @*/
-    public UserDB(String fileName) {
+    public UserDB(String dirName, String fileName) {
         Debug.log("model", "UserDB Created");
+        DIR = dirName;
         DATABASE = fileName;
         loadUserDB();
     }
@@ -124,7 +126,7 @@ public class UserDB {
         }
 
         catch (Exception e) {
-            e.printStackTrace();
+            Debug.log("Error", "failed to load UserDB");
         }
 
     }
@@ -165,7 +167,7 @@ public class UserDB {
         }
         
         catch (IOException e) {
-            
+            Debug.log("Error", "failed to update user db");
         }
     }
 
@@ -373,6 +375,22 @@ public class UserDB {
         
         //set current user to null
         return true;
+    }
+    
+    /**
+     * Sets the directory that users.udb is placed in (for testing)
+     */
+    /*@
+          ensures
+              (newDir == null) ==> (DIR.equals("LoginData"));
+     @*/
+    public void setDir(String newDir) {
+        
+        if (newDir == null) {
+            DIR = "LoginData";
+        }
+        
+        DIR = newDir;
     }
 
     /**

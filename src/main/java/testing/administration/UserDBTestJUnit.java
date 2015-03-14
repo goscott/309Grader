@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 
+import model.administration.PermissionKeys;
 import model.administration.User;
 import model.administration.UserDB;
 import model.administration.UserTypes;
@@ -86,7 +87,7 @@ public class UserDBTestJUnit {
         String fileName = "dbtest.udb";
         File file;
         
-        UserDB database = new UserDB(fileName);
+        UserDB database = new UserDB(directory, fileName);
         file = new File(directory + "/" + fileName);
         
         assertEquals(directory + "/" + fileName + "does not exist", true, file.exists());
@@ -100,21 +101,29 @@ public class UserDBTestJUnit {
     @Test
     public void testLoadUserDB() {
         String fileName = "dbtest.udb";
-        String directory = "LoginData";
+        String directory = "LoginData2";
         File file;
         User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
+        user.addPermission(PermissionKeys.PUSH_TO_HISTORY);
+        user.setType(UserTypes.USER_CUSTOM);
         
-        UserDB database = new UserDB(fileName);
+        UserDB database = new UserDB(directory, fileName);
         database.addUser(user, true);
         
         database = null;
-        database = new UserDB(fileName);
+        database = new UserDB(directory, fileName);
         
         assertEquals("User was not written to the database file", true, database.get(user.getId()) != null);
         assertEquals("User retrieved from database file is incorrect", true, database.get(user.getId()).equals(user));
         
         file = new File(directory + "/" + fileName);
         file.delete();
+        
+        file = new File(directory);
+        file.delete();
+        
+        user = new User("Bob", "McJoe", "bmcj01", "12345", UserTypes.USER_STUDENT);
+        database.addUser(user, true);
     }
     
     /**
@@ -127,7 +136,7 @@ public class UserDBTestJUnit {
         File file;
         User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
         
-        UserDB database = new UserDB(fileName);
+        UserDB database = new UserDB(directory, fileName);
         database.addUser(user, true);
         
         assertEquals("User was not written to the database file", true, database.get(user.getId()) != null);
@@ -150,7 +159,7 @@ public class UserDBTestJUnit {
         File file;
         User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
         
-        UserDB database = new UserDB(fileName);
+        UserDB database = new UserDB(directory, fileName);
         database.addUser(user, true);
         assertEquals("User was not written to the database file", true, database.get(user.getId()) != null);
         
@@ -158,8 +167,11 @@ public class UserDBTestJUnit {
         assertEquals("User was not removed from the database file", true, database.get(user.getId()) == null);
         
         database = null;
-        database = new UserDB(fileName);
+        database = new UserDB(directory, fileName);
         assertEquals("User was not removed from the database file", true, database.get(user.getId()) == null);
+        
+        user = new User("Bob", "McJoe", "bmcj01", "12345", UserTypes.USER_STUDENT);
+        assertEquals("Database tried to remove a user that did not exist", false, database.removeUser(user));
         
         file = new File(directory + "/" + fileName);
         file.delete();
@@ -175,7 +187,7 @@ public class UserDBTestJUnit {
         File file;
         User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
         
-        UserDB database = new UserDB(fileName);
+        UserDB database = new UserDB(directory, fileName);
         database.addUser(user, true);
         assertEquals("User was not written to the database file", true, database.get(user.getId()) != null);
         
@@ -199,7 +211,7 @@ public class UserDBTestJUnit {
         File file;
         User user = new User("Bob", "McBob", "bmcb01", "12345", UserTypes.USER_STUDENT);
         
-        UserDB database = new UserDB(fileName);
+        UserDB database = new UserDB(directory, fileName);
         database.addUser(user, true);
         assertEquals("User was not written to the database file", true, database.get(user.getId()) != null);
         
