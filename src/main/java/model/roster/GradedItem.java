@@ -128,6 +128,7 @@ public class GradedItem implements Serializable {
 		}
 		// depth = calcDepth();
 		studentGrades = new HashMap<Student, Double>();
+		if(Grader.getStudentList() != null)
 		for (Student student : Grader.getStudentList()) {
 			studentGrades.put(student, null);
 		}

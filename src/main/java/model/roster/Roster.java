@@ -412,11 +412,14 @@ public class Roster implements Serializable {
 			student.getAssignmentScore(asgn.name()) == score
 		);
 	@*/
-	public void addScore(Student student, GradedItem asgn, Double score) {
-		if (students.contains(student) && assignments.contains(asgn)
-				&& (score == null || (score >= 0 && score <= asgn.maxScore()))) {
-			Student stud = students.get(students.indexOf(student));
-			asgn.setStudentScore(stud, score);
+	public void addScore(Student student, GradedItem asg, Double score) {
+		if(assignments.indexOf(getAssignment(asg.name())) != -1) {
+			GradedItem asgn = assignments.get(assignments.indexOf(getAssignment(asg.name())));
+			if (students.contains(student) && assignments.contains(asgn)
+					&& (score == null || (score >= 0 && score <= asgn.maxScore()))) {
+				Student stud = students.get(students.indexOf(student));
+				asgn.setStudentScore(stud, score);
+			}
 		}
 	}
 

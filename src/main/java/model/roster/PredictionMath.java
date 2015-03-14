@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import model.curve.Grade;
 import model.driver.Debug;
+import model.driver.Grader;
 
 /**
  * Handles grade prediction calculations.
@@ -20,12 +21,15 @@ public class PredictionMath {
      * Given a student, a roster, and a desired grade, returns a list of assignment grades needed for that
      * student to achieve the desired grade.
      */
-    public static HashMap<GradedItem, Double> getPrediction(Roster roster, Student student, Grade desiredGrade) {
+    public static HashMap<GradedItem, Double> getPrediction(Roster rost, Student stud, Grade desiredGrade) {
         double maxPoints, curPoints, reqPoints, availablePoints, chunk;
         int ungradedAssignments = 0;
         GradedItem temp;
         HashMap<GradedItem, Double> result = new HashMap<GradedItem, Double>();
         String word = " are ";
+        
+        Roster roster = Grader.getRoster();
+        Student student = Grader.getStudentList().get(Grader.getStudentList().indexOf(stud));
         
         Debug.log("PredictionMath", "Desired grade for student " + student.getName() + ": " + desiredGrade.getName());
         
@@ -34,7 +38,7 @@ public class PredictionMath {
         
         //get curent number of points this student has
         curPoints = student.getTotalScore();
-        
+        Debug.log("PredictionMath", "Current Points: " + curPoints);
         //calculate required points
         // (cur + x) / tot = desired -----> x = (desired * tot) - cur 
         reqPoints = (desiredGrade.value() * DECIMAL_SHIFT * maxPoints) - curPoints;
@@ -43,11 +47,10 @@ public class PredictionMath {
         availablePoints = 0;
         
         //get the ungraded assignments
-        for (GradedItem item : roster.getAssignments()) {
-            
+        for (GradedItem item : Grader.getAssignmentList()) {
             // not extra credit, and has no children
             if (!item.isExtraCredit() && item.isLeaf()) {
-                if (item.getStudentScore(student) == null) {
+                if (Grader.getScore(student, item.name()) == null) {
                     ungradedAssignments++;
                     result.put(item, null);
                     availablePoints += item.maxScore();
