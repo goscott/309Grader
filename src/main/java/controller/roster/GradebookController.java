@@ -5,13 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-
 import controller.Alert;
 import controller.GraderPopup;
-import controller.graph.Histogram;
 import model.administration.PermissionKeys;
-import model.announcements.Announcement;
 import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
@@ -21,19 +17,15 @@ import model.roster.Roster;
 import model.roster.Student;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.SplitPane;
@@ -49,7 +41,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -61,6 +52,7 @@ public class GradebookController {
 	/** The main gradebook table **/
 	@FXML
 	private TableView<Student> mainTable;
+	@SuppressWarnings("rawtypes")
 	@FXML
 	private TableView stats_table;
 	/** The column showing the students' ids **/
@@ -108,10 +100,12 @@ public class GradebookController {
 		return singletonTwo;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public TableView getMainTable() {
 	    return mainTable;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public TableView getStatsTable() {
 	    return stats_table;
 	}
@@ -460,6 +454,7 @@ public class GradebookController {
 	/**
 	 * Gets the column title from it's graphic object
 	 */
+	@SuppressWarnings("rawtypes")
 	private String getColumnTitle(TableColumn column) {
 		if(column.getGraphic() != null) {
 			return ((Label)(column.getGraphic())).getText();
@@ -467,7 +462,7 @@ public class GradebookController {
 		return column.getText();
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
     public void populateStatsTable() {
 	    Debug.log("GradebookController", "Populating Stats Table");
 	    TableColumn targetColumn;
