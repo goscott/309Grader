@@ -7,7 +7,6 @@ import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 
 import controller.Alert;
-import controller.roster.GradebookController;
 import model.curve.Grade;
 import model.driver.Grader;
 import javafx.event.ActionEvent;

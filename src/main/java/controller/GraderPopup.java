@@ -2,12 +2,17 @@ package controller;
 
 import java.io.IOException;
 
+import com.sun.glass.ui.Application;
+import com.sun.glass.ui.Robot;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.driver.Debug;
@@ -87,5 +92,22 @@ public class GraderPopup {
 			Debug.log("ERROR", "Could not load " + fxml);
 		}
 		return null;
+	}
+	
+	/**
+	 * Shows a tooltip
+	 * @param message The message to be displayed
+	 * @param node Any fx node (object) in the scene, so the
+	 * tooltip can be set in the same stage (does not have to
+	 * be tied to the tooltip at all)
+	 */
+	@SuppressWarnings("restriction")
+	public static void showTooltip(String message, Node node) {
+		Robot robot = Application.GetApplication().createRobot();
+        Tooltip tt = new Tooltip(message);
+        tt.setX(robot.getMouseX()+10);
+        tt.setY(robot.getMouseY()-10);
+        tt.setAutoHide(true);
+        tt.show((Stage) node.getScene().getWindow());
 	}
 }
