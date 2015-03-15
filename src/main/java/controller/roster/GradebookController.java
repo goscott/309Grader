@@ -29,6 +29,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
@@ -36,6 +37,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -390,8 +392,11 @@ public class GradebookController {
 				if (!columnExists(item.name())
 						&& (item.getParent() == null || expanded.contains(item
 								.getParent().name()))) {
-					TableColumn<Student, String> newColumn = new TableColumn<Student, String>(
-							item.name());
+					TableColumn<Student, String> newColumn = new TableColumn<Student, String>();
+					Label label = new Label(item.name());
+					label.setTooltip(new Tooltip("Max Score: " + item.maxScore()));
+					newColumn.setGraphic(label);
+					
 					newColumn.setMinWidth(COLUMN_WIDTH);
 					newColumn.setEditable(item.isLeaf());
 
@@ -399,11 +404,11 @@ public class GradebookController {
 						public SimpleStringProperty call(
 								CellDataFeatures<Student, String> param) {
 							if (param.getValue().getAssignmentScore(
-									newColumn.getText()) == null) {
+									getColumnTitle(newColumn)) == null) {
 								return new SimpleStringProperty("");
 							}
 							return new SimpleStringProperty(param.getValue()
-									.getAssignmentScore(newColumn.getText())
+									.getAssignmentScore(getColumnTitle(newColumn))
 									+ "");
 						}
 
@@ -433,6 +438,16 @@ public class GradebookController {
 			
 			populateStatsTable();
 		}
+	}
+	
+	/**
+	 * Gets the column title from it's graphic object
+	 */
+	private String getColumnTitle(TableColumn column) {
+		if(column.getGraphic() != null) {
+			return ((Label)(column.getGraphic())).getText();
+		}
+		return column.getText();
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -603,12 +618,12 @@ public class GradebookController {
 	    
 	    //leaf
 	    if (targetColumn.getColumns().isEmpty()) {
-	        newColumn = new TableColumn<AggregateInfo, String>(targetColumn.getText());
+	        newColumn = new TableColumn<AggregateInfo, String>(getColumnTitle(targetColumn));
             newColumn.setMinWidth(COLUMN_WIDTH);
             
             newColumn.setCellValueFactory(new Callback() {
                 public SimpleStringProperty call(CellDataFeatures<AggregateInfo, String> param) {
-                    return new SimpleStringProperty(param.getValue().getCell(newColumn.getText()));
+                    return new SimpleStringProperty(param.getValue().getCell(getColumnTitle(newColumn)));
                 }
 
                 public Object call(Object param) {
@@ -733,7 +748,7 @@ public class GradebookController {
 	 * @return TableColumn the colummn if it exists, or null if it does not.
 	 */
 	private TableColumn<?, ?> findSubColumn(TableColumn<?, ?> col, String name) {
-		if (col.getText().equals(name)) {
+		if (getColumnTitle(col).equals(name)) {
 			return col;
 		}
 		for (TableColumn<?, ?> sub : col.getColumns()) {
@@ -756,7 +771,7 @@ public class GradebookController {
 	 *         column
 	 */
 	private boolean checkChildren(TableColumn<?, ?> col, String name) {
-		if (col.getText().equals(name)) {
+		if (getColumnTitle(col).equals(name)) {
 			return true;
 		}
 		for (TableColumn<?, ?> sub : col.getColumns()) {
@@ -795,8 +810,8 @@ public class GradebookController {
 		root.setExpanded(true);
 
 		for (TableColumn<?, ?> topColumn : getTopLevelColumns()) {
-			TreeItem<String> item = makeTreeItem(topColumn.getText());
-			item.setExpanded(getExpanded().contains(topColumn.getText()));
+			TreeItem<String> item = makeTreeItem(getColumnTitle(topColumn));
+			item.setExpanded(getExpanded().contains(getColumnTitle(topColumn)));
 			root.getChildren().add(item);
 		}
 		tree.setRoot(root);
