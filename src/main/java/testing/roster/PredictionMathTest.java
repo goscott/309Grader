@@ -31,13 +31,13 @@ public class PredictionMathTest {
 		Grader.addStudent(student);
 		Grader.addAssignment(item1);
 		
-		HashMap<GradedItem, Double> map = PredictionMath.getPrediction(Grader.getRoster(), student, desiredGrade);
+		HashMap<GradedItem, Double> map = PredictionMath.getPrediction(student, desiredGrade);
 		assertEquals(new Double(90), map.get(item1));
 		assertEquals(new Integer(1), new Integer(map.size()));
 		
 		Grader.addAssignment(item2);
 		
-		map = PredictionMath.getPrediction(Grader.getRoster(), student, desiredGrade);
+		map = PredictionMath.getPrediction(student, desiredGrade);
 		assertEquals(new Double(90), map.get(item1));
 		assertEquals(new Double(90), map.get(item2));
 		assertEquals(new Integer(2), new Integer(map.size()));
@@ -52,7 +52,7 @@ public class PredictionMathTest {
 		Grader.addAssignment(item6);
 		Grader.addScore(student, item6.name(), new Double(90));
 		
-		map = PredictionMath.getPrediction(Grader.getRoster(), student, desiredGrade);
+		map = PredictionMath.getPrediction(student, desiredGrade);
 		assertEquals(new Double(90), map.get(item1));
 		assertEquals(new Double(90), map.get(item2));
 		assertEquals(new Double(90), map.get(item5));
@@ -62,7 +62,7 @@ public class PredictionMathTest {
 		Grader.addScore(student, item2.name(), new Double(0));
 		Grader.addScore(student, item3.name(), new Double(0));
 		Grader.addScore(student, item4.name(), new Double(0));
-		map = PredictionMath.getPrediction(Grader.getRoster(), student, desiredGrade);
+		map = PredictionMath.getPrediction(student, desiredGrade);
 		assertEquals(null, map);
 	}
 }

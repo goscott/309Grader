@@ -33,6 +33,7 @@ public class CellEditEventHandler implements
 		if(input.trim().length() == 0) {
 			Grader.addScore(t.getRowValue(), t.getTableColumn().getText(),
 					null);
+			GradebookController.get().fullRefresh();
 			return;
 		}
 		try {

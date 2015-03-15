@@ -2,10 +2,12 @@ package controller.roster;
  
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 
+import controller.Alert;
 import controller.GraderPopup;
 import controller.graph.Histogram;
 import model.administration.PermissionKeys;
@@ -200,19 +202,12 @@ public class GradebookController {
 			MenuItem addStudent = new MenuItem("Add Student");
 			MenuItem dropStudent = new MenuItem("Drop Student");
 			MenuItem ref = new MenuItem("Refresh");
-			MenuItem makePrediction = new MenuItem("Make Prediction");
 			
 			ref.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
 					fullRefresh();
 				}
 			});
-			
-			makePrediction.setOnAction(new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent event) {
-                    PredictionMath.getPrediction(Grader.getRoster(), mainTable.getSelectionModel().getSelectedItem(), Grader.getRoster().getCurve().getGrade("A"));
-                }
-            });
 			
 			addAssignment.setOnAction(GraderPopup.getPopupHandler("addAssignmentDialog", addAssignment));
 			dropAssignment.setOnAction(GraderPopup.getPopupHandler("dropAssignment", dropAssignment));
@@ -301,12 +296,17 @@ public class GradebookController {
 				if(Grader.getCurve().getGrade(event.getNewValue()) != null) {
 					 Roster rost = Roster.load("Rosters/" + Roster.TEMP_NAME + ".rost");
 					 Grader.setCurrentRoster(rost);
-					 HashMap<GradedItem, Double> map = PredictionMath.getPrediction(Grader.getRoster(),
+					 HashMap<GradedItem, Double> map = PredictionMath.getPrediction(
 							 mainTable.getSelectionModel().getSelectedItem(),
 							 Grader.getRoster().getCurve().getGrade(event.getNewValue()));
-					 for(GradedItem item : map.keySet()) {
-						 Grader.addScore(event.getRowValue(), item.name(),
-									map.get(item));
+					 if(map != null) {
+						 for(GradedItem item : map.keySet()) {
+							 Grader.addScore(event.getRowValue(), item.name(),
+										map.get(item));
+						 }
+					 } else {
+						 showImpossibleGradeWarning(mainTable.getSelectionModel().getSelectedItem(),
+								 event.getNewValue());
 					 }
 				}
 				fullRefresh();
@@ -316,6 +316,23 @@ public class GradebookController {
 		mainTable.getColumns().add(gradeCol);
 	}
 
+	/**
+	 * Informs the user that no prediction can be made for a requested grade
+	 */
+	private void showImpossibleGradeWarning(Student student, String attempted) {
+		ArrayList<Grade> list =  Grader.getCurve().getGrades();
+		Collections.reverse(list);
+		for(Grade grade : list) {
+			HashMap<GradedItem, Double> map = PredictionMath.getPrediction(student, grade);
+			if(map != null) {
+				Alert.showWarningMessage("Impossible Grade", 
+						student.getName() + " cannot receive a " + attempted + ". The highest they can" + 
+						" receive is a " + grade.getName());
+				return;
+			}
+		}
+	}
+	
 	/**
 	 * Adds the far-left student columns to the gradebook
 	 */
