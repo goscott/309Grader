@@ -218,8 +218,6 @@ public class Grader {
 	 	);
 	@*/
 	public static void addStudent(Student student) {
-		/*if(!currentRoster.containsStudent(student.getId()) &&
-				Server.getStudents().contains(student))*/
 		currentRoster.addStudent(student);
 	}
 

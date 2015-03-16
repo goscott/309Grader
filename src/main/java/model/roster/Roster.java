@@ -2,9 +2,7 @@ package model.roster;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -632,6 +630,10 @@ public class Roster implements Serializable {
 		}
 	}
 
+	/**
+	 * Saves a roster temporarily, preventing the roster file from
+	 * being loaded. Will only be loaded when leaving prediction mode.
+	 */
 	public static void saveTemp(Roster rost) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(
@@ -691,6 +693,10 @@ public class Roster implements Serializable {
 		return max;
 	}
 
+	/**
+	 * Gets the maximum possible points on every assignment
+	 * on which a student has recieved a grade.
+	 */
 	public double getMaxPoints(Student student) {
 		double max = 0;
 		for (GradedItem item : assignments) {

@@ -12,7 +12,6 @@ import java.util.Calendar;
 
 import model.roster.GradedItem;
 import model.roster.Roster;
-import model.roster.Student;
 
 /**
  * A class that offers standardized debugging output and saved output/error logs
@@ -34,11 +33,6 @@ public class Debug {
 
 	/**
 	 * Logs a message. Outputs it to the screen, and saves it to the output log
-	 * 
-	 * @param category
-	 *            Disaplays a category before the message
-	 * @param msg
-	 *            The message
 	 */
 	public static void log(String category, String msg) {
 		if (loggerPrint)
@@ -63,9 +57,6 @@ public class Debug {
 
 	/**
 	 * Logs a message with no category
-	 * 
-	 * @param msg
-	 *            The message
 	 */
 	public static void log(String msg) {
 		if (loggerPrint)
@@ -100,10 +91,6 @@ public class Debug {
 		Grader.addAssignment(test2);
 		Grader.addAssignment(test3);
 		Grader.addAssignment(new GradedItem("Q1", "wefgr", 75, test3, false));
-
-		//Student bob = new Student("Bob", "123");
-
-		//Grader.addStudent(bob);
 	}
 
 	/**
@@ -115,7 +102,6 @@ public class Debug {
 			try {
 				writer = new PrintWriter(fileName, "UTF-8");
 			} catch (FileNotFoundException | UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -139,7 +125,6 @@ public class Debug {
 		try {
 			writer = new PrintWriter(errorFileName, "UTF-8");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");

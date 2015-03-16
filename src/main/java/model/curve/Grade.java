@@ -6,6 +6,7 @@ import java.io.Serializable;
 /**
  * A representation of a percentage based grade.
  * @author Frank Poole
+ * @author Gavin Scott
  */
 public class Grade implements Comparable<Grade>, Serializable {
     /** auto Generated serial ID */

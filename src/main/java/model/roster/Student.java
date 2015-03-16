@@ -72,6 +72,10 @@ public class Student implements Comparable<Student>, Serializable {
 		this.units = units;
 	}
 
+	/**
+	 * Creates a copy of this student and enrolls them in the
+	 * provided roster
+	 */
 	public Student copyTo(Roster rost) {
 		return new Student(name, id, emplID, major, ferpa, units, rost);
 	}

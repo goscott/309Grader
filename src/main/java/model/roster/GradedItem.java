@@ -27,8 +27,6 @@ public class GradedItem implements Serializable {
 	private ArrayList<GradedItem> children;
 	/** The assignment's parent **/
 	private GradedItem parent;
-	/** The assignment's depth **/
-	// private int depth;
 	/** Determines whether or not an assignment is extra credit **/
 	private boolean extraCredit;
 	/** Each student's grade on this assignment **/
@@ -37,11 +35,6 @@ public class GradedItem implements Serializable {
 	/**
 	 * Creates a graded item with the given information. The parent will be set
 	 * to null, and the score will be set to zero.
-	 * 
-	 * @param name
-	 *            the assignment's name
-	 * @param descr
-	 *            the assignment's description
 	 */
 	/*@
 	 	ensures(
@@ -64,13 +57,6 @@ public class GradedItem implements Serializable {
 	/**
 	 * Creates a graded item with the given information. The score will be set
 	 * to zero
-	 * 
-	 * @param name
-	 *            The assignment's name
-	 * @param descr
-	 *            The assignment's description
-	 * @param parent
-	 *            The assignment's parent assignment or category
 	 */
 	/*@
 	 	ensures(
@@ -92,15 +78,6 @@ public class GradedItem implements Serializable {
 
 	/**
 	 * Creates a graded item with the given input
-	 * 
-	 * @param name
-	 *            The assignment's name
-	 * @param descr
-	 *            The assignment's description
-	 * @param parent
-	 *            The assignment's parent or parent category
-	 * @param score
-	 *            The assignment's score
 	 */
 	/*@
 	 	ensures(
@@ -549,6 +526,9 @@ public class GradedItem implements Serializable {
 	
 	/** STATISTICS **/
 	
+	/**
+	 * Gets the number of students that have grades on this assignment
+	 */
 	public int getNumGraded() {
 		int total = 0;
 		for(Double grade : studentGrades.values()) {
@@ -559,6 +539,9 @@ public class GradedItem implements Serializable {
 		return total;
 	}
 	
+	/**
+	 * Gets the mean grade on this assignment
+	 */
 	public double getMean() {
 		double sum = 0;
 		int num = 0;
@@ -571,6 +554,9 @@ public class GradedItem implements Serializable {
 		return sum / num;
 	}
 	
+	/**
+	 * Gets the median grade on this assignment
+	 */
 	public double getMedian() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
@@ -592,6 +578,9 @@ public class GradedItem implements Serializable {
 		return 0;
 	}
 	
+	/**
+	 * Gets the maximum grade on this assignment
+	 */
 	public double getMax() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
@@ -607,6 +596,9 @@ public class GradedItem implements Serializable {
 		}
 	}
 	
+	/**
+	 * Gets the minimum grade on this assignment
+	 */
 	public double getMin() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
@@ -622,6 +614,9 @@ public class GradedItem implements Serializable {
 		}
 	}
 	
+	/**
+	 * Gets the standard deviation for this assignment
+	 */
 	public double getStandardDeviation() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
