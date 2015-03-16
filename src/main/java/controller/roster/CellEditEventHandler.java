@@ -4,6 +4,7 @@ import model.driver.Debug;
 import model.driver.Grader;
 import model.roster.Student;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TableColumn.CellEditEvent;
 
@@ -31,19 +32,23 @@ public class CellEditEventHandler implements
 	public void handle(CellEditEvent<Student, String> t) {
 		String input = t.getNewValue();
 		if(input.trim().length() == 0) {
-			Grader.addScore(t.getRowValue(), t.getTableColumn().getText(),
+			Grader.addScore(t.getRowValue(), ((Label)t.getTableColumn().getGraphic()).getText(),
 					null);
 			GradebookController.get().fullRefresh();
 			return;
 		}
 		try {
 			double newGrade = Double.parseDouble(input);
-			double maxScore = Grader.getAssignment(t.getTableColumn().getText()).maxScore();
+			System.out.println("t: " + t);
+			System.out.println("t.gTC: " + t.getTableColumn());
+			System.out.println("t.gTC.gT: " + ((Label)t.getTableColumn().getGraphic()).getText());
+			double maxScore = Grader.getAssignment(((Label)t.getTableColumn().getGraphic())
+					.getText()).maxScore();
 			if (newGrade < 0 || newGrade > maxScore) {
 				throw new NumberFormatException();
 			}
 			GradebookController.edited = true;
-			Grader.addScore(t.getRowValue(), t.getTableColumn().getText(),
+			Grader.addScore(t.getRowValue(), ((Label)t.getTableColumn().getGraphic()).getText(),
 					newGrade);
 		} catch (NumberFormatException ex) {
 			try {
@@ -56,7 +61,8 @@ public class CellEditEventHandler implements
 					throw new NumberFormatException();
 				}
 				GradebookController.edited = true;
-				Grader.addPercentageScore(t.getRowValue(), t.getTableColumn().getText(),
+				Grader.addPercentageScore(t.getRowValue(),
+						((Label)t.getTableColumn().getGraphic()).getText(),
 						newGrade);
 				
 			} catch (NumberFormatException ex2) {
