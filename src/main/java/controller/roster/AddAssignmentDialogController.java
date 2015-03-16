@@ -1,6 +1,5 @@
 package controller.roster;
 
-import controller.GraderPopup;
 import resources.ResourceLoader;
 import model.driver.Grader;
 import model.roster.GradedItem;
@@ -26,7 +25,6 @@ import javafx.stage.Stage;
  * The dialog that allows the user to add assignments to the gradebook
  * 
  * @author Gavin Scott
- *
  */
 public class AddAssignmentDialogController {
 	/** The field for the assignment's name **/
@@ -84,12 +82,12 @@ public class AddAssignmentDialogController {
 		maxScoreField.setText("100");
 	}
 
-	@FXML
 	/**
 	 * Handles the add button. Adds a new assignment and
 	 * clears the fields in the dialog.
 	 * @param event the button's actionevent
 	 */
+	@FXML
 	private void handleAddButton(ActionEvent event) {
 		GradedItem asgnParent = null;
 		if (parentDropdown.getValue() != null
@@ -115,24 +113,24 @@ public class AddAssignmentDialogController {
 		gbook.populateTree();
 	}
 
-	@FXML
 	/**
 	 * Handles the cancel button. Closes the window.
 	 * @param event the button's event
 	 */
+	@FXML
 	private void handleCancelButton(ActionEvent event) {
 		Node source = (Node) event.getSource();
 		Stage stage = (Stage) source.getScene().getWindow();
 		stage.hide();
 	}
 
-	@FXML
 	/**
 	 * Checks the name for validity every time the user
 	 * changes it. Names must be unique and between 1 and
 	 * a maximum number of characters.
 	 * @param event The key event
 	 */
+	@FXML
 	private void nameChangeHandler(KeyEvent event) {
 		addButton.setDisable(checkValid());
 		if (nameField.getText().length() == 0) {
@@ -166,11 +164,11 @@ public class AddAssignmentDialogController {
 		}
 	}
 
-	@FXML
 	/**
 	 * Checks if the entered data is valid
 	 * @return boolean true if the data is valid
 	 */
+	@FXML
 	private boolean checkValid() {
 		checkNameValid();
 		checkScoreInvalid();
@@ -219,13 +217,13 @@ public class AddAssignmentDialogController {
 		return false;
 	}
 
-	@FXML
 	/**
 	 * Checks the score for validity every time the user
 	 * changes it. Max scores must be greater than 1
 	 * and valid doubles.
 	 * @param event The key event
 	 */
+	@FXML
 	private void scoreChangeHandler(KeyEvent event) {
 		addButton.setDisable(checkValid());
 	}

@@ -166,8 +166,8 @@ public class UserLoginController {
 			
 			//Links the horizontal scrollbars for the two tables in the gradebook
 			//This only works if you put the code here, where the mainpage is initialized
-			ScrollBar table1Scroller = findHorizontalScrollBar(GradebookController.getController().getMainTable());  
-	        ScrollBar table2Scroller = findHorizontalScrollBar(GradebookController.getController().getStatsTable());  
+			ScrollBar table1Scroller = findHorizontalScrollBar(GradebookController.get().getMainTable());  
+	        ScrollBar table2Scroller = findHorizontalScrollBar(GradebookController.get().getStatsTable());  
 	        
 	        table1Scroller.valueProperty().bindBidirectional(table2Scroller.valueProperty());
 			closeLoadScreen();

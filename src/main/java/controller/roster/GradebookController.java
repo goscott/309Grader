@@ -52,6 +52,7 @@ public class GradebookController {
 	/** The main gradebook table **/
 	@FXML
 	private TableView<Student> mainTable;
+	/** The stat table **/
 	@SuppressWarnings("rawtypes")
 	@FXML
 	private TableView stats_table;
@@ -67,15 +68,16 @@ public class GradebookController {
 	/** The scrollpane that holds the TableView **/
 	@FXML
 	private ScrollPane scrollPane;
+	/** The vbox that holds the expand tree **/
 	@FXML
 	private VBox expander;
+	/** The split pane holdign the gradebook and the tree **/
 	@FXML
 	private SplitPane splitPane;
+	/** The expand/collapse tree **/
 	@FXML
 	private TreeView<String> tree;
 
-	/** The right-click menu **/
-	// private ContextMenu rightClickMenu;
 	/** An ArrayList holding the names of the columns that are expanded **/
 	private ArrayList<String> expanded;
 	/** The instance of the controller **/
@@ -86,34 +88,38 @@ public class GradebookController {
 	private boolean current = true;
 	/** The roster, if not current **/
 	private Roster roster = null;
-	   /** Whether or not the gradebook is in prediction mode **/
-	    public static boolean predictionMode = false;
-	    /** whether or not changes have been made **/
-	    public static boolean edited;
+   /** Whether or not the gradebook is in prediction mode **/
+    public static boolean predictionMode = false;
+    /** whether or not changes have been made **/
+    public static boolean edited;
+    /** The width of a column **/
 	public static final int COLUMN_WIDTH = 125;
 
-	public static GradebookController getController() {
-		return singleton;
-	}
-
+	/** Gets the history gradebook **/
 	public static GradebookController getControllerTwo() {
 		return singletonTwo;
 	}
 	
+	/**
+	 * Gets the gradebook table
+	 */
 	@SuppressWarnings("rawtypes")
 	public TableView getMainTable() {
 	    return mainTable;
 	}
 	
+	/**
+	 * Gets the stats table
+	 */
 	@SuppressWarnings("rawtypes")
 	public TableView getStatsTable() {
 	    return stats_table;
 	}
 
-	@FXML
 	/**
 	 * Initializes the gradebook view
 	 */
+	@FXML
 	public void initialize() {
 		Debug.log("GradebookController", "controller init");
 
@@ -149,15 +155,6 @@ public class GradebookController {
 			}
 		});
 		populateTree();
-		
-		/*
-		mainTable.getColumns().addListener(new ListChangeListener<TableColumn<?,?>>() {  
-		     @Override  
-		     public void onChanged(Change<? extends TableColumn<?,?>> change) {  
-		          // table columns changed, perhaps due to reordering...  
-		         populateStatsTable();
-		     }  
-		}); */
 	} 
 
 	/**
@@ -167,7 +164,6 @@ public class GradebookController {
 		ContextMenu rightClickMenu = new ContextMenu();
 		MenuItem predictionToggle = new MenuItem("Toggle Prediction Mode");
 		MenuItem expandCollapse = new MenuItem("Expand/Collapse Columns");
-		//expandCollapse.setOnAction(GraderPopup.getPopupHandler("expandCollapseDialog", expandCollapse));
 		expandCollapse.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 expander.setMaxWidth(250);
@@ -186,7 +182,6 @@ public class GradebookController {
 				GradebookController.get().fullRefresh();
 			}
 		});
-		
 		// students don't get these options
 		if (current
 				&& Grader.getUser().getPermissions()
@@ -216,6 +211,9 @@ public class GradebookController {
 		return rightClickMenu;
 	}
 	
+	/**
+	 * Collapses the expand/collapse tree (hides it)
+	 */
 	public void collapseTree() {
         expander.setMaxWidth(0);
         expander.setMinWidth(0);
@@ -352,11 +350,6 @@ public class GradebookController {
 
 	/**
 	 * Checks if a column exists with the given name
-	 * 
-	 * @param name
-	 *            the name being checked
-	 * @return boolean true if there is already a column in the gradebook with
-	 *         that name
 	 */
 	private boolean columnExists(String name) {
 		for (TableColumn<?, ?> col : mainTable.getColumns()) {
@@ -368,9 +361,6 @@ public class GradebookController {
 
 	/**
 	 * Sets which columns are visible
-	 * 
-	 * @param asgnNames
-	 *            the names of the assignments that will now be visible
 	 */
 	void setExpanded(ArrayList<String> asgnNames) {
 		expanded = asgnNames;
@@ -411,24 +401,8 @@ public class GradebookController {
 					newColumn.setMinWidth(COLUMN_WIDTH);
 					newColumn.setEditable(item.isLeaf());
 
-					newColumn.setCellValueFactory(new Callback() {
-						public SimpleStringProperty call(
-								CellDataFeatures<Student, String> param) {
-							if (param.getValue().getAssignmentScore(
-									getColumnTitle(newColumn)) == null) {
-								return new SimpleStringProperty("");
-							}
-							return new SimpleStringProperty(param.getValue()
-									.getAssignmentScore(getColumnTitle(newColumn))
-									+ "");
-						}
-
-						public Object call(Object param) {
-							return call((CellDataFeatures<Student, String>) (param));
-						}
-					});
-					newColumn.setCellFactory(TextFieldTableCell
-							.<Student> forTableColumn());
+					newColumn = setAssignmentCellFactories(newColumn);
+					
 					/* When a user types a change */
 					newColumn.setOnEditCommit(new CellEditEventHandler(this));
 
@@ -452,6 +426,34 @@ public class GradebookController {
 	}
 	
 	/**
+	 * Sets the cell factories for a tablecolumn and returns
+	 * the updated column
+	 */
+	@SuppressWarnings("unchecked")
+	private TableColumn<Student, String> setAssignmentCellFactories(
+			TableColumn<Student, String> newColumn) {
+		newColumn.setCellValueFactory(new Callback() {
+			public SimpleStringProperty call(
+					CellDataFeatures<Student, String> param) {
+				if (param.getValue().getAssignmentScore(
+						getColumnTitle(newColumn)) == null) {
+					return new SimpleStringProperty("");
+				}
+				return new SimpleStringProperty(param.getValue()
+						.getAssignmentScore(getColumnTitle(newColumn))
+						+ "");
+			}
+
+			public Object call(Object param) {
+				return call((CellDataFeatures<Student, String>) (param));
+			}
+		});
+		newColumn.setCellFactory(TextFieldTableCell
+				.<Student> forTableColumn());
+		return newColumn;
+	}
+
+	/**
 	 * Gets the column title from it's graphic object
 	 */
 	@SuppressWarnings("rawtypes")
@@ -462,14 +464,16 @@ public class GradebookController {
 		return column.getText();
 	}
 	
+	/**
+	 * Populate the stats table
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
     public void populateStatsTable() {
 	    Debug.log("GradebookController", "Populating Stats Table");
 	    TableColumn targetColumn;
-	    TableColumn<AggregateInfo, String> newColumn, titleColumn, bufferColumn2, bufferColumn3, bufferColumn4;
-	    
+	    TableColumn<AggregateInfo, String> newColumn, titleColumn, 
+	    	bufferColumn2, bufferColumn3, bufferColumn4;
 	    ObservableList<AggregateInfo> data;
-	    
 	    stats_table.getColumns().clear();
 	    
 	    titleColumn = new TableColumn<AggregateInfo, String>("");
@@ -481,7 +485,6 @@ public class GradebookController {
             public SimpleStringProperty call(CellDataFeatures<AggregateInfo, String> param) {
                 return new SimpleStringProperty(param.getValue().getTitle());
             }
-
             public Object call(Object param) {
                 return call((CellDataFeatures<AggregateInfo, String>) (param));
             }
@@ -500,39 +503,33 @@ public class GradebookController {
 	        targetColumn = mainTable.getColumns().get(index);
 	        dfsAddCollumns(targetColumn);
 	    }
-	    
 	    stats_table.getColumns().add(bufferColumn4);
-	    
 	    stats_table.getItems().clear();
-	    
-	    
-	    
 	    data = FXCollections.observableArrayList(
-	            getPointValues(),
-	            getDataPoints(), 
-	            getRanges(),
-	            getMeans(),
-	            getDeviations(),
-	            getMedians(),
-	            getMax(),
-	            getMin());
+	            getPointValues(), getDataPoints(), 
+	            getRanges(), getMeans(),
+	            getDeviations(), getMedians(),
+	            getMax(), getMin());
 	    stats_table.setItems(data);
 	}
 	
+	/**
+	 * Gets the point values for the assignments (for the stats table)
+	 */
 	private AggregateInfo getPointValues() {
 	    AggregateInfo pointValues;
-	    
 	    pointValues = new AggregateInfo("Maximum Point Value");
         
         for (GradedItem item : Grader.getAssignmentList()) {
             pointValues.addCell(item.name(), item.maxScore());
         }
-        
         pointValues.addCell("Percentage", Grader.getMaxPoints());
-        
         return pointValues;
 	}
 	
+	/**
+	 * Gets the data points for the assignments (for the stats table)
+	 */
 	private AggregateInfo getDataPoints() {
 	    AggregateInfo dataPoints;
 	    dataPoints = new AggregateInfo("# of Data Points");
@@ -540,12 +537,14 @@ public class GradebookController {
 	    for (GradedItem item : Grader.getAssignmentList()) {
 	        dataPoints.addCell(item.name(), item.getNumGraded());
 	    }
-	    
 	    dataPoints.addCell("Percentage", Grader.getStudentList().size());
 	    
 	    return dataPoints;
 	}
 	
+	/**
+	 * Gets the ranges for the assignments (for the stats table)
+	 */
 	private AggregateInfo getRanges() {
         AggregateInfo range;
         range = new AggregateInfo("Range");
@@ -559,6 +558,9 @@ public class GradebookController {
         return range;
     }
 	
+	/**
+	 * Gets the means for the assignments (for the stats table)
+	 */
 	private AggregateInfo getMeans() {
         AggregateInfo mean;
         mean = new AggregateInfo("Mean");
@@ -572,6 +574,9 @@ public class GradebookController {
         return mean;
     }
 	
+	/**
+	 * Gets the medians for the assignments (for the stats table)
+	 */
 	private AggregateInfo getMedians() {
         AggregateInfo median;
         median = new AggregateInfo("Median");
@@ -585,6 +590,9 @@ public class GradebookController {
         return median;
     }
 	
+	/**
+	 * Gets the standard deviations for the assignments (for the stats table)
+	 */
 	private AggregateInfo getDeviations() {
         AggregateInfo standardDeviation;
         standardDeviation = new AggregateInfo("Standard Deviation");
@@ -598,6 +606,9 @@ public class GradebookController {
         return standardDeviation;
     }
 	
+	/**
+	 * Gets the min values for the assignments (for the stats table)
+	 */
 	private AggregateInfo getMin() {
         AggregateInfo mins;
         mins = new AggregateInfo("Minimum Score");
@@ -611,6 +622,9 @@ public class GradebookController {
         return mins;
     }
 	
+	/**
+	 * Gets the max values for the assignments (for the stats table)
+	 */
 	private AggregateInfo getMax() {
         AggregateInfo max;
         max = new AggregateInfo("Maximum Score");
@@ -624,6 +638,9 @@ public class GradebookController {
         return max;
     }
 	
+	/**
+	 * Adds the assignment columns to the stats table
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
     private void dfsAddCollumns(TableColumn targetColumn) {
 	    TableColumn<AggregateInfo, String> newColumn;
@@ -653,18 +670,12 @@ public class GradebookController {
 	        }
 	    }
 	}
-
 	ObservableList<TableColumn<Student, ?>> getTopLevelColumns() {
 		return mainTable.getColumns();
 	}
 
 	/**
-	 * Expands or collapses a column
-	 * 
-	 * @param asgnName
-	 *            The name of the column
-	 * @param expand
-	 *            Whether to expand or collapse (true expands)
+	 * Expands or collapses a column with the given name
 	 */
 	void setAssignmentExpansion(String asgnName, boolean expand) {
 		if (expand) {
@@ -676,8 +687,6 @@ public class GradebookController {
 
 	/**
 	 * Recursively expands a column and its children
-	 * 
-	 * @param asgnName
 	 */
 	private void open(String asgnName) {
 		if (!expanded.contains(asgnName)) {
@@ -691,9 +700,6 @@ public class GradebookController {
 
 	/**
 	 * Recursively collapses a column an its children
-	 * 
-	 * @param asgnName
-	 *            The name of the column
 	 */
 	private void close(String asgnName) {
 		if (expanded.contains(asgnName)) {
@@ -774,13 +780,6 @@ public class GradebookController {
 	/**
 	 * Checks if a column exists with the given name as a child of a column.
 	 * Checks recursively.
-	 * 
-	 * @param col
-	 *            The column being checked
-	 * @param name
-	 *            The name beign searched for
-	 * @return boolean true if a column exists with the given name in any child
-	 *         column
 	 */
 	private boolean checkChildren(TableColumn<?, ?> col, String name) {
 		if (getColumnTitle(col).equals(name)) {
@@ -813,10 +812,16 @@ public class GradebookController {
 		this.roster = roster;
 	}
 
+	/**
+	 * Gets the singleton gradebook controller
+	 */
 	public static GradebookController get() {
 		return singleton;
 	}
 	
+	/**
+	 * Populates the expand/collapse tree to match the assignments
+	 */
 	void populateTree() {
 		TreeItem<String> root = new TreeItem<String>("All Columns");
 		root.setExpanded(true);
@@ -829,6 +834,10 @@ public class GradebookController {
 		tree.setRoot(root);
 	}
 	
+	/**
+	 * Creates an item (representing an assignment) for
+	 * the expand/collapse tree
+	 */
 	private TreeItem<String> makeTreeItem(String name) {
 		GradedItem temp = Grader.getAssignment(name);
 		TreeItem<String> item = new TreeItem<String>(name);
@@ -843,6 +852,9 @@ public class GradebookController {
 		return item;
 	}
 	
+	/**
+	 * Handles the user expanding or collapsing a column
+	 */
 	private void handleTreeEvent() {
 		for (TreeItem<String> item : tree.getRoot().getChildren()) {
 			mirrorInGradebook(item);
@@ -850,6 +862,10 @@ public class GradebookController {
 		fullRefresh();
 	}
 	
+	/**
+	 * Expands or collapses a column in the gradebook to reflect
+	 * changes in the tree
+	 */
 	private void mirrorInGradebook(TreeItem<String> item) {
 		setAssignmentExpansion(item.getValue(), item.isExpanded());
 		if (item.isExpanded()) {
