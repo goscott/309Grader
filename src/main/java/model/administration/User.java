@@ -9,32 +9,32 @@ import model.driver.Debug;
  * @author Mason Stevenson
  */
 public class User {
-    
+
     /**
      * First Name.
      */
     private String fName;
-    
+
     /**
      * Last Name.
      */
     private String lName;
-    
+
     /**
      * User login id (should be same as calpoly id).
      */
     private String id;
-    
+
     /**
      * User password.
      */
     private String password;
-    
+
     /**
      * User type. See model/administration/UserTypes.java
      */
     private char type;
-    
+
     /**
      * Custom configuration of permission keys.
      */
@@ -221,14 +221,14 @@ public class User {
         if (!(other instanceof User)) {
             return false;
         }
-        
-        if (((User)other).getId().equals(id)) {
+
+        if (((User) other).getId().equals(id)) {
             return true;
         }
 
         return false;
     }
-    
+
     /**
      * Returns this user's custom permission key configuration, 
      * or the default configuration if this user does not have one set.
@@ -244,16 +244,16 @@ public class User {
           );
      @*/
     public ArrayList<PermissionKeys> getPermissions() {
-        
+
         if (permissions == null) {
             return PermissionKeys.getKeys(type);
         }
-        
+
         else {
             return permissions;
         }
     }
-    
+
     /**
      * Adds a new permission key to this user's list of permissions.
      */
@@ -268,18 +268,18 @@ public class User {
               );
      @*/
     public void addPermission(PermissionKeys key) {
-        
+
         if (permissions == null) {
             permissions = new ArrayList<PermissionKeys>();
         }
-        
+
         permissions.add(key);
     }
-    
+
     public void setPermissions(ArrayList<PermissionKeys> list) {
         permissions = list;
     }
-    
+
     /**
      * Removes key from this user's list of permissions.
      */
@@ -288,6 +288,6 @@ public class User {
               (\old(permissions).contains(key)) ==> (!permissions.contains(key));
      @*/
     public void removePermission(PermissionKeys key) {
-        
+
     }
 }

@@ -1,4 +1,5 @@
 package run;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,33 +28,36 @@ public class Launcher extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    	Server.init();
-        Application.launch(Launcher.class, (java.lang.String[])null);
+        Server.init();
+        Application.launch(Launcher.class, (java.lang.String[]) null);
     }
-    
+
     /**
      * Launches the user login view.
      */
     @Override
     public void start(Stage primaryStage) {
         try {
-            Scene scene = new Scene((VBox) GraderPopup.getResource("view/administration/user_login.fxml"));
+            Scene scene = new Scene(
+                    (VBox) GraderPopup.getResource(
+                            "view/administration/user_login.fxml"));
             primaryStage.setTitle("GraderTool: Login");
             primaryStage.setScene(scene);
             setUser(scene);
             GraderPopup.setIcon(primaryStage);
             primaryStage.show();
             primaryStage.setResizable(false);
-            
+
             Debug.newFile();
             Debug.log("Grader Tool", "Initializing...\n");
-            
+
         } catch (Exception ex) {
-            Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null,
+                    ex);
             Debug.log("ERROR", "Exception thrown during application start");
         }
     }
-    
+
     /**
      * Fills in the username that was last logged into.
      * @param scene The current scene.
@@ -63,18 +67,18 @@ public class Launcher extends Application {
         File file = new File(filename);
         TextField field;
         BufferedReader reader;
-        
+
         if (file.exists()) {
             //set username field
             field = (TextField) scene.lookup("#user_name");
             try {
-                reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
+                reader = new BufferedReader(new InputStreamReader(
+                        new FileInputStream(filename)));
                 field.setText(reader.readLine());
                 reader.close();
                 ((PasswordField) scene.lookup("#password")).requestFocus();
-            }
-            catch (Exception e) {
-            	Debug.log("ERROR", "Could not read login file");
+            } catch (Exception e) {
+                Debug.log("ERROR", "Could not read login file");
                 e.printStackTrace();
             }
         }

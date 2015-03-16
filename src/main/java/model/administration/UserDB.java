@@ -16,34 +16,36 @@ import model.driver.Debug;
  *
  */
 public class UserDB {
-    
+
     /**
      * A list of all registered users.
      */
     private ArrayList<User> users;
-    
+
     /**
      * Relative (from project root) path to the file containing user info.
      */
     private static String DATABASE = "users.udb";
-    
+
     /**
-     * The path to the file containing the username of the last user who logged in.
+     * The path to the file containing the username of the last user 
+     * who logged in.
      */
     private static final String LOGIN = "LoginData/login.txt";
-    
+
     /**
      * Directory for login.txt.
      */
     private static String DIR = "LoginData";
-    
+
     /**
      * The string that delimits the items in the user info file.
      */
     private static final String DELIM = Character.toString((char) 0);
 
     /**
-     * Constructor for UserDB. Calls loadUserDB(), which loads users from users.udb.
+     * Constructor for UserDB. Calls loadUserDB(), which loads users 
+     * from users.udb.
      */
     /*@
           ensures(users != null);
@@ -52,7 +54,7 @@ public class UserDB {
         Debug.log("model", "UserDB Created");
         loadUserDB();
     }
-    
+
     /**
      * Constructor for UserDB. Sets a custom database location.
      */
@@ -93,31 +95,34 @@ public class UserDB {
         targetFile = new File(DIR + "/" + DATABASE);
 
         try {
-            
+
             if (!directory.exists()) {
                 directory.mkdir();
             }
-            
+
             // check if file exists
             if (!targetFile.exists()) {
                 targetFile.createNewFile();
             }
 
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(targetFile)));
-            
+            reader = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(targetFile)));
+
             while ((line = reader.readLine()) != null) {
                 tokens = line.split(DELIM);
                 index = 0;
-                
-                toAdd = new User(tokens[index++], tokens[index++], tokens[index++], tokens[index++], tokens[index++].charAt(0));
+
+                toAdd = new User(tokens[index++], tokens[index++],
+                        tokens[index++], tokens[index++],
+                        tokens[index++].charAt(0));
                 users.add(toAdd);
-                
-                
+
                 if (toAdd.getType() == UserTypes.USER_CUSTOM) {
-                    
+
                     //check for keys
                     for (; index < tokens.length; index++) {
-                        toAdd.addPermission(PermissionKeys.valueOf(tokens[index]));
+                        toAdd.addPermission(PermissionKeys
+                                .valueOf(tokens[index]));
                     }
                 }
             }
@@ -143,29 +148,29 @@ public class UserDB {
 
         try {
             writer = new PrintWriter(new File(DIR + "/" + DATABASE));
-            
+
             for (User newUser : users) {
                 // add the user to the db file
                 writer.append(newUser.getfName() + DELIM + newUser.getlName()
-                        + DELIM + newUser.getId() + DELIM + newUser.getPassword()
-                        + DELIM + newUser.getType());
-                
+                        + DELIM + newUser.getId() + DELIM
+                        + newUser.getPassword() + DELIM + newUser.getType());
+
                 if (newUser.getType() == UserTypes.USER_CUSTOM) {
-                    
+
                     Debug.log("UserDB", "Writing permission keys to file");
-                    
+
                     //add keys
                     for (PermissionKeys key : newUser.getPermissions()) {
                         writer.append(DELIM + key.toString());
                     }
                 }
-                
+
                 writer.append("\n");
             }
-            
+
             writer.close();
         }
-        
+
         catch (IOException e) {
             Debug.log("Error", "failed to update user db");
         }
@@ -188,9 +193,9 @@ public class UserDB {
 
         // check the db
         if (!users.contains(newUser)) {
-            
+
             users.add(newUser);
-            
+
             //if do update if false, it wont overwrite the dbfile
             //this is helpful for testing.
             if (doUpdate) {
@@ -215,7 +220,7 @@ public class UserDB {
      @*/
     public boolean removeUser(User target) {
         Debug.log("model", "UserDB.removeUser() invoked.");
-        
+
         // check to see if user exists
         if (users.contains(target)) {
             // remove from users
@@ -245,7 +250,7 @@ public class UserDB {
      @*/
     public boolean editUserType(User target, char newType) {
         Debug.log("model", "UserDB.editUserType() invoked.");
-        
+
         // check if target exists
         if (users.contains(target) && UserTypes.isValidType(newType)) {
             // edit User object type
@@ -297,7 +302,7 @@ public class UserDB {
 
         return null;
     }
-    
+
     /**
      * Fetches a matching User object if supplied with a valid user id and password.
      * @param id A user id.
@@ -318,19 +323,18 @@ public class UserDB {
      @*/
     public User login(String id, String password) {
         Debug.log("model", "UserDB.login() invoked.");
-        
+
         User temp = get(id);
-        
-        
+
         //if id exists and password matches, return true        
         if (temp != null && temp.getPassword().equals(password)) {
             updateLogin(id);
             return temp;
         }
-        
+
         return null;
     }
-    
+
     /**
      * Writes the current user's id to login.txt. 
      * This will cause the login screen to remember the id
@@ -347,21 +351,20 @@ public class UserDB {
     private void updateLogin(String id) {
         File file;
         PrintWriter writer;
-        
+
         try {
-            //file = new File(this.getClass().getClassLoader().getResource(filename).getPath());
             file = new File(LOGIN);
             Debug.log("Writing to file" + file.getAbsolutePath());
             writer = new PrintWriter(file);
             writer.println(id);
             writer.close();
         }
-        
+
         catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Logs the current user out.
      * @return Returns true if the logout was successful.
@@ -372,11 +375,11 @@ public class UserDB {
      @*/
     public boolean logout() {
         Debug.log("model", "UserDB.logout() invoked");
-        
+
         //set current user to null
         return true;
     }
-    
+
     /**
      * Sets the directory that users.udb is placed in (for testing)
      */
@@ -385,30 +388,11 @@ public class UserDB {
               (newDir == null) ==> (DIR.equals("LoginData"));
      @*/
     public void setDir(String newDir) {
-        
+
         if (newDir == null) {
             DIR = "LoginData";
         }
-        
+
         DIR = newDir;
     }
-
-    /**
-     * Prints the user database to system.out
-     */
-    /*
-    public void print() {
-        System.out.println("USER DB:");
-        System.out
-                .println("----------------------------------------------------------------------------------------");
-        System.out.printf("%-20s%-20s%-20s%-20s%-20s\n\n", "First", "Last",
-                "ID", "Password", "Type");
-
-        for (User u : users) {
-            System.out.printf("%-20s%-20s%-20s%-20s%-20c\n", u.getfName(),
-                    u.getlName(), u.getId(), u.getPassword(), u.getType());
-        }
-        System.out
-                .println("----------------------------------------------------------------------------------------\n\n");
-    }*/
 }

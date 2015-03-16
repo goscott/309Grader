@@ -8,22 +8,22 @@ import java.util.Arrays;
  * @author Mason Stevenson
  */
 public class QuarterAverage implements Comparable<QuarterAverage> {
-    
+
     /**
      * The average of all student grades in a course.
      */
     private final double val;
-    
+
     /**
      * The quarter this course was taught.
      */
     private final String quarter;
-    
+
     /**
      * The year the course was taught.
      */
     private final int year;
-    
+
     /**
      * Constructor for quarter average.
      */
@@ -40,7 +40,7 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
         quarter = newQuarter;
         year = newYear;
     }
-    
+
     /*@
           ensures
               (\result == val);
@@ -48,7 +48,7 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
     public double getValue() {
         return val;
     }
-    
+
     /*@
         ensures
             (\result.equals(quarter));
@@ -56,7 +56,7 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
     public String getQuarter() {
         return quarter;
     }
-    
+
     /*@
         ensures
             (\result == year);
@@ -64,7 +64,7 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
     public int getYear() {
         return year;
     }
-    
+
     /**
      * Compares the QuarterAverages chronologically. 
      * Eg: Spring 2012 < Spring 2013 and Summer 2015 < Winter 2015
@@ -85,14 +85,17 @@ public class QuarterAverage implements Comparable<QuarterAverage> {
                  );
      @*/
     public int compareTo(QuarterAverage otherAverage) {
-        ArrayList<String> quarters = new ArrayList<String>(Arrays.asList(new String[]{"Winter", "Spring", "Summer", "Fall"}));
-        
+        ArrayList<String> quarters = new ArrayList<String>(
+                Arrays.asList(new String[] { "Winter", "Spring", "Summer",
+                        "Fall" }));
+
         if (otherAverage.getYear() != year) {
             return year - otherAverage.getYear();
         }
-        
+
         else {
-            return quarters.indexOf(quarter) - quarters.indexOf(otherAverage.getQuarter());
+            return quarters.indexOf(quarter)
+                    - quarters.indexOf(otherAverage.getQuarter());
         }
     }
 }
