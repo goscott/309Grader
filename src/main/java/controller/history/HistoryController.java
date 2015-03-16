@@ -258,6 +258,12 @@ public class HistoryController {
 							button_gradebook.setVisible(false);
 
 							if (selectedSection != null) {
+		                       selectedSection.setStyle("-fx-background-color: #2EA1B1, "
+		                                       + "linear-gradient(#2EA1B1, #74D7E5); "
+		                                       + "-fx-text-base-color: #ffffff;"
+		                                       + "-fx-background-radius: 3,2,1;"
+		                                       + "-fx-text-alignment: left;"
+		                                       );
 								selectedSection.setSelected(false);
 								selectedSection = null;
 							}
@@ -336,6 +342,7 @@ public class HistoryController {
 		}
 		pie_chart.setData(pieChartData);
 		pie_chart.setTitle("Grade Breakdown Across All Quarters");
+
 	}
 
 	/**
@@ -504,12 +511,21 @@ public class HistoryController {
 			                            + "-fx-background-radius: 3,2,1;"
 			                            + "-fx-text-alignment: left;"
 			                            );
+
 						if (selectedSection != null) {
+	                        selectedSection.setStyle("-fx-background-color: #2EA1B1, "
+	                                        + "linear-gradient(#2EA1B1, #74D7E5); "
+	                                        + "-fx-text-base-color: #ffffff;"
+	                                        + "-fx-background-radius: 3,2,1;"
+	                                        + "-fx-text-alignment: left;"
+	                                        );
 							selectedSection.setSelected(false); // deactivate
 																// other button
+							
 						}
 
 						selectedSection = (SectionButton) event.getSource();
+
 
 						section_label.setText(selectedSection.getText());
 
@@ -544,6 +560,7 @@ public class HistoryController {
 						selectedSection = null;
 						switch_graph.setVisible(true);
 						button_gradebook.setVisible(false);
+
 					}
 				}
 			});
