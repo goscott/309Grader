@@ -16,10 +16,14 @@ import model.driver.Debug;
 import model.server.Server;
 import controller.GraderPopup;
 
-
+/**
+ * Launches the Grader Tool
+ * @author Mason Stevenson
+ */
 public class Launcher extends Application {
 
     /**
+     * Runs the program
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -55,7 +59,6 @@ public class Launcher extends Application {
      * @param scene The current scene.
      */
     private void setUser(Scene scene) {
-        //String filename = "src/main/java/model/administration/login.txt";
         String filename = "LoginData/login.txt";
         File file = new File(filename);
         TextField field;
@@ -64,9 +67,7 @@ public class Launcher extends Application {
         if (file.exists()) {
             //set username field
             field = (TextField) scene.lookup("#user_name");
-            
             try {
-                //reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("model/administration/login.txt")));
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
                 field.setText(reader.readLine());
                 reader.close();
