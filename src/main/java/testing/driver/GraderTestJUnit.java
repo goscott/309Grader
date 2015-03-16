@@ -1,12 +1,19 @@
 package testing.driver;
 
 import static org.junit.Assert.*;
+import javafx.collections.ObservableList;
+import model.administration.User;
+import model.administration.UserDB;
+import model.curve.Curve;
+import model.curve.Grade;
 import model.driver.Grader;
 import model.roster.GradedItem;
 import model.roster.Roster;
 import model.roster.Student;
 
 import org.junit.Test;
+
+import resources.ResourceLoader;
 
 /**
  * Grader Tests 
@@ -54,13 +61,92 @@ public class GraderTestJUnit
             fail("Unscored item no longer considered unchecked : " + Grader.getScore(student1, "temp2"));
         
     }
+    
+    @Test
+    public void testGetSetUser() {
+        User testU = new User("Rianna", "Uppal", "password", "password", 'a');
+        Grader.setUser(testU);
+        User temp = Grader.getUser();
+        if(temp == null)
+            fail("The User was not set.");
+               
+    }
+    
+    @Test 
+    public void testGetUserDB()
+    {
+        UserDB temp = Grader.getUserDB();
+        if(temp == null)
+        {
+            fail("The UserDB is null");
+        }
+    }
 
+    @Test 
+    public void testGetSetCurve(){
+        Grader.setCurrentRoster(new Roster("temp", "ins", 1, "fall", null, null));
+        Curve temp = null;
+        Curve curve = new Curve();
+        
+        try{
+            Grader.setCurve(curve);
+            temp = Grader.getCurve();
+        }
+        catch(Exception ex)
+        { 
+            assertTrue(temp == null);   
+        }
+        
+        assertTrue(temp == curve);
+    }
+    
     @Test
     public void testAddAssignment() {
+        Grader.setCurrentRoster(new Roster("temp", "ins", 1, "fall", null, null));
+        GradedItem grade = new GradedItem("", "", 50.0, true);
+        
+        Grader.addAssignment(grade);
+        assertTrue(Grader.getAssignmentList().size() == 1);
+        
+        int temp = Grader.getAssignmentList().size();
+        Grader.addAssignment(null);
+        assertTrue(Grader.getAssignmentList().size() == temp);
+    }
+    
+    @Test
+    public void testGetAssignment(){
+        Grader.setCurrentRoster(new Roster("temp", "ins", 1, "fall", null, null));
+        GradedItem grade = new GradedItem("", "", 50.0, true);
+        
+        assertTrue(Grader.getAssignmentList().size() == 0);
+        Grader.addAssignment(grade);
+        
+        assertTrue(Grader.getAssignmentList().size() == 1);
+        GradedItem example = Grader.getAssignment("");
+        assertTrue(example == grade);
     }
 
     @Test
     public void testAddPercentageScore() {
+        Grader.setCurrentRoster(new Roster("temp", "ins", 1, "fall", null, null));
+        Student student = new Student("Rianne", "12345", "19400000", "General Engeineering", false, 4);
+        GradedItem grade = new GradedItem("assignment", "", 50.0, true);
+        Grade info = new Grade("assignment", 50.0, ResourceLoader.GREEN);
+        
+        Grader.addStudent(student);
+        
+        assertTrue(Grader.getAssignmentList().size() == 0);
+        Grader.addAssignment(grade);
+        assertTrue(Grader.getAssignmentList().size() == 1);
+        
+        ObservableList<Student> temp = Grader.getStudentList();
+        int index = temp.indexOf(student);
+        
+        assert(temp.get(index) == student);
+
+        Grader.addPercentageScore(student, "assignment", 100);
+        assert(temp.get(index).getGrade("assignement") == info);
+        
     }
 
     @Test
