@@ -1,6 +1,5 @@
 package controller.mainpage;
 
-
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,7 +45,9 @@ import controller.roster.GradebookController;
 /**
  * Controller for the main GraderTool view
  * 
- * @author Mason Stevenson, Gavin Scott, Frank Poole
+ * @author Mason Stevenson
+ * @author Gavin Scott
+ * @author Frank Poole
  *
  */
 public class MainPageController {
@@ -69,9 +70,6 @@ public class MainPageController {
 	/** The history tab **/
 	@FXML
 	private Tab historyTab;
-	/** The prediction tab **/
-	/*@FXML
-	private Tab predictionsTab;*/
 	/** The announcements tab **/
 	@FXML
 	private Tab announcementsTab;
@@ -117,7 +115,6 @@ public class MainPageController {
 	public void initialize() {
 		// gives it some initial data
 		Debug.autoPopulate();
-
 		// loads tab contents
 		try {
 			// add gradebook
@@ -156,20 +153,6 @@ public class MainPageController {
 			BorderPane announcemetsPage = (BorderPane) GraderPopup
 					.getResource("view/announcements/announcementTab.fxml");
 			announcementsTab.setContent(announcemetsPage);
-
-			// add predictions
-			// (students do not see)
-			/*
-			if (Grader.getUser().getType() != UserTypes.USER_STUDENT) {
-				HBox predictionsPage = (HBox) FXMLLoader.load(getClass()
-						.getClassLoader().getResource(
-								"view/predictions/predictions_view.fxml"));
-				predictionsTab.setContent(predictionsPage);
-			} else {
-			    predictionsTab.setDisable(true);
-			    serverMenu.setDisable(true);
-			}
-			*/
 			// turn off server menu for students and TAs
 			if (!Grader.getUser().getPermissions()
 					.contains(PermissionKeys.SERVER_MENU)) {
@@ -179,15 +162,11 @@ public class MainPageController {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-
 		ClassButtonsController con = new ClassButtonsController(buttonSetUp);
 		buttonController = con;
 		thisController = this;
 	    (classesScrollPane).setBorder(new Border(new BorderStroke(null, null, null, new BorderWidths(25.0))));
-
-
 		disable();
-
 		// students can't save changes
 		if (!Grader.getUser().getPermissions().contains(PermissionKeys.SAVE)) {
 			save.setVisible(false);
@@ -195,7 +174,6 @@ public class MainPageController {
 		} else {
 			requestHelp.setVisible(false);
 		}
-
 		initTabPane();
 	}
 
@@ -221,10 +199,7 @@ public class MainPageController {
 		classTab.setOnSelectionChanged(getStyleHandler());
 		announcementsTab.setOnSelectionChanged(getStyleHandler());
 		historyTab.setOnSelectionChanged(getStyleHandler());
-		
 	    classTab.setStyle("-fx-background-color: #74D7E5; -fx-text-base-color: #ffffff;");
-
-		
 		synch.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				Stage stage = GraderPopup.getPopupStage("Roster Sync", "view/mainpage/RosterSync.fxml");
@@ -239,6 +214,9 @@ public class MainPageController {
 		});
 	}
 	
+	/** Gets a handler that styles the tabs as they are selected
+	 * and deselected
+	 */
 	private EventHandler<Event> getStyleHandler() {
 	    return new EventHandler<Event>() {
             public void handle(Event event) {
@@ -263,10 +241,6 @@ public class MainPageController {
 		buttonController.refreshButtons();
 		save.setDisable(true);
 		serverMenu.setDisable(true);
-
-//		gradebookTab.setText("GradeBook");
-//		graphTab.setText("Graphs");
-//		announcementsTab.setText("Announcements");
 	}
 
 	/**
@@ -280,11 +254,6 @@ public class MainPageController {
 		announcementsTab.setDisable(false);
 		save.setDisable(false);
 		serverMenu.setDisable(false);
-
-//		gradebookTab.setText("GradeBook - " + Grader.getRoster().courseName());
-//		graphTab.setText("Graphs - " + Grader.getRoster().courseName());
-//		announcementsTab.setText("Announcements - "
-//				+ Grader.getRoster().courseName());
 	}
 	
 	/**
@@ -301,10 +270,10 @@ public class MainPageController {
 		thisController.enable();
 	}
 
-	@FXML
 	/**
 	 * Launches the permissions editor.
 	 */
+	@FXML
 	public void permissions() {
 		Debug.log("Launching permissions editor");
 		GraderPopup.getPopupStage("Edit User Permissions",
@@ -335,10 +304,10 @@ public class MainPageController {
 		}
 	}
 
-	@FXML
 	/**
 	 * Logs the user out
 	 */
+	@FXML
 	public void logout() {
 		UserDB users = Grader.getUserDB();
 		users.logout();
@@ -351,10 +320,10 @@ public class MainPageController {
 		((Stage) tabPane.getScene().getWindow()).close();
 	}
 
-	@FXML
 	/**
 	 * Exits the grader tool program.
 	 */
+	@FXML
 	public void exit() {
 		// close the program
 		((Stage) tabPane.getScene().getWindow()).close();
@@ -362,8 +331,6 @@ public class MainPageController {
 
 	/**
 	 * Saves the current roster
-	 * 
-	 * @param event
 	 */
 	@FXML
 	private void saveHandler(ActionEvent event) {
@@ -402,7 +369,6 @@ public class MainPageController {
 	@FXML
 	private void synchRoster(ActionEvent event) {
 		Debug.log("Roster sync", "Roster synced with server");
-		
 	}
 
 	/**
