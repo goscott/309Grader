@@ -13,29 +13,45 @@ import javafx.scene.text.Text;
 
 /**
  * A histogram displaying the current roster's curve
+ * 
  * @author Gavin Scott
  */
 public class Histogram {
+	/** The width of one student (pixels between vertivcal lines) **/
 	public static final int INCR_PER_PERSON = 35;
+	/** Distance from between the y-axis and the left margin **/
 	public static final int DIST_TO_LINE = 30;
+	/** The vertical width of a bar **/
 	public static final int BAR_WIDTH = 10;
+	/** The buffer between a bar and a tick **/
 	public static final int BUFFER = 1;
+	/** The length of a line in a gradeshape **/
 	public static final int SQUARE_START = 150;
+	/** The number of ticks in the histogram **/
 	public static final int NUM_TICKS = 100;
+	/** How many ticks in between each label **/
 	public static final int TICKS_UNTIL_TEXT = 5;
+	/** The width of a tick **/
 	public static final int TICK_WIDTH = 10;
+	/** The width of a labelled tick **/
 	public static final int BIG_TICK_WIDTH = 20;
+	/** The width of the y-axis **/
 	public static final int MAIN_LINE_WIDTH = 3;
+	/** The miniumum student lines in the histogram **/
 	public static final int MIN_LINES = 15;
+	/** The distance between the top margin and the top of the histogram **/
 	public static final int TOP_BUFFER = 30;
-	
+	/** The default width of the drawing pane **/
 	private static final int DEFAULT_PANE_WIDTH = 300;
+	/** The default height of the drawing pane **/
 	private static final int DEFAULT_PANE_HEIGHT = 500;
-	
+	/** The largest numer of students per grade **/
 	private int maxNumber = 0;
+	/** The scrollpane **/
 	private static ScrollPane scrollPane;
+	/** The main pane of the histogram **/
 	private static Pane drawingPane;
-	
+	/** The singleton instance of the histogram **/
 	private static Histogram singleton;
 
 	/**
@@ -44,100 +60,115 @@ public class Histogram {
 	public void initialize() {
 		singleton = this;
 		drawingPane = new Pane();
-        drawingPane.setPrefSize(DEFAULT_PANE_WIDTH, DEFAULT_PANE_HEIGHT);
-        drawingPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        scrollPane = new ScrollPane(drawingPane);
-        scrollPane.setPrefSize(DEFAULT_PANE_WIDTH, DEFAULT_PANE_HEIGHT);
-        scrollPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setBackground(new Background(new BackgroundFill(ResourceLoader.BACKGROUND, null, null)));
-        drawingPane.setBackground(new Background(new BackgroundFill(ResourceLoader.BACKGROUND, null, null)));
-        // screen pane size
-        drawingPane.setMinHeight(NUM_TICKS * BAR_WIDTH + 2*TOP_BUFFER);
-        update();
+		drawingPane.setPrefSize(DEFAULT_PANE_WIDTH, DEFAULT_PANE_HEIGHT);
+		drawingPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		scrollPane = new ScrollPane(drawingPane);
+		scrollPane.setPrefSize(DEFAULT_PANE_WIDTH, DEFAULT_PANE_HEIGHT);
+		scrollPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setFitToHeight(true);
+		scrollPane.setBackground(new Background(new BackgroundFill(
+				ResourceLoader.BACKGROUND, null, null)));
+		drawingPane.setBackground(new Background(new BackgroundFill(
+				ResourceLoader.BACKGROUND, null, null)));
+		// screen pane size
+		drawingPane.setMinHeight(NUM_TICKS * BAR_WIDTH + 2 * TOP_BUFFER);
+		update();
 	}
-	
+
 	/**
 	 * Redraws the histogram
 	 */
 	private void update() {
 		drawingPane.getChildren().removeAll(drawingPane.getChildren());
-		for(int i = NUM_TICKS; i > 0; i--) {
-        	if(i % TICKS_UNTIL_TEXT == 0) {
-        		// Label and big tick
-        		drawingPane.getChildren().add(new Text(DIST_TO_LINE / 4, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER+BAR_WIDTH, i + ""));
-        		Line line = new Line(DIST_TO_LINE, (NUM_TICKS-i)*BAR_WIDTH + TOP_BUFFER, DIST_TO_LINE + BIG_TICK_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER);
-        		line.setFill(ResourceLoader.LINE_COLOR);
-        		drawingPane.getChildren().add(line);
-        	} else {
-        		// tick
-        		Line line = new Line(DIST_TO_LINE, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER, DIST_TO_LINE + TICK_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+TOP_BUFFER);
-        		line.setFill(ResourceLoader.LINE_COLOR);
-        		drawingPane.getChildren().add(line);
-        	}
-        	// bar for number of students
-        	Rectangle rect = new Rectangle(DIST_TO_LINE+MAIN_LINE_WIDTH, (NUM_TICKS-i)*BAR_WIDTH+1+TOP_BUFFER, INCR_PER_PERSON*getNum(i), BAR_WIDTH - 2*BUFFER);
-        	rect.setFill(ResourceLoader.BAR_COLOR);
-        	drawingPane.getChildren().add(rect);
+		for (int i = NUM_TICKS; i > 0; i--) {
+			if (i % TICKS_UNTIL_TEXT == 0) {
+				// Label and big tick
+				drawingPane.getChildren().add(
+						new Text(DIST_TO_LINE / 4, (NUM_TICKS - i) * BAR_WIDTH
+								+ TOP_BUFFER + BAR_WIDTH, i + ""));
+				Line line = new Line(DIST_TO_LINE, (NUM_TICKS - i) * BAR_WIDTH
+						+ TOP_BUFFER, DIST_TO_LINE + BIG_TICK_WIDTH,
+						(NUM_TICKS - i) * BAR_WIDTH + TOP_BUFFER);
+				line.setFill(ResourceLoader.LINE_COLOR);
+				drawingPane.getChildren().add(line);
+			} else {
+				// tick
+				Line line = new Line(DIST_TO_LINE, (NUM_TICKS - i) * BAR_WIDTH
+						+ TOP_BUFFER, DIST_TO_LINE + TICK_WIDTH,
+						(NUM_TICKS - i) * BAR_WIDTH + TOP_BUFFER);
+				line.setFill(ResourceLoader.LINE_COLOR);
+				drawingPane.getChildren().add(line);
+			}
+			// bar for number of students
+			Rectangle rect = new Rectangle(DIST_TO_LINE + MAIN_LINE_WIDTH,
+					(NUM_TICKS - i) * BAR_WIDTH + 1 + TOP_BUFFER,
+					INCR_PER_PERSON * getNum(i), BAR_WIDTH - 2 * BUFFER);
+			rect.setFill(ResourceLoader.BAR_COLOR);
+			drawingPane.getChildren().add(rect);
 		}
-    	// student number lines
-        for(int count = 1; count < ((maxNumber + 1) > MIN_LINES ? (maxNumber + 1) : MIN_LINES); count++) {
-        	Line line = new Line(DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, TOP_BUFFER, DIST_TO_LINE + MAIN_LINE_WIDTH + count*INCR_PER_PERSON, TOP_BUFFER+BAR_WIDTH*NUM_TICKS);
-        	line.getStrokeDashArray().addAll(3d);
-        	drawingPane.getChildren().add(line);
-        }
-        
-        // add sliders
-        drawingPane.getChildren().addAll(new GradeShapeGroup().get());
-        
-        // x and y axis
-        Rectangle y_axis = new Rectangle(DIST_TO_LINE - 1, TOP_BUFFER, MAIN_LINE_WIDTH + 1, NUM_TICKS * BAR_WIDTH);
-        y_axis.setFill(ResourceLoader.LINE_COLOR);
-        Rectangle x_axis = new Rectangle(DIST_TO_LINE - 1, TOP_BUFFER + BAR_WIDTH*NUM_TICKS, MIN_LINES*INCR_PER_PERSON, MAIN_LINE_WIDTH);
-        x_axis.setFill(ResourceLoader.LINE_COLOR);
-        drawingPane.getChildren().addAll(y_axis, x_axis);
-        
+		// student number lines
+		for (int count = 1; count < ((maxNumber + 1) > MIN_LINES ? (maxNumber + 1)
+				: MIN_LINES); count++) {
+			Line line = new Line(DIST_TO_LINE + MAIN_LINE_WIDTH + count
+					* INCR_PER_PERSON, TOP_BUFFER, DIST_TO_LINE
+					+ MAIN_LINE_WIDTH + count * INCR_PER_PERSON, TOP_BUFFER
+					+ BAR_WIDTH * NUM_TICKS);
+			line.getStrokeDashArray().addAll(3d);
+			drawingPane.getChildren().add(line);
+		}
+		// add sliders
+		drawingPane.getChildren().addAll(new GradeShapeGroup().get());
+		// x and y axis
+		Rectangle y_axis = new Rectangle(DIST_TO_LINE - 1, TOP_BUFFER,
+				MAIN_LINE_WIDTH + 1, NUM_TICKS * BAR_WIDTH);
+		y_axis.setFill(ResourceLoader.LINE_COLOR);
+		Rectangle x_axis = new Rectangle(DIST_TO_LINE - 1, TOP_BUFFER
+				+ BAR_WIDTH * NUM_TICKS, MIN_LINES * INCR_PER_PERSON,
+				MAIN_LINE_WIDTH);
+		x_axis.setFill(ResourceLoader.LINE_COLOR);
+		drawingPane.getChildren().addAll(y_axis, x_axis);
 	}
-	
+
 	/**
 	 * Refreshes the histogram to reflect the current curve
 	 */
 	public static void refresh() {
-		if(singleton != null) {
+		if (singleton != null) {
 			singleton.update();
 		}
 	}
-	
+
 	/**
 	 * Get's the scroll pane for the histogram
 	 */
 	private Node getNode() {
 		return scrollPane;
 	}
-	
+
 	/**
 	 * Gets the histogram as a node
 	 */
-    public static Node get() {
-    	if(singleton == null) {
-	    	Histogram histo = new Histogram();
-	    	histo.initialize();
-    	}
-    	return singleton.getNode();
-    }
+	public static Node get() {
+		if (singleton == null) {
+			Histogram histo = new Histogram();
+			histo.initialize();
+		}
+		return singleton.getNode();
+	}
 
-    /**
-     * Gets the largest number of students that have any
-     * one grade
-     */
+	/**
+	 * Gets the largest number of students that have any one grade
+	 */
 	private int getNum(double score) {
 		int num = Grader.getRoster().getNumStudentsWithScore(score);
-		if(num > maxNumber) {
+		if (num > maxNumber) {
 			maxNumber = num;
 		}
-		if(drawingPane.getWidth() < maxNumber*INCR_PER_PERSON + 3*INCR_PER_PERSON) {
-			drawingPane.setMinWidth(maxNumber*INCR_PER_PERSON + 3*INCR_PER_PERSON);
+		if (drawingPane.getWidth() < maxNumber * INCR_PER_PERSON + 3
+				* INCR_PER_PERSON) {
+			drawingPane.setMinWidth(maxNumber * INCR_PER_PERSON + 3
+					* INCR_PER_PERSON);
 		}
 		return num;
 	}
