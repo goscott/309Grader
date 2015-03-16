@@ -1,18 +1,17 @@
 package controller.announcements;
 
-import java.io.IOException;
-
 import controller.GraderPopup;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.announcements.Announcement;
-import model.driver.Debug;
 
+/**
+ * Controls the popup that displays announcements
+ * @author Gavin Scott
+ */
 public class ViewAnnouncementController {
+	/** The textArea for showing the body of the announcement **/
 	@FXML
 	private TextArea bodyField;
 	/** The displayed announcement **/
@@ -36,6 +35,9 @@ public class ViewAnnouncementController {
 		stage.show();
 	}
 
+	/**
+	 * Initializes the popup
+	 */
 	public void initialize() {
 		bodyField.setText(announcement.getContent());
 		bodyField.setEditable(false);

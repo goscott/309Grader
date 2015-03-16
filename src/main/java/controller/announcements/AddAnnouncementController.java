@@ -1,7 +1,5 @@
 package controller.announcements;
 
-import java.io.IOException;
-
 import controller.GraderPopup;
 import model.announcements.Announcement;
 import model.driver.Debug;
@@ -10,19 +8,23 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * Controls the popup that adds announcements
+ * @author Gavin Scott
+ */
 public class AddAnnouncementController {
+	/** The field for entering the body **/
 	@FXML
 	private TextArea bodyField;
+	/** The field fot entering the subject **/
 	@FXML
 	private TextField subjectField;
+	/** The button that commits the announcement **/
 	@FXML
 	private Button sendButton;
 

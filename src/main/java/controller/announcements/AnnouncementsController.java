@@ -17,9 +17,7 @@ import model.announcements.Announcement;
 import model.driver.Grader;
 
 /**
- * 
  * @author Jacob
- *
  */
 public class AnnouncementsController {
     
