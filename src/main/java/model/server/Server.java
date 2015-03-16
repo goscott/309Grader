@@ -197,28 +197,6 @@ public class Server {
 	}
 
 	/**
-	 * Gets a list of the names of every roster that a user is associated with
-	 */
-	/*
-	public static ArrayList<String> getAssociatedRosters(Student student) {
-	return associatedClasses.get(student);
-	}*/
-
-	/**
-	 * Gets a list of every user associated with the current roster
-	 */
-	/*
-	public static ArrayList<Student> getAssociatedStudents(Roster roster) {
-	 ArrayList<Student> students = new ArrayList<Student>();
-	 String rName = roster.courseName();
-	 for(Student student : associatedClasses.keySet()) {
-	     if(associatedClasses.get(student).contains(rName))
-	         students.add(student);
-	 }
-	 return students;
-	}*/
-
-	/**
 	 * Gets a student from the server by their name
 	 */
 	/*@
@@ -370,12 +348,8 @@ public class Server {
                     "IO ERROR",
                     "Could not locate file at server.sav"
                             + "(Class Not Found)");
-        }
-        
-        
-        
+        } 
     }
-
 
     /**
      * Commits the new server data to files so they will be preserved between
@@ -399,6 +373,5 @@ public class Server {
             Debug.log("SAVE ERROR", "failed to backup server");
             ex.printStackTrace();
         } 
-        
     }
 }

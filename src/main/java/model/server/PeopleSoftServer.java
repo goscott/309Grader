@@ -11,8 +11,10 @@ import model.roster.Student;
  * @author Gavin Scott
  */
 public class PeopleSoftServer {
+	/** The list of students stored in the peoplesoft server **/
 	private static ArrayList<Student> list;
 
+	/** Populates the server with dummy data **/
 	public static void initialize() {
 		list = new ArrayList<Student>();
 		list.add(new Student("user0", "00000","19403278", "Softwhere Engeineering", false, 4));
@@ -69,6 +71,9 @@ public class PeopleSoftServer {
 		return ret;
 	}
 	
+	/**
+	 * Gets all the students stored in the server
+	 */
 	public static ArrayList<Student> getStudents() {
 		return list;
 	}
