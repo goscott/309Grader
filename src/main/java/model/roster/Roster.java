@@ -18,6 +18,7 @@ import model.curve.Curve;
 import model.curve.Grade;
 import model.driver.Debug;
 import model.driver.Grader;
+import model.server.PeopleSoftServer;
 import model.server.Server;
 
 /**
@@ -843,10 +844,10 @@ public class Roster implements Serializable {
 						((ArrayList<Student>)\result).contains(student)))
 		);
 	@*/
-	public ArrayList<Student> rosterSynch(boolean extraLocal) {
+	public ArrayList<Student> rosterSync(boolean extraLocal) {
 		ArrayList<Student> list = new ArrayList<Student>();
-		ArrayList<String> serverList = Server
-				.getStudentsAssociatedWithRoster(this);
+		ArrayList<Student> serverList = PeopleSoftServer
+				.getAssociatedStudents(this);
 		if (extraLocal) {
 			for (Student student : students) {
 				if (!serverList.contains(student.getId())) {
@@ -854,10 +855,9 @@ public class Roster implements Serializable {
 				}
 			}
 		} else {
-			for (String id : serverList) {
-				Student stud = Server.findUser(id);
-				if (!students.contains(stud)) {
-					list.add(stud);
+			for (Student student : serverList) {
+				if (!students.contains(student)) {
+					list.add(student);
 				}
 			}
 		}

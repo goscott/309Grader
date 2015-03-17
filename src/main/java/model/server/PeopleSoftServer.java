@@ -77,4 +77,16 @@ public class PeopleSoftServer {
 	public static ArrayList<Student> getStudents() {
 		return list;
 	}
+	
+	/**
+	 * Gets the server's list of all students associated with a roster
+	 * (currently dummy data)
+	 */
+	public static ArrayList<Student> getAssociatedStudents(Roster roster) {
+		ArrayList<Student> retList = new ArrayList<Student>();
+		for(int ndx = 0; ndx < 10; ndx++) {
+			retList.add(list.get(ndx));
+		}
+		return retList;
+	}
 }

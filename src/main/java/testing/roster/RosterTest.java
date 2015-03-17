@@ -316,8 +316,8 @@ public class RosterTest {
 		roster.addScore(s1, item, new Double(100));
 		Server.addRosterToUser("123", roster);
 		Server.addRosterToUser("22222", roster);
-		assertNotEquals(null, roster.rosterSynch(true));
-		assertNotEquals(null, roster.rosterSynch(false));
+		assertNotEquals(null, roster.rosterSync(true));
+		assertNotEquals(null, roster.rosterSync(false));
 	}
 	
 	/**
