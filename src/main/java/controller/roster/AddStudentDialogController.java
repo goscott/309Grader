@@ -22,7 +22,6 @@ import javafx.stage.Stage;
  * controls the Add Student dialog functionality complete
  * 
  * @author Shelli Crispen
- * 
  */
 public class AddStudentDialogController {
 	/** contains the ComboBox with all the students names to add **/
@@ -52,14 +51,17 @@ public class AddStudentDialogController {
 	 *            the stage
 	 */
 	public void start(Stage stage) {
-		GraderPopup.getPopupStage("Add Student", "view/roster/AddStudent.fxml").show();
+		GraderPopup.getPopupStage("Add Student", "view/roster/AddStudent.fxml")
+				.show();
 	}
 
-	@FXML
 	/**
 	 * Handles the Add button. Closes the window.
-	 * @param event the button's event
+	 * 
+	 * @param event
+	 *            the button's event
 	 */
+	@FXML
 	private void handleAddButton(ActionEvent event) {
 		if (SelectStudentMenu.getValue() != null) {
 			Student addS = null;
@@ -75,11 +77,11 @@ public class AddStudentDialogController {
 		gbook.refresh();
 	}
 
-	@FXML
 	/**
 	 * Handles the cancel button. Closes the window.
 	 * @param event the button's event
 	 */
+	@FXML
 	private void handleCancelButton(ActionEvent event) {
 		Node source = (Node) event.getSource();
 		Stage stage = (Stage) source.getScene().getWindow();
