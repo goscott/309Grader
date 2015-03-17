@@ -25,7 +25,6 @@ import model.server.Server;
  * The class Roster that stores students and assignments
  * 
  * @author Gavin Scott
- * @author Shelli Crispen
  */
 public class Roster implements Serializable {
 	/** Generated serial ID **/

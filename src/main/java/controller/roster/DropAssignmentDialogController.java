@@ -20,7 +20,6 @@ import javafx.stage.Stage;
  * The dialog that allows the user to drop assignments from the gradebook
  * 
  * @author Shelli Crispen
- *
  */
 public class DropAssignmentDialogController {
 	/** The drop button **/
@@ -61,11 +60,11 @@ public class DropAssignmentDialogController {
 				"view/roster/dropAssignment.fxml").show();
 	}
 
-	@FXML
 	/**
 	 * Handles the cancel button. Closes the window.
 	 * @param event the button's event
 	 */
+	@FXML
 	private void handleDropButton(ActionEvent event) {
 		if (dropAssignmentSelect.getValue() != null) {
 			GradedItem dropS = null;
@@ -82,11 +81,11 @@ public class DropAssignmentDialogController {
 		gbook.populateTree();
 	}
 
-	@FXML
 	/**
 	 * Handles the cancel button. Closes the window.
 	 * @param event the button's event
 	 */
+	@FXML
 	private void handleCancelButton(ActionEvent event) {
 		Node source = (Node) event.getSource();
 		Stage stage = (Stage) source.getScene().getWindow();

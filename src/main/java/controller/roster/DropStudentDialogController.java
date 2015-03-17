@@ -22,7 +22,6 @@ import model.server.Server;
  * controls the Drop Student dialog functionality incomplete
  * 
  * @author Shelli Crispen
- * 
  */
 public class DropStudentDialogController {
 	/** contains the ComboBox with all the students names to add **/
@@ -53,11 +52,11 @@ public class DropStudentDialogController {
 				"view/roster/DropStudent.fxml").show();
 	}
 
-	@FXML
 	/**
 	 * Handles the Add button. Closes the window.
 	 * @param event the button's event
 	 */
+	@FXML
 	private void handleDropButton(ActionEvent event) {
 		if (SelectAStudent.getValue() != null) {
 			Student dropS = null;
@@ -73,11 +72,11 @@ public class DropStudentDialogController {
 		gbook.fullRefresh();
 	}
 
-	@FXML
 	/**
 	 * Handles the cancel button. Closes the window.
 	 * @param event the button's event
 	 */
+	@FXML
 	private void handleCancelButton(ActionEvent event) {
 		Node source = (Node) event.getSource();
 		Stage stage = (Stage) source.getScene().getWindow();

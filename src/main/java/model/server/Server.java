@@ -21,7 +21,6 @@ import model.roster.Student;
  * 
  * @author Gavin Scott
  * @author Shelli Crispen
- *
  */
 public class Server {
 	/** The students stored in the server **/
@@ -226,15 +225,13 @@ public class Server {
 	     );
 	@*/
 	public static void addRosterToUser(String id, Roster roster) {
-		if(associatedClasses == null) {
+		if (associatedClasses == null) {
 			associatedClasses = new HashMap<String, ArrayList<String>>();
 		}
-		if (associatedClasses != null
-				&& associatedClasses.get(id) != null
-				&& !associatedClasses.get(id)
-						.contains(roster.courseName())) {
-			Debug.log("Server updated", id + " associated with "
-					+ roster.courseName());
+		if (associatedClasses != null && associatedClasses.get(id) != null
+				&& !associatedClasses.get(id).contains(roster.courseName())) {
+			Debug.log("Server updated",
+					id + " associated with " + roster.courseName());
 			associatedClasses.get(id).add(roster.courseName());
 		} else {
 			Debug.log("Error",
@@ -255,8 +252,7 @@ public class Server {
 		ArrayList<String> list = new ArrayList<String>();
 		if (associatedClasses != null) {
 			for (String id : associatedClasses.keySet()) {
-				if (associatedClasses.get(id)
-						.contains(roster.courseName())) {
+				if (associatedClasses.get(id).contains(roster.courseName())) {
 					list.add(id);
 				}
 			}
@@ -298,7 +294,7 @@ public class Server {
 	@*/
 	private static void initializeStudents() {
 		PeopleSoftServer.initialize();
-		for(Student student : PeopleSoftServer.getStudents()) {
+		for (Student student : PeopleSoftServer.getStudents()) {
 			students.add(student);
 		}
 
@@ -310,68 +306,64 @@ public class Server {
 		Debug.log("Initializing Server", "Students Loaded");
 	}
 
+	/**
+	 * Populates the server
+	 */
+	/*@
+	    ensures
+	    (   *
+	        *Gavin's Debug functions to help make sure the server is running correctly. 
+	    );
+	@*/
+	@SuppressWarnings("unchecked")
+	public static void init() {
+
+		initializeStudents();
+
+		Debug.log("Server initialization", "starting init...");
+		try {
+			FileInputStream in = new FileInputStream("server.sav");
+			ObjectInputStream obj = new ObjectInputStream(in);
+			students = (ArrayList<Student>) obj.readObject();
+			associatedClasses = (HashMap<String, ArrayList<String>>) obj
+					.readObject();
+			obj.close();
+			Debug.log("Server", "Sucessfuly loaded");
+
+		} catch (FileNotFoundException e) {
+			Debug.log("No Server loaded", "initialize default");
+			initializeStudents();
+
+		} catch (IOException e) {
+			Debug.log("IO ERROR", "Could not locate file at server.sav"
+					+ "(IOException)");
+		} catch (ClassNotFoundException e) {
+			Debug.log("IO ERROR", "Could not locate file at server.sav"
+					+ "(Class Not Found)");
+		}
+	}
 
 	/**
-     * Populates the server
-     */
-    /*@
-        ensures
-        (   *
-            *Gavin's Debug functions to help make sure the server is running correctly. 
-        );
-    @*/
-    @SuppressWarnings("unchecked")
-    public static void init() {
-        
-        initializeStudents();
-        
-        Debug.log("Server initialization", "starting init...");
-        try {
-            FileInputStream in = new FileInputStream("server.sav");
-            ObjectInputStream obj = new ObjectInputStream(in);
-            students = (ArrayList<Student>) obj.readObject();
-            associatedClasses = (HashMap<String, ArrayList<String>>) obj.readObject();
-            obj.close();
-            Debug.log("Server", "Sucessfuly loaded");
-
-        } catch (FileNotFoundException e) {
-            Debug.log("No Server loaded", "initialize default");
-            initializeStudents();
-
-        } catch (IOException e) {
-            Debug.log(
-                    "IO ERROR",
-                    "Could not locate file at server.sav"
-                            + "(IOException)");
-        } catch (ClassNotFoundException e) {
-            Debug.log(
-                    "IO ERROR",
-                    "Could not locate file at server.sav"
-                            + "(Class Not Found)");
-        } 
-    }
-
-    /**
-     * Commits the new server data to files so they will be preserved between
-     * runs of the program
-     */
-    /*@
-         ensures
-         (   *
-             *Gavin's Debug functions to help make sure the server is running correctly. 
-         );
-    @*/
-    public static void backup() {
-        Debug.log("Server Backup", "Starting backup...");
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(
-                    new FileOutputStream("server.sav"));
-            out.writeObject(students);
-            out.writeObject(associatedClasses);
-            out.close();
-        } catch (IOException ex) {
-            Debug.log("SAVE ERROR", "failed to backup server");
-            ex.printStackTrace();
-        } 
-    }
+	 * Commits the new server data to files so they will be preserved between
+	 * runs of the program
+	 */
+	/*@
+	     ensures
+	     (   *
+	         *Gavin's Debug functions to help make sure the server is running correctly. 
+	     );
+	@*/
+	public static void backup() {
+		Debug.log("Server Backup", "Starting backup...");
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream("server.sav"));
+			out.writeObject(students);
+			out.writeObject(associatedClasses);
+			out.close();
+		} catch (IOException ex) {
+			Debug.log("SAVE ERROR", "failed to backup server");
+			ex.printStackTrace();
+		}
+	}
 }
