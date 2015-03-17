@@ -253,6 +253,9 @@ public class Curve implements Serializable {
 		return curve.get(curve.indexOf(grade) - 1);
 	}
 
+	/**
+	 * Gets a grade with the given name
+	 */
 	public Grade getGrade(String name) {
 		Grade temp = new Grade(name, 100, null);
 		if (curve.contains(temp)) {
