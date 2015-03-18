@@ -45,9 +45,6 @@ public class RosterSyncController
     private ArrayList<Student> serverArray;
     /** Spacing used for list View **/
     private static final String SPACING = " %-36s%35s";
-
-    
-
     
     /**
      * Initializes the dropdown box.
@@ -59,19 +56,25 @@ public class RosterSyncController
         
         for(Student stu: Grader.getRoster().rosterSync(false))
         {
-            serverArray.add(stu);
-            server.add(String.format(SPACING, stu.getName()));
+            //serverArray.add(stu);
+        	if(stu != null) {
+            server.add(stu.getName());
+        	}
         }
         for(Student stu: Grader.getRoster().rosterSync(true))
         {
-            localArray.add(stu);
-            local.add(String.format(SPACING, stu.getName()));
+            //localArray.add(stu);
+        	if(stu != null)
+            local.add(stu.getName());
         }   
-        
+        for(String s : server) {
+        	System.out.println("server " + s);
+        }
         syncLocal.setItems(local);
         syncLocal.setOrientation(Orientation.HORIZONTAL);
         syncServer.setItems(server);
-        syncServer.setOrientation(Orientation.HORIZONTAL);   
+        syncServer.setOrientation(Orientation.HORIZONTAL);
+        
     }
     
 
@@ -80,7 +83,7 @@ public class RosterSyncController
      * @param stage the stage
      */
     public void start(Stage stage) {
-        GraderPopup.getPopupStage("Roster Sync", "view/mainpage/RosterSync.fxml")
+        GraderPopup.getPopupStage("Roster Sync", "view/roster/RosterSync.fxml")
                 .show();
     }
 
