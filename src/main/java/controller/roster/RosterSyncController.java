@@ -68,9 +68,6 @@ public class RosterSyncController
         	if(stu != null){
                 local.add(stu.getName());
         	}
-        }   
-        for(String s : server) {
-        	System.out.println("server " + s);
         }
         syncLocal.setItems(local);
         syncLocal.setOrientation(Orientation.VERTICAL);
