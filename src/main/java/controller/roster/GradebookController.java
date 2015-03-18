@@ -235,12 +235,10 @@ public class GradebookController {
 				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 						"totalPercentage"));
 		mainTable.getColumns().add(percentCol);
-
 		TableColumn<Student, String> gradeCol = new TableColumn<Student, String>(
 				"Grade");
 		gradeCol.setMinWidth(COLUMN_WIDTH);
 		gradeCol.setEditable(predictionMode);
-
 		gradeCol.setCellValueFactory(new Callback() {
 			public SimpleStringProperty call(
 					CellDataFeatures<Student, String> param) {
@@ -248,42 +246,26 @@ public class GradebookController {
 						.getGrade().getName()
 						+ "");
 			}
-
 			public Object call(Object param) {
 				return call((CellDataFeatures<Student, String>) (param));
 			}
 		});
 		if(!predictionMode) {
-			gradeCol.setCellFactory(new Callback<TableColumn<Student, String>, TableCell<Student, String>>() {
-				@Override
-				public TableCell<Student, String> call(
-						TableColumn<Student, String> param) {
-					TableCell cell = new TableCell() {
-						@Override
-						public void updateItem(Object item, boolean empty) {
-							if (item != null) {
-								setText(item.toString());
-								Grade grade = getRoster().getCurve().getGrade(
-										item.toString());
-								Color col = grade.getColor();
-								setStyle("-fx-background-color: rgb("
-										+ col.getRed() + ", " + col.getGreen()
-										+ ", " + col.getBlue() + ")");
-							}
-						}
-					};
-					cell.setAlignment(Pos.CENTER);
-	
-					return cell;
-				}
-			});
+			gradeCol.setCellFactory(getGradeColumnCellFactory());
 		} else {
 			gradeCol.setCellFactory(TextFieldTableCell
 				.<Student> forTableColumn());
 		}
-		/* When a user types a change */
-		//newColumn.setOnEditCommit(new CellEditEventHandler(this));
-		gradeCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Student,String>>() {
+		gradeCol.setOnEditCommit(getGradeColumnEditHandler());
+		mainTable.getColumns().add(gradeCol);
+	}
+
+	/**
+	 * Creates the event handler that handles the editing of final grades
+	 * in prediction mode
+	 */
+	private EventHandler<CellEditEvent<Student, String>> getGradeColumnEditHandler() {
+		return new EventHandler<TableColumn.CellEditEvent<Student,String>>() {
 			public void handle(CellEditEvent<Student, String> event) {
 				if(Grader.getCurve().getGrade(event.getNewValue()) != null) {
 					 Roster rost = Roster.load("Rosters/" + Roster.TEMP_NAME + ".rost");
@@ -303,9 +285,36 @@ public class GradebookController {
 				}
 				fullRefresh();
 			}
-		});
+		};
+	}
 
-		mainTable.getColumns().add(gradeCol);
+	/**
+	 * Creates the cell factory that colors the cells in the grade column
+	 * based on their grade (A's are green, B's are blue, etc.)
+	 */
+	private Callback<TableColumn<Student, String>, TableCell<Student, String>> getGradeColumnCellFactory() {
+		return new Callback<TableColumn<Student, String>, TableCell<Student, String>>() {
+			@Override
+			public TableCell<Student, String> call(
+					TableColumn<Student, String> param) {
+				TableCell cell = new TableCell() {
+					@Override
+					public void updateItem(Object item, boolean empty) {
+						if (item != null) {
+							setText(item.toString());
+							Grade grade = getRoster().getCurve().getGrade(
+									item.toString());
+							Color col = grade.getColor();
+							setStyle("-fx-background-color: rgb("
+									+ col.getRed() + ", " + col.getGreen()
+									+ ", " + col.getBlue() + ")");
+						}
+					}
+				};
+				cell.setAlignment(Pos.CENTER);
+				return cell;
+			}
+		};
 	}
 
 	/**
