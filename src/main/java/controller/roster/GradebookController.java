@@ -404,12 +404,14 @@ public class GradebookController {
 								.getParent().name()))) {
 					TableColumn<Student, String> newColumn = new TableColumn<Student, String>();
 					Label label = new Label(item.name());
-					label.setTooltip(new Tooltip("Max Score: " + item.maxScore()));
+					if(item.isExtraCredit()) {
+						label.setTooltip(new Tooltip("Max Score: " + item.maxScore() + "(Extra Credit)"));
+					} else {
+						label.setTooltip(new Tooltip("Max Score: " + item.maxScore()));
+					}
 					newColumn.setGraphic(label);
-					
 					newColumn.setMinWidth(COLUMN_WIDTH);
 					newColumn.setEditable(item.isLeaf());
-
 					newColumn = setAssignmentCellFactories(newColumn);
 					
 					/* When a user types a change */
@@ -422,14 +424,11 @@ public class GradebookController {
 					}
 				}
 			}
-
 			endColumns();
-
 			mainTable.setItems(getRoster().getStudentList());
 			// force hard refresh
 			mainTable.getColumns().add(0, new TableColumn<Student, String>());
 			mainTable.getColumns().remove(0);
-			
 			populateStatsTable();
 		}
 	}
