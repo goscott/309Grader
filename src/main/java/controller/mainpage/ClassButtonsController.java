@@ -9,6 +9,7 @@ import model.driver.Grader;
 import model.roster.Roster;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 
@@ -70,6 +71,7 @@ public class ClassButtonsController {
 			                + "-fx-background-radius: 3,2,1;"
 			                + "-fx-padding: 15 30 15 30;");
 			button.addEventHandler(MouseEvent.MOUSE_PRESSED, new ClassButtonEventHandler());
+			button.setTooltip(new Tooltip("Ctrl + right-click to delete this class"));
 			buttonSetUp.getChildren().add(button);
 		}
 

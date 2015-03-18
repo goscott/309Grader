@@ -42,6 +42,11 @@ public class ClassButtonEventHandler implements EventHandler<MouseEvent> {
 					"Are you sure you want to delete '" + ((Button)event.getSource()).getText() + "?");
 			if (response == Dialog.ACTION_YES) {
 				try {
+					if(((Button)event.getSource()).getText().equals(
+							Grader.getRoster().courseName() + '-' + 
+							String.format("%02d", Grader.getRoster().getSection()))) {
+						MainPageController.deselectRoster();
+					}
 					Files.deleteIfExists(FileSystems.getDefault().getPath("Rosters/" + ((Button)event.getSource()).getText() + ".rost"));
 				} catch (IOException ex) {
 					ex.printStackTrace();

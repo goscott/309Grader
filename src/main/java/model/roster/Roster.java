@@ -581,20 +581,6 @@ public class Roster implements Serializable {
 	}
 
 	/**
-	 * Returns a string representation of the roster
-	 * 
-	 * @return String the representation
-	 */
-	/*@
-		ensures(
-			((String)\result).equals(courseName + " " + section + " : " + instructor)
-		);
-	@*//*
-		public String toString() {
-		return courseName + " " + section + " : " + instructor;
-		}*/
-
-	/**
 	 * Saves the roster to the computer
 	 */
 	/*@
@@ -849,14 +835,12 @@ public class Roster implements Serializable {
 				.getAssociatedStudents(this);
 		if (extraLocal) {
 			for (Student student : students) {
-				System.out.println("1: " + student.getName());
 				if (!serverList.contains(student.getId())) {
 					list.add(student);
 				}
 			}
 		} else {
 			for (Student student : serverList) {
-				System.out.println("2: " + student.getName());
 				if (!students.contains(student)) {
 					list.add(student);
 				}

@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -229,6 +230,17 @@ public class MainPageController {
         };
 	}
 
+	/**
+	 * Deselects the current roster
+	 */
+	public static void deselectRoster() {
+		thisController.tabPane.getSelectionModel().select(
+				thisController.classTab);
+		((Stage)thisController.tabPane.getScene().getWindow())
+			.setTitle("Grader Tool");
+		thisController.disable();
+	}
+	
 	/**
 	 * Disables tabs when no roster is selected and refreshes buttons
 	 */
