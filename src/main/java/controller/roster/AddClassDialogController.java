@@ -148,7 +148,7 @@ public class AddClassDialogController {
 		for (String name : students.getSelectionModel().getSelectedItems()) {
 			roster.addStudent(Server.getStudentByName(name));
 		}
-		roster.Save();
+		roster.save();
 		Debug.log("Roster created and saved");
 		ClassButtonsController.refresh();
 		((Stage) AddClassButton.getScene().getWindow()).close();

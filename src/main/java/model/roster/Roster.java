@@ -588,7 +588,7 @@ public class Roster implements Serializable {
 			// saves the file
 		);
 	@*/
-	public void Save() {
+	public void save() {
 		save(this);
 	}
 
@@ -803,7 +803,7 @@ public class Roster implements Serializable {
 		current = false;
 		Grader.getHistoryDB().addRoster(this);
 		thisFile.delete();
-		Save();
+		save();
 	}
 
 	/**
