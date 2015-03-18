@@ -14,7 +14,7 @@
       </SplitPane>
       <Label layoutX="128.0" layoutY="14.0" text="Local" />
       <Label layoutX="444.0" layoutY="14.0" text="Server" />
-      <Button fx:id="syncButton" layoutX="250.0" layoutY="367.0" mnemonicParsing="false" style="-fx-background-color: #0396AA;" text="Sync Rosters " textFill="WHITE">
+      <Button fx:id="syncButton" layoutX="250.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleSyncButton" style="-fx-background-color: #0396AA;" text="Sync Rosters " textFill="WHITE">
       	<tooltip>
 			<Tooltip text="Merges the local roster with the remote version" />
 	    </tooltip>

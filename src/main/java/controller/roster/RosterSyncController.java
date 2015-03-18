@@ -7,6 +7,7 @@ import model.administration.UserTypes;
 import model.driver.Grader;
 import model.roster.Student;
 import model.server.Server;
+import controller.Alert;
 import controller.GraderPopup;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,9 +41,9 @@ public class RosterSyncController
     /** The controller for the gradebook **/
     private static GradebookController gbook;
     /** ArrayList of local names to be deleted **/
-    private ArrayList<Student> localArray;
+    private ArrayList<Student> localArray = new ArrayList<Student>();
     /** ArrayList of server names to be added **/
-    private ArrayList<Student> serverArray;
+    private ArrayList<Student> serverArray = new ArrayList<Student>();
     /** Spacing used for list View **/
     private static final String SPACING = " %-36s%35s";
     
@@ -56,24 +57,25 @@ public class RosterSyncController
         
         for(Student stu: Grader.getRoster().rosterSync(false))
         {
-            //serverArray.add(stu);
+            serverArray.add(stu);
         	if(stu != null) {
-            server.add(stu.getName());
+        	    server.add(stu.getName());
         	}
         }
         for(Student stu: Grader.getRoster().rosterSync(true))
         {
-            //localArray.add(stu);
-        	if(stu != null)
-            local.add(stu.getName());
+            localArray.add(stu);
+        	if(stu != null){
+                local.add(stu.getName());
+        	}
         }   
         for(String s : server) {
         	System.out.println("server " + s);
         }
         syncLocal.setItems(local);
-        syncLocal.setOrientation(Orientation.HORIZONTAL);
+        syncLocal.setOrientation(Orientation.VERTICAL);
         syncServer.setItems(server);
-        syncServer.setOrientation(Orientation.HORIZONTAL);
+        syncServer.setOrientation(Orientation.VERTICAL);
         
     }
     
@@ -93,15 +95,10 @@ public class RosterSyncController
      */
     @FXML
     private void handleSyncButton(ActionEvent event) {
-        for(Student stu: serverArray)
-        {
-            Grader.getRoster().addStudent(stu);
-        }
-        for(Student stu: localArray)
-        {
-            Grader.getRoster().dropStudent(stu);
-        }
+        Alert.show("Roster has been synced");
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.hide();
     }
-
     
 }
