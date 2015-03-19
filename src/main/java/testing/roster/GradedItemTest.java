@@ -10,12 +10,34 @@ import model.roster.Roster;
 import model.roster.Student;
 
 import org.junit.Test;
+
 /**
- * Graded Item testing class
- * @author Shelli Crispen
- * @author Gavin Scott
- *
- */
+* Tests the GradedItem
+*
+* GradedItemJUnitTest implements the following module test plan:
+* 
+*      Phase 1: Unit Test the max score
+*      
+*      Phase 2: Unit Test add child
+*      
+*      Phase 3: Unit Test set parent
+*      
+*      Phase 4: Unit Test getStudentScore
+*      
+*      Phase 5: Unit Test setStudentScore
+*      
+*      Phase 6: Unit Test addStudent
+*      
+*      Phase 7: Unit Test removeStudent
+*      
+*      Phase 8: Unit Test equals & copy
+*      
+*      Phase 9: Unit Test save & load
+*      
+*      Phase 10: Unit Test statistics methods
+*      
+* @author Gavin Scott
+*/
 public class GradedItemTest
 {
 	/**

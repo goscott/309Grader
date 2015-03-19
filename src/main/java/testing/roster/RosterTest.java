@@ -20,6 +20,37 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+* Tests the GradedItem
+*
+* GradedItemJUnitTest implements the following module test plan:
+* 
+*      Phase 1: Unit Test the constructor
+*      
+*      Phase 2: Unit Test the calendar string methods
+*      
+*      Phase 3: Unit Test setCurve
+*      
+*      Phase 4: Unit Test addStudent & dropStudent
+*      
+*      Phase 5: Unit Test equals
+*      
+*      Phase 6: Unit Test addAssignment & dropAssignment
+*      
+*      Phase 7: Unit Test score methods
+*      
+*      Phase 8: Unit Test getStudentByScore
+*      
+*      Phase 9: Unit Test roster sync
+*      
+*      Phase 10: Unit Test announcement method
+*      
+*      Phase 11: Unit Test archive
+*      
+*      Phase 12: Unit Test saving & loading
+*      
+* @author Gavin Scott
+*/
 public class RosterTest {
 
 	/**
