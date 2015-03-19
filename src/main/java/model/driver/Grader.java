@@ -124,6 +124,11 @@ public class Grader {
 		return history;
 	}
 
+	/**
+	 * Loads the history database from a file, populating
+	 * the program's records of old courses.
+	 * @return HistoryDB The updated History Database
+	 */
 	/*@
 	 	ensures(
 	 		\result != null
