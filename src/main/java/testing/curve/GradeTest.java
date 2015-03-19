@@ -1,6 +1,7 @@
 package testing.curve;
 
 import static org.junit.Assert.*;
+import java.awt.Color;
 import model.curve.Grade;
 import org.junit.After;
 import org.junit.Before;
@@ -36,9 +37,9 @@ public class GradeTest {
      */
     @Before
     public void setUp() {
-//        grade1 = new Grade("A", 100, 90);
-//        grade2 = new Grade("B", 90, 80);
-//        grade3 = new Grade("C", 80, 70);
+        grade1 = new Grade("A", 90, Color.GREEN);
+        grade2 = new Grade("B", 80, Color.BLUE);
+        grade3 = new Grade("C", 70, Color.CYAN);
     }
     
     /**
@@ -71,9 +72,9 @@ public class GradeTest {
      */
     @Test
     public void testEquals() {
-//        assertFalse(grade1.equals(null));
-//        assertTrue(grade1.equals(grade1));
-//        assertFalse(grade1.equals(grade2));
+        assertFalse(grade1.equals(null));
+        assertTrue(grade1.equals(grade1));
+        assertFalse(grade1.equals(grade2));
     }
     
     /**
@@ -98,11 +99,13 @@ public class GradeTest {
      */
     @Test
     public void testOverlap() {
-//        assertTrue(grade1.overlap(grade1));
-//        assertFalse(grade1.overlap(grade2));
-//        assertFalse(grade2.overlap(grade1));
-//        assertTrue(grade2.overlap(grade2));
-//        assertFalse(grade2.overlap(grade3));
+        /*
+        assertTrue(grade1.overlap(grade1));
+        assertFalse(grade1.overlap(grade2));
+        assertFalse(grade2.overlap(grade1));
+        assertTrue(grade2.overlap(grade2));
+        assertFalse(grade2.overlap(grade3));
+        */
     }
     
     /**

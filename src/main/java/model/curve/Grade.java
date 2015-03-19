@@ -24,6 +24,14 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param max the maximum percentage required
      * @param min the minimum percentage required
      */
+    /*@
+     * ensures
+     * (
+     *     name.equals(name) &&
+     *     value == val &&
+     *     color.equals(color)
+     * );  
+    @*/
     public Grade(String name, double val, Color color) {
         this.name = name;
         this.color = color;
@@ -33,17 +41,29 @@ public class Grade implements Comparable<Grade>, Serializable {
     /**
      * Gets the color of the grade
      */
+    /*@
+     * ensures \result.equals(color)
+    @*/
     public Color getColor() {
     	return color;
     }
 
     /**
      * Returns a negative integer, zero, or a positive integer as this grade is
-     * less than, equal to, or greater than the specified grade. Overlapping
-     * grades are considered duplicates and therefore equivalent.
+     * less than, equal to, or greater than the specified grade.
      * @return a negative integer, zero, or a positive integer as this grade is
      * less than, equal to, or greater than the specified grade.
      */
+    /*@
+     *     requires value == other;
+     *     ensures \result == 0;
+     * also
+     *     requires values < other;
+     *     ensures \result < 0;
+     * also
+     *     requires values > 0;
+     *     ensures \result > 0;
+     @*/
     @Override
     public int compareTo(Grade other) {
     	return Double.compare(value, other.value);
@@ -55,8 +75,27 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param obj the object being compared to this grade
      * @return true if the object is equivalent
      */
+    /*@
+     *     requires 
+     *     (
+     *         name == null ||
+     *         obj == null ||
+     *         !(obj instanceof Grade)
+     *     );
+     *     ensures \result == false;
+     * also
+     *     requires
+     *     (
+     *         name != null &&
+     *         obj != null &&
+     *         obj instanceof Grade
+     *     );
+     *     ensures \result == true;
+    @*/
     @Override
     public boolean equals(Object obj) {
+        
+        // Ensure object is not null and is the correct type
         if (name != null && obj != null && (obj instanceof Grade))
         {
             return name.equals(((Grade) obj).getName());
@@ -71,17 +110,12 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @return true if percentage score is in range
      */
     /*@
-    public normal_behavior
-        requires percentage <= 100.0 && percentage >= 0.0 && 
-            percentage >= min && percentage < max;
-        assignable \nothing;
-        ensures \result == true;
-    also
-    public normal_behavior
-        requires !(percentage <= 100.0 && percentage >= 0.0 && 
-            percentage >= min && percentage < max);
-        assignable \nothing;
-        ensures \result == false;
+     * also
+     *     requires percentage >= value;
+     *     ensures \result == true;
+     * also
+     *     requires percentage < value;
+     *     ensures \result == false;
     @*/
     public boolean contains(double percentage) {
     	return percentage >= value;
@@ -92,7 +126,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @return the grade name designation
      */
     /*@
-        ensures \result.equals(name);
+     * ensures \result.equals(name);
     @*/
     public String getName() {
         return name;
@@ -102,7 +136,7 @@ public class Grade implements Comparable<Grade>, Serializable {
      * Returns the value
      */
     /*@
-        ensures \result.equals(min);
+     * ensures \result.equals(min);
     @*/
     public double value() {
         return value;
@@ -114,16 +148,16 @@ public class Grade implements Comparable<Grade>, Serializable {
      * @param min the new minimum percentage required
      */
     /*@
-       public normal_behavior
-           requires max <= 100.0 && min >= 0.0 && max > min;
-           assignable max;
-           assignable min;
-           ensures max == max;
-           ensures min == min;
-       also
-       public exceptional_behavior
-           requires !(max <= 100.0 && min >= 0.0 && max > min);
-           signals_only IllegalArgumentException;
+     * public normal_behavior
+     *     requires max <= 100.0 && min >= 0.0 && max > min;
+     *     assignable max;
+     *     assignable min;
+     *     ensures max == max;
+     *     ensures min == min;
+     * also
+     * public exceptional_behavior
+     *     requires !(max <= 100.0 && min >= 0.0 && max > min);
+     *     signals_only IllegalArgumentException;
     @*/
     public void set(double val) {
         if (val <= 100.0 && val >= 0.0) {
@@ -136,10 +170,12 @@ public class Grade implements Comparable<Grade>, Serializable {
     }
     
     /**
-     * Overrides the toString method to retun the name
+     * Overrides the toString method to return the name.
      */
+    /*@
+     * ensures \result == name;
+    @*/
     public String toString() {
     	return name;
     }
-
 }
