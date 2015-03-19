@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author Shelli Crispen
  *
  */
-public class TestSeverJUnit
+public class TestServerJUnit
 {
     
     @Before
