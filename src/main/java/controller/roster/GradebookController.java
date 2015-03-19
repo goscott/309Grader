@@ -164,6 +164,7 @@ public class GradebookController {
 		ContextMenu rightClickMenu = new ContextMenu();
 		MenuItem predictionToggle = new MenuItem("Toggle Prediction Mode");
 		MenuItem expandCollapse = new MenuItem("Expand/Collapse Columns");
+		
 		expandCollapse.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 expander.setMaxWidth(250);
@@ -185,7 +186,7 @@ public class GradebookController {
 		// students don't get these options
 		if (current
 				&& Grader.getUser().getPermissions()
-						.contains(PermissionKeys.EDIT_GRADEBOOK)) {
+						 .contains(PermissionKeys.EDIT_GRADEBOOK)) {
 			MenuItem addAssignment = new MenuItem("Add Assignment");
 			MenuItem dropAssignment = new MenuItem("Drop Assignment");
 			MenuItem addStudent = new MenuItem("Add Student");
@@ -227,18 +228,18 @@ public class GradebookController {
 	 * Adds the far-right columns (Total percentage and Grade) to the gradebook.
 	 */
 	private void endColumns() {
-		TableColumn<Student, Double> percentCol = new TableColumn<Student, Double>(
-				"Percentage");
+		TableColumn<Student, Double> percentCol = 
+		         new TableColumn<Student, Double>("Percentage");
 		percentCol.setEditable(false);
 		percentCol.setMinWidth(COLUMN_WIDTH);
-		percentCol
-				.setCellValueFactory(new PropertyValueFactory<Student, Double>(
-						"totalPercentage"));
+		percentCol.setCellValueFactory(new PropertyValueFactory<Student, Double>(
+				 "totalPercentage"));
 		mainTable.getColumns().add(percentCol);
 		TableColumn<Student, String> gradeCol = new TableColumn<Student, String>(
 				"Grade");
 		gradeCol.setMinWidth(COLUMN_WIDTH);
 		gradeCol.setEditable(predictionMode);
+		
 		gradeCol.setCellValueFactory(new Callback() {
 			public SimpleStringProperty call(
 					CellDataFeatures<Student, String> param) {
@@ -323,6 +324,7 @@ public class GradebookController {
 	private void showImpossibleGradeWarning(Student student, String attempted) {
 		ArrayList<Grade> list =  Grader.getCurve().getGrades();
 		Collections.reverse(list);
+		
 		for(Grade grade : list) {
 			HashMap<GradedItem, Double> map = PredictionMath.getPrediction(student, grade);
 			if(map != null) {
@@ -398,17 +400,20 @@ public class GradebookController {
 			totalGradeCol
 					.setCellValueFactory(new PropertyValueFactory<Student, Double>(
 							"totalScore"));
+			
 			for (GradedItem item : getRoster().getAssignments()) {
 				if (!columnExists(item.name())
 						&& (item.getParent() == null || expanded.contains(item
 								.getParent().name()))) {
 					TableColumn<Student, String> newColumn = new TableColumn<Student, String>();
 					Label label = new Label(item.name());
+					
 					if(item.isExtraCredit()) {
 						label.setTooltip(new Tooltip("Max Score: " + item.maxScore() + "(Extra Credit)"));
 					} else {
 						label.setTooltip(new Tooltip("Max Score: " + item.maxScore()));
 					}
+					
 					newColumn.setGraphic(label);
 					newColumn.setMinWidth(COLUMN_WIDTH);
 					newColumn.setEditable(item.isLeaf());
@@ -511,6 +516,7 @@ public class GradebookController {
 	        targetColumn = mainTable.getColumns().get(index);
 	        dfsAddCollumns(targetColumn);
 	    }
+	    
 	    stats_table.getColumns().add(bufferColumn4);
 	    stats_table.getItems().clear();
 	    data = FXCollections.observableArrayList(
@@ -678,6 +684,11 @@ public class GradebookController {
 	        }
 	    }
 	}
+	
+	/**
+	 * Gets the columns for the main table of the gradebook.
+	 * @return returns the columns 
+	 */
 	ObservableList<TableColumn<Student, ?>> getTopLevelColumns() {
 		return mainTable.getColumns();
 	}
@@ -751,9 +762,7 @@ public class GradebookController {
 	/**
 	 * Finds a column with the given name. If no such column exists, returns
 	 * null
-	 * 
-	 * @param name
-	 *            The desired name
+	 * @param name The desired name
 	 * @return TableColumn the colummn if it exists, or null if it does not.
 	 */
 	private TableColumn<?, ?> findColumn(String name) {
@@ -768,9 +777,7 @@ public class GradebookController {
 	/**
 	 * Finds a column with the given name under the given column. If no such
 	 * column exists, returns null
-	 * 
-	 * @param name
-	 *            The desired name
+	 * @param name The desired name
 	 * @return TableColumn the colummn if it exists, or null if it does not.
 	 */
 	private TableColumn<?, ?> findSubColumn(TableColumn<?, ?> col, String name) {
