@@ -37,6 +37,13 @@ public class Grader {
 	/**
 	 * Initiates a Grader
 	 */
+	/*@
+		ensures(
+			currentRoster != null
+				&&
+			classList != null
+		);
+	@*/
 	private Grader() {
 		currentRoster = null;
 		classList = new ArrayList<Roster>();
@@ -47,6 +54,11 @@ public class Grader {
 	 * 
 	 * @return Grader the Grader (singleton)
 	 */
+	/*@
+	 	ensures(
+	 		\result.equals(grader)
+	 	);
+	@*/
 	public static Grader get() {
 		return grader;
 	}
@@ -57,6 +69,14 @@ public class Grader {
 	 * @param newUser
 	 *            the new user
 	 */
+	/*@
+		requires(
+			newUser != null
+		);
+		ensures(
+			user.equals(newUser)
+		);
+	@*/
 	public static void setUser(User newUser) {
 		Debug.log("New User", newUser.getfName() + " " + newUser.getlName()
 				+ " logged in");
@@ -68,6 +88,11 @@ public class Grader {
 	 * 
 	 * @return User the current user
 	 */
+	/*@
+	 	ensures(
+	 		\result.equals(user)
+	 	);
+	@*/
 	public static User getUser() {
 		return user;
 	}
@@ -77,6 +102,11 @@ public class Grader {
 	 * 
 	 * @return Returns the static UserDB object held by this class.
 	 */
+	/*@
+	 	ensures(
+	 		\result.equals(userDB)
+	 	);
+	@*/
 	public static UserDB getUserDB() {
 		return userDB;
 	}
@@ -84,34 +114,39 @@ public class Grader {
 	/**
 	 * Gets the history database.
 	 */
+	/*@
+	 	ensures(
+	 		\result.equals(history)
+	 	);
+	@*/
 	public static HistoryDB getHistoryDB() {
 		// history = new HistoryDB();
 		return history;
 	}
 
+	/*@
+	 	ensures(
+	 		\result != null
+	 	);
+	@*/
 	public static HistoryDB loadHistory() {
 		File database = new File("History/data.hdb");
 		HistoryDB toReturn = null;
-
 		if (database.exists()) {
 			try {
 				ObjectInputStream obj = new ObjectInputStream(
 						new FileInputStream(database));
 				toReturn = (HistoryDB) obj.readObject();
 				obj.close();
-
 			}
-
 			catch (Exception e) {
 				Debug.log("IO Error", e.toString());
 				toReturn = new HistoryDB();
 			}
 		}
-
 		else {
 			toReturn = new HistoryDB();
 		}
-
 		return toReturn;
 	}
 
@@ -121,6 +156,11 @@ public class Grader {
 	 * @param curve
 	 *            the new curve
 	 */
+	/*@
+	 	ensures(
+	 		currentRoster.getCurve().equals(curve)
+	 	);
+	@*/
 	public static void setCurve(Curve curve) {
 		currentRoster.setCurve(curve);
 	}
@@ -130,6 +170,11 @@ public class Grader {
 	 * 
 	 * @return the current roster's curve
 	 */
+	/*@
+	 	ensures(
+	 		\result.equals(currentRoster.getCurve())
+	 	);
+	@*/
 	public static Curve getCurve() {
 		return currentRoster.getCurve();
 	}
@@ -139,6 +184,11 @@ public class Grader {
 	 * 
 	 * @return Roster the current roster
 	 */
+	/*@
+	 	ensures(
+	 		\result.equals(currentRoster)
+	 	);
+	@*/
 	public static Roster getRoster() {
 		return currentRoster;
 	}
@@ -149,6 +199,11 @@ public class Grader {
 	 * 
 	 * @return double the max points
 	 */
+	/*@
+	 	ensures(
+	 		\result == currentRoster.getMaxPoints()
+	 	);
+	@*/
 	public static double getMaxPoints() {
 		return currentRoster.getMaxPoints();
 	}
@@ -176,10 +231,8 @@ public class Grader {
 		);
 	@*/
 	public static void addRoster(Roster newRoster) {
-		// if(!classList.contains(newRoster)) {
 		classList.add(newRoster);
 		Debug.log("Grader model updated", "New roster registered");
-		// }
 	}
 
 	/**
@@ -189,6 +242,11 @@ public class Grader {
 	 * @param newRoster
 	 *            the new roster
 	 */
+	/*@
+	 	ensures(
+	 		currentRoster.equals(newRoster)
+	 	);
+	@*/
 	public static void setCurrentRoster(Roster newRoster) {
 		currentRoster = newRoster;
 		Debug.log("Grader model updated", "Current roster changed");
@@ -228,6 +286,11 @@ public class Grader {
 	 *            the student in question
 	 * @return boolean true if the student is enrolled
 	 */
+	/*@
+	 	ensures(
+	 		\result == currentRoster.getStudents().contains(student)
+	 	);
+	@*/
 	public static boolean studentEnrolled(Student student) {
 		return currentRoster.getStudents().contains(student);
 	}
@@ -264,6 +327,11 @@ public class Grader {
 	 * @param item
 	 *            the GradedItem that will be added to the roster
 	 */
+	/*@
+        ensures(
+	        \result.equals(currentRoster.getAssignment(asgn))
+        );
+	@*/
 	public static GradedItem getAssignment(String asgn) {
 		return currentRoster.getAssignment(asgn);
 	}
@@ -342,9 +410,24 @@ public class Grader {
 	 *            The name of the assignment being checked
 	 * @return double the student's score on that assignment
 	 */
+	/*@
+	 	requires(
+	 		student != null
+	 			&&
+	 		currentRoster.getStudents().contains(student)
+	 	);
+	    ensures(
+	        \result.equals(currentRoster.getStudentByID(student.getId())
+				.getAssignmentScore(asgn))
+	    );
+	@*/
 	public static Double getScore(Student student, String asgn) {
-		return currentRoster.getStudentByID(student.getId())
+		if(student != null && currentRoster.getStudents().contains(student)) {
+			return currentRoster.getStudentByID(student.getId())
 				.getAssignmentScore(asgn);
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -353,6 +436,14 @@ public class Grader {
 	 * @return ObservableList<Student> The students in the class that is
 	 *         currently selected
 	 */
+	/*@
+		requires(
+			currentRoster != null
+		);
+		ensures(
+			\result.equals(currentRoster.getStudentList())
+		);
+	@*/
 	public static ObservableList<Student> getStudentList() {
 		if(currentRoster != null) {
 			return currentRoster.getStudentList();
@@ -367,6 +458,11 @@ public class Grader {
 	 * @return ObservableList<String> The names of all of the assignments in the
 	 *         current roster
 	 */
+	/*@
+		ensures(
+			\result.equals(currentRoster.getAssignmentNameList())
+		);
+	@*/
 	public static ObservableList<String> getAssignmentNameList() {
 		return currentRoster.getAssignmentNameList();
 	}
@@ -378,6 +474,12 @@ public class Grader {
 	 * @return ObservableList<GradedItem> All of the assignments in the current
 	 *         roster
 	 */
+	/*@
+		ensures(
+			\forall(GradedItem item ; currentRoster.getAssignments().contains(item) ;
+				\result.contains(item))
+		);
+	@*/
 	public static ObservableList<GradedItem> getAssignmentList() {
 		ObservableList<GradedItem> data = FXCollections.observableArrayList();
 		for (GradedItem item : currentRoster.getAssignments()) {
