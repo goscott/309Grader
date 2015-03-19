@@ -489,6 +489,17 @@ public class Roster implements Serializable {
 		return ret;
 	}
 
+	/**
+	 * Returns the number of students in the roster with
+	 * the provided overall score
+	 */
+	/*@
+	 	ensures(
+	 		\result >= 0
+	 			&&
+	 		\result <= students.size()
+	 	);
+	@*/
 	public int getNumStudentsWithScore(Double score) {
 		int ret = 0;
 		for (Student student : students) {
@@ -620,6 +631,11 @@ public class Roster implements Serializable {
 	 * Saves a roster temporarily, preventing the roster file from
 	 * being loaded. Will only be loaded when leaving prediction mode.
 	 */
+	/*@
+	 	requires(
+	 		rost != null
+	 	);
+	@*/
 	public static void saveTemp(Roster rost) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(
@@ -683,6 +699,13 @@ public class Roster implements Serializable {
 	 * Gets the maximum possible points on every assignment
 	 * on which a student has recieved a grade.
 	 */
+	/*@
+	 	requires(
+	 		student != null
+	 			&&
+	 		students.contains(student)
+	 	);
+	@*/
 	public double getMaxPoints(Student student) {
 		double max = 0;
 		for (GradedItem item : assignments) {
@@ -852,6 +875,11 @@ public class Roster implements Serializable {
 	/**
 	 * Gets an observable list of students
 	 */
+	/*@
+	 	ensures(
+	 		\result != null
+	 	);
+	@*/
 	public ObservableList<Student> getStudentList() {
 		ObservableList<Student> data = FXCollections.observableArrayList();
 		for (Student s : getStudents()) {
@@ -863,6 +891,11 @@ public class Roster implements Serializable {
 	/**
 	 * Gets an observable list of assignment names
 	 */
+	/*@
+	 	ensures(
+	 		\result != null
+	 	);
+	@*/
 	public ObservableList<String> getAssignmentNameList() {
 		ObservableList<String> data = FXCollections.observableArrayList();
 		for (GradedItem item : getAssignments()) {
@@ -874,13 +907,30 @@ public class Roster implements Serializable {
 	/**
 	 * Adds an announcement to a roster
 	 */
+	/*@
+	 	requires(
+	 		ann != null
+	 			&&
+	 		!announcements.contains(ann)
+	 	);
+	 	ensures(
+	 		announcements.contains(ann)
+	 	);
+	@*/
 	public void addAnnouncement(Announcement ann) {
-		announcements.add(ann);
+		if(ann != null && !announcements.contains(ann)) {
+			announcements.add(ann);
+		}
 	}
 
 	/**
 	 * Adds an announcement to a roster
 	 */
+	/*@
+	 	ensures(
+	 		\result.equals(announcements)
+	 	);
+	@*/
 	public ArrayList<Announcement> getAnnouncements() {
 		return announcements;
 	}
