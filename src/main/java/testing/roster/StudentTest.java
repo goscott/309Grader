@@ -12,23 +12,21 @@ import model.roster.Student;
 
 import org.junit.Test;
 /**
- *  @author ShelliCrispen
+ *  @author Shelli Crispen
  *  Phase 1: Unit Test testConstructor()
  *      Tests that the constructor sets elements correctly.
  *      
- *  Phase 2: Unit Test
+ *  Phase 2: Unit Test testCopy()
+ *      Tests the copy method 
  *  
- *  Phase 3: Unit Test
+ *  Phase 3: Unit Test testGetName()
+ *      Tests the GetName method
+ *      
+ *  Phase 4: Unit Test testScore()
+ *      Tests the scores methods 
  *  
- *  Phase 4: Unit Test
- *  
- *  Phase 5: Unit Test
- *  
- *  Phase 6: Unit Test
- *  
- *  Phase 7: Unit Test
- *  
- *  Phase 8: Unit Test
+ *  Phase 5: Unit Test testSave()
+ *      Tests that the save actually works. 
  *
  */
 public class StudentTest {

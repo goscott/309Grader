@@ -17,6 +17,17 @@ import model.roster.Student;
 
 import org.junit.Test;
 
+/**
+* Tests the GradedItem
+*
+* GradedItemJUnitTest implements the following module test plan:
+* 
+*      Phase 1: Unit Test export to File
+*      
+*      Phase 2: Unit Test export to Excel
+*      
+* @author Gavin Scott
+*/
 public class ExporterTest {
 
 	/**

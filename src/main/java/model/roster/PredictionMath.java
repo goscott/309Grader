@@ -1,10 +1,8 @@
 package model.roster;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.curve.Grade;
-import model.driver.Debug;
 import model.driver.Grader;
 
 /**

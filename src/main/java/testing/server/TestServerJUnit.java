@@ -12,7 +12,28 @@ import org.junit.Test;
  * @author Shelli Crispen
  *
  */
-public class TestSeverJUnit
+/**
+ *  @author ShelliCrispen
+ *  Phase 1: Unit Test setup()
+ *      Tests that the server sets up correctly.
+ *      
+ *  Phase 2: Unit Test test()
+ *      Practice test no longer used
+ *  
+ *  Phase 3: Unit Test testGetObservableStudentList()
+ *      Tests that the observable list of students is correct.
+ *  
+ *  Phase 4: Unit Test testGetStudentListNotRoster()
+ *      Tests the that observable list of students not in the Roster is correct.
+ *  
+ *  Phase 5: Unit Test testGetStudentListName()
+ *      Tests that the students name list is correct
+ *  
+ *  Phase 6: Unit Test testGetStudentListNameNotRoster()
+ *      Tests that the students name list of students not in the roster is correct.
+ *
+ */
+public class TestServerJUnit
 {
     
     @Before

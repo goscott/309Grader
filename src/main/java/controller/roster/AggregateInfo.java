@@ -3,6 +3,11 @@ package controller.roster;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * 
+ * @author Mason Stevenson
+ *
+ */
 public class AggregateInfo {
     private String title;
     private HashMap<String, String> cells;

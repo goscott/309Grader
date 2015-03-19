@@ -20,6 +20,39 @@ import resources.ResourceLoader;
  * @author Shelli Crispen
  * @author Gavin Scott
  */
+/**
+ *  @author Shelli Crispen
+ *  Phase 1: Unit Test testAddScore()
+ *      Tests the addScore function and makes sure that a score was correctly 
+ *      added to an assignment.
+ *      
+ *  Phase 2: Unit Test testGetSetUser()
+ *      Tests that users are correctly set and can be retrieved correctly.
+ *  
+ *  Phase 3: Unit Test testGetUserDB()
+ *      Tests that the userDB is returned correctly by the function.
+ *      
+ *  Phase 4: Unit Test testGetSetCurve()
+ *      Tests that the Get and Set curve functions are working correctly. 
+ *  
+ *  Phase 5: Unit Test testAddAssignment() 
+ *      Tests that the addAssignment function adds the assignment correctly 
+ *      and the list size goes up by one. 
+ *       
+ *  Phase 6: Unit Test testGetAssignment() 
+ *      Tests that an assignment can be retrieved by its name.  
+ *     
+ *  Phase 7: Unit Test testAddPercentageScore()
+ *      Tests that the percentage score function can correctly add a percent to 
+ *      an assignment for a specific student. 
+ *      
+ *  Phase 8: Unit Test testAddRoster()
+ *      Tests the Roster (Not implemented yet)
+ *      
+ *  Phase 9: Unit Test testAddStudent()
+ *      Tests that the Add Student function works correctly and the number of 
+ *      students in the currentroster is incremented by 1. 
+ */
 public class GraderTestJUnit
 {
 
