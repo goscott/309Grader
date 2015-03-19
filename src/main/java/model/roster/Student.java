@@ -76,6 +76,11 @@ public class Student implements Comparable<Student>, Serializable {
 	 * Creates a copy of this student and enrolls them in the
 	 * provided roster
 	 */
+	/*@
+	 	ensures(
+	 		rost.getStudents().contains(\result)
+	 	);
+	@*/
 	public Student copyTo(Roster rost) {
 		return new Student(name, id, emplID, major, ferpa, units, rost);
 	}
