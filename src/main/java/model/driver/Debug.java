@@ -34,6 +34,13 @@ public class Debug {
 	/**
 	 * Logs a message. Outputs it to the screen, and saves it to the output log
 	 */
+	/*@
+	 	requires(
+	 		category != null
+	 			&&
+	 		msg != null
+	 	);
+	@*/
 	public static void log(String category, String msg) {
 		if (loggerPrint)
 			System.out.println(category.toUpperCase() + " : " + msg);
@@ -58,6 +65,11 @@ public class Debug {
 	/**
 	 * Logs a message with no category
 	 */
+	/*@
+	 	requires(
+	 		msg != null
+	 	);
+	@*/
 	public static void log(String msg) {
 		if (loggerPrint)
 			System.out.println(msg);
@@ -73,6 +85,11 @@ public class Debug {
 	/**
 	 * Initializes the program with some data
 	 */
+	/*@
+		ensures(
+			Grader.getRoster() != null
+		);
+	@*/
 	public static void autoPopulate() {
 		Calendar start = Calendar.getInstance();
 		Calendar end = Calendar.getInstance();		
@@ -96,6 +113,9 @@ public class Debug {
 	/**
 	 * Wipes the old log files
 	 */
+	/*@
+	 	// old log files have been deleted
+	@*/
 	public static void newFile() {
 		if (loggerRecord) {
 			PrintWriter writer = null;
@@ -120,6 +140,9 @@ public class Debug {
 	/**
 	 * Wipes the old error file
 	 */
+	/*@
+	 	// old error log files have been deleted
+	@*/
 	private static void newErrorFile() {
 		PrintWriter writer = null;
 		try {
