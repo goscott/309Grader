@@ -529,6 +529,9 @@ public class GradedItem implements Serializable {
 	/**
 	 * Gets the number of students that have grades on this assignment
 	 */
+	/*@
+	 	// \result == the number of students that have a grade on this assignment
+	@*/
 	public int getNumGraded() {
 		int total = 0;
 		for(Double grade : studentGrades.values()) {
@@ -542,6 +545,10 @@ public class GradedItem implements Serializable {
 	/**
 	 * Gets the mean grade on this assignment
 	 */
+	/*@
+	 	// \result == the sum of every students score on this assignment
+	 	// divided by the number of students that have a grade on this assignment
+	@*/
 	public double getMean() {
 		double sum = 0;
 		int num = 0;
@@ -557,6 +564,10 @@ public class GradedItem implements Serializable {
 	/**
 	 * Gets the median grade on this assignment
 	 */
+	/*@
+	 	// \result == the score at the middle of a sorted list of 
+	 	// all students scores on this assignment
+	@*/
 	public double getMedian() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
@@ -581,6 +592,9 @@ public class GradedItem implements Serializable {
 	/**
 	 * Gets the maximum grade on this assignment
 	 */
+	/*@
+	 	// \result == the max score a student has received on this assignment
+	@*/
 	public double getMax() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
@@ -599,6 +613,9 @@ public class GradedItem implements Serializable {
 	/**
 	 * Gets the minimum grade on this assignment
 	 */
+	/*@
+	 	// \result == the min score a student has received on this assignment
+	@*/
 	public double getMin() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
@@ -617,6 +634,10 @@ public class GradedItem implements Serializable {
 	/**
 	 * Gets the standard deviation for this assignment
 	 */
+	/*@
+	 	// \result == the standard deviation of the scores 
+	 	// on this assignment
+	@*/
 	public double getStandardDeviation() {
 		ArrayList<Double> list = new ArrayList<Double>();
 		for(Double grade : studentGrades.values()) {
