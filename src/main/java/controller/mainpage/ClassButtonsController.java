@@ -13,6 +13,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 
+/**
+ * @author Michael Lenz
+ * @author Shelli Crispen
+ *
+ */
 public class ClassButtonsController {
 	private FlowPane buttonSetUp;
 	private static ClassButtonsController singleton;

@@ -199,7 +199,6 @@ public class AddAssignmentDialogController {
 	 */
 	private boolean checkScoreInvalid() {
 		if (maxScoreField.getText().length() == 0){
-				//|| Double.parseDouble(maxScoreField.getText()) > Grader.getAssignment(parentDropdown.getValue()).maxScore()) {
 			maxScoreField.setBackground(new Background(new BackgroundFill(
 					ResourceLoader.ERROR_RED, CornerRadii.EMPTY, Insets.EMPTY)));
 			return true;
