@@ -15,6 +15,11 @@ public class PeopleSoftServer {
 	private static ArrayList<Student> list;
 
 	/** Populates the server with dummy data **/
+	/*@
+	 	ensures(
+	 		list.size() > 0
+	 	);
+	@*/
 	public static void initialize() {
 		list = new ArrayList<Student>();
 		list.add(new Student("user0", "00000","19403278", "Softwhere Engeineering", false, 4));
@@ -55,6 +60,11 @@ public class PeopleSoftServer {
 	/**
 	 * Commits a finalized roster to polylearn
 	 */
+	/*@
+		ensures(
+			// the roster has been sent to polylearn
+		);
+	@*/
 	public static void commitRoster(Roster roster) {
 		// doesn't do anything
 		Debug.log("PolyLearn", roster.courseName() + " sent to polylearn");
@@ -63,6 +73,11 @@ public class PeopleSoftServer {
 	/**
 	 * Gets all possible IDs for Cal Poly users (empl ids)
 	 */
+	/*@
+	 	ensures(
+	 		((ArrayList<String>)\result.size()) > 0
+	 	);
+	@*/
 	public static ArrayList<String> getAllEmplIds() {
 		ArrayList<String> ret = new ArrayList<String>();
 		for(Student student : list) {
@@ -74,6 +89,11 @@ public class PeopleSoftServer {
 	/**
 	 * Gets all the students stored in the server
 	 */
+	/*@
+	 	ensures(
+	 		((ArrayList<String>)\result).equals(list)
+	 	);
+	@*/
 	public static ArrayList<Student> getStudents() {
 		return list;
 	}
@@ -82,6 +102,11 @@ public class PeopleSoftServer {
 	 * Gets the server's list of all students associated with a roster
 	 * (currently dummy data)
 	 */
+	/*@
+	 	ensures(
+	 		\result != null
+	 	);
+	@*/
 	public static ArrayList<Student> getAssociatedStudents(Roster roster) {
 		ArrayList<Student> retList = new ArrayList<Student>();
 		for(int ndx = 0; ndx < 10; ndx++) {
