@@ -132,6 +132,13 @@ public class Exporter {
 	/**
 	 * Exports a roster as a .rost to the provided file
 	 */
+	/*@
+		requires(
+			roster != null
+				&&
+			file != null
+		);
+	@*/
 	public static void exportRosterToFile(Roster roster, File file) {
 		try {
 			if(roster == null || file == null) {
